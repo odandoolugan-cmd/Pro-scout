@@ -261,6 +261,51 @@
             opacity: 0.6;
         }
         
+        /* Botón VR */
+        .vr-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 40px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 100;
+            font-family: 'Cinzel', serif;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+            transition: transform 0.2s;
+        }
+        .vr-button:hover { transform: scale(1.05); }
+        
+        /* Modo VR */
+        .vr-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            display: none;
+            background: #0a0f1e;
+        }
+        .vr-mode.active { display: block; }
+        .close-vr {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            border: 1px solid #e9c46a;
+            padding: 8px 16px;
+            border-radius: 30px;
+            color: #e9c46a;
+            cursor: pointer;
+            z-index: 1001;
+            font-family: monospace;
+        }
+        
         @media (max-width: 700px) {
             .player-name { font-size: 1.3rem; }
             .ad-container { margin: 1rem 0; }
@@ -268,150 +313,163 @@
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="hero">
-        <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="ia-badge">GROQ</span></h1>
-        <p>Busca cualquier jugador · Análisis con Inteligencia Artificial</p>
-    </div>
 
-    <!-- Panel de búsqueda -->
-    <div class="search-panel">
-        <div class="search-title">
-            🔍 <span>BUSCADOR DE JUGADORES</span>
+    <!-- MODO NORMAL -->
+    <div class="normal-mode" id="normalMode">
+        <div class="container">
+            <div class="hero">
+                <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="ia-badge">GROQ</span></h1>
+                <p>Busca cualquier jugador · Análisis con Inteligencia Artificial</p>
+            </div>
+
+            <!-- Panel de búsqueda -->
+            <div class="search-panel">
+                <div class="search-title">
+                    🔍 <span>BUSCADOR DE JUGADORES</span>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="playerSearch" placeholder="Ej: Lionel Messi, Cristiano Ronaldo, Vinicius Jr, Erling Haaland..." autocomplete="off">
+                    <button id="searchBtn">📊 ANALIZAR CON IA</button>
+                </div>
+                <div class="api-status" id="apiStatus" style="font-size:0.8rem; color:#9bd5c9;">
+                    💡 Sistema con IA: genera estadísticas realistas y análisis táctico.
+                </div>
+                <div id="playerInfoContainer"></div>
+            </div>
+
+            <h2 style="margin-top: 0.5rem;">🎯 RENDIMIENTO POR POSICIÓN</h2>
+            
+            <div id="positionsContainer" class="positions-grid"></div>
+            
+            <!-- SMART LINK 1 -->
+            <div class="ad-container">
+                <div class="ad-label">🔗 OFERTA DESTACADA</div>
+                <a href="https://www.profitablecpmratenetwork.com/cuitcvgz?key=85ca230e218898f76e48c348cafb2311" target="_blank" rel="nofollow" style="display: inline-block; background: linear-gradient(90deg, #e9c46a, #f4a261); color: #1a222c; padding: 10px 25px; border-radius: 40px; text-decoration: none; font-weight: bold; margin: 5px;">🎮 OFERTA ESPECIAL 1</a>
+            </div>
+            
+            <!-- SMART LINK 2 -->
+            <div class="ad-container">
+                <div class="ad-label">🎁 OFERTA ESPECIAL</div>
+                <a href="https://www.profitablecpmratenetwork.com/b27uffyn?key=5b35819451353807b0e99b21addde69a" target="_blank" rel="nofollow" style="display: inline-block; background: linear-gradient(90deg, #2a9d8f, #264653); color: white; padding: 10px 25px; border-radius: 40px; text-decoration: none; font-weight: bold; margin: 5px;">🎲 OFERTA ESPECIAL 2</a>
+            </div>
+            
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <button id="resetBtn" class="global-reset">🔄 REINICIAR A JUGADOR BASE</button>
+            </div>
+            <div class="footer">
+                ✨ Análisis generado con Groq IA · Estadísticas dinámicas según nombre y posición
+            </div>
         </div>
-        <div class="search-box">
-            <input type="text" id="playerSearch" placeholder="Ej: Lionel Messi, Cristiano Ronaldo, Vinicius Jr, Erling Haaland..." autocomplete="off">
-            <button id="searchBtn">📊 ANALIZAR CON IA</button>
-        </div>
-        <div class="api-status" id="apiStatus" style="font-size:0.8rem; color:#9bd5c9;">
-            💡 Sistema con IA: genera estadísticas realistas y análisis táctico.
-        </div>
-        <div id="playerInfoContainer"></div>
     </div>
 
-    <h2 style="margin-top: 0.5rem;">🎯 RENDIMIENTO POR POSICIÓN</h2>
-    
-    <div id="positionsContainer" class="positions-grid"></div>
-    
-    <!-- SMART LINK 1 -->
-    <div class="ad-container">
-        <div class="ad-label">🔗 OFERTA DESTACADA</div>
-        <a href="https://www.profitablecpmratenetwork.com/cuitcvgz?key=85ca230e218898f76e48c348cafb2311" target="_blank" rel="nofollow" style="display: inline-block; background: linear-gradient(90deg, #e9c46a, #f4a261); color: #1a222c; padding: 10px 25px; border-radius: 40px; text-decoration: none; font-weight: bold; margin: 5px;">🎮 OFERTA ESPECIAL 1</a>
-    </div>
-    
-    <!-- SMART LINK 2 -->
-    <div class="ad-container">
-        <div class="ad-label">🎁 OFERTA ESPECIAL</div>
-        <a href="https://www.profitablecpmratenetwork.com/b27uffyn?key=5b35819451353807b0e99b21addde69a" target="_blank" rel="nofollow" style="display: inline-block; background: linear-gradient(90deg, #2a9d8f, #264653); color: white; padding: 10px 25px; border-radius: 40px; text-decoration: none; font-weight: bold; margin: 5px;">🎲 OFERTA ESPECIAL 2</a>
-    </div>
-    
-    <div style="text-align: center; margin-top: 1.5rem;">
-        <button id="resetBtn" class="global-reset">🔄 REINICIAR A JUGADOR BASE</button>
-    </div>
-    <div class="footer">
-        ✨ Análisis generado con Groq IA · Estadísticas dinámicas según nombre y posición
-    </div>
-</div>
+    <!-- Botón VR -->
+    <button class="vr-button" id="vrModeBtn">🔮 ACTIVAR MODO VR</button>
 
-<script>
-    // ==================== CONFIGURACIÓN GROQ IA ====================
-    const GROQ_API_KEY = "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";
-    const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
-    const MODEL = "llama-3.3-70b-versatile";
-    
-    // Límite de 100 consultas/día
-    const limite = {
-        get hoy() { return new Date().toDateString(); },
-        get usadas() { 
-            if(localStorage.getItem('dia_scout') !== this.hoy) return 0;
-            return parseInt(localStorage.getItem('consultas_scout') || 0);
-        },
-        puede() { return this.usadas < 100; },
-        registrar() { 
-            localStorage.setItem('dia_scout', this.hoy);
-            localStorage.setItem('consultas_scout', this.usadas + 1);
-        }
-    };
-    
-    // ==================== DEFINICIÓN DE POSICIONES ====================
-    const POSITIONS_TEMPLATE = [
-        { id: "portero", name: "🧤 Portero", icon: "🧤", skills: ["Reflejos", "Juego Aéreo", "Colocación", "Salida con pies"] },
-        { id: "defensa", name: "🛡️ Defensa Central", icon: "🛡️", skills: ["Marcaje", "Anticipación", "Juego Aéreo", "Salida de Balón"] },
-        { id: "lateral", name: "⚡ Lateral", icon: "⚡", skills: ["Velocidad", "Centro", "Defensa 1vs1", "Resistencia"] },
-        { id: "mediocentro", name: "🎯 Mediocentro", icon: "🎯", skills: ["Pase", "Visión", "Recuperación", "Tiro Lejano"] },
-        { id: "extremidad", name: "🌪️ Extremo", icon: "🌪️", skills: ["Regate", "Velocidad", "Asistencia", "Finalización"] },
-        { id: "delantero", name: "⚽ Delantero", icon: "⚽", skills: ["Finalización", "Posicionamiento", "Remate", "Asociación"] }
-    ];
+    <!-- MODO VR -->
+    <div class="vr-mode" id="vrMode">
+        <button class="close-vr" id="closeVrBtn">✕ SALIR DE VR</button>
+        <div id="vrContainer" style="width:100%;height:100%"></div>
+    </div>
 
-    let positionsState = [];
-    let currentPlayer = {
-        name: "Jugador Base",
-        overall: 75,
-        position: "Delantero",
-        goals: 8,
-        assists: 6,
-        pace: 78,
-        shooting: 75,
-        passing: 72,
-        defending: 45,
-        physical: 70
-    };
-    
-    let currentAnalysisDiv = null;
+    <script>
+        // ==================== CONFIGURACIÓN GROQ IA ====================
+        const GROQ_API_KEY = "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";
+        const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
+        const MODEL = "llama-3.3-70b-versatile";
+        
+        // Límite de 100 consultas/día
+        const limite = {
+            get hoy() { return new Date().toDateString(); },
+            get usadas() { 
+                if(localStorage.getItem('dia_scout') !== this.hoy) return 0;
+                return parseInt(localStorage.getItem('consultas_scout') || 0);
+            },
+            puede() { return this.usadas < 100; },
+            registrar() { 
+                localStorage.setItem('dia_scout', this.hoy);
+                localStorage.setItem('consultas_scout', this.usadas + 1);
+            }
+        };
+        
+        // ==================== DEFINICIÓN DE POSICIONES ====================
+        const POSITIONS_TEMPLATE = [
+            { id: "portero", name: "🧤 Portero", icon: "🧤", skills: ["Reflejos", "Juego Aéreo", "Colocación", "Salida con pies"] },
+            { id: "defensa", name: "🛡️ Defensa Central", icon: "🛡️", skills: ["Marcaje", "Anticipación", "Juego Aéreo", "Salida de Balón"] },
+            { id: "lateral", name: "⚡ Lateral", icon: "⚡", skills: ["Velocidad", "Centro", "Defensa 1vs1", "Resistencia"] },
+            { id: "mediocentro", name: "🎯 Mediocentro", icon: "🎯", skills: ["Pase", "Visión", "Recuperación", "Tiro Lejano"] },
+            { id: "extremidad", name: "🌪️ Extremo", icon: "🌪️", skills: ["Regate", "Velocidad", "Asistencia", "Finalización"] },
+            { id: "delantero", name: "⚽ Delantero", icon: "⚽", skills: ["Finalización", "Posicionamiento", "Remate", "Asociación"] }
+        ];
 
-    // ==================== ALGORITMO INTELIGENTE ====================
-    function generatePlayerStatsFromName(name) {
-        if (!name || name.trim() === "") name = "Jugador Base";
-        const nameLower = name.toLowerCase();
+        let positionsState = [];
+        let currentPlayer = {
+            name: "Jugador Base",
+            overall: 75,
+            position: "Delantero",
+            goals: 8,
+            assists: 6,
+            pace: 78,
+            shooting: 75,
+            passing: 72,
+            defending: 45,
+            physical: 70
+        };
         
-        let overall = 70, position = "Delantero", goals = 5, assists = 4;
-        let pace = 70, shooting = 68, passing = 70, defending = 50, physical = 68;
+        let currentAnalysisDiv = null;
+
+        // ==================== ALGORITMO INTELIGENTE ====================
+        function generatePlayerStatsFromName(name) {
+            if (!name || name.trim() === "") name = "Jugador Base";
+            const nameLower = name.toLowerCase();
+            
+            let overall = 70, position = "Delantero", goals = 5, assists = 4;
+            let pace = 70, shooting = 68, passing = 70, defending = 50, physical = 68;
+            
+            // Estrellas mundiales
+            if (nameLower.includes("messi") || nameLower.includes("lionel")) {
+                overall = 92; position = "Extremo"; goals = 25; assists = 18; pace = 82; shooting = 91; passing = 93; defending = 35; physical = 68;
+            }
+            else if (nameLower.includes("cristiano") || nameLower.includes("ronaldo")) {
+                overall = 91; position = "Delantero"; goals = 28; assists = 8; pace = 85; shooting = 94; passing = 78; defending = 40; physical = 85;
+            }
+            else if (nameLower.includes("mbappé") || nameLower.includes("mbappe")) {
+                overall = 92; position = "Delantero"; goals = 30; assists = 10; pace = 97; shooting = 89; passing = 80; defending = 38; physical = 82;
+            }
+            else if (nameLower.includes("haaland") || nameLower.includes("erling")) {
+                overall = 91; position = "Delantero"; goals = 32; assists = 6; pace = 88; shooting = 93; passing = 65; defending = 42; physical = 90;
+            }
+            else if (nameLower.includes("vinicius") || nameLower.includes("vini")) {
+                overall = 88; position = "Extremo"; goals = 18; assists = 12; pace = 94; shooting = 83; passing = 79; defending = 40; physical = 74;
+            }
+            else if (nameLower.includes("bellingham") || nameLower.includes("jude")) {
+                overall = 89; position = "Mediocentro"; goals = 19; assists = 8; pace = 82; shooting = 84; passing = 86; defending = 70; physical = 82;
+            }
+            else {
+                const hash = name.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+                const seed = (hash % 100) / 100;
+                overall = 65 + Math.floor(seed * 28);
+                const positions = ["Delantero", "Extremo", "Mediocentro", "Defensa Central", "Lateral", "Portero"];
+                position = positions[Math.floor(seed * positions.length)];
+                goals = Math.floor(Math.random() * 15) + (overall > 80 ? 8 : 2);
+                assists = Math.floor(Math.random() * 12) + (overall > 78 ? 5 : 1);
+                pace = 60 + Math.floor(Math.random() * 30);
+                shooting = 55 + Math.floor(Math.random() * 35);
+                passing = 55 + Math.floor(Math.random() * 35);
+                defending = 30 + Math.floor(Math.random() * 55);
+                physical = 55 + Math.floor(Math.random() * 30);
+            }
+            
+            return { name, overall: Math.min(99, overall), position, goals, assists, pace, shooting, passing, defending, physical };
+        }
         
-        // Estrellas mundiales
-        if (nameLower.includes("messi") || nameLower.includes("lionel")) {
-            overall = 92; position = "Extremo"; goals = 25; assists = 18; pace = 82; shooting = 91; passing = 93; defending = 35; physical = 68;
-        }
-        else if (nameLower.includes("cristiano") || nameLower.includes("ronaldo")) {
-            overall = 91; position = "Delantero"; goals = 28; assists = 8; pace = 85; shooting = 94; passing = 78; defending = 40; physical = 85;
-        }
-        else if (nameLower.includes("mbappé") || nameLower.includes("mbappe")) {
-            overall = 92; position = "Delantero"; goals = 30; assists = 10; pace = 97; shooting = 89; passing = 80; defending = 38; physical = 82;
-        }
-        else if (nameLower.includes("haaland") || nameLower.includes("erling")) {
-            overall = 91; position = "Delantero"; goals = 32; assists = 6; pace = 88; shooting = 93; passing = 65; defending = 42; physical = 90;
-        }
-        else if (nameLower.includes("vinicius") || nameLower.includes("vini")) {
-            overall = 88; position = "Extremo"; goals = 18; assists = 12; pace = 94; shooting = 83; passing = 79; defending = 40; physical = 74;
-        }
-        else if (nameLower.includes("bellingham") || nameLower.includes("jude")) {
-            overall = 89; position = "Mediocentro"; goals = 19; assists = 8; pace = 82; shooting = 84; passing = 86; defending = 70; physical = 82;
-        }
-        else {
-            const hash = name.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
-            const seed = (hash % 100) / 100;
-            overall = 65 + Math.floor(seed * 28);
-            const positions = ["Delantero", "Extremo", "Mediocentro", "Defensa Central", "Lateral", "Portero"];
-            position = positions[Math.floor(seed * positions.length)];
-            goals = Math.floor(Math.random() * 15) + (overall > 80 ? 8 : 2);
-            assists = Math.floor(Math.random() * 12) + (overall > 78 ? 5 : 1);
-            pace = 60 + Math.floor(Math.random() * 30);
-            shooting = 55 + Math.floor(Math.random() * 35);
-            passing = 55 + Math.floor(Math.random() * 35);
-            defending = 30 + Math.floor(Math.random() * 55);
-            physical = 55 + Math.floor(Math.random() * 30);
-        }
-        
-        return { name, overall: Math.min(99, overall), position, goals, assists, pace, shooting, passing, defending, physical };
-    }
-    
-    // ==================== ANÁLISIS CON IA ====================
-    async function analizarConIA(jugador, elementoPadre) {
-        if (!limite.puede()) {
-            elementoPadre.innerHTML = "🛡️ Límite de IA alcanzado (100 análisis/día). Vuelve mañana.";
-            return;
-        }
-        
-        const prompt = `Analiza al siguiente jugador de fútbol como un scout profesional, en máximo 80 palabras:
+        // ==================== ANÁLISIS CON IA ====================
+        async function analizarConIA(jugador, elementoPadre) {
+            if (!limite.puede()) {
+                elementoPadre.innerHTML = "🛡️ Límite de IA alcanzado (100 análisis/día). Vuelve mañana.";
+                return;
+            }
+            
+            const prompt = `Analiza al siguiente jugador de fútbol como un scout profesional, en máximo 80 palabras:
 
 Nombre: ${jugador.name}
 Posición principal: ${jugador.position}
@@ -420,201 +478,335 @@ Goles: ${jugador.goals} | Asistencias: ${jugador.assists}
 Ritmo: ${jugador.pace} | Tiro: ${jugador.shooting} | Pase: ${jugador.passing} | Defensa: ${jugador.defending} | Físico: ${jugador.physical}
 
 Da una evaluación breve: sus 3 principales fortalezas, 1 debilidad, y recomendación final (¿fichaje recomendado? ¿para qué equipo?).`;
-        
-        try {
-            const response = await fetch(GROQ_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${GROQ_API_KEY}`
-                },
-                body: JSON.stringify({
-                    model: MODEL,
-                    messages: [
-                        { role: "system", content: "Eres un scout de fútbol experto. Analizas jugadores con datos realistas. Hablas español. Respuestas concisas y profesionales." },
-                        { role: "user", content: prompt }
-                    ],
-                    max_tokens: 200,
-                    temperature: 0.7
-                })
-            });
             
-            if (!response.ok) throw new Error("Error API");
-            const data = await response.json();
-            const analisis = data.choices?.[0]?.message?.content || "No se pudo generar análisis.";
-            
-            limite.registrar();
-            elementoPadre.innerHTML = `🤖 ${analisis}`;
-            
-        } catch (error) {
-            elementoPadre.innerHTML = "⚠️ Error al conectar con la IA. Intenta de nuevo.";
-        }
-    }
-    
-    // ==================== ACTUALIZAR ATRIBUTOS ====================
-    function updatePositionsFromPlayer(player) {
-        positionsState = POSITIONS_TEMPLATE.map(pos => {
-            let affinityBonus = 0;
-            const mainPos = player.position.toLowerCase();
-            
-            if ((mainPos.includes("delan") && pos.id === "delantero") ||
-                (mainPos.includes("extrem") && pos.id === "extremidad") ||
-                (mainPos.includes("centro") && pos.id === "mediocentro") ||
-                (mainPos.includes("defensa") && pos.id === "defensa") ||
-                (mainPos.includes("later") && pos.id === "lateral") ||
-                (mainPos.includes("porter") && pos.id === "portero")) {
-                affinityBonus = 12;
+            try {
+                const response = await fetch(GROQ_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${GROQ_API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        model: MODEL,
+                        messages: [
+                            { role: "system", content: "Eres un scout de fútbol experto. Analizas jugadores con datos realistas. Hablas español. Respuestas concisas y profesionales." },
+                            { role: "user", content: prompt }
+                        ],
+                        max_tokens: 200,
+                        temperature: 0.7
+                    })
+                });
+                
+                if (!response.ok) throw new Error("Error API");
+                const data = await response.json();
+                const analisis = data.choices?.[0]?.message?.content || "No se pudo generar análisis.";
+                
+                limite.registrar();
+                elementoPadre.innerHTML = `🤖 ${analisis}`;
+                
+            } catch (error) {
+                elementoPadre.innerHTML = "⚠️ Error al conectar con la IA. Intenta de nuevo.";
             }
-            
-            const offensiveBonus = Math.min(18, Math.floor(player.goals * 1.2 + player.assists * 0.9));
-            const overallBonus = (player.overall - 70) * 0.7;
-            
-            return {
-                id: pos.id,
-                name: pos.name,
-                icon: pos.icon,
-                skills: pos.skills.map(skillName => {
-                    let baseValue = 50 + overallBonus + affinityBonus;
-                    if (skillName.includes("Finalización") || skillName.includes("Remate")) baseValue += (player.shooting - 60) * 0.6 + offensiveBonus * 0.5;
-                    if (skillName.includes("Pase") || skillName.includes("Visión")) baseValue += (player.passing - 60) * 0.7 + player.assists * 1.2;
-                    if (skillName.includes("Velocidad") || skillName.includes("Regate")) baseValue += (player.pace - 65) * 0.8;
-                    if (skillName.includes("Defensa") || skillName.includes("Marcaje")) baseValue += (player.defending - 55) * 0.7;
-                    if (skillName.includes("Físico") || skillName.includes("Resistencia")) baseValue += (player.physical - 60) * 0.6;
-                    if (pos.id === "delantero" || pos.id === "extremidad") baseValue += player.goals * 1.3;
-                    return { name: skillName, value: Math.min(99, Math.max(35, Math.floor(baseValue))) };
-                })
-            };
-        });
-    }
-    
-    function getPerformance(pos) {
-        const sum = pos.skills.reduce((acc, s) => acc + s.value, 0);
-        return Math.round(sum / pos.skills.length);
-    }
-    
-    function renderPositions() {
-        const container = document.getElementById('positionsContainer');
-        if (!container) return;
-        container.innerHTML = '';
+        }
         
-        positionsState.forEach(pos => {
-            const perf = getPerformance(pos);
-            const card = document.createElement('div');
-            card.className = 'position-card';
-            card.innerHTML = `
-                <div class="pos-header">
-                    <span class="pos-name">${pos.name}</span>
-                    <span class="pos-perf">🎯 ${perf}%</span>
-                </div>
-                <div>
-                    ${pos.skills.map(skill => `
-                        <div class="skill-item">
-                            <div class="skill-label">
-                                <span>${skill.name}</span>
-                                <span>${skill.value}/99</span>
+        // ==================== ACTUALIZAR ATRIBUTOS ====================
+        function updatePositionsFromPlayer(player) {
+            positionsState = POSITIONS_TEMPLATE.map(pos => {
+                let affinityBonus = 0;
+                const mainPos = player.position.toLowerCase();
+                
+                if ((mainPos.includes("delan") && pos.id === "delantero") ||
+                    (mainPos.includes("extrem") && pos.id === "extremidad") ||
+                    (mainPos.includes("centro") && pos.id === "mediocentro") ||
+                    (mainPos.includes("defensa") && pos.id === "defensa") ||
+                    (mainPos.includes("later") && pos.id === "lateral") ||
+                    (mainPos.includes("porter") && pos.id === "portero")) {
+                    affinityBonus = 12;
+                }
+                
+                const offensiveBonus = Math.min(18, Math.floor(player.goals * 1.2 + player.assists * 0.9));
+                const overallBonus = (player.overall - 70) * 0.7;
+                
+                return {
+                    id: pos.id,
+                    name: pos.name,
+                    icon: pos.icon,
+                    skills: pos.skills.map(skillName => {
+                        let baseValue = 50 + overallBonus + affinityBonus;
+                        if (skillName.includes("Finalización") || skillName.includes("Remate")) baseValue += (player.shooting - 60) * 0.6 + offensiveBonus * 0.5;
+                        if (skillName.includes("Pase") || skillName.includes("Visión")) baseValue += (player.passing - 60) * 0.7 + player.assists * 1.2;
+                        if (skillName.includes("Velocidad") || skillName.includes("Regate")) baseValue += (player.pace - 65) * 0.8;
+                        if (skillName.includes("Defensa") || skillName.includes("Marcaje")) baseValue += (player.defending - 55) * 0.7;
+                        if (skillName.includes("Físico") || skillName.includes("Resistencia")) baseValue += (player.physical - 60) * 0.6;
+                        if (pos.id === "delantero" || pos.id === "extremidad") baseValue += player.goals * 1.3;
+                        return { name: skillName, value: Math.min(99, Math.max(35, Math.floor(baseValue))) };
+                    })
+                };
+            });
+        }
+        
+        function getPerformance(pos) {
+            const sum = pos.skills.reduce((acc, s) => acc + s.value, 0);
+            return Math.round(sum / pos.skills.length);
+        }
+        
+        function renderPositions() {
+            const container = document.getElementById('positionsContainer');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            positionsState.forEach(pos => {
+                const perf = getPerformance(pos);
+                const card = document.createElement('div');
+                card.className = 'position-card';
+                card.innerHTML = `
+                    <div class="pos-header">
+                        <span class="pos-name">${pos.name}</span>
+                        <span class="pos-perf">🎯 ${perf}%</span>
+                    </div>
+                    <div>
+                        ${pos.skills.map(skill => `
+                            <div class="skill-item">
+                                <div class="skill-label">
+                                    <span>${skill.name}</span>
+                                    <span>${skill.value}/99</span>
+                                </div>
+                                <div class="skill-bar-bg">
+                                    <div class="skill-fill" style="width: ${skill.value}%;"></div>
+                                </div>
                             </div>
-                            <div class="skill-bar-bg">
-                                <div class="skill-fill" style="width: ${skill.value}%;"></div>
-                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="badge-recom">
+                        ${perf >= 80 ? '🏆 ELITE · Recomendado' : perf >= 65 ? '👍 BUEN RENDIMIENTO' : '📈 MARGEN DE MEJORA'}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        function renderPlayerInfo(player) {
+            const container = document.getElementById('playerInfoContainer');
+            container.innerHTML = `
+                <div class="player-card-big">
+                    <div>
+                        <div class="player-name">⭐ ${player.name}</div>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 0.3rem; flex-wrap: wrap;">
+                            <span class="stat-chip">📊 Overall: <span>${player.overall}</span></span>
+                            <span class="stat-chip">📍 Posición: <span>${player.position}</span></span>
+                            <span class="stat-chip">⚽ Goles: <span>${player.goals}</span></span>
+                            <span class="stat-chip">🎯 Asistencias: <span>${player.assists}</span></span>
                         </div>
-                    `).join('')}
-                </div>
-                <div class="badge-recom">
-                    ${perf >= 80 ? '🏆 ELITE · Recomendado' : perf >= 65 ? '👍 BUEN RENDIMIENTO' : '📈 MARGEN DE MEJORA'}
-                </div>
-            `;
-            container.appendChild(card);
-        });
-    }
-    
-    function renderPlayerInfo(player) {
-        const container = document.getElementById('playerInfoContainer');
-        container.innerHTML = `
-            <div class="player-card-big">
-                <div>
-                    <div class="player-name">⭐ ${player.name}</div>
-                    <div style="display: flex; gap: 0.5rem; margin-top: 0.3rem; flex-wrap: wrap;">
-                        <span class="stat-chip">📊 Overall: <span>${player.overall}</span></span>
-                        <span class="stat-chip">📍 Posición: <span>${player.position}</span></span>
-                        <span class="stat-chip">⚽ Goles: <span>${player.goals}</span></span>
-                        <span class="stat-chip">🎯 Asistencias: <span>${player.assists}</span></span>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <span class="stat-chip">💨 Ritmo: ${player.pace}</span>
+                        <span class="stat-chip">🎯 Tiro: ${player.shooting}</span>
+                        <span class="stat-chip">🎨 Pase: ${player.passing}</span>
+                        <span class="stat-chip">🛡️ Defensa: ${player.defending}</span>
+                        <span class="stat-chip">💪 Físico: ${player.physical}</span>
                     </div>
                 </div>
-                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                    <span class="stat-chip">💨 Ritmo: ${player.pace}</span>
-                    <span class="stat-chip">🎯 Tiro: ${player.shooting}</span>
-                    <span class="stat-chip">🎨 Pase: ${player.passing}</span>
-                    <span class="stat-chip">🛡️ Defensa: ${player.defending}</span>
-                    <span class="stat-chip">💪 Físico: ${player.physical}</span>
+                <div class="ia-analysis" id="iaAnalysis">
+                    <button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON IA (GROQ)</button>
+                    <div id="iaResult" style="margin-top: 10px;"></div>
                 </div>
-            </div>
-            <div class="ia-analysis" id="iaAnalysis">
-                <button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON IA (GROQ)</button>
-                <div id="iaResult" style="margin-top: 10px;"></div>
-            </div>
-        `;
-        currentAnalysisDiv = document.getElementById('iaResult');
-    }
-    
-    window.generarAnalisis = function() {
-        if (currentAnalysisDiv) {
-            currentAnalysisDiv.innerHTML = "🔄 IA analizando al jugador...";
-            analizarConIA(currentPlayer, currentAnalysisDiv);
-        }
-    };
-    
-    function searchPlayer() {
-        const input = document.getElementById('playerSearch');
-        const query = input.value.trim();
-        if (!query) {
-            document.getElementById('apiStatus').innerHTML = "⚠️ Escribe el nombre de un jugador";
-            return;
+            `;
+            currentAnalysisDiv = document.getElementById('iaResult');
         }
         
-        document.getElementById('apiStatus').innerHTML = "🔄 Analizando con IA...";
-        const playerStats = generatePlayerStatsFromName(query);
-        currentPlayer = playerStats;
-        
-        updatePositionsFromPlayer(currentPlayer);
-        renderPlayerInfo(currentPlayer);
-        renderPositions();
-        
-        document.getElementById('apiStatus').innerHTML = `✅ ${currentPlayer.name} · Overall ${currentPlayer.overall} · ${currentPlayer.position}`;
-    }
-    
-    function resetToBase() {
-        currentPlayer = {
-            name: "Jugador Base",
-            overall: 75,
-            position: "Delantero",
-            goals: 8,
-            assists: 6,
-            pace: 75,
-            shooting: 74,
-            passing: 72,
-            defending: 50,
-            physical: 70
+        window.generarAnalisis = function() {
+            if (currentAnalysisDiv) {
+                currentAnalysisDiv.innerHTML = "🔄 IA analizando al jugador...";
+                analizarConIA(currentPlayer, currentAnalysisDiv);
+            }
         };
-        updatePositionsFromPlayer(currentPlayer);
-        renderPlayerInfo(currentPlayer);
-        renderPositions();
-        document.getElementById('playerSearch').value = "";
-        document.getElementById('apiStatus').innerHTML = "🔄 Reiniciado a valores base. ¡Busca cualquier jugador!";
-        if (currentAnalysisDiv) currentAnalysisDiv.innerHTML = "";
-    }
-    
-    function init() {
-        updatePositionsFromPlayer(currentPlayer);
-        renderPlayerInfo(currentPlayer);
-        renderPositions();
-        document.getElementById('searchBtn').addEventListener('click', searchPlayer);
-        document.getElementById('resetBtn').addEventListener('click', resetToBase);
-        document.getElementById('playerSearch').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') searchPlayer();
+        
+        function searchPlayer() {
+            const input = document.getElementById('playerSearch');
+            const query = input.value.trim();
+            if (!query) {
+                document.getElementById('apiStatus').innerHTML = "⚠️ Escribe el nombre de un jugador";
+                return;
+            }
+            
+            document.getElementById('apiStatus').innerHTML = "🔄 Analizando con IA...";
+            const playerStats = generatePlayerStatsFromName(query);
+            currentPlayer = playerStats;
+            
+            updatePositionsFromPlayer(currentPlayer);
+            renderPlayerInfo(currentPlayer);
+            renderPositions();
+            
+            document.getElementById('apiStatus').innerHTML = `✅ ${currentPlayer.name} · Overall ${currentPlayer.overall} · ${currentPlayer.position}`;
+        }
+        
+        function resetToBase() {
+            currentPlayer = {
+                name: "Jugador Base",
+                overall: 75,
+                position: "Delantero",
+                goals: 8,
+                assists: 6,
+                pace: 75,
+                shooting: 74,
+                passing: 72,
+                defending: 50,
+                physical: 70
+            };
+            updatePositionsFromPlayer(currentPlayer);
+            renderPlayerInfo(currentPlayer);
+            renderPositions();
+            document.getElementById('playerSearch').value = "";
+            document.getElementById('apiStatus').innerHTML = "🔄 Reiniciado a valores base. ¡Busca cualquier jugador!";
+            if (currentAnalysisDiv) currentAnalysisDiv.innerHTML = "";
+        }
+        
+        function init() {
+            updatePositionsFromPlayer(currentPlayer);
+            renderPlayerInfo(currentPlayer);
+            renderPositions();
+            document.getElementById('searchBtn').addEventListener('click', searchPlayer);
+            document.getElementById('resetBtn').addEventListener('click', resetToBase);
+            document.getElementById('playerSearch').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') searchPlayer();
+            });
+        }
+        
+        init();
+    </script>
+
+    <!-- Script para el MODO VR (Three.js + WebXR) -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { VRButton } from 'three/addons/webxr/VRButton.js';
+        
+        let vrScene, vrCamera, vrRenderer, vrControls;
+        let vrActive = false;
+        
+        function initVR() {
+            const container = document.getElementById('vrContainer');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            vrScene = new THREE.Scene();
+            vrScene.background = new THREE.Color(0x0a0f1e);
+            vrScene.fog = new THREE.FogExp2(0x0a0f1e, 0.008);
+            
+            vrCamera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+            vrCamera.position.set(5, 3, 8);
+            
+            vrRenderer = new THREE.WebGLRenderer({ antialias: true });
+            vrRenderer.setSize(container.clientWidth, container.clientHeight);
+            vrRenderer.setPixelRatio(window.devicePixelRatio);
+            vrRenderer.xr.enabled = true;
+            container.appendChild(vrRenderer.domElement);
+            
+            const vrBtn = VRButton.createButton(vrRenderer);
+            vrBtn.style.position = 'absolute';
+            vrBtn.style.bottom = '20px';
+            vrBtn.style.right = '20px';
+            vrBtn.style.zIndex = '1000';
+            container.appendChild(vrBtn);
+            
+            vrControls = new OrbitControls(vrCamera, vrRenderer.domElement);
+            vrControls.enableDamping = true;
+            vrControls.target.set(0, 1.2, 0);
+            
+            // Campo de fútbol en VR
+            const ambientLight = new THREE.AmbientLight(0x404060);
+            vrScene.add(ambientLight);
+            const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+            dirLight.position.set(5, 10, 7);
+            vrScene.add(dirLight);
+            
+            const grassMaterial = new THREE.MeshStandardMaterial({ color: 0x2d6a4f, roughness: 0.7 });
+            const field = new THREE.Mesh(new THREE.PlaneGeometry(20, 30), grassMaterial);
+            field.rotation.x = -Math.PI / 2;
+            field.position.y = -1;
+            field.receiveShadow = true;
+            vrScene.add(field);
+            
+            const gridHelper = new THREE.GridHelper(25, 20, 0x4a9eff, 0x334155);
+            gridHelper.position.y = -0.9;
+            vrScene.add(gridHelper);
+            
+            // Balón flotante
+            const ballMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffd966, emissiveIntensity: 0.3 });
+            const ball = new THREE.Mesh(new THREE.SphereGeometry(0.3, 32, 32), ballMaterial);
+            ball.position.set(0, 0.5, 0);
+            vrScene.add(ball);
+            
+            // Aros o conos decorativos
+            const coneMaterial = new THREE.MeshStandardMaterial({ color: 0xff6b6b });
+            for (let i = -4; i <= 4; i+=2) {
+                const cone = new THREE.Mesh(new THREE.ConeGeometry(0.2, 0.5, 8), coneMaterial);
+                cone.position.set(i, -0.75, 8);
+                vrScene.add(cone);
+            }
+            
+            // Partículas de ambiente
+            const particleCount = 500;
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesPositions = new Float32Array(particleCount * 3);
+            for (let i = 0; i < particleCount; i++) {
+                particlesPositions[i * 3] = (Math.random() - 0.5) * 30;
+                particlesPositions[i * 3 + 1] = Math.random() * 5;
+                particlesPositions[i * 3 + 2] = (Math.random() - 0.5) * 20 - 5;
+            }
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(particlesPositions, 3));
+            const particlesMaterial = new THREE.PointsMaterial({ color: 0x60e0c0, size: 0.05, transparent: true, opacity: 0.5 });
+            const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+            vrScene.add(particles);
+            
+            let time = 0;
+            function animate() {
+                requestAnimationFrame(animate);
+                time += 0.01;
+                ball.rotation.y += 0.03;
+                ball.rotation.x = Math.sin(time) * 0.2;
+                particles.rotation.y += 0.002;
+                if (vrControls) vrControls.update();
+                if (vrRenderer) vrRenderer.render(vrScene, vrCamera);
+            }
+            animate();
+            
+            window.addEventListener('resize', () => {
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+                vrCamera.aspect = width / height;
+                vrCamera.updateProjectionMatrix();
+                vrRenderer.setSize(width, height);
+            });
+        }
+        
+        const normalMode = document.getElementById('normalMode');
+        const vrModeDiv = document.getElementById('vrMode');
+        const vrBtn = document.getElementById('vrModeBtn');
+        const closeVrBtn = document.getElementById('closeVrBtn');
+        
+        vrBtn.addEventListener('click', () => {
+            normalMode.style.display = 'none';
+            vrModeDiv.classList.add('active');
+            if (!vrActive) {
+                initVR();
+                vrActive = true;
+            }
         });
-    }
-    
-    init();
-</script>
+        
+        closeVrBtn.addEventListener('click', () => {
+            vrModeDiv.classList.remove('active');
+            normalMode.style.display = 'block';
+        });
+    </script>
 </body>
 </html>
