@@ -18,6 +18,7 @@
             min-height: 100vh;
             padding: 1.5rem;
             color: #ecfdf5;
+            overflow-x: hidden;
         }
 
         .container {
@@ -261,6 +262,51 @@
             opacity: 0.6;
         }
         
+        /* Botón VR */
+        .vr-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 40px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 100;
+            font-family: 'Cinzel', serif;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+            transition: transform 0.2s;
+        }
+        .vr-button:hover { transform: scale(1.05); }
+        
+        .vr-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            display: none;
+            background: #0a0f1e;
+        }
+        .vr-mode.active { display: block; }
+        
+        .close-vr {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            border: 1px solid #e9c46a;
+            padding: 8px 16px;
+            border-radius: 30px;
+            color: #e9c46a;
+            cursor: pointer;
+            z-index: 1001;
+            font-family: monospace;
+        }
+        
         @media (max-width: 700px) {
             .player-name { font-size: 1.3rem; }
             .ad-container { margin: 1rem 0; }
@@ -311,6 +357,15 @@
     <div class="footer">
         ✨ Análisis generado con Groq IA · Estadísticas dinámicas según nombre y posición · Anuncios: PopAds, Adsterra, HilltopAds
     </div>
+</div>
+
+<!-- Botón VR -->
+<button class="vr-button" id="vrModeBtn">🔮 ACTIVAR MODO VR (ESTADIO)</button>
+
+<!-- Modo VR -->
+<div class="vr-mode" id="vrMode">
+    <button class="close-vr" id="closeVrBtn">✕ SALIR DE VR</button>
+    <div id="vrContainer" style="width:100%;height:100%"></div>
 </div>
 
 <script>
@@ -643,6 +698,187 @@ s.async = true;
 s.referrerPolicy = 'no-referrer-when-downgrade';
 l.parentNode.insertBefore(s, l);
 })({})
+</script>
+
+<!-- Script para el MODO VR (Three.js + WebXR) -->
+<script type="importmap">
+{
+    "imports": {
+        "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+    }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { VRButton } from 'three/addons/webxr/VRButton.js';
+
+let vrScene, vrCamera, vrRenderer, vrControls;
+let vrActive = false;
+
+function initVR() {
+    const container = document.getElementById('vrContainer');
+    if (!container) return;
+    container.innerHTML = '';
+    
+    vrScene = new THREE.Scene();
+    vrScene.background = new THREE.Color(0x0a4d3a);
+    vrScene.fog = new THREE.FogExp2(0x0a4d3a, 0.008);
+    
+    vrCamera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+    vrCamera.position.set(5, 2.5, 8);
+    vrCamera.lookAt(0, 0, 0);
+    
+    vrRenderer = new THREE.WebGLRenderer({ antialias: true });
+    vrRenderer.setSize(container.clientWidth, container.clientHeight);
+    vrRenderer.setPixelRatio(window.devicePixelRatio);
+    vrRenderer.xr.enabled = true;
+    container.appendChild(vrRenderer.domElement);
+    
+    const vrBtn = VRButton.createButton(vrRenderer);
+    vrBtn.style.position = 'absolute';
+    vrBtn.style.bottom = '20px';
+    vrBtn.style.right = '20px';
+    vrBtn.style.zIndex = '1000';
+    container.appendChild(vrBtn);
+    
+    vrControls = new OrbitControls(vrCamera, vrRenderer.domElement);
+    vrControls.enableDamping = true;
+    vrControls.target.set(0, 0, 0);
+    
+    // Luces
+    const ambientLight = new THREE.AmbientLight(0x404060);
+    vrScene.add(ambientLight);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+    dirLight.position.set(5, 10, 7);
+    vrScene.add(dirLight);
+    const fillLight = new THREE.PointLight(0x8b5cf6, 0.3);
+    fillLight.position.set(0, 3, 2);
+    vrScene.add(fillLight);
+    
+    // Césped
+    const grassMaterial = new THREE.MeshStandardMaterial({ color: 0x2d6a4f, roughness: 0.8 });
+    const field = new THREE.Mesh(new THREE.PlaneGeometry(14, 20), grassMaterial);
+    field.rotation.x = -Math.PI / 2;
+    field.position.y = -0.5;
+    field.receiveShadow = true;
+    vrScene.add(field);
+    
+    // Líneas del campo
+    const lineMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+    
+    // Círculo central
+    const circleGeometry = new THREE.TorusGeometry(1.2, 0.05, 32, 100);
+    const circle = new THREE.Mesh(circleGeometry, lineMaterial);
+    circle.rotation.x = Math.PI / 2;
+    circle.position.y = -0.45;
+    vrScene.add(circle);
+    
+    // Línea de medio campo
+    const midfieldLine = new THREE.Mesh(new THREE.BoxGeometry(10, 0.05, 0.1), lineMaterial);
+    midfieldLine.position.set(0, -0.45, 0);
+    vrScene.add(midfieldLine);
+    
+    // Arcos (simulados)
+    const postMaterial = new THREE.MeshStandardMaterial({ color: 0xc0c0c0 });
+    const leftGoal = new THREE.Mesh(new THREE.BoxGeometry(0.1, 1.5, 0.1), postMaterial);
+    leftGoal.position.set(-4.5, 0.2, -7);
+    vrScene.add(leftGoal);
+    
+    const rightGoal = new THREE.Mesh(new THREE.BoxGeometry(0.1, 1.5, 0.1), postMaterial);
+    rightGoal.position.set(4.5, 0.2, -7);
+    vrScene.add(rightGoal);
+    
+    // Bancas de suplentes
+    const benchMaterial = new THREE.MeshStandardMaterial({ color: 0x8b5cf6 });
+    for (let i = -2; i <= 2; i++) {
+        const bench = new THREE.Mesh(new THREE.BoxGeometry(1, 0.2, 0.8), benchMaterial);
+        bench.position.set(i * 1.2, -0.3, 6);
+        vrScene.add(bench);
+    }
+    
+    // Conos de entrenamiento
+    const coneMaterial = new THREE.MeshStandardMaterial({ color: 0xf59e0b });
+    for (let i = -3; i <= 3; i++) {
+        if (i !== 0) {
+            const cone = new THREE.Mesh(new THREE.ConeGeometry(0.2, 0.4, 8), coneMaterial);
+            cone.position.set(i, -0.3, 3);
+            vrScene.add(cone);
+        }
+    }
+    
+    // Texto flotante
+    const canvas = document.createElement('canvas');
+    canvas.width = 512;
+    canvas.height = 128;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#0a4d3a';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.font = 'Bold 28px "Segoe UI"';
+    ctx.fillStyle = '#e9c46a';
+    ctx.textAlign = 'center';
+    ctx.fillText('SCOUT IA PRO · ESTADIO VIRTUAL', canvas.width/2, canvas.height/2);
+    const textTexture = new THREE.CanvasTexture(canvas);
+    const textMaterial3D = new THREE.MeshStandardMaterial({ map: textTexture, side: THREE.DoubleSide });
+    const textPlane = new THREE.Mesh(new THREE.PlaneGeometry(6, 1.4), textMaterial3D);
+    textPlane.position.set(0, 2.5, -4.5);
+    vrScene.add(textPlane);
+    
+    // Partículas (luz ambiental)
+    const particleCount = 800;
+    const particlesGeometry = new THREE.BufferGeometry();
+    const particlesPositions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+        particlesPositions[i * 3] = (Math.random() - 0.5) * 20;
+        particlesPositions[i * 3 + 1] = Math.random() * 5;
+        particlesPositions[i * 3 + 2] = (Math.random() - 0.5) * 15;
+    }
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(particlesPositions, 3));
+    const particlesMaterial3D = new THREE.PointsMaterial({ color: 0x60a5fa, size: 0.05, transparent: true, opacity: 0.4 });
+    const particles = new THREE.Points(particlesGeometry, particlesMaterial3D);
+    vrScene.add(particles);
+    
+    let time = 0;
+    function animate() {
+        requestAnimationFrame(animate);
+        time += 0.005;
+        particles.rotation.y += 0.0005;
+        if (vrControls) vrControls.update();
+        if (vrRenderer) vrRenderer.render(vrScene, vrCamera);
+    }
+    animate();
+    
+    window.addEventListener('resize', () => {
+        if (vrRenderer && vrCamera) {
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            vrCamera.aspect = width / height;
+            vrCamera.updateProjectionMatrix();
+            vrRenderer.setSize(width, height);
+        }
+    });
+}
+
+const normalMode = document.getElementById('normalMode') || document.querySelector('.container').parentNode;
+const vrModeDiv = document.getElementById('vrMode');
+const vrBtn = document.getElementById('vrModeBtn');
+const closeVrBtn = document.getElementById('closeVrBtn');
+
+vrBtn.addEventListener('click', () => {
+    normalMode.style.display = 'none';
+    vrModeDiv.classList.add('active');
+    if (!vrActive) {
+        initVR();
+        vrActive = true;
+    }
+});
+
+closeVrBtn.addEventListener('click', () => {
+    vrModeDiv.classList.remove('active');
+    normalMode.style.display = 'block';
+});
 </script>
 
 </body>
