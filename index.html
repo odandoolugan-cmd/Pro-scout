@@ -3,259 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta name="referrer" content="no-referrer-when-downgrade">
-    <title>🏆 RENDIMIENTO PRO · SCOUT IA</title>
-    
+    <title>Radio IA Pro · Noticias REALES · Música · IA Local</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', system-ui, 'Segoe UI', sans-serif;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: linear-gradient(145deg, #0a1217 0%, #0a1f23 100%);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0a0f1e 0%, #0c1222 100%);
+            color: #eef2ff;
             min-height: 100vh;
-            padding: 1.5rem;
-            color: #ecfdf5;
+            padding: 1rem;
             overflow-x: hidden;
         }
-
-        .container {
-            max-width: 1400px;
+        
+        .normal-mode {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
             margin: 0 auto;
         }
-
-        .hero {
-            text-align: center;
-            margin-bottom: 2rem;
+        
+        .header { text-align: center; margin-bottom: 2rem; }
+        h1 { font-size: 2rem; background: linear-gradient(135deg, #FFD166, #FF6B6B, #4ECDC4, #8B5CF6); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .sub { color: #94a3b8; margin-top: 0.5rem; font-size: 0.7rem; }
+        .live-badge {
+            background: #dc2626;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            margin-left: 10px;
+            animation: pulse 1.5s infinite;
+            display: inline-block;
+            vertical-align: middle;
         }
-        .hero h1 {
-            font-size: 2.3rem;
-            background: linear-gradient(135deg, #60e0c0, #ffd966);
-            background-clip: text;
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+        
+        .daily-tip {
+            background: rgba(139, 92, 246, 0.15);
+            border-radius: 2rem;
+            padding: 0.6rem 1.2rem;
+            margin: 0.8rem auto 0 auto;
+            text-align: center;
+            max-width: 90%;
+            font-size: 0.75rem;
+            border: 1px solid rgba(96,165,250,0.3);
+        }
+        
+        .news-ticker {
+            background: rgba(0,0,0,0.3);
+            border-radius: 2rem;
+            padding: 0.4rem 1rem;
+            margin: 0.5rem auto;
+            font-size: 0.7rem;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        
+        .player-card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .radio-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #FFD166, #FF6B6B);
             -webkit-background-clip: text;
+            background-clip: text;
             color: transparent;
         }
-        .hero p {
-            color: #9bd5c9;
+        
+        audio {
+            width: 100%;
+            border-radius: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .locutor-status {
+            background: rgba(139, 92, 246, 0.2);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .speaking-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 1s infinite;
+            margin-right: 8px;
+        }
+        
+        .btn-voz {
+            background: linear-gradient(90deg, #10b981, #059669);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            transition: transform 0.2s;
+        }
+        
+        .btn-voz:hover { transform: scale(1.02); }
+        
+        .now-playing {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 1rem;
+            padding: 0.8rem;
             margin-top: 0.5rem;
         }
-
+        
+        .song-title { font-weight: bold; color: #e9c46a; }
+        
+        .chat-card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            margin-bottom: 1.5rem;
+        }
+        
+        .chat-area {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 1rem;
+            padding: 1rem;
+            height: 200px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
+        
+        .message { margin-bottom: 0.8rem; display: flex; flex-direction: column; }
+        .user-message { align-items: flex-end; }
+        .ia-message { align-items: flex-start; }
+        
+        .message-bubble {
+            max-width: 80%;
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+        }
+        
+        .user-message .message-bubble {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-bottom-right-radius: 0.2rem;
+        }
+        
+        .ia-message .message-bubble {
+            background: #1e293b;
+            border: 1px solid #8b5cf6;
+            border-bottom-left-radius: 0.2rem;
+        }
+        
+        .chat-input-area {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 2rem;
+            color: white;
+            font-size: 0.75rem;
+            font-family: inherit;
+            outline: none;
+        }
+        
+        .send-btn {
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            border: none;
+            padding: 0 1.2rem;
+            border-radius: 2rem;
+            color: white;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+        
+        .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
         .ia-badge {
             background: #8b5cf6;
             padding: 2px 10px;
             border-radius: 20px;
             font-size: 0.7rem;
-            margin-left: 10px;
-            display: inline-block;
-        }
-
-        .search-panel {
-            background: rgba(15, 35, 38, 0.8);
-            backdrop-filter: blur(12px);
-            border-radius: 1.8rem;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border: 1px solid #2c9b8a;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-        .search-title {
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .search-box {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-        }
-        .search-box input {
-            flex: 1;
-            padding: 0.9rem 1.2rem;
-            border-radius: 3rem;
-            border: none;
-            background: #1e3a3a;
-            color: white;
-            font-size: 1rem;
-            outline: none;
-            transition: 0.2s;
-        }
-        .search-box input:focus {
-            background: #2a534b;
-            box-shadow: 0 0 0 2px #5fe0c0;
-        }
-        .search-box button {
-            background: linear-gradient(90deg, #2d8f7a, #3fb597);
-            border: none;
-            padding: 0 1.8rem;
-            border-radius: 3rem;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .search-box button:hover {
-            transform: scale(0.96);
         }
         
-        .player-card-big {
-            background: linear-gradient(135deg, #0d2a2a, #0b2222);
-            border-radius: 1.5rem;
-            padding: 1.2rem 1.8rem;
-            margin-top: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            border-left: 5px solid #3bcb9b;
-        }
-        .player-name {
-            font-size: 1.8rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-        .stat-chip {
-            background: #1e4a43;
-            padding: 0.3rem 1rem;
-            border-radius: 2rem;
-            font-size: 0.9rem;
-        }
-        .stat-chip span {
-            font-weight: bold;
-            color: #ffd966;
-        }
-
-        .positions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-        .position-card {
-            background: rgba(18, 35, 38, 0.85);
-            backdrop-filter: blur(4px);
-            border-radius: 1.6rem;
-            padding: 1.2rem;
-            border: 1px solid #319b8450;
-            transition: all 0.2s;
-        }
-        .position-card:hover {
-            transform: translateY(-3px);
-            border-color: #6febcf;
-        }
-        .position-card.recomendada {
-            border: 2px solid #f59e0b;
-            background: rgba(245, 158, 11, 0.1);
-        }
-        .pos-header {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 2px solid #2b705f;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        .pos-name {
-            font-size: 1.5rem;
-            font-weight: 800;
-        }
-        .pos-perf {
-            background: #00000060;
-            padding: 0.2rem 0.7rem;
-            border-radius: 2rem;
-            font-weight: bold;
-        }
-        .skill-item {
-            margin-bottom: 1rem;
-        }
-        .skill-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            margin-bottom: 0.2rem;
-        }
-        .skill-bar-bg {
-            background: #1e4a43;
-            height: 8px;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-        .skill-fill {
-            background: linear-gradient(90deg, #3bcb9b, #1f9979);
-            width: 0%;
-            height: 100%;
-            transition: width 0.4s ease;
-        }
-        .badge-recom {
-            font-size: 0.7rem;
-            background: #2c6e5d;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            margin-top: 0.8rem;
-            display: inline-block;
-        }
-        
-        .ia-analysis {
-            background: rgba(139, 92, 246, 0.2);
-            border-left: 3px solid #8b5cf6;
-            padding: 0.8rem;
-            margin-top: 1rem;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            line-height: 1.5;
-        }
-        .ia-btn {
-            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
-            border: none;
-            color: white;
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            margin-top: 8px;
-            transition: all 0.2s;
-        }
-        .ia-btn:hover { transform: scale(1.02); opacity: 0.9; }
-        
-        .ad-container {
-            margin: 1.5rem 0;
-            text-align: center;
-            background: rgba(0,0,0,0.2);
+        .context-info {
+            background: rgba(139,92,246,0.1);
             border-radius: 1rem;
-            padding: 0.8rem;
-        }
-        .ad-label {
-            font-size: 0.7rem;
-            color: #6c9e93;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            font-size: 0.65rem;
+            color: #a5b4fc;
+            text-align: center;
         }
         
-        .global-reset {
-            background: #aa3e2e;
-            border: none;
-            padding: 0.6rem 1.5rem;
-            border-radius: 3rem;
-            color: white;
+        .restriction-alert {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid #8b5cf6;
+            border-radius: 0.8rem;
+            padding: 0.5rem 1rem;
             margin-top: 1rem;
-            cursor: pointer;
-            font-weight: bold;
+            font-size: 0.7rem;
+            text-align: center;
+            color: #a78bfa;
         }
-        .global-reset:hover {
-            background: #c55543;
-        }
-        .footer {
+        
+        .footer-text {
             text-align: center;
             margin-top: 2rem;
             font-size: 0.7rem;
-            opacity: 0.6;
+            color: #64748b;
         }
         
         .vr-button {
@@ -270,8 +242,10 @@
             font-weight: bold;
             cursor: pointer;
             z-index: 100;
-            box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+            box-shadow: 0 0 15px rgba(245,158,11,0.5);
+            transition: transform 0.2s;
         }
+        
         .vr-button:hover { transform: scale(1.05); }
         
         .vr-mode {
@@ -284,6 +258,7 @@
             display: none;
             background: #0a0f1e;
         }
+        
         .vr-mode.active { display: block; }
         
         .close-vr {
@@ -297,597 +272,611 @@
             color: #e9c46a;
             cursor: pointer;
             z-index: 1001;
+            font-family: monospace;
         }
         
+        .toast-msg {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #10b981;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            z-index: 2000;
+            animation: fadeOut 2s forwards;
+        }
+        
+        @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
+        
+        .sponsors {
+            text-align: center;
+            margin: 20px 0 10px 0;
+            padding: 8px;
+        }
+        .sponsors-link {
+            display: inline-flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .sponsors-link a {
+            background: rgba(255,255,255,0.08);
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.65rem;
+            color: #94a3b8;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .sponsors-link a:hover {
+            background: rgba(255,255,255,0.15);
+            color: #e9c46a;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
         @media (max-width: 700px) {
-            .player-name { font-size: 1.3rem; }
+            .chat-input-area { flex-direction: column; }
+            .send-btn { padding: 0.8rem; }
+            .news-ticker { white-space: normal; line-height: 1.3; }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="hero">
-        <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="ia-badge">GROQ</span></h1>
-        <p>Busca cualquier jugador · Análisis con Inteligencia Artificial</p>
-    </div>
 
-    <div class="search-panel">
-        <div class="search-title">
-            🔍 <span>BUSCADOR DE JUGADORES</span>
+    <div class="normal-mode" id="normalMode">
+        <div class="header">
+            <h1>🎙️ Radio IA Pro <span class="ia-badge">NOTICIAS REALES + IA LOCAL</span><span class="live-badge" id="liveBadge">🌐 EN VIVO</span></h1>
+            <div class="sub" id="subHeader">Noticias REALES de actualidad · Música · Locutora IA con contexto web</div>
+            <div class="daily-tip" id="dailyTip">
+                🎤 La información es poder, la música es alma.
+            </div>
+            <div class="news-ticker" id="newsTicker">
+                🌐 Conectando a fuentes de noticias en tiempo real...
+            </div>
         </div>
-        <div class="search-box">
-            <input type="text" id="playerSearch" placeholder="Ej: Lionel Messi, Cristiano Ronaldo, Vinicius Jr, Erling Haaland..." autocomplete="off">
-            <button id="searchBtn">📊 ANALIZAR CON IA</button>
+
+        <div class="player-card">
+            <div class="radio-name">📻 RADIO IA PRO · INFORMACIÓN Y MÚSICA</div>
+            
+            <audio id="radioPlayer" controls autoplay></audio>
+            
+            <div class="locutor-status">
+                <span class="speaking-indicator" id="speakingIndicator" style="display: none;"></span>
+                <span id="locutorStatus">🎙️ Locutora IA: En espera...</span>
+            </div>
+            
+            <button class="btn-voz" id="activarVozBtn">🔊 Activar Voz de la Locutora</button>
+            
+            <div class="now-playing">
+                <span class="song-title">🎵 Ahora suena:</span> <span id="currentSong">Cargando playlist...</span>
+            </div>
         </div>
-        <div class="api-status" id="apiStatus" style="font-size:0.8rem; color:#9bd5c9;">
-            💡 Sistema con IA: genera estadísticas realistas y análisis táctico.
+
+        <div class="chat-card">
+            <div class="chat-area" id="chatArea">
+                <div class="message ia-message">
+                    <div class="message-bubble">🎤 ¡Hola! Soy tu locutora con IA. Recibo noticias REALES de actualidad y respondo tus preguntas con información actualizada. Activa mi voz y pregúntame lo que quieras. ¡Noticias cada 4 canciones!</div>
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Ej: ¿Qué pasa con la economía hoy?, Últimas noticias, Recomiéndame música...">
+                <button class="send-btn" id="sendChatBtn">🎤 PREGUNTAR</button>
+            </div>
+            <div class="context-info" id="contextInfo">
+                📡 Conectando a fuentes de noticias...
+            </div>
+            <div class="restriction-alert" id="restrictionAlert">
+                🤖 IA Local ilimitada · Noticias reales de internet · Voz nativa
+            </div>
         </div>
-        <div id="playerInfoContainer"></div>
+
+        <div class="sponsors">
+            <div class="sponsors-link">
+                <a href="https://www.profitablecpmratenetwork.com/cuitcvgz?key=85ca230e218898f76e48c348cafb2311" target="_blank" rel="nofollow">🎮 OFERTA 1</a>
+                <a href="https://www.profitablecpmratenetwork.com/b27uffyn?key=5b35819451353807b0e99b21addde69a" target="_blank" rel="nofollow">🎲 OFERTA 2</a>
+            </div>
+        </div>
+
+        <div class="footer-text" id="footer">
+            ⚡ Radio IA Pro · Noticias REALES · Locutora IA Local · Playlist automática
+        </div>
     </div>
 
-    <h2 style="margin-top: 0.5rem;">🎯 RENDIMIENTO POR POSICIÓN</h2>
-    
-    <div id="positionsContainer" class="positions-grid"></div>
-    
-    <div class="ad-container">
-        <div class="ad-label">🔗 OFERTA DESTACADA</div>
-        <a href="https://www.profitablecpmratenetwork.com/cuitcvgz?key=85ca230e218898f76e48c348cafb2311" target="_blank" rel="nofollow" style="display: inline-block; background: linear-gradient(90deg, #e9c46a, #f4a261); color: #1a222c; padding: 10px 25px; border-radius: 40px; text-decoration: none; font-weight: bold; margin: 5px;">🎮 OFERTA ESPECIAL 1</a>
-    </div>
-    
-    <div class="ad-container">
-        <div class="ad-label">🎁 OFERTA ESPECIAL</div>
-        <a href="https://www.profitablecpmratenetwork.com/b27uffyn?key=5b35819451353807b0e99b21addde69a" target="_blank" rel="nofollow" style="display: inline-block; background: linear-gradient(90deg, #2a9d8f, #264653); color: white; padding: 10px 25px; border-radius: 40px; text-decoration: none; font-weight: bold; margin: 5px;">🎲 OFERTA ESPECIAL 2</a>
-    </div>
-    
-    <div style="text-align: center; margin-top: 1.5rem;">
-        <button id="resetBtn" class="global-reset">🔄 REINICIAR A JUGADOR BASE</button>
-    </div>
-    <div class="footer">
-        ✨ Análisis generado con Groq IA · Estadísticas dinámicas según nombre y posición · Anuncios: PopAds, Adsterra, HilltopAds
-    </div>
-</div>
+    <button class="vr-button" id="vrModeBtn">🔮 ACTIVAR MODO VR</button>
 
-<button class="vr-button" id="vrModeBtn">🔮 ACTIVAR MODO VR (ESTADIO)</button>
+    <div class="vr-mode" id="vrMode">
+        <button class="close-vr" id="closeVrBtn">✕ SALIR DE VR</button>
+        <div id="vrContainer" style="width:100%;height:100%"></div>
+    </div>
 
-<div class="vr-mode" id="vrMode">
-    <button class="close-vr" id="closeVrBtn">✕ SALIR DE VR</button>
-    <div id="vrContainer" style="width:100%;height:100%"></div>
-</div>
+    <!-- jsllm7 - IA local -->
+    <script src="https://cdn.jsdelivr.net/npm/jsllm7@0.1.0/jsllm7.js"></script>
 
-<script>
-    // ==================== CONFIGURACIÓN GROQ IA ====================
-    const GROQ_API_KEY = "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";
-    const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
-    const MODEL = "llama3-70b-8192";
-    
-    const limite = {
-        get hoy() { return new Date().toDateString(); },
-        get usadas() { 
-            if(localStorage.getItem('dia_scout') !== this.hoy) return 0;
-            return parseInt(localStorage.getItem('consultas_scout') || 0);
-        },
-        puede() { return this.usadas < 100; },
-        registrar() { 
-            localStorage.setItem('dia_scout', this.hoy);
-            localStorage.setItem('consultas_scout', this.usadas + 1);
+    <script>
+        // ============================================
+        // SISTEMA DE NOTICIAS REALES (RSS gratuitos)
+        // ============================================
+        
+        let ultimasNoticias = {
+            politica: [],
+            economia: [],
+            tecnologia: []
+        };
+        let ultimaActualizacion = null;
+        
+        // Fuentes RSS gratuitas
+        const fuentesNoticias = {
+            politica: 'https://api.rss2json.com/v1/api.json?rss_url=https://feeds.bbci.co.uk/news/world/rss.xml',
+            economia: 'https://api.rss2json.com/v1/api.json?rss_url=https://www.economist.com/finance-and-economics/rss.xml',
+            tecnologia: 'https://api.rss2json.com/v1/api.json?rss_url=https://www.wired.com/feed/rss'
+        };
+        
+        async function obtenerNoticiasReales(categoria) {
+            try {
+                const url = fuentesNoticias[categoria];
+                if (!url) return [];
+                const response = await fetch(url);
+                const data = await response.json();
+                if (data && data.items) {
+                    return data.items.slice(0, 3).map(item => ({
+                        titulo: item.title,
+                        descripcion: item.description,
+                        link: item.link
+                    }));
+                }
+            } catch (error) {
+                console.log(`Error obteniendo noticias de ${categoria}:`, error);
+            }
+            return [];
         }
-    };
-    
-    // ==================== MAPEO DE POSICIONES REALES ====================
-    const posicionesValidas = {
-        "portero": ["portero", "arquero", "goalkeeper", "courtois", "neuer", "ter stegen", "oblak", "alisson"],
-        "defensa": ["defensa central", "central", "center back", "cb", "van dijk", "ramos", "piqué", "chiellini", "marquinhos", "rüdiger"],
-        "lateral": ["lateral", "full back", "wing back", "cancelo", "carvajal", "alba", "robertson", "hakimi", "marcelo", "davies"],
-        "mediocentro": ["mediocentro", "centrocampista", "midfielder", "cdm", "cm", "busquets", "casemiro", "modric", "kroos", "de bruyne", "rodri", "kimmich"],
-        "extremidad": ["extremo", "wing", "winger", "vinicius", "mbappé", "salah", "neymar", "sané", "coman", "dembélé", "robben", "ribery"],
-        "delantero": ["delantero", "delantero centro", "striker", "centro delantero", "haaland", "lewandowski", "benzema", "suárez", "aguero", "kane", "cavani"]
-    };
-    
-    function getPosicionReal(nombre) {
-        const nombreLower = nombre.toLowerCase();
-        for (let [pos, palabras] of Object.entries(posicionesValidas)) {
-            for (let palabra of palabras) {
-                if (nombreLower.includes(palabra)) {
-                    const nombresPos = {
-                        "portero": "Portero", "defensa": "Defensa Central", "lateral": "Lateral",
-                        "mediocentro": "Mediocentro", "extremidad": "Extremo", "delantero": "Delantero"
-                    };
-                    return nombresPos[pos];
+        
+        async function actualizarNoticias() {
+            const contextDiv = document.getElementById('contextInfo');
+            const newsTicker = document.getElementById('newsTicker');
+            
+            contextDiv.innerHTML = "🌐 Buscando noticias actuales en internet...";
+            newsTicker.innerHTML = "📡 Actualizando fuentes de información...";
+            
+            try {
+                const [politica, economia, tecnologia] = await Promise.all([
+                    obtenerNoticiasReales('politica'),
+                    obtenerNoticiasReales('economia'),
+                    obtenerNoticiasReales('tecnologia')
+                ]);
+                
+                ultimasNoticias = { politica, economia, tecnologia };
+                ultimaActualizacion = new Date();
+                
+                if (politica.length > 0) {
+                    newsTicker.innerHTML = `📰 ${politica[0].titulo.substring(0, 100)}...`;
+                } else {
+                    newsTicker.innerHTML = "📡 Conectado a fuentes de noticias · Actualización en curso";
+                }
+                
+                contextDiv.innerHTML = `📡 Noticias actualizadas: ${ultimaActualizacion.toLocaleTimeString()} · Política: ${politica.length} · Economía: ${economia.length} · Tecnología: ${tecnologia.length}`;
+                
+                return { politica, economia, tecnologia };
+            } catch (error) {
+                contextDiv.innerHTML = "⚠️ Usando fuente local de noticias · Sintonizando...";
+                newsTicker.innerHTML = "🎙️ Conectando a servidores de noticias...";
+                return null;
+            }
+        }
+        
+        function getNoticiaAleatoria() {
+            const categorias = ['politica', 'economia', 'tecnologia'];
+            const categoria = categorias[Math.floor(Math.random() * categorias.length)];
+            const noticias = ultimasNoticias[categoria];
+            if (noticias && noticias.length > 0) {
+                const noticia = noticias[Math.floor(Math.random() * noticias.length)];
+                return {
+                    categoria,
+                    titulo: noticia.titulo,
+                    texto: `${noticia.titulo}. ${noticia.descripcion ? noticia.descripcion.substring(0, 200) : ''}`
+                };
+            }
+            return null;
+        }
+        
+        // ============================================
+        // ACTUALIZACIÓN DIARIA
+        // ============================================
+        
+        function actualizarContenidoDiario() {
+            const hoy = new Date();
+            const diaSemana = hoy.getDay();
+            const diaMes = hoy.getDate();
+            
+            const frasesRadio = [
+                "📻 Domingo: La mejor música para cerrar la semana con buena energía.",
+                "🎙️ Lunes: Noticias frescas para empezar con toda la información.",
+                "📊 Martes: Análisis económico para que tomes mejores decisiones.",
+                "🌍 Miércoles: Actualidad mundial y tendencias que importan.",
+                "🎵 Jueves: Nuevos lanzamientos musicales que no te puedes perder.",
+                "🎤 Viernes: La fiesta comienza con los mejores éxitos.",
+                "🧘 Sábado: Ritmos relajados para un fin de semana tranquilo."
+            ];
+            
+            const subtitulos = [
+                "Noticias REALES actualidad · Música · Locutora IA con contexto web",
+                "Información política, económica y tecnológica actualizada 24/7",
+                "Tu radio inteligente con noticias reales y música · IA Local ilimitada",
+                "La locutora IA que te mantiene informado con noticias de verdad"
+            ];
+            
+            document.getElementById('dailyTip').innerHTML = frasesRadio[diaSemana];
+            document.getElementById('subHeader').innerHTML = subtitulos[diaMes % subtitulos.length];
+            document.getElementById('footer').innerHTML = `⚡ Radio IA Pro · ${hoy.toLocaleDateString('es-ES')} · Noticias en tiempo real`;
+        }
+        
+        // ============================================
+        // IA LOCAL CON CONTEXTO DE NOTICIAS REALES
+        // ============================================
+        
+        let iaLista = false;
+        let procesandoRespuesta = false;
+        
+        function showToast(msg, isError = false) {
+            const t = document.createElement('div');
+            t.className = 'toast-msg';
+            if(isError) t.style.background = '#ef4444';
+            t.innerText = msg;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 2000);
+        }
+        
+        // Respuestas offline (respaldo)
+        const respuestasOffline = {
+            presentacion: (cancion) => `🎵 ¡Excelente música! Ahora escuchamos "${cancion}". Disfruta de Radio IA Pro.`,
+            politica: "📰 En el ámbito político, los líderes mundiales continúan trabajando en desafíos globales.",
+            economia: "📊 La economía global muestra signos de recuperación y estabilidad.",
+            tecnologia: "🔬 La innovación tecnológica avanza rápidamente en todo el mundo."
+        };
+        
+        async function generarContenidoLocal(tipo, contexto = "") {
+            return new Promise(async (resolve) => {
+                try {
+                    if (typeof jsllm7 === 'undefined') {
+                        await new Promise(r => setTimeout(r, 500));
+                        if (typeof jsllm7 === 'undefined') {
+                            resolve(respuestasOffline[tipo] || "🎤 Radio IA Pro al aire");
+                            return;
+                        }
+                    }
+                    
+                    let prompt = "";
+                    if (tipo === "presentacion") {
+                        prompt = `Eres locutora de radio. Presenta la canción "${contexto}" con energía. Máximo 35 palabras. Español.`;
+                    } else if (tipo === "politica" && contexto) {
+                        prompt = `Eres locutora de radio. Lee esta noticia real: "${contexto}". Dale un tono profesional pero ameno. Máximo 60 palabras. Español.`;
+                    } else if (tipo === "economia" && contexto) {
+                        prompt = `Eres locutora de radio. Lee esta noticia económica real: "${contexto}". Clara y precisa. Máximo 60 palabras. Español.`;
+                    } else if (tipo === "tecnologia" && contexto) {
+                        prompt = `Eres locutora de radio. Lee esta noticia tecnológica real: "${contexto}". Interesante y actual. Máximo 60 palabras. Español.`;
+                    } else if (tipo === "respuesta") {
+                        let noticiasContexto = "";
+                        if (ultimasNoticias.politica.length > 0) {
+                            noticiasContexto += `\nNoticias reales actuales:\n- Política: ${ultimasNoticias.politica[0].titulo}\n- Economía: ${ultimasNoticias.economia[0]?.titulo || 'Sin datos'}\n- Tecnología: ${ultimasNoticias.tecnologia[0]?.titulo || 'Sin datos'}`;
+                        }
+                        prompt = `Eres locutora de radio. Responde amablemente: "${contexto}". Usa estas noticias actuales si son relevantes:${noticiasContexto}. Máximo 70 palabras. Español.`;
+                    } else {
+                        resolve(respuestasOffline[tipo] || "🎤 Radio IA Pro al aire");
+                        return;
+                    }
+                    
+                    const respuesta = await jsllm7(prompt);
+                    
+                    if (respuesta && respuesta.length > 10 && respuesta.length < 500) {
+                        resolve(respuesta);
+                    } else {
+                        resolve(respuestasOffline[tipo] || `🎤 ${contexto || "¡Saludos! Esta es Radio IA Pro"}`);
+                    }
+                } catch (error) {
+                    console.error("Error IA local:", error);
+                    resolve(respuestasOffline[tipo] || "🎤 Radio IA Pro al aire");
+                }
+            });
+        }
+        
+        // ============================================
+        // PLAYLIST
+        // ============================================
+        const playlist = [
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"
+        ];
+        
+        const nombresCanciones = [
+            "SoundHelix - Rock Energy",
+            "SoundHelix - Pop Vibes",
+            "SoundHelix - Electronic Dreams",
+            "SoundHelix - Jazz Fusion",
+            "SoundHelix - Funk Groove",
+            "SoundHelix - Ambient Chill",
+            "SoundHelix - Latin Rhythm",
+            "SoundHelix - Dance Party"
+        ];
+        
+        let cancionActual = 0;
+        let contadorCanciones = 0;
+        let vozActivada = false;
+        let synth = window.speechSynthesis;
+        
+        const audio = document.getElementById('radioPlayer');
+        const currentSongSpan = document.getElementById('currentSong');
+        
+        function cargarCancion(index) {
+            audio.src = playlist[index];
+            audio.load();
+            audio.play().catch(e => console.log("Auto-play bloqueado:", e));
+            currentSongSpan.innerHTML = `${nombresCanciones[index]} 🎵`;
+        }
+        
+        // ============================================
+        // TEXTO A VOZ
+        // ============================================
+        function activarVoz() {
+            if (!synth) { alert("Tu navegador no soporta voz"); return; }
+            const utterance = new SpeechSynthesisUtterance(" ");
+            utterance.lang = 'es-ES';
+            synth.speak(utterance);
+            vozActivada = true;
+            document.getElementById('activarVozBtn').style.background = "linear-gradient(90deg, #10b981, #059669)";
+            document.getElementById('activarVozBtn').innerHTML = "✅ Voz Activada";
+            document.getElementById('locutorStatus').innerHTML = '🎙️ Locutora IA: Voz lista';
+            setTimeout(() => synth.cancel(), 100);
+            showToast("🔊 Voz activada. ¡Ahora la locutora hablará con noticias reales!");
+        }
+        
+        function hablar(texto, onEnd = null) {
+            if (!vozActivada || !synth) { if(onEnd) onEnd(); return; }
+            synth.cancel();
+            const utterance = new SpeechSynthesisUtterance(texto);
+            utterance.lang = 'es-ES';
+            utterance.rate = 0.95;
+            utterance.pitch = 1.1;
+            utterance.onstart = () => {
+                document.getElementById('speakingIndicator').style.display = 'inline-block';
+                document.getElementById('locutorStatus').innerHTML = '🎙️ Locutora IA: Hablando...';
+            };
+            utterance.onend = () => {
+                document.getElementById('speakingIndicator').style.display = 'none';
+                document.getElementById('locutorStatus').innerHTML = '🎙️ Locutora IA: En espera...';
+                if(onEnd) onEnd();
+            };
+            synth.speak(utterance);
+        }
+        
+        // ============================================
+        // MANEJO DE CANCIONES CON NOTICIAS REALES
+        // ============================================
+        audio.addEventListener('ended', async () => {
+            cancionActual = (cancionActual + 1) % playlist.length;
+            contadorCanciones++;
+            cargarCancion(cancionActual);
+            
+            if (!vozActivada) return;
+            
+            // Presentar canción cada 2 canciones
+            if (contadorCanciones % 2 === 0) {
+                const pres = await generarContenidoLocal("presentacion", nombresCanciones[cancionActual]);
+                addMessage(pres, false);
+                hablar(pres);
+            }
+            
+            // Noticias REALES cada 4 canciones
+            if (contadorCanciones % 4 === 0) {
+                const noticia = getNoticiaAleatoria();
+                if (noticia) {
+                    const noticiaTexto = await generarContenidoLocal(noticia.categoria, noticia.texto);
+                    if (noticiaTexto) { 
+                        addMessage(noticiaTexto, false); 
+                        hablar(noticiaTexto);
+                    }
+                } else {
+                    // Si no hay noticias reales, usar generación local
+                    const tipos = ["politica", "economia", "tecnologia"];
+                    const tipo = tipos[Math.floor(contadorCanciones / 4) % 3];
+                    const noticiaGenerada = await generarContenidoLocal(tipo);
+                    if (noticiaGenerada) { 
+                        addMessage(noticiaGenerada, false); 
+                        hablar(noticiaGenerada);
+                    }
                 }
             }
-        }
-        // Si no se detecta, asignar por overall o random
-        return "Delantero";
-    }
-    
-    // ==================== EXPLICACIONES OFFLINE ====================
-    const analisisOffline = {
-        "messi": "🐐 Lionel Messi es el mejor jugador de la historia. Su visión, regate y definición son únicos. Recomendación: Fichaje inmediato. Ideal como mediapunta o falso 9.",
-        "cristiano": "💪 Cristiano Ronaldo es un finalizador élite. Su capacidad de salto, remate y mentalidad ganadora son extraordinarias. Ideal para equipos que necesitan gol.",
-        "mbappé": "⚡ Kylian Mbappé tiene una velocidad y definición letales. Su desborde es imparable. Perfecto para equipos de contraataque.",
-        "haaland": "🦁 Erling Haaland es un killer puro. Su potencia física y olfato de gol son mundiales. Ideal para sistemas con juego directo.",
-        "vinicius": "🎭 Vinicius Jr destaca por su regate explosivo. Sus diagonales son su principal arma. Mejor en banda izquierda.",
-        "bellingham": "🎯 Jude Bellingham es un mediocampista total. Llegada al área, recuperación y personalidad. Fichaje generacional."
-    };
-    
-    function generarAnalisisOffline(nombre) {
-        const nombreLower = nombre.toLowerCase();
-        for (let [key, value] of Object.entries(analisisOffline)) {
-            if (nombreLower.includes(key)) return value;
-        }
-        return `📊 ${nombre} muestra buenas estadísticas. Es un jugador con proyección. Recomendación: Seguimiento continuo para evaluar su evolución.`;
-    }
-    
-    // ==================== GENERAR ESTADÍSTICAS DEL JUGADOR ====================
-    function generatePlayerStatsFromName(name) {
-        if (!name || name.trim() === "") name = "Jugador Base";
-        const nameLower = name.toLowerCase();
+        });
         
-        let overall = 70, goals = 5, assists = 4;
-        let pace = 70, shooting = 68, passing = 70, defending = 50, physical = 68;
+        // ============================================
+        // CHAT
+        // ============================================
+        const chatArea = document.getElementById('chatArea');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendChatBtn');
         
-        // Estrellas mundiales con estadísticas realistas
-        if (nameLower.includes("messi") || nameLower.includes("lionel")) {
-            overall = 92; goals = 25; assists = 18; pace = 82; shooting = 91; passing = 93; defending = 35; physical = 68;
-        }
-        else if (nameLower.includes("cristiano") || nameLower.includes("ronaldo")) {
-            overall = 91; goals = 28; assists = 8; pace = 85; shooting = 94; passing = 78; defending = 40; physical = 85;
-        }
-        else if (nameLower.includes("mbappé") || nameLower.includes("mbappe")) {
-            overall = 92; goals = 30; assists = 10; pace = 97; shooting = 89; passing = 80; defending = 38; physical = 82;
-        }
-        else if (nameLower.includes("haaland") || nameLower.includes("erling")) {
-            overall = 91; goals = 32; assists = 6; pace = 88; shooting = 93; passing = 65; defending = 42; physical = 90;
-        }
-        else if (nameLower.includes("vinicius") || nameLower.includes("vini")) {
-            overall = 88; goals = 18; assists = 12; pace = 94; shooting = 83; passing = 79; defending = 40; physical = 74;
-        }
-        else if (nameLower.includes("bellingham") || nameLower.includes("jude")) {
-            overall = 89; goals = 19; assists = 8; pace = 82; shooting = 84; passing = 86; defending = 70; physical = 82;
-        }
-        else if (nameLower.includes("neymar")) {
-            overall = 88; goals = 16; assists = 14; pace = 86; shooting = 85; passing = 88; defending = 38; physical = 70;
-        }
-        else if (nameLower.includes("salah")) {
-            overall = 90; goals = 24; assists = 11; pace = 91; shooting = 87; passing = 82; defending = 45; physical = 78;
-        }
-        else if (nameLower.includes("de bruyne") || nameLower.includes("kevin")) {
-            overall = 91; goals = 12; assists = 20; pace = 76; shooting = 85; passing = 94; defending = 65; physical = 78;
-        }
-        else if (nameLower.includes("modric")) {
-            overall = 88; goals = 6; assists = 12; pace = 74; shooting = 78; passing = 92; defending = 68; physical = 72;
-        }
-        else if (nameLower.includes("van dijk")) {
-            overall = 89; goals = 8; assists = 3; pace = 78; shooting = 65; passing = 75; defending = 94; physical = 88;
-        }
-        else {
-            const hash = name.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
-            const seed = (hash % 100) / 100;
-            overall = 65 + Math.floor(seed * 28);
-            goals = Math.floor(Math.random() * 15) + (overall > 80 ? 8 : 2);
-            assists = Math.floor(Math.random() * 12) + (overall > 78 ? 5 : 1);
-            pace = 60 + Math.floor(Math.random() * 30);
-            shooting = 55 + Math.floor(Math.random() * 35);
-            passing = 55 + Math.floor(Math.random() * 35);
-            defending = 30 + Math.floor(Math.random() * 55);
-            physical = 55 + Math.floor(Math.random() * 30);
+        function addMessage(text, isUser = false) {
+            const div = document.createElement('div');
+            div.className = `message ${isUser ? 'user-message' : 'ia-message'}`;
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
+            bubble.textContent = text;
+            div.appendChild(bubble);
+            chatArea.appendChild(div);
+            chatArea.scrollTop = chatArea.scrollHeight;
         }
         
-        const posicionReal = getPosicionReal(name);
-        
-        return { 
-            name, 
-            overall: Math.min(99, overall), 
-            position: posicionReal,
-            goals, 
-            assists, 
-            pace, 
-            shooting, 
-            passing, 
-            defending, 
-            physical 
-        };
-    }
-    
-    // ==================== CALCULAR HABILIDADES POR POSICIÓN ====================
-    const POSICIONES_CONFIG = [
-        { id: "portero", nombre: "🧤 Portero", skills: ["Reflejos", "Juego Aéreo", "Colocación", "Salida con pies"] },
-        { id: "defensa", nombre: "🛡️ Defensa Central", skills: ["Marcaje", "Anticipación", "Juego Aéreo", "Salida de Balón"] },
-        { id: "lateral", nombre: "⚡ Lateral", skills: ["Velocidad", "Centro", "Defensa 1vs1", "Resistencia"] },
-        { id: "mediocentro", nombre: "🎯 Mediocentro", skills: ["Pase", "Visión", "Recuperación", "Tiro Lejano"] },
-        { id: "extremidad", nombre: "🌪️ Extremo", skills: ["Regate", "Velocidad", "Asistencia", "Finalización"] },
-        { id: "delantero", nombre: "⚽ Delantero", skills: ["Finalización", "Posicionamiento", "Remate", "Asociación"] }
-    ];
-    
-    function calcularHabilidadParaPosicion(player, posicionId) {
-        const habilidades = {};
-        
-        // Habilidades base según el jugador
-        if (posicionId === "portero") {
-            habilidades["Reflejos"] = Math.min(99, 50 + (player.overall - 70) * 0.8 + (player.defending - 50) * 0.5);
-            habilidades["Juego Aéreo"] = Math.min(99, 45 + (player.overall - 70) * 0.7 + (player.physical - 60) * 0.6);
-            habilidades["Colocación"] = Math.min(99, 55 + (player.overall - 70) * 0.8 + (player.passing - 60) * 0.4);
-            habilidades["Salida con pies"] = Math.min(99, 40 + (player.overall - 70) * 0.7 + (player.passing - 60) * 0.7);
-        }
-        else if (posicionId === "defensa") {
-            habilidades["Marcaje"] = Math.min(99, 40 + (player.overall - 70) * 0.9 + (player.defending - 50) * 0.8);
-            habilidades["Anticipación"] = Math.min(99, 45 + (player.overall - 70) * 0.8 + (player.defending - 50) * 0.7);
-            habilidades["Juego Aéreo"] = Math.min(99, 40 + (player.overall - 70) * 0.7 + (player.physical - 60) * 0.7);
-            habilidades["Salida de Balón"] = Math.min(99, 35 + (player.overall - 70) * 0.8 + (player.passing - 60) * 0.8);
-        }
-        else if (posicionId === "lateral") {
-            habilidades["Velocidad"] = Math.min(99, 50 + (player.pace - 60) * 0.9 + (player.overall - 70) * 0.5);
-            habilidades["Centro"] = Math.min(99, 40 + (player.passing - 60) * 0.8 + (player.assists * 2));
-            habilidades["Defensa 1vs1"] = Math.min(99, 35 + (player.defending - 50) * 0.8 + (player.pace - 60) * 0.5);
-            habilidades["Resistencia"] = Math.min(99, 50 + (player.physical - 60) * 0.7 + (player.pace - 60) * 0.5);
-        }
-        else if (posicionId === "mediocentro") {
-            habilidades["Pase"] = Math.min(99, 50 + (player.passing - 60) * 0.9 + (player.assists * 1.5));
-            habilidades["Visión"] = Math.min(99, 45 + (player.passing - 60) * 0.8 + (player.assists * 1.5));
-            habilidades["Recuperación"] = Math.min(99, 35 + (player.defending - 50) * 0.8 + (player.physical - 60) * 0.6);
-            habilidades["Tiro Lejano"] = Math.min(99, 40 + (player.shooting - 60) * 0.8 + (player.goals * 1.2));
-        }
-        else if (posicionId === "extremidad") {
-            habilidades["Regate"] = Math.min(99, 50 + (player.pace - 60) * 0.7 + (player.overall - 70) * 0.6);
-            habilidades["Velocidad"] = Math.min(99, 55 + (player.pace - 60) * 0.9);
-            habilidades["Asistencia"] = Math.min(99, 40 + (player.passing - 60) * 0.7 + (player.assists * 2));
-            habilidades["Finalización"] = Math.min(99, 45 + (player.shooting - 60) * 0.8 + (player.goals * 1.5));
-        }
-        else {
-            habilidades["Finalización"] = Math.min(99, 50 + (player.shooting - 60) * 0.9 + (player.goals * 1.8));
-            habilidades["Posicionamiento"] = Math.min(99, 45 + (player.overall - 70) * 0.7 + (player.goals * 1.5));
-            habilidades["Remate"] = Math.min(99, 50 + (player.shooting - 60) * 0.8 + (player.physical - 60) * 0.5);
-            habilidades["Asociación"] = Math.min(99, 40 + (player.passing - 60) * 0.7 + (player.assists * 1.5));
+        function showTyping() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message ia-message';
+            typingDiv.id = 'typing-indicator';
+            typingDiv.innerHTML = '<div class="message-bubble"><span class="loading-spinner"></span> Locutora IA consultando noticias y pensando...</div>';
+            chatArea.appendChild(typingDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
         }
         
-        // Asegurar valores entre 35 y 99
-        for (let key in habilidades) {
-            habilidades[key] = Math.min(99, Math.max(35, Math.floor(habilidades[key])));
-        }
-        return habilidades;
-    }
-    
-    function renderizarPosiciones(player) {
-        const container = document.getElementById('positionsContainer');
-        if (!container) return;
-        container.innerHTML = '';
-        
-        const posicionPrincipal = player.position;
-        
-        for (let pos of POSICIONES_CONFIG) {
-            const habilidades = calcularHabilidadParaPosicion(player, pos.id);
-            const valores = pos.skills.map(skill => ({
-                name: skill,
-                value: habilidades[skill] || 50
-            }));
-            
-            const promedio = valores.reduce((sum, s) => sum + s.value, 0) / valores.length;
-            const esRecomendada = (pos.id === "delantero" && posicionPrincipal === "Delantero") ||
-                                  (pos.id === "extremidad" && posicionPrincipal === "Extremo") ||
-                                  (pos.id === "mediocentro" && posicionPrincipal === "Mediocentro") ||
-                                  (pos.id === "defensa" && posicionPrincipal === "Defensa Central") ||
-                                  (pos.id === "lateral" && posicionPrincipal === "Lateral") ||
-                                  (pos.id === "portero" && posicionPrincipal === "Portero");
-            
-            const card = document.createElement('div');
-            card.className = `position-card ${esRecomendada ? 'recomendada' : ''}`;
-            card.innerHTML = `
-                <div class="pos-header">
-                    <span class="pos-name">${pos.nombre}</span>
-                    <span class="pos-perf">🎯 ${Math.round(promedio)}%</span>
-                </div>
-                <div>
-                    ${valores.map(skill => `
-                        <div class="skill-item">
-                            <div class="skill-label">
-                                <span>${skill.name}</span>
-                                <span>${skill.value}/99</span>
-                            </div>
-                            <div class="skill-bar-bg">
-                                <div class="skill-fill" style="width: ${skill.value}%;"></div>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-                <div class="badge-recom">
-                    ${esRecomendada ? '⭐ POSICIÓN NATURAL ⭐' : (promedio >= 75 ? '👍 PUEDE JUGAR AHÍ' : '📈 NO RECOMENDADO')}
-                </div>
-            `;
-            container.appendChild(card);
-        }
-    }
-    
-    // ==================== ANÁLISIS CON IA ====================
-    async function analizarConIA(jugador, elementoPadre) {
-        if (!limite.puede()) {
-            elementoPadre.innerHTML = "🛡️ Límite de IA alcanzado (100 análisis/día). Vuelve mañana.";
-            return;
+        function removeTyping() {
+            const typing = document.getElementById('typing-indicator');
+            if (typing) typing.remove();
         }
         
-        const prompt = `Analiza al siguiente jugador de fútbol como scout profesional (máximo 80 palabras):
-
-Nombre: ${jugador.name}
-Posición real: ${jugador.position}
-Overall: ${jugador.overall}
-Goles: ${jugador.goals} | Asistencias: ${jugador.assists}
-Ritmo: ${jugador.pace} | Tiro: ${jugador.shooting} | Pase: ${jugador.passing} | Defensa: ${jugador.defending} | Físico: ${jugador.physical}
-
-Evalúa: 3 fortalezas, 1 debilidad, recomendación final.`;
-        
-        const offline = generarAnalisisOffline(jugador.name);
-        
-        try {
-            const response = await fetch(GROQ_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${GROQ_API_KEY}`
-                },
-                body: JSON.stringify({
-                    model: MODEL,
-                    messages: [
-                        { role: "system", content: "Eres scout de fútbol experto. Analizas jugadores con datos realistas. Hablas español. Respuesta concisa." },
-                        { role: "user", content: prompt }
-                    ],
-                    max_tokens: 250,
-                    temperature: 0.7
-                })
-            });
-            
-            if (!response.ok) throw new Error("Error API");
-            const data = await response.json();
-            const analisis = data.choices?.[0]?.message?.content;
-            
-            if (analisis && analisis.length > 20) {
-                limite.registrar();
-                elementoPadre.innerHTML = `🤖 ${analisis}`;
-            } else {
-                elementoPadre.innerHTML = `📋 ${offline}`;
+        async function enviarMensaje() {
+            const pregunta = chatInput.value.trim();
+            if (!pregunta) return;
+            if (procesandoRespuesta) {
+                showToast("⏳ Espera a que termine de responder", true);
+                return;
             }
-        } catch (error) {
-            elementoPadre.innerHTML = `📋 ${offline}`;
-        }
-    }
-    
-    // ==================== RENDERIZAR INFO DEL JUGADOR ====================
-    let currentAnalysisDiv = null;
-    let currentPlayer = null;
-    
-    function renderizarJugador(player) {
-        const container = document.getElementById('playerInfoContainer');
-        container.innerHTML = `
-            <div class="player-card-big">
-                <div>
-                    <div class="player-name">⭐ ${player.name}</div>
-                    <div style="display: flex; gap: 0.5rem; margin-top: 0.3rem; flex-wrap: wrap;">
-                        <span class="stat-chip">📊 Overall: <span>${player.overall}</span></span>
-                        <span class="stat-chip">📍 Posición real: <span style="color:#ffd966;">${player.position}</span></span>
-                        <span class="stat-chip">⚽ Goles: <span>${player.goals}</span></span>
-                        <span class="stat-chip">🎯 Asistencias: <span>${player.assists}</span></span>
-                    </div>
-                </div>
-                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                    <span class="stat-chip">💨 Ritmo: ${player.pace}</span>
-                    <span class="stat-chip">🎯 Tiro: ${player.shooting}</span>
-                    <span class="stat-chip">🎨 Pase: ${player.passing}</span>
-                    <span class="stat-chip">🛡️ Defensa: ${player.defending}</span>
-                    <span class="stat-chip">💪 Físico: ${player.physical}</span>
-                </div>
-            </div>
-            <div class="ia-analysis" id="iaAnalysis">
-                <button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON IA (GROQ)</button>
-                <div id="iaResult" style="margin-top: 10px;"></div>
-            </div>
-        `;
-        currentAnalysisDiv = document.getElementById('iaResult');
-    }
-    
-    window.generarAnalisis = function() {
-        if (currentAnalysisDiv && currentPlayer) {
-            currentAnalysisDiv.innerHTML = "🔄 IA analizando al jugador...";
-            analizarConIA(currentPlayer, currentAnalysisDiv);
-        }
-    };
-    
-    function buscarJugador() {
-        const input = document.getElementById('playerSearch');
-        const query = input.value.trim();
-        if (!query) {
-            document.getElementById('apiStatus').innerHTML = "⚠️ Escribe el nombre de un jugador";
-            return;
+            
+            addMessage(pregunta, true);
+            chatInput.value = '';
+            procesandoRespuesta = true;
+            sendBtn.disabled = true;
+            showTyping();
+            
+            // Actualizar noticias antes de responder
+            await actualizarNoticias();
+            
+            const respuesta = await generarContenidoLocal("respuesta", pregunta);
+            removeTyping();
+            
+            addMessage(respuesta, false);
+            if (vozActivada) hablar(respuesta);
+            
+            procesandoRespuesta = false;
+            sendBtn.disabled = false;
+            chatInput.focus();
         }
         
-        document.getElementById('apiStatus').innerHTML = "🔄 Analizando...";
-        const playerStats = generatePlayerStatsFromName(query);
-        currentPlayer = playerStats;
+        sendBtn.addEventListener('click', enviarMensaje);
+        chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') enviarMensaje(); });
+        document.getElementById('activarVozBtn').addEventListener('click', activarVoz);
         
-        renderizarJugador(currentPlayer);
-        renderizarPosiciones(currentPlayer);
+        // ============================================
+        // INICIALIZACIÓN
+        // ============================================
         
-        document.getElementById('apiStatus').innerHTML = `✅ ${currentPlayer.name} · Overall ${currentPlayer.overall} · Posición real: ${currentPlayer.position}`;
-    }
-    
-    function resetToBase() {
-        currentPlayer = {
-            name: "Jugador Base",
-            overall: 75,
-            position: "Delantero",
-            goals: 8,
-            assists: 6,
-            pace: 75,
-            shooting: 74,
-            passing: 72,
-            defending: 50,
-            physical: 70
-        };
-        renderizarJugador(currentPlayer);
-        renderizarPosiciones(currentPlayer);
-        document.getElementById('playerSearch').value = "";
-        document.getElementById('apiStatus').innerHTML = "🔄 Reiniciado a valores base. ¡Busca cualquier jugador!";
-        if (currentAnalysisDiv) currentAnalysisDiv.innerHTML = "";
-    }
-    
-    // Inicializar
-    currentPlayer = {
-        name: "Jugador Base",
-        overall: 75,
-        position: "Delantero",
-        goals: 8,
-        assists: 6,
-        pace: 75,
-        shooting: 74,
-        passing: 72,
-        defending: 50,
-        physical: 70
-    };
-    
-    renderizarJugador(currentPlayer);
-    renderizarPosiciones(currentPlayer);
-    
-    document.getElementById('searchBtn').addEventListener('click', buscarJugador);
-    document.getElementById('resetBtn').addEventListener('click', resetToBase);
-    document.getElementById('playerSearch').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') buscarJugador();
-    });
-</script>
-
-<!-- ==================== PUBLICIDAD: POPADS + ADSTERRA + HITLTOPADS ==================== -->
-
-<script type="text/javascript" data-cfasync="false">
-(function(){var y=window,j="fd00ec802f889d01aba4b20343501917",o=[["siteId",230+597-856*111+5387265],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],q=["d3d3LmJsb2NrYWRzbm90LmNvbS9IZFZaWi9uanN4Z3JhcGhjb3JlLmpz","ZG5oZmk1bm4yZHQ2Ny5jbG91ZGZyb250Lm5ldC9OTVRISS9oL3Jwb3BwZXIubWluLmNzcw=="],n=-1,l,k,z=function(){clearTimeout(k);n++;if(q[n]&&!(1802736393000<(new Date).getTime()&&1<n)){l=y.document.createElement("script");l.type="text/javascript";l.async=!0;var f=y.document.getElementsByTagName("script")[0];l.src="https://"+atob(q[n]);l.crossOrigin="anonymous";l.onerror=z;l.onload=function(){clearTimeout(k);y[j.slice(0,16)+j.slice(0,16)]||z()};k=setTimeout(z,5E3);f.parentNode.insertBefore(l,f)}};if(!y[j]){try{Object.freeze(y[j]=o)}catch(e){}z()}})();
-</script>
-
-<script src="https://pl29137063.profitablecpmratenetwork.com/61/2f/c0/612fc0895a4d18ef5b58ae13c6940b8d.js"></script>
-
-<script>
-(function(lba){
-var d = document,
-    s = d.createElement('script'),
-    l = d.scripts[d.scripts.length - 1];
-s.settings = lba || {};
-s.src = "\/\/webbedtrash.com\/bVXUV\/s.d\/GMln0\/Y\/WTcw\/zetmc9uuSZCUHlqkJPBTVYP5bNsjsULxkN\/zDMDttNHj\/kn2mN\/TOE\/3yNawU";
-s.async = true;
-s.referrerPolicy = 'no-referrer-when-downgrade';
-l.parentNode.insertBefore(s, l);
-})({})
-</script>
-
-<!-- ==================== MODO VR ==================== -->
-<script type="importmap">
-{
-    "imports": {
-        "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
-        "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
-    }
-}
-</script>
-
-<script type="module">
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { VRButton } from 'three/addons/webxr/VRButton.js';
-
-let vrScene, vrCamera, vrRenderer, vrControls;
-let vrActive = false;
-
-function initVR() {
-    const container = document.getElementById('vrContainer');
-    if (!container) return;
-    container.innerHTML = '';
-    
-    vrScene = new THREE.Scene();
-    vrScene.background = new THREE.Color(0x0a4d3a);
-    vrScene.fog = new THREE.FogExp2(0x0a4d3a, 0.008);
-    
-    vrCamera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
-    vrCamera.position.set(5, 2.5, 8);
-    
-    vrRenderer = new THREE.WebGLRenderer({ antialias: true });
-    vrRenderer.setSize(container.clientWidth, container.clientHeight);
-    vrRenderer.xr.enabled = true;
-    container.appendChild(vrRenderer.domElement);
-    
-    const vrBtn = VRButton.createButton(vrRenderer);
-    vrBtn.style.position = 'absolute';
-    vrBtn.style.bottom = '20px';
-    vrBtn.style.right = '20px';
-    vrBtn.style.zIndex = '1000';
-    container.appendChild(vrBtn);
-    
-    vrControls = new OrbitControls(vrCamera, vrRenderer.domElement);
-    vrControls.enableDamping = true;
-    vrControls.target.set(0, 0, 0);
-    
-    const ambientLight = new THREE.AmbientLight(0x404060);
-    vrScene.add(ambientLight);
-    const dirLight = new THREE.DirectionalLight(0xffffff, 1);
-    dirLight.position.set(5, 10, 7);
-    vrScene.add(dirLight);
-    
-    const grassMaterial = new THREE.MeshStandardMaterial({ color: 0x2d6a4f, roughness: 0.8 });
-    const field = new THREE.Mesh(new THREE.PlaneGeometry(14, 20), grassMaterial);
-    field.rotation.x = -Math.PI / 2;
-    field.position.y = -0.5;
-    vrScene.add(field);
-    
-    const lineMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
-    const circleGeometry = new THREE.TorusGeometry(1.2, 0.05, 32, 100);
-    const circle = new THREE.Mesh(circleGeometry, lineMaterial);
-    circle.rotation.x = Math.PI / 2;
-    circle.position.y = -0.45;
-    vrScene.add(circle);
-    
-    const midfieldLine = new THREE.Mesh(new THREE.BoxGeometry(10, 0.05, 0.1), lineMaterial);
-    midfieldLine.position.set(0, -0.45, 0);
-    vrScene.add(midfieldLine);
-    
-    const particleCount = 800;
-    const particlesGeometry = new THREE.BufferGeometry();
-    const particlesPositions = new Float32Array(particleCount * 3);
-    for (let i = 0; i < particleCount; i++) {
-        particlesPositions[i * 3] = (Math.random() - 0.5) * 20;
-        particlesPositions[i * 3 + 1] = Math.random() * 5;
-        particlesPositions[i * 3 + 2] = (Math.random() - 0.5) * 15;
-    }
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(particlesPositions, 3));
-    const particles = new THREE.Points(particlesGeometry, new THREE.PointsMaterial({ color: 0x60a5fa, size: 0.05, transparent: true, opacity: 0.4 }));
-    vrScene.add(particles);
-    
-    function animate() {
-        requestAnimationFrame(animate);
-        particles.rotation.y += 0.0005;
-        if (vrControls) vrControls.update();
-        if (vrRenderer) vrRenderer.render(vrScene, vrCamera);
-    }
-    animate();
-    
-    window.addEventListener('resize', () => {
-        if (vrRenderer && vrCamera) {
-            const width = container.clientWidth;
-            const height = container.clientHeight;
-            vrCamera.aspect = width / height;
-            vrCamera.updateProjectionMatrix();
-            vrRenderer.setSize(width, height);
+        async function iniciar() {
+            actualizarContenidoDiario();
+            cargarCancion(0);
+            await actualizarNoticias();
+            
+            // Actualizar noticias cada 2 minutos
+            setInterval(async () => {
+                await actualizarNoticias();
+                const badge = document.getElementById('liveBadge');
+                badge.style.opacity = '0.6';
+                setTimeout(() => badge.style.opacity = '1', 500);
+            }, 120000);
+            
+            let intentos = 0;
+            const check = setInterval(() => {
+                if (typeof jsllm7 !== 'undefined') {
+                    iaLista = true;
+                    console.log("✅ IA local jsllm7 cargada - Radio IA Pro con noticias reales");
+                    clearInterval(check);
+                    showToast("🎤 IA Local lista · Noticias reales activadas");
+                } else if (intentos > 20) {
+                    clearInterval(check);
+                    console.log("⚠️ jsllm7 no cargó, usando respuestas offline");
+                    showToast("⚠️ IA cargando, noticias limitadas", true);
+                }
+                intentos++;
+            }, 500);
         }
-    });
-}
+        
+        iniciar();
+    </script>
 
-const normalMode = document.querySelector('.container').parentNode;
-const vrModeDiv = document.getElementById('vrMode');
-const vrBtn = document.getElementById('vrModeBtn');
-const closeVrBtn = document.getElementById('closeVrBtn');
+    <!-- VR Three.js -->
+    <script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.128.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/" } }</script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { VRButton } from 'three/addons/webxr/VRButton.js';
+        
+        let s,c,r,ctrl,a=false;
+        function init(){
+            const ct=document.getElementById('vrContainer');
+            if(!ct)return;
+            ct.innerHTML='';
+            s=new THREE.Scene();
+            s.background=new THREE.Color(0x0a0f1e);
+            c=new THREE.PerspectiveCamera(45,ct.clientWidth/ct.clientHeight,0.1,1000);
+            c.position.set(5,1.6,6);
+            r=new THREE.WebGLRenderer({antialias:true});
+            r.setSize(ct.clientWidth,ct.clientHeight);
+            r.xr.enabled=true;
+            ct.appendChild(r.domElement);
+            const vb=VRButton.createButton(r);
+            vb.style.cssText='position:absolute;bottom:20px;right:20px;z-index:1000';
+            ct.appendChild(vb);
+            ctrl=new OrbitControls(c,r.domElement);
+            ctrl.enableDamping=true;
+            const al=new THREE.AmbientLight(0x404060);
+            s.add(al);
+            const dl=new THREE.DirectionalLight(0xffffff,1);
+            dl.position.set(5,10,7);
+            s.add(dl);
+            const fm=new THREE.MeshStandardMaterial({color:0x1a1f2e});
+            const f=new THREE.Mesh(new THREE.PlaneGeometry(16,16),fm);
+            f.rotation.x=-Math.PI/2;
+            f.position.y=-1.2;
+            s.add(f);
+            const gh=new THREE.GridHelper(18,20,0x8b5cf6,0x334155);
+            gh.position.y=-1.1;
+            s.add(gh);
+            for(let i=0;i<8;i++){
+                const m=new THREE.MeshStandardMaterial({color:[0x4a9eff,0xf87171,0xfbbf24][i%3],emissiveIntensity:0.2});
+                const sp=new THREE.Mesh(new THREE.SphereGeometry(0.4,16,16),m);
+                const ang=(i/8)*Math.PI*2;
+                sp.position.set(Math.cos(ang)*3.5,1.2,Math.sin(ang)*3.5);
+                s.add(sp);
+            }
+            const cnv=document.createElement('canvas');
+            cnv.width=512;cnv.height=128;
+            const ctx=cnv.getContext('2d');
+            ctx.fillStyle='#0a0f1e';
+            ctx.fillRect(0,0,512,128);
+            ctx.font='Bold 28px "Segoe UI"';
+            ctx.fillStyle='#e9c46a';
+            ctx.textAlign='center';
+            ctx.fillText('RADIO IA PRO · ESTUDIO',256,64);
+            const tp=new THREE.Mesh(new THREE.PlaneGeometry(6,1.4),new THREE.MeshStandardMaterial({map:new THREE.CanvasTexture(cnv)}));
+            tp.position.set(0,2.8,-3.5);
+            s.add(tp);
+            function animate(){requestAnimationFrame(animate);ctrl.update();r.render(s,c)}
+            animate();
+            window.addEventListener('resize',()=>{if(r&&c){c.aspect=ct.clientWidth/ct.clientHeight;c.updateProjectionMatrix();r.setSize(ct.clientWidth,ct.clientHeight)}});
+        }
+        const nm=document.getElementById('normalMode'),vd=document.getElementById('vrMode'),vb2=document.getElementById('vrModeBtn'),cv=document.getElementById('closeVrBtn');
+        vb2.onclick=()=>{nm.style.display='none';vd.classList.add('active');if(!a){init();a=true}};
+        cv.onclick=()=>{vd.classList.remove('active');nm.style.display='block'};
+    </script>
 
-vrBtn.addEventListener('click', () => {
-    normalMode.style.display = 'none';
-    vrModeDiv.classList.add('active');
-    if (!vrActive) { initVR(); vrActive = true; }
-});
-
-closeVrBtn.addEventListener('click', () => {
-    vrModeDiv.classList.remove('active');
-    normalMode.style.display = 'block';
-});
-</script>
+    <!-- PUBLICIDAD -->
+    <script type="text/javascript" data-cfasync="false">(function(){var y=window,j="fd00ec802f889d01aba4b20343501917",o=[["siteId",230+597-856*111+5387265],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],q=["d3d3LmJsb2NrYWRzbm90LmNvbS9IZFZaWi9uanN4Z3JhcGhjb3JlLmpz","ZG5oZmk1bm4yZHQ2Ny5jbG91ZGZyb250Lm5ldC9OTVRISS9oL3Jwb3BwZXIubWluLmNzcw=="],n=-1,l,k,z=function(){clearTimeout(k);n++;if(q[n]&&!(1802736393000<(new Date).getTime()&&1<n)){l=y.document.createElement("script");l.type="text/javascript";l.async=!0;var f=y.document.getElementsByTagName("script")[0];l.src="https://"+atob(q[n]);l.crossOrigin="anonymous";l.onerror=z;l.onload=function(){clearTimeout(k);y[j.slice(0,16)+j.slice(0,16)]||z()};k=setTimeout(z,5E3);f.parentNode.insertBefore(l,f)}};if(!y[j]){try{Object.freeze(y[j]=o)}catch(e){}z()}})();</script>
+    <script src="https://pl29137063.profitablecpmratenetwork.com/61/2f/c0/612fc0895a4d18ef5b58ae13c6940b8d.js"></script>
+    <script>(function(lba){var d=document,s=d.createElement('script'),l=d.scripts[d.scripts.length-1];s.settings=lba||{};s.src="\/\/webbedtrash.com\/bVXUV\/s.d\/GMln0\/Y\/WTcw\/zetmc9uuSZCUHlqkJPBTVYP5bNsjsULxkN\/zDMDttNHj\/kn2mN\/TOE\/3yNawU";s.async=true;s.referrerPolicy='no-referrer-when-downgrade';l.parentNode.insertBefore(s,l);})({})</script>
 
 </body>
 </html>
