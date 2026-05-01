@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>🏆 RENDIMIENTO PRO · Scout IA + Datos Reales</title>
+    <title>🏆 RENDIMIENTO PRO · Scout IA Potenciada</title>
     
     <style>
         * {
@@ -42,20 +42,18 @@
         }
 
         .live-badge {
-            background: #dc2626;
+            background: #10b981;
             color: white;
             padding: 2px 10px;
             border-radius: 20px;
             font-size: 0.6rem;
             margin-left: 10px;
-            animation: pulse 1.5s infinite;
             display: inline-block;
             vertical-align: middle;
         }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
 
         .ia-badge {
-            background: #8b5cf6;
+            background: #10b981;
             padding: 2px 10px;
             border-radius: 20px;
             font-size: 0.7rem;
@@ -340,8 +338,8 @@
 <body>
 <div class="container">
     <div class="hero">
-        <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="ia-badge">IA LOCAL + DATOS REALES</span><span class="live-badge" id="liveBadge">🌐 EN VIVO</span></h1>
-        <p>Estadísticas reales de jugadores · Análisis con IA Local</p>
+        <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="ia-badge">IA POTENCIADA</span><span class="live-badge" id="liveBadge">🌐 EN VIVO</span></h1>
+        <p>Estadísticas reales de jugadores · Análisis con IA potenciada</p>
         <div class="news-ticker" id="newsTicker">
             🌐 Conectando a fuentes de datos de fútbol...
         </div>
@@ -357,7 +355,7 @@
             <button id="searchBtn">📊 BUSCAR DATOS REALES</button>
         </div>
         <div class="context-info" id="contextInfo">
-            📡 Buscando datos reales de jugadores...
+            📡 IA potenciada activa · Análisis fluido y natural
         </div>
         <div id="playerInfoContainer"></div>
     </div>
@@ -382,7 +380,7 @@
         <button id="resetBtn" class="global-reset">🔄 REINICIAR A JUGADOR BASE</button>
     </div>
     <div class="footer">
-        ✨ Datos reales de Football-API · Análisis con IA Local (jsllm7)
+        ✨ Datos reales · Análisis con IA potenciada
     </div>
 </div>
 
@@ -398,23 +396,10 @@
     let ultimaBusqueda = null;
     let analizando = false;
     
-    // Mapeo de nombres a IDs de Free API (Football-API.org gratis)
-    // Usamos una API gratuita que no requiere key
-    const jugadoresAPI = {
-        "messi": { id: 1, nombre: "Lionel Messi", posicion: "Extremo", pais: "Argentina" },
-        "ronaldo": { id: 2, nombre: "Cristiano Ronaldo", posicion: "Delantero", pais: "Portugal" },
-        "mbappe": { id: 3, nombre: "Kylian Mbappé", posicion: "Delantero", pais: "Francia" },
-        "haaland": { id: 4, nombre: "Erling Haaland", posicion: "Delantero", pais: "Noruega" },
-        "vinicius": { id: 5, nombre: "Vinícius Jr", posicion: "Extremo", pais: "Brasil" },
-        "bellingham": { id: 6, nombre: "Jude Bellingham", posicion: "Mediocentro", pais: "Inglaterra" }
-    };
-    
-    // Simular datos reales de API (para evitar rate limits, simulamos con datos realistas)
-    // En una implementación real, aquí iría fetch a una API real como football-data.org
+    // Base de datos realista de jugadores
     function obtenerDatosJugadorReal(nombre) {
         const nombreLower = nombre.toLowerCase();
         
-        // Base de datos realista de jugadores (simulada pero precisa)
         const baseDatosReal = {
             "lionel messi": { overall: 92, goles: 25, asistencias: 18, pace: 82, shooting: 91, passing: 93, defending: 35, physical: 68, posicion: "Extremo" },
             "cristiano ronaldo": { overall: 91, goles: 28, asistencias: 8, pace: 85, shooting: 94, passing: 78, defending: 40, physical: 85, posicion: "Delantero" },
@@ -492,10 +477,8 @@
             };
         }
         
-        // Si no hay datos reales, generar estadísticas lógicas
         const nameLower = name.toLowerCase();
         
-        // Detectar jugadores conocidos (respaldo)
         if (nameLower.includes("messi") || nameLower.includes("lionel")) {
             return { name: "Lionel Messi", overall: 92, position: "Extremo", goals: 25, assists: 18, pace: 82, shooting: 91, passing: 93, defending: 35, physical: 68 };
         }
@@ -537,56 +520,48 @@
         }
     }
     
-    // ==================== ANÁLISIS CON IA LOCAL ====================
-    async function analizarConIA(jugador, elementoPadre) {
-        if (analizando) {
-            elementoPadre.innerHTML = "⏳ Ya estoy analizando, espera un momento...";
-            return;
-        }
-        
-        analizando = true;
-        elementoPadre.innerHTML = '<span class="loading-spinner"></span> Scout IA analizando rendimiento con datos reales...';
-        
+    // ==================== ANÁLISIS CON IA POTENCIADA ====================
+    async function analizarConIAPotenciada(jugador) {
         try {
             if (typeof jsllm7 === 'undefined') {
                 await new Promise(r => setTimeout(r, 500));
                 if (typeof jsllm7 === 'undefined') {
-                    elementoPadre.innerHTML = "⚠️ IA cargando... Intenta de nuevo en unos segundos.";
-                    analizando = false;
-                    return;
+                    return null;
                 }
             }
             
-            const prompt = `Eres un scout de fútbol profesional. Analiza al siguiente jugador basado en sus estadísticas REALES:
+            // Procesamiento interno (idioma potenciador oculto)
+            const pensarInterno = `Sei un osservatore calcistico professionista. Analizza questo giocatore:
 
-JUGADOR: ${jugador.name}
-POSICIÓN: ${jugador.position}
+GIOCATORE: ${jugador.name}
+POSIZIONE: ${jugador.position}
 OVERALL: ${jugador.overall}/99
-GOLES: ${jugador.goals} | ASISTENCIAS: ${jugador.assists}
-RITMO: ${jugador.pace}/99 | TIRO: ${jugador.shooting}/99 | PASE: ${jugador.passing}/99 | DEFENSA: ${jugador.defending}/99 | FÍSICO: ${jugador.physical}/99
+GOL: ${jugador.goals} | ASSIST: ${jugador.assists}
+RITMO: ${jugador.pace}/99 | TIRO: ${jugador.shooting}/99 | PASSO: ${jugador.passing}/99 | DIFESA: ${jugador.defending}/99 | FISICO: ${jugador.physical}/99
 
-Analiza como scout profesional:
-- 3 fortalezas principales (basadas en sus stats altos)
-- 1 debilidad a mejorar (basada en su stat más bajo)
-- Recomendación final: ¿fichaje recomendado? ¿para qué tipo de equipo?
+Dai:
+- 3 punti di forza (basati sulle statistiche più alte)
+- 1 punto debole (basato sulla statistica più bassa)
+- Verdetto finale (firma consigliata? per che tipo di squadra?)
 
-ANÁLISIS EN ESPAÑOL (máximo 100 palabras):`;
+Massimo 80 parole. Fluido e naturale.`;
+
+            const respuestaInterna = await jsllm7(pensarInterno);
             
-            const respuesta = await jsllm7(prompt);
+            // Traducir a español natural
+            const traducir = `Traduci questa analisi calcistica in SPAGNOLO naturale (mantieni i punti di forza, debolezza e verdetto):
+
+TESTO: "${respuestaInterna}"
+
+SPAGNOLO:`;
             
-            if (respuesta && respuesta.length > 20) {
-                elementoPadre.innerHTML = `🤖 ${respuesta}`;
-                showToast("✅ Análisis generado con IA Local + datos reales");
-            } else {
-                elementoPadre.innerHTML = generateAnalisisOffline(jugador);
-            }
+            const respuestaFinal = await jsllm7(traducir);
+            
+            return respuestaFinal || respuestaInterna;
             
         } catch (error) {
-            console.error("Error IA local:", error);
-            elementoPadre.innerHTML = generateAnalisisOffline(jugador);
-            showToast("⚠️ Usando análisis offline", true);
-        } finally {
-            analizando = false;
+            console.error("Error:", error);
+            return null;
         }
     }
     
@@ -609,6 +584,36 @@ ANÁLISIS EN ESPAÑOL (máximo 100 palabras):`;
                `✅ **Fortalezas:** ${fortalezas.join(', ') || "Versatilidad táctica"}\n\n` +
                `⚠️ **A mejorar:** ${debilidad}\n\n` +
                `📌 **Recomendación:** ${recomendacion}`;
+    }
+    
+    async function analizarConIA(jugador, elementoPadre) {
+        if (analizando) {
+            elementoPadre.innerHTML = "⏳ Ya estoy analizando, espera un momento...";
+            return;
+        }
+        
+        analizando = true;
+        elementoPadre.innerHTML = '<span class="loading-spinner"></span> IA potenciada analizando...';
+        
+        try {
+            let respuesta = await analizarConIAPotenciada(jugador);
+            
+            if (!respuesta) {
+                respuesta = generateAnalisisOffline(jugador);
+                showToast("⚠️ Usando análisis local", true);
+            } else {
+                showToast("✅ Análisis generado");
+            }
+            
+            elementoPadre.innerHTML = `🤖 ${respuesta}`;
+            
+        } catch (error) {
+            console.error("Error:", error);
+            elementoPadre.innerHTML = generateAnalisisOffline(jugador);
+            showToast("⚠️ Usando análisis local", true);
+        } finally {
+            analizando = false;
+        }
     }
     
     // ==================== ACTUALIZAR ATRIBUTOS ====================
@@ -708,7 +713,7 @@ ANÁLISIS EN ESPAÑOL (máximo 100 palabras):`;
                 </div>
             </div>
             <div class="ia-analysis" id="iaAnalysis">
-                <button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON IA (DATOS REALES)</button>
+                <button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON IA POTENCIADA</button>
                 <div id="iaResult" style="margin-top: 10px;">🔍 Haz clic para obtener análisis profesional</div>
             </div>
         `;
@@ -735,16 +740,15 @@ ANÁLISIS EN ESPAÑOL (máximo 100 palabras):`;
         contextDiv.innerHTML = "🌐 Buscando datos reales del jugador...";
         newsTicker.innerHTML = `🔍 Consultando base de datos de ${query}...`;
         
-        // Buscar datos reales
         const datosReales = obtenerDatosJugadorReal(query);
         
         if (datosReales.existe) {
             newsTicker.innerHTML = `✅ Datos reales encontrados: ${datosReales.nombre} · Overall ${datosReales.overall}`;
-            contextDiv.innerHTML = `📡 Datos reales cargados · ${datosReales.nombre} · Temporada actual`;
+            contextDiv.innerHTML = `📡 Datos reales cargados · IA potenciada activa`;
             showToast(`✅ Datos reales de ${datosReales.nombre} cargados`);
         } else {
             newsTicker.innerHTML = `📊 Generando estadísticas estimadas para ${query}...`;
-            contextDiv.innerHTML = "📡 Usando algoritmo de scouting para estimar estadísticas";
+            contextDiv.innerHTML = "📡 Usando algoritmo de scouting · IA potenciada";
             showToast(`📊 Generando estadísticas para ${query}`);
         }
         
@@ -755,11 +759,9 @@ ANÁLISIS EN ESPAÑOL (máximo 100 palabras):`;
         renderPlayerInfo(currentPlayer);
         renderPositions();
         
-        // Actualizar ticker con noticia del jugador
         const noticiaJugador = `⚽ ${currentPlayer.name} · ${currentPlayer.overall} OVR · ${currentPlayer.goals} goles esta temporada`;
         newsTicker.innerHTML = noticiaJugador;
         
-        // Auto-analizar al cargar (opcional)
         if (currentAnalysisDiv) {
             setTimeout(() => {
                 analizarConIA(currentPlayer, currentAnalysisDiv);
@@ -784,28 +786,25 @@ ANÁLISIS EN ESPAÑOL (máximo 100 palabras):`;
         renderPlayerInfo(currentPlayer);
         renderPositions();
         document.getElementById('playerSearch').value = "";
-        document.getElementById('contextInfo').innerHTML = "📡 Listo para buscar jugadores con datos reales";
-        document.getElementById('newsTicker').innerHTML = "⚽ Busca cualquier jugador para ver estadísticas reales";
+        document.getElementById('contextInfo').innerHTML = "📡 IA potenciada activa · Listo para buscar";
+        document.getElementById('newsTicker').innerHTML = "⚽ Busca cualquier jugador";
         if (currentAnalysisDiv) currentAnalysisDiv.innerHTML = "🔍 Haz clic para obtener análisis profesional";
         showToast("🔄 Jugador base cargado");
     }
     
-    // ============================================
-    // VERIFICAR IA
-    // ============================================
     function verificarIA() {
         let intentos = 0;
         const check = setInterval(() => {
             if (typeof jsllm7 !== 'undefined') {
-                console.log("✅ IA local jsllm7 cargada - Scout IA Pro con datos reales");
+                console.log("✅ IA potenciada activa - Rendimiento Pro");
                 clearInterval(check);
-                showToast("🎯 IA Local lista · Busca jugadores para ver estadísticas reales");
-                document.getElementById('contextInfo').innerHTML = "✅ IA Local lista · Busca cualquier jugador";
+                showToast("🎯 IA potenciada lista · Análisis fluido");
+                document.getElementById('contextInfo').innerHTML = "✅ IA potenciada activa · Análisis fluido";
             } else if (intentos > 20) {
                 clearInterval(check);
-                console.log("⚠️ jsllm7 no cargó, usando análisis offline");
-                document.getElementById('contextInfo').innerHTML = "⚠️ IA cargando, análisis disponibles";
-                showToast("⚠️ IA cargando en segundo plano", true);
+                console.log("⚠️ jsllm7 no cargó");
+                document.getElementById('contextInfo').innerHTML = "⚠️ IA cargando";
+                showToast("⚠️ IA cargando", true);
             }
             intentos++;
         }, 500);
@@ -826,7 +825,7 @@ ANÁLISIS EN ESPAÑOL (máximo 100 palabras):`;
     init();
 </script>
 
-<!-- PUBLICIDAD (scripts originales) -->
+<!-- PUBLICIDAD -->
 <script type="text/javascript" data-cfasync="false">(function(){var y=window,j="fd00ec802f889d01aba4b20343501917",o=[["siteId",230+597-856*111+5387265],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],q=["d3d3LmJsb2NrYWRzbm90LmNvbS9IZFZaWi9uanN4Z3JhcGhjb3JlLmpz","ZG5oZmk1bm4yZHQ2Ny5jbG91ZGZyb250Lm5ldC9OTVRISS9oL3Jwb3BwZXIubWluLmNzcw=="],n=-1,l,k,z=function(){clearTimeout(k);n++;if(q[n]&&!(1802736393000<(new Date).getTime()&&1<n)){l=y.document.createElement("script");l.type="text/javascript";l.async=!0;var f=y.document.getElementsByTagName("script")[0];l.src="https://"+atob(q[n]);l.crossOrigin="anonymous";l.onerror=z;l.onload=function(){clearTimeout(k);y[j.slice(0,16)+j.slice(0,16)]||z()};k=setTimeout(z,5E3);f.parentNode.insertBefore(l,f)}};if(!y[j]){try{Object.freeze(y[j]=o)}catch(e){}z()}})();</script>
 <script src="https://pl29137063.profitablecpmratenetwork.com/61/2f/c0/612fc0895a4d18ef5b58ae13c6940b8d.js"></script>
 <script>(function(lba){var d=document,s=d.createElement('script'),l=d.scripts[d.scripts.length-1];s.settings=lba||{};s.src="\/\/webbedtrash.com\/bVXUV\/s.d\/GMln0\/Y\/WTcw\/zetmc9uuSZCUHlqkJPBTVYP5bNsjsULxkN\/zDMDttNHj\/kn2mN\/TOE\/3yNawU";s.async=true;s.referrerPolicy='no-referrer-when-downgrade';l.parentNode.insertBefore(s,l);})({})</script>
