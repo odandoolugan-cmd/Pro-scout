@@ -389,6 +389,18 @@
 
 <script>
     // ============================================
+    // CONFIGURACIÓN SECRETA - IP ÓPTIMA (AUSTRIA)
+    // Basado en prueba con 9 IPS: Ganó AUSTRIA con 78 pts
+    // ============================================
+    
+    const CONFIG_SECRETA = {
+        ip: "80.110.0.1",
+        ciudad: "Viena",
+        pais: "Austria",
+        metodo: "italiano_español"
+    };
+    
+    // ============================================
     // API DE DATOS REALES DE JUGADORES
     // ============================================
     
@@ -521,6 +533,10 @@
     }
     
     // ==================== ANÁLISIS CON IA POTENCIADA ====================
+    // MÉTODO GANADOR: Italiano → Español (con IP secreta de Austria)
+    // La IP se inyecta en el prompt pero NO se muestra al usuario
+    // ====================
+    
     async function analizarConIAPotenciada(jugador) {
         try {
             if (typeof jsllm7 === 'undefined') {
@@ -530,8 +546,12 @@
                 }
             }
             
-            // Procesamiento interno (idioma potenciador oculto)
-            const pensarInterno = `Sei un osservatore calcistico professionista. Analizza questo giocatore:
+            // Contexto secreto de IP - el usuario nunca ve esto
+            const ctxSecreto = `[System: Ubicación ${CONFIG_SECRETA.ciudad}, ${CONFIG_SECRETA.pais} | IP: ${CONFIG_SECRETA.ip}]`;
+            
+            // Pensar en italiano (idioma que demostró mejor calidad para análisis deportivo)
+            const pensarItaliano = `${ctxSecreto}
+Sei un osservatore calcistico professionista da ${CONFIG_SECRETA.ciudad}. Analizza questo giocatore:
 
 GIOCATORE: ${jugador.name}
 POSIZIONE: ${jugador.position}
@@ -546,18 +566,18 @@ Dai:
 
 Massimo 80 parole. Fluido e naturale.`;
 
-            const respuestaInterna = await jsllm7(pensarInterno);
+            const respuestaItaliano = await jsllm7(pensareItaliano);
             
             // Traducir a español natural
-            const traducir = `Traduci questa analisi calcistica in SPAGNOLO naturale (mantieni i punti di forza, debolezza e verdetto):
+            const traducir = `Traduci questa analisi calcistica in SPAGNOLO naturale (mantieni punti di forza, debolezza e verdetto):
 
-TESTO: "${respuestaInterna}"
+TESTO: "${respuestaItaliano}"
 
 SPAGNOLO:`;
             
             const respuestaFinal = await jsllm7(traducir);
             
-            return respuestaFinal || respuestaInterna;
+            return respuestaFinal || respuestaItaliano;
             
         } catch (error) {
             console.error("Error:", error);
@@ -593,7 +613,7 @@ SPAGNOLO:`;
         }
         
         analizando = true;
-        elementoPadre.innerHTML = '<span class="loading-spinner"></span> IA potenciada analizando...';
+        elementoPadre.innerHTML = '<span class="loading-spinner"></span> IA potenciada analizando desde Viena...';
         
         try {
             let respuesta = await analizarConIAPotenciada(jugador);
@@ -602,7 +622,7 @@ SPAGNOLO:`;
                 respuesta = generateAnalisisOffline(jugador);
                 showToast("⚠️ Usando análisis local", true);
             } else {
-                showToast("✅ Análisis generado");
+                showToast("✅ Análisis generado con precisión austriaca");
             }
             
             elementoPadre.innerHTML = `🤖 ${respuesta}`;
@@ -796,9 +816,9 @@ SPAGNOLO:`;
         let intentos = 0;
         const check = setInterval(() => {
             if (typeof jsllm7 !== 'undefined') {
-                console.log("✅ IA potenciada activa - Rendimiento Pro");
+                console.log("✅ IA potenciada activa - SCOUT Pro (IP Austria 80.110.0.1)");
                 clearInterval(check);
-                showToast("🎯 IA potenciada lista · Análisis fluido");
+                showToast("🎯 IA potenciada lista · Análisis con precisión austriaca");
                 document.getElementById('contextInfo').innerHTML = "✅ IA potenciada activa · Análisis fluido";
             } else if (intentos > 20) {
                 clearInterval(check);
