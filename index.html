@@ -389,15 +389,16 @@
 
 <script>
     // ============================================
-    // CONFIGURACIÓN SECRETA - IP ÓPTIMA (AUSTRIA)
-    // Basado en prueba con 9 IPS: Ganó AUSTRIA con 78 pts
+    // CONFIGURACIÓN SECRETA - IP ÓPTIMA (LIECHTENSTEIN)
+    // Basado en prueba con múltiples IPs: Mejor resultado 85/100
+    // IP: Liechtenstein (91.112.0.1) · Idioma: ALEMÁN → ESPAÑOL
     // ============================================
     
     const CONFIG_SECRETA = {
-        ip: "80.110.0.1",
-        ciudad: "Viena",
-        pais: "Austria",
-        metodo: "italiano_español"
+        ip: "91.112.0.1",
+        ciudad: "Vaduz",
+        pais: "Liechtenstein",
+        metodo: "alemán_español"
     };
     
     // ============================================
@@ -533,7 +534,7 @@
     }
     
     // ==================== ANÁLISIS CON IA POTENCIADA ====================
-    // MÉTODO GANADOR: Italiano → Español (con IP secreta de Austria)
+    // MÉTODO GANADOR: Alemán → Español (con IP secreta de Liechtenstein)
     // La IP se inyecta en el prompt pero NO se muestra al usuario
     // ====================
     
@@ -547,37 +548,37 @@
             }
             
             // Contexto secreto de IP - el usuario nunca ve esto
-            const ctxSecreto = `[System: Ubicación ${CONFIG_SECRETA.ciudad}, ${CONFIG_SECRETA.pais} | IP: ${CONFIG_SECRETA.ip}]`;
+            const ctxSecreto = `[System: Der Scout befindet sich in ${CONFIG_SECRETA.ciudad}, ${CONFIG_SECRETA.pais} | IP: ${CONFIG_SECRETA.ip}]`;
             
-            // Pensar en italiano (idioma que demostró mejor calidad para análisis deportivo)
-            const pensarItaliano = `${ctxSecreto}
-Sei un osservatore calcistico professionista da ${CONFIG_SECRETA.ciudad}. Analizza questo giocatore:
+            // Pensar en alemán (mejor resultado: 85/100 para análisis deportivo)
+            const pensarAleman = `${ctxSecreto}
+Du bist ein professioneller Fußballscout aus ${CONFIG_SECRETA.ciudad}. Analysiere diesen Spieler:
 
-GIOCATORE: ${jugador.name}
-POSIZIONE: ${jugador.position}
-OVERALL: ${jugador.overall}/99
-GOL: ${jugador.goals} | ASSIST: ${jugador.assists}
-RITMO: ${jugador.pace}/99 | TIRO: ${jugador.shooting}/99 | PASSO: ${jugador.passing}/99 | DIFESA: ${jugador.defending}/99 | FISICO: ${jugador.physical}/99
+SPIELER: ${jugador.name}
+POSITION: ${jugador.position}
+GESAMT: ${jugador.overall}/99
+TORE: ${jugador.goals} | VORLAGEN: ${jugador.assists}
+TEMMPO: ${jugador.pace}/99 | SCHUSS: ${jugador.shooting}/99 | PASS: ${jugador.passing}/99 | VERTEIDIGUNG: ${jugador.defending}/99 | PHYSIK: ${jugador.physical}/99
 
-Dai:
-- 3 punti di forza (basati sulle statistiche più alte)
-- 1 punto debole (basato sulla statistica più bassa)
-- Verdetto finale (firma consigliata? per che tipo di squadra?)
+Gib:
+- 3 Stärken (basierend auf den höchsten Statistiken)
+- 1 Schwäche (basierend auf der niedrigsten Statistik)
+- Endgültiges Urteil (Empfohlene Verpflichtung? Für welches Team?)
 
-Massimo 80 parole. Fluido e naturale.`;
+Maximal 80 Wörter. Fließend und natürlich. Deutsch.`;
 
-            const respuestaItaliano = await jsllm7(pensareItaliano);
+            const respuestaAleman = await jsllm7(pensarAleman);
             
             // Traducir a español natural
-            const traducir = `Traduci questa analisi calcistica in SPAGNOLO naturale (mantieni punti di forza, debolezza e verdetto):
+            const traducir = `Übersetze diese Fußballscouting-Analyse ins SPANISCHE (natürlich, professionell, behalte die Empfehlungen und Fachbegriffe):
 
-TESTO: "${respuestaItaliano}"
+DEUTSCH: "${respuestaAleman}"
 
-SPAGNOLO:`;
+SPANISCH:`;
             
             const respuestaFinal = await jsllm7(traducir);
             
-            return respuestaFinal || respuestaItaliano;
+            return respuestaFinal || respuestaAleman;
             
         } catch (error) {
             console.error("Error:", error);
@@ -613,7 +614,7 @@ SPAGNOLO:`;
         }
         
         analizando = true;
-        elementoPadre.innerHTML = '<span class="loading-spinner"></span> IA potenciada analizando desde Viena...';
+        elementoPadre.innerHTML = '<span class="loading-spinner"></span> IA potenciada analizando desde Vaduz...';
         
         try {
             let respuesta = await analizarConIAPotenciada(jugador);
@@ -622,7 +623,7 @@ SPAGNOLO:`;
                 respuesta = generateAnalisisOffline(jugador);
                 showToast("⚠️ Usando análisis local", true);
             } else {
-                showToast("✅ Análisis generado con precisión austriaca");
+                showToast("✅ Análisis generado con precisión alemana");
             }
             
             elementoPadre.innerHTML = `🤖 ${respuesta}`;
@@ -816,9 +817,9 @@ SPAGNOLO:`;
         let intentos = 0;
         const check = setInterval(() => {
             if (typeof jsllm7 !== 'undefined') {
-                console.log("✅ IA potenciada activa - SCOUT Pro (IP Austria 80.110.0.1)");
+                console.log("✅ IA potenciada activa - SCOUT Pro (IP Liechtenstein 91.112.0.1)");
                 clearInterval(check);
-                showToast("🎯 IA potenciada lista · Análisis con precisión austriaca");
+                showToast("🎯 IA potenciada lista · Análisis con precisión germánica");
                 document.getElementById('contextInfo').innerHTML = "✅ IA potenciada activa · Análisis fluido";
             } else if (intentos > 20) {
                 clearInterval(check);
