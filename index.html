@@ -26,7 +26,6 @@
         
         .player-card-big { background: linear-gradient(135deg, #0d2a2a, #0b2222); border-radius: 1.5rem; padding: 1.2rem 1.8rem; margin-top: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; border-left: 5px solid #3bcb9b; }
         .player-name { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; }
-        .player-stats { display: flex; gap: 1.5rem; flex-wrap: wrap; }
         .stat-chip { background: #1e4a43; padding: 0.3rem 1rem; border-radius: 2rem; font-size: 0.9rem; }
         .stat-chip span { font-weight: bold; color: #ffd966; }
 
@@ -50,20 +49,15 @@
         .loading-spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite; margin-right: 6px; vertical-align: middle; }
         @keyframes spin { to { transform: rotate(360deg); } }
         
-        .ad-container { margin: 1.5rem 0; text-align: center; background: rgba(0,0,0,0.2); border-radius: 1rem; padding: 0.8rem; position: relative; }
+        .ad-container { margin: 1.5rem 0; text-align: center; background: rgba(0,0,0,0.2); border-radius: 1rem; padding: 0.8rem; }
         .ad-label { font-size: 0.7rem; color: #6c9e93; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px; }
-        
         .news-ticker { background: rgba(0,0,0,0.3); border-radius: 2rem; padding: 0.4rem 1rem; margin: 0.5rem auto; font-size: 0.7rem; text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-        
         .global-reset { background: #aa3e2e; border: none; padding: 0.6rem 1.5rem; border-radius: 3rem; color: white; margin-top: 1rem; cursor: pointer; font-weight: bold; transition: 0.2s; }
         .global-reset:hover { background: #c55543; transform: scale(0.98); }
         .footer { text-align: center; margin-top: 2rem; font-size: 0.7rem; opacity: 0.6; }
-        
         .toast-msg { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #10b981; color: white; padding: 8px 20px; border-radius: 50px; font-size: 0.8rem; z-index: 2000; animation: fadeOut 2s forwards; }
         @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
-        
         .context-info { background: rgba(139,92,246,0.1); border-radius: 1rem; padding: 0.5rem; margin: 0.5rem 0; font-size: 0.65rem; color: #a5b4fc; text-align: center; }
-        
         @media (max-width: 700px) { .player-name { font-size: 1.3rem; } .ad-container { margin: 1rem 0; } .news-ticker { white-space: normal; line-height: 1.3; } }
     </style>
 </head>
@@ -88,19 +82,10 @@
     <h2 style="margin-top: 0.5rem;">🎯 RENDIMIENTO POR POSICIÓN</h2>
     <div id="positionsContainer" class="positions-grid"></div>
     
-    <div class="ad-container">
-        <div class="ad-label">🔗 OFERTA DESTACADA</div>
-        <a href="https://www.profitablecpmratenetwork.com/cuitcvgz?key=85ca230e218898f76e48c348cafb2311" target="_blank" rel="nofollow" style="display: inline-block; background: linear-gradient(90deg, #e9c46a, #f4a261); color: #1a222c; padding: 10px 25px; border-radius: 40px; text-decoration: none; font-weight: bold; margin: 5px;">🎮 OFERTA ESPECIAL 1</a>
-    </div>
+    <div class="ad-container"><div class="ad-label">🔗 OFERTA DESTACADA</div><a href="https://www.profitablecpmratenetwork.com/cuitcvgz?key=85ca230e218898f76e48c348cafb2311" target="_blank" rel="nofollow" style="display:inline-block;background:linear-gradient(90deg,#e9c46a,#f4a261);color:#1a222c;padding:10px 25px;border-radius:40px;text-decoration:none;font-weight:bold;margin:5px;">🎮 OFERTA ESPECIAL 1</a></div>
+    <div class="ad-container"><div class="ad-label">🎁 OFERTA ESPECIAL</div><a href="https://www.profitablecpmratenetwork.com/b27uffyn?key=5b35819451353807b0e99b21addde69a" target="_blank" rel="nofollow" style="display:inline-block;background:linear-gradient(90deg,#2a9d8f,#264653);color:white;padding:10px 25px;border-radius:40px;text-decoration:none;font-weight:bold;margin:5px;">🎲 OFERTA ESPECIAL 2</a></div>
     
-    <div class="ad-container">
-        <div class="ad-label">🎁 OFERTA ESPECIAL</div>
-        <a href="https://www.profitablecpmratenetwork.com/b27uffyn?key=5b35819451353807b0e99b21addde69a" target="_blank" rel="nofollow" style="display: inline-block; background: linear-gradient(90deg, #2a9d8f, #264653); color: white; padding: 10px 25px; border-radius: 40px; text-decoration: none; font-weight: bold; margin: 5px;">🎲 OFERTA ESPECIAL 2</a>
-    </div>
-    
-    <div style="text-align: center; margin-top: 1.5rem;">
-        <button id="resetBtn" class="global-reset">🔄 REINICIAR A JUGADOR BASE</button>
-    </div>
+    <div style="text-align:center;margin-top:1.5rem;"><button id="resetBtn" class="global-reset">🔄 REINICIAR A JUGADOR BASE</button></div>
     <div class="footer">✨ Datos reales · Análisis con IA potenciada</div>
 </div>
 
@@ -108,357 +93,73 @@
 
 <script>
     // ============================================
-    // SCOUT IA - SISTEMA CONFIDENCIAL
-    // MÉTODO GANADOR: Italiano→Español (100%)
-    // + Portugués (94%), Árabe (90%), Triple Chino (100%)
-    // 5 métodos auto-adaptativos en secreto
+    // NANO-IMPORTS SCOUTING ÉLITE (SECRETOS)
     // ============================================
-    
-    (function() {
-        const _ = { t: 20, r: 2, p: 30000, m: 4 };
-        
-        const M = [
-            { f: [
-                (q) => `Sei un esperto mondiale di scouting calcistico. Rispondi in ITALIANO con massima profondità: "${q}" 3 punti di forza, 1 debolezza, giudizio finale. Precisione assoluta.`,
-                (t) => `Traduci questa analisi di scouting in SPAGNOLO con massima qualità e precisione:\n\n"${t}"\n\nSPAGNOLO:`
-            ]},
-            { f: [
-                (q) => `Especialista mundial em scouting de futebol. Responda em PORTUGUÊS com profundidade: "${q}" 3 pontos fortes, 1 fraqueza, veredito final.`,
-                (t) => `Traduza esta análise de scouting para ESPANHOL com máxima qualidade:\n\n"${t}"\n\nESPANHOL:`
-            ]},
-            { f: [
-                (q) => `Eres un experto en scouting. Responde en CHINO con profundidad: "${q}" 3 fortalezas, 1 debilidad, veredicto.`,
-                (t) => `Translate to ENGLISH:\n\n"${t}"\n\nENGLISH:`,
-                (t) => `Traduis en FRANÇAIS:\n\n"${t}"\n\nFRANÇAIS:`,
-                (t) => `Traduce a ESPAÑOL con máxima calidad:\n\n"${t}"\n\nESPAÑOL:`
-            ]},
-            { f: [
-                (q) => `خبير كشاف كرة قدم عالمي. أجب بالعربية: "${q}" 3 نقاط قوة، نقطة ضعف، حكم نهائي.`,
-                (t) => `Traduce este análisis a ESPAÑOL:\n\n"${t}"\n\nESPAÑOL:`
-            ]},
-            { f: [
-                (q) => `Du bist ein Fußball-Scouting-Experte. Antworte auf DEUTSCH: "${q}" 3 Stärken, 1 Schwäche, Urteil.`,
-                (t) => `Übersetze ins SPANISCHE:\n\n"${t}"\n\nSPANISCH:`
-            ]}
-        ];
-        
-        let S = { i: 0, c: 0 };
-        let C = JSON.parse(localStorage.getItem('_sx') || '{}');
-        function _s() { localStorage.setItem('_sx', JSON.stringify(C)); }
-        function _g(q) { const k = q.toLowerCase().trim(); if (C[k] && (Date.now()-C[k].t)<3600000) return C[k].r; return null; }
-        function _p(q, r) {
-            const k = q.toLowerCase().trim(); C[k] = { r, t: Date.now() };
-            const keys = Object.keys(C);
-            if (keys.length > 200) { keys.sort((a,b) => C[a].t-C[b].t); for (let i=0;i<30;i++) delete C[keys[i]]; }
-            _s();
-        }
-        
-        async function _l(p) {
-            return new Promise(async (resolve, reject) => {
-                const t = setTimeout(() => reject(new Error('T')), _.t * 1000);
-                try { const r = await jsllm7(p); clearTimeout(t); resolve(r); }
-                catch (e) { clearTimeout(t); reject(e); }
-            });
-        }
-        
-        async function _e(m, q) {
-            let t = null;
-            for (let i = 0; i < m.f.length; i++) t = await _l(i === 0 ? m.f[i](q) : m.f[i](t));
-            return t;
-        }
-        
-        window._x = async function(q) {
-            const start = S.i;
-            for (let i = 0; i < M.length; i++) {
-                const idx = (start + i) % M.length;
-                try {
-                    const r = await _e(M[idx], q);
-                    S.i = idx; S.c = 0;
-                    return { r, e: true };
-                } catch (e) {
-                    S.c++;
-                    if (S.c >= _.m) { await new Promise(r => setTimeout(r, _.p)); S.c = 0; }
-                    if (i < M.length - 1) await new Promise(r => setTimeout(r, 2000));
-                }
-            }
-            return { r: null, e: false };
-        };
-        
-        window._g = _g;
-        window._p = _p;
-        
-        setInterval(() => { if (S.i > 0 && S.c === 0) S.i = 0; }, 180000);
-    })();
-    
-    // ============================================
-    // CONFIGURACIÓN Y DATOS
-    // ============================================
-    const CONFIG = { ip: "91.112.0.1", ciudad: "Vaduz", pais: "Liechtenstein" };
-    
-    let datosJugadorReal = null;
-    let analizando = false;
-    let currentPlayer = { name: "Jugador Base", overall: 75, position: "Delantero", goals: 8, assists: 6, pace: 75, shooting: 74, passing: 72, defending: 50, physical: 70 };
-    let currentAnalysisDiv = null;
-    
-    function showToast(msg, isError = false) {
-        const t = document.createElement('div');
-        t.className = 'toast-msg';
-        if(isError) t.style.background = '#ef4444';
-        t.innerText = msg;
-        document.body.appendChild(t);
-        setTimeout(() => t.remove(), 3000);
-    }
-    
-    function obtenerDatosJugadorReal(nombre) {
-        const nombreLower = nombre.toLowerCase();
-        const baseDatosReal = {
-            "lionel messi": { overall: 92, goles: 25, asistencias: 18, pace: 82, shooting: 91, passing: 93, defending: 35, physical: 68, posicion: "Extremo" },
-            "cristiano ronaldo": { overall: 91, goles: 28, asistencias: 8, pace: 85, shooting: 94, passing: 78, defending: 40, physical: 85, posicion: "Delantero" },
-            "kylian mbappé": { overall: 92, goles: 30, asistencias: 10, pace: 97, shooting: 89, passing: 80, defending: 38, physical: 82, posicion: "Delantero" },
-            "erling haaland": { overall: 91, goles: 32, asistencias: 6, pace: 88, shooting: 93, passing: 65, defending: 42, physical: 90, posicion: "Delantero" },
-            "vinícius jr": { overall: 88, goles: 18, asistencias: 12, pace: 94, shooting: 83, passing: 79, defending: 40, physical: 74, posicion: "Extremo" },
-            "jude bellingham": { overall: 89, goles: 19, asistencias: 8, pace: 82, shooting: 84, passing: 86, defending: 70, physical: 82, posicion: "Mediocentro" },
-            "neymar": { overall: 89, goles: 17, asistencias: 14, pace: 86, shooting: 85, passing: 88, defending: 38, physical: 70, posicion: "Extremo" },
-            "salah": { overall: 90, goles: 24, asistencias: 13, pace: 92, shooting: 87, passing: 82, defending: 45, physical: 78, posicion: "Extremo" },
-            "lewandowski": { overall: 90, goles: 26, asistencias: 7, pace: 78, shooting: 92, passing: 74, defending: 40, physical: 85, posicion: "Delantero" }
-        };
-        for (let [key, value] of Object.entries(baseDatosReal)) {
-            if (nombreLower.includes(key) || key.includes(nombreLower)) {
-                return { existe: true, nombre: key.split(' ').map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(' '), ...value };
-            }
-        }
-        return { existe: false };
-    }
-    
-    function generatePlayerStatsFromName(name, datosReales = null) {
-        if (datosReales?.existe) {
-            return { name: datosReales.nombre, overall: datosReales.overall, position: datosReales.posicion, goals: datosReales.goles, assists: datosReales.asistencias, pace: datosReales.pace, shooting: datosReales.shooting, passing: datosReales.passing, defending: datosReales.defending, physical: datosReales.physical };
-        }
-        const nameLower = name.toLowerCase();
-        if (nameLower.includes("messi")) return { name: "Lionel Messi", overall: 92, position: "Extremo", goals: 25, assists: 18, pace: 82, shooting: 91, passing: 93, defending: 35, physical: 68 };
-        if (nameLower.includes("cristiano") || nameLower.includes("ronaldo")) return { name: "Cristiano Ronaldo", overall: 91, position: "Delantero", goals: 28, assists: 8, pace: 85, shooting: 94, passing: 78, defending: 40, physical: 85 };
-        if (nameLower.includes("mbapp")) return { name: "Kylian Mbappé", overall: 92, position: "Delantero", goals: 30, assists: 10, pace: 97, shooting: 89, passing: 80, defending: 38, physical: 82 };
-        if (nameLower.includes("haaland")) return { name: "Erling Haaland", overall: 91, position: "Delantero", goals: 32, assists: 6, pace: 88, shooting: 93, passing: 65, defending: 42, physical: 90 };
-        if (nameLower.includes("vinicius") || nameLower.includes("vini")) return { name: "Vinícius Jr", overall: 88, position: "Extremo", goals: 18, assists: 12, pace: 94, shooting: 83, passing: 79, defending: 40, physical: 74 };
-        if (nameLower.includes("bellingham")) return { name: "Jude Bellingham", overall: 89, position: "Mediocentro", goals: 19, assists: 8, pace: 82, shooting: 84, passing: 86, defending: 70, physical: 82 };
-        
-        const hash = name.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
-        const seed = (hash % 100) / 100;
-        const overall = 65 + Math.floor(seed * 28);
-        const positions = ["Delantero","Extremo","Mediocentro","Defensa Central","Lateral","Portero"];
-        return {
-            name, overall, position: positions[Math.floor(seed * positions.length)],
-            goals: Math.floor(Math.random()*15)+(overall>80?8:2),
-            assists: Math.floor(Math.random()*12)+(overall>78?5:1),
-            pace: 60+Math.floor(Math.random()*30), shooting: 55+Math.floor(Math.random()*35),
-            passing: 55+Math.floor(Math.random()*35), defending: 30+Math.floor(Math.random()*55),
-            physical: 55+Math.floor(Math.random()*30)
-        };
-    }
-    
-    const POSITIONS_TEMPLATE = [
-        { id:"portero", name:"🧤 Portero", skills:["Reflejos","Juego Aéreo","Colocación","Salida con pies"] },
-        { id:"defensa", name:"🛡️ Defensa Central", skills:["Marcaje","Anticipación","Juego Aéreo","Salida de Balón"] },
-        { id:"lateral", name:"⚡ Lateral", skills:["Velocidad","Centro","Defensa 1vs1","Resistencia"] },
-        { id:"mediocentro", name:"🎯 Mediocentro", skills:["Pase","Visión","Recuperación","Tiro Lejano"] },
-        { id:"extremidad", name:"🌪️ Extremo", skills:["Regate","Velocidad","Asistencia","Finalización"] },
-        { id:"delantero", name:"⚽ Delantero", skills:["Finalización","Posicionamiento","Remate","Asociación"] }
-    ];
-    let positionsState = [];
-    
-    function updatePositionsFromPlayer(player) {
-        positionsState = POSITIONS_TEMPLATE.map(pos => {
-            let affinityBonus = 0;
-            const mainPos = player.position.toLowerCase();
-            if ((mainPos.includes("delan")&&pos.id==="delantero")||(mainPos.includes("extrem")&&pos.id==="extremidad")||(mainPos.includes("centro")&&pos.id==="mediocentro")||(mainPos.includes("defensa")&&pos.id==="defensa")||(mainPos.includes("later")&&pos.id==="lateral")||(mainPos.includes("porter")&&pos.id==="portero")) affinityBonus = 15;
-            const offensiveBonus = Math.min(20, Math.floor(player.goals*1.2+player.assists*0.9));
-            const overallBonus = (player.overall-70)*0.8;
-            return {
-                id:pos.id, name:pos.name, icon:pos.icon,
-                skills:pos.skills.map(skillName => {
-                    let baseValue = 50+overallBonus+affinityBonus;
-                    if (skillName.includes("Finalización")||skillName.includes("Remate")) baseValue += (player.shooting-60)*0.7+offensiveBonus*0.5;
-                    if (skillName.includes("Pase")||skillName.includes("Visión")) baseValue += (player.passing-60)*0.7+player.assists*1.2;
-                    if (skillName.includes("Velocidad")||skillName.includes("Regate")) baseValue += (player.pace-65)*0.8;
-                    if (skillName.includes("Defensa")||skillName.includes("Marcaje")) baseValue += (player.defending-55)*0.7;
-                    if (skillName.includes("Físico")||skillName.includes("Resistencia")) baseValue += (player.physical-60)*0.6;
-                    return { name:skillName, value:Math.min(99,Math.max(35,Math.floor(baseValue))) };
-                })
-            };
-        });
-    }
-    
-    function getPerformance(pos) { return Math.round(pos.skills.reduce((acc,s)=>acc+s.value,0)/pos.skills.length); }
-    
-    function renderPositions() {
-        const container = document.getElementById('positionsContainer');
-        if (!container) return;
-        container.innerHTML = '';
-        positionsState.forEach(pos => {
-            const perf = getPerformance(pos);
-            const card = document.createElement('div');
-            card.className = 'position-card';
-            card.innerHTML = `
-                <div class="pos-header"><span class="pos-name">${pos.name}</span><span class="pos-perf">🎯 ${perf}%</span></div>
-                <div>${pos.skills.map(skill => `
-                    <div class="skill-item"><div class="skill-label"><span>${skill.name}</span><span>${skill.value}/99</span></div>
-                    <div class="skill-bar-bg"><div class="skill-fill" style="width:${skill.value}%;"></div></div></div>
-                `).join('')}</div>
-                <div class="badge-recom">${perf>=80?'🏆 ELITE':perf>=65?'👍 BUEN RENDIMIENTO':'📈 MARGEN DE MEJORA'}</div>
-            `;
-            container.appendChild(card);
-        });
-    }
-    
-    function renderPlayerInfo(player) {
-        const container = document.getElementById('playerInfoContainer');
-        container.innerHTML = `
-            <div class="player-card-big">
-                <div>
-                    <div class="player-name">⭐ ${player.name}</div>
-                    <div style="display:flex;gap:0.5rem;margin-top:0.3rem;flex-wrap:wrap;">
-                        <span class="stat-chip">📊 Overall: <span>${player.overall}</span></span>
-                        <span class="stat-chip">📍 Posición: <span>${player.position}</span></span>
-                        <span class="stat-chip">⚽ Goles: <span>${player.goals}</span></span>
-                        <span class="stat-chip">🎯 Asistencias: <span>${player.assists}</span></span>
-                    </div>
-                </div>
-                <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-                    <span class="stat-chip">💨 Ritmo: ${player.pace}</span>
-                    <span class="stat-chip">🎯 Tiro: ${player.shooting}</span>
-                    <span class="stat-chip">🎨 Pase: ${player.passing}</span>
-                    <span class="stat-chip">🛡️ Defensa: ${player.defending}</span>
-                    <span class="stat-chip">💪 Físico: ${player.physical}</span>
-                </div>
-            </div>
-            <div class="ia-analysis" id="iaAnalysis">
-                <button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON IA POTENCIADA</button>
-                <div id="iaResult" style="margin-top:10px;">🔍 Haz clic para obtener análisis profesional</div>
-            </div>
-        `;
-        currentAnalysisDiv = document.getElementById('iaResult');
-    }
-    
-    function generateAnalisisOffline(jugador) {
-        const fortalezas = [];
-        if (jugador.shooting>85) fortalezas.push("⚽ Finalización letal");
-        if (jugador.pace>85) fortalezas.push("💨 Velocidad explosiva");
-        if (jugador.passing>85) fortalezas.push("🎨 Visión de juego");
-        if (jugador.physical>85) fortalezas.push("💪 Dominio físico");
-        if (jugador.defending>80) fortalezas.push("🛡️ Solidez defensiva");
-        const debilidad = jugador.defending<50?"Defensa":(jugador.shooting<70?"Definición":(jugador.passing<70?"Precisión de pase":"Regularidad"));
-        const recomendacion = jugador.overall>=85?"🎯 Fichaje de élite":(jugador.overall>=75?"📈 Buena opción":"🔮 Proyecto de futuro");
-        return `🤖 **${jugador.name}** - ${jugador.position}\n\n✅ **Fortalezas:** ${fortalezas.join(', ')||'Versatilidad'}\n\n⚠️ **A mejorar:** ${debilidad}\n\n📌 **Recomendación:** ${recomendacion}`;
-    }
-    
-    async function analizarConIA(jugador, elementoPadre) {
-        if (analizando) { elementoPadre.innerHTML = "⏳ Ya estoy analizando..."; return; }
-        analizando = true;
-        elementoPadre.innerHTML = '<span class="loading-spinner"></span> IA potenciada analizando...';
-        
-        try {
-            const prompt = `Analizza questo giocatore: ${jugador.name}, ${jugador.position}, Overall ${jugador.overall}/99, Gol ${jugador.goals}, Assist ${jugador.assists}. Ritmo ${jugador.pace}, Tiro ${jugador.shooting}, Passaggio ${jugador.passing}, Difesa ${jugador.defending}, Fisico ${jugador.physical}. Dai 3 punti di forza, 1 debolezza, verdetto finale.`;
-            
-            let respuesta = null;
-            
-            // Verificar caché
-            if (window._g) respuesta = window._g(prompt);
-            
-            if (!respuesta && window._x) {
-                const result = await window._x(prompt);
-                if (result.e) {
-                    respuesta = result.r;
-                    if (window._p) window._p(prompt, respuesta);
-                }
-            }
-            
-            if (!respuesta) respuesta = generateAnalisisOffline(jugador);
-            
-            elementoPadre.innerHTML = `🤖 ${respuesta}`;
-            showToast("✅ Análisis generado con IA potenciada");
-        } catch (error) {
-            elementoPadre.innerHTML = generateAnalisisOffline(jugador);
-            showToast("⚠️ Usando análisis local", true);
-        } finally {
-            analizando = false;
-        }
-    }
-    
-    window.generarAnalisis = function() {
-        if (currentAnalysisDiv) analizarConIA(currentPlayer, currentAnalysisDiv);
+    const _B = {
+        s: `[SCOUTING-ELITE] Técnica:control orientado,regate 1vs1,primer toque,golpeo,pase largo/corto,tiro colocación. Físico:velocidad punta,aceleración,potencia,fuerza,resistencia,salto,agilidad. Mentalidad:madurez,liderazgo,disciplina,resiliencia,confianza,trabajo,humildad. Proyección:edad biológica,margen mejora,adaptabilidad,consistencia,techo. Ejemplos:Messi(LaMasia),Vinicius(Flamengo),Haaland(Molde),Bellingham(Birmingham).`,
+        p: `[POSICIONES] DC:finalización,posicionamiento,juego aéreo,remate 1 toque,desmarque ruptura. EXT:regate,velocidad,centro,desborde,1vs1,diagonal. MP:creatividad,asistencia,visión,disparo media distancia,último pase. MC:recuperación,pase,posicionamiento,presión,box-to-box. DEF:anticipación,marcaje,salida balón,juego aéreo,liderazgo. LAT:ida/vuelta,centro,cobertura,resistencia. POR:reflejos,blocaje,salida,penaltis,juego pies.`,
+        d: `[DATOS] Métricas:xG,goles,asistencias,pases clave,regates exitosos,intercepciones,duelos ganados%,pérdidas,recuperaciones,km recorridos. Plataformas:Wyscout,InStat,Transfermarkt,FBref,Opta,Scout7. Valoración:rendimiento,disciplina,minutos,titularidades,lesiones.`
     };
-    
-    async function searchPlayer() {
-        const input = document.getElementById('playerSearch');
-        const query = input.value.trim();
-        if (!query) { showToast("⚠️ Escribe el nombre de un jugador", true); return; }
-        
-        const contextDiv = document.getElementById('contextInfo');
-        const newsTicker = document.getElementById('newsTicker');
-        contextDiv.innerHTML = "🌐 Buscando datos reales del jugador...";
-        newsTicker.innerHTML = `🔍 Consultando base de datos de ${query}...`;
-        
-        const datosReales = obtenerDatosJugadorReal(query);
-        if (datosReales.existe) {
-            newsTicker.innerHTML = `✅ Datos reales: ${datosReales.nombre} · Overall ${datosReales.overall}`;
-            contextDiv.innerHTML = `📡 Datos reales cargados · IA potenciada activa`;
-            showToast(`✅ Datos reales de ${datosReales.nombre}`);
-        } else {
-            newsTicker.innerHTML = `📊 Generando estadísticas para ${query}...`;
-            contextDiv.innerHTML = "📡 Algoritmo de scouting · IA potenciada";
-            showToast(`📊 Generando estadísticas para ${query}`);
-        }
-        
-        currentPlayer = generatePlayerStatsFromName(query, datosReales);
-        updatePositionsFromPlayer(currentPlayer);
-        renderPlayerInfo(currentPlayer);
-        renderPositions();
-        newsTicker.innerHTML = `⚽ ${currentPlayer.name} · ${currentPlayer.overall} OVR · ${currentPlayer.goals} goles`;
-        
-        if (currentAnalysisDiv) setTimeout(() => analizarConIA(currentPlayer, currentAnalysisDiv), 500);
-    }
-    
-    function resetToBase() {
-        currentPlayer = { name:"Jugador Base", overall:75, position:"Delantero", goals:8, assists:6, pace:75, shooting:74, passing:72, defending:50, physical:70 };
-        updatePositionsFromPlayer(currentPlayer);
-        renderPlayerInfo(currentPlayer);
-        renderPositions();
-        document.getElementById('playerSearch').value = "";
-        document.getElementById('contextInfo').innerHTML = "📡 IA potenciada activa · Listo para buscar";
-        document.getElementById('newsTicker').innerHTML = "⚽ Busca cualquier jugador";
-        if (currentAnalysisDiv) currentAnalysisDiv.innerHTML = "🔍 Haz clic para obtener análisis profesional";
-        showToast("🔄 Jugador base cargado");
-    }
-    
-    function init() {
-        updatePositionsFromPlayer(currentPlayer);
-        renderPlayerInfo(currentPlayer);
-        renderPositions();
-        document.getElementById('searchBtn').addEventListener('click', searchPlayer);
-        document.getElementById('resetBtn').addEventListener('click', resetToBase);
-        document.getElementById('playerSearch').addEventListener('keypress', (e) => { if (e.key==='Enter') searchPlayer(); });
-        
-        let intentos = 0;
-        const check = setInterval(() => {
-            if (typeof jsllm7 !== 'undefined') {
-                clearInterval(check);
-                document.getElementById('contextInfo').innerHTML = "✅ IA potenciada activa · Análisis fluido";
-                showToast("🎯 IA potenciada lista");
-            } else if (intentos > 30) {
-                clearInterval(check);
-                document.getElementById('contextInfo').innerHTML = "⚠️ IA cargando";
-            }
-            intentos++;
-        }, 500);
-    }
-    
+    function _I() { return Object.values(_B).join(' '); }
+
+    // ============================================
+    // SCOUT IA - SISTEMA CONFIDENCIAL + IMPORTS
+    // ============================================
+    (function() {
+        const _ = { t: 20, r: 1, p: 30000, m: 3 };
+        const M = [
+            { f: [(q)=>`${_I()}\n\nSei un esperto mondiale di scouting. ITALIANO: "${q}"`,(t)=>`Traduci in SPAGNOLO:\n\n"${t}"\n\nSPAGNOLO:`]},
+            { f: [(q)=>`${_I()}\n\nEspecialista em scouting. PORTUGUÊS: "${q}"`,(t)=>`Traduza para ESPANHOL:\n\n"${t}"\n\nESPANHOL:`]},
+            { f: [(q)=>`${_I()}\n\nEres experto en scouting. CHINO: "${q}"`,(t)=>`Traduce al ESPAÑOL:\n\n"${t}"\n\nESPAÑOL:`]},
+            { f: [(q)=>`${_I()}\n\nScouting-Experte. DEUTSCH: "${q}"`,(t)=>`Übersetze ins SPANISCHE:\n\n"${t}"\n\nSPANISCH:`]}
+        ];
+        let S={i:0,c:0},C=JSON.parse(localStorage.getItem('_s2')||'{}');
+        function _s(){localStorage.setItem('_s2',JSON.stringify(C));}
+        function _g(q){const k=q.toLowerCase().trim().substring(0,100);if(C[k]&&(Date.now()-C[k].t)<3600000)return C[k].r;return null;}
+        function _p(q,r){const k=q.toLowerCase().trim().substring(0,100);C[k]={r,t:Date.now()};const keys=Object.keys(C);if(keys.length>200){keys.sort((a,b)=>C[a].t-C[b].t);for(let i=0;i<30;i++)delete C[keys[i]];}_s();}
+        async function _l(p){return new Promise(async(r,j)=>{const t=setTimeout(()=>j(new Error('T')),_.t*1000);try{const x=await jsllm7(p);clearTimeout(t);r(x);}catch(e){clearTimeout(t);j(e);}});}
+        async function _e(m,q){let t=null;for(let i=0;i<m.f.length;i++)t=await _l(i===0?m.f[i](q):m.f[i](t));return t;}
+        window._x=async function(q){const start=S.i;for(let i=0;i<M.length;i++){const idx=(start+i)%M.length;try{const r=await _e(M[idx],q);S.i=idx;S.c=0;return{r,e:true};}catch(e){S.c++;if(S.c>=_.m){await new Promise(r=>setTimeout(r,_.p));S.c=0;}if(i<M.length-1)await new Promise(r=>setTimeout(r,2000));}}return{r:null,e:false};};
+        window._g=_g;window._p=_p;setInterval(()=>{if(S.i>0&&S.c===0)S.i=0;},180000);
+    })();
+
+    // ============================================
+    // DATOS Y UI
+    // ============================================
+    let analizando=false,currentPlayer={name:"Jugador Base",overall:75,position:"Delantero",goals:8,assists:6,pace:75,shooting:74,passing:72,defending:50,physical:70},currentAnalysisDiv=null;
+
+    function showToast(msg,isError){const t=document.createElement('div');t.className='toast-msg';t.style.background=isError?'#ef4444':'#10b981';t.innerText=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3000);}
+
+    function obtenerDatosJugadorReal(nombre){const nl=nombre.toLowerCase();const db={ "lionel messi":{overall:92,goles:25,asistencias:18,pace:82,shooting:91,passing:93,defending:35,physical:68,posicion:"Extremo"},"cristiano ronaldo":{overall:91,goles:28,asistencias:8,pace:85,shooting:94,passing:78,defending:40,physical:85,posicion:"Delantero"},"kylian mbappé":{overall:92,goles:30,asistencias:10,pace:97,shooting:89,passing:80,defending:38,physical:82,posicion:"Delantero"},"erling haaland":{overall:91,goles:32,asistencias:6,pace:88,shooting:93,passing:65,defending:42,physical:90,posicion:"Delantero"},"vinícius jr":{overall:88,goles:18,asistencias:12,pace:94,shooting:83,passing:79,defending:40,physical:74,posicion:"Extremo"},"jude bellingham":{overall:89,goles:19,asistencias:8,pace:82,shooting:84,passing:86,defending:70,physical:82,posicion:"Mediocentro"},"neymar":{overall:89,goles:17,asistencias:14,pace:86,shooting:85,passing:88,defending:38,physical:70,posicion:"Extremo"},"salah":{overall:90,goles:24,asistencias:13,pace:92,shooting:87,passing:82,defending:45,physical:78,posicion:"Extremo"},"lewandowski":{overall:90,goles:26,asistencias:7,pace:78,shooting:92,passing:74,defending:40,physical:85,posicion:"Delantero"} };for(let[k,v]of Object.entries(db)){if(nl.includes(k)||k.includes(nl))return{existe:true,nombre:k.split(' ').map(p=>p.charAt(0).toUpperCase()+p.slice(1)).join(' '),...v};}return{existe:false};}
+
+    function generatePlayerStatsFromName(name,datosReales){if(datosReales?.existe)return{name:datosReales.nombre,overall:datosReales.overall,position:datosReales.posicion,goals:datosReales.goles,assists:datosReales.asistencias,pace:datosReales.pace,shooting:datosReales.shooting,passing:datosReales.passing,defending:datosReales.defending,physical:datosReales.physical};const nl=name.toLowerCase();if(nl.includes("messi"))return{name:"Lionel Messi",overall:92,position:"Extremo",goals:25,assists:18,pace:82,shooting:91,passing:93,defending:35,physical:68};if(nl.includes("cristiano")||nl.includes("ronaldo"))return{name:"Cristiano Ronaldo",overall:91,position:"Delantero",goals:28,assists:8,pace:85,shooting:94,passing:78,defending:40,physical:85};if(nl.includes("mbapp"))return{name:"Kylian Mbappé",overall:92,position:"Delantero",goals:30,assists:10,pace:97,shooting:89,passing:80,defending:38,physical:82};if(nl.includes("haaland"))return{name:"Erling Haaland",overall:91,position:"Delantero",goals:32,assists:6,pace:88,shooting:93,passing:65,defending:42,physical:90};if(nl.includes("vinicius")||nl.includes("vini"))return{name:"Vinícius Jr",overall:88,position:"Extremo",goals:18,assists:12,pace:94,shooting:83,passing:79,defending:40,physical:74};if(nl.includes("bellingham"))return{name:"Jude Bellingham",overall:89,position:"Mediocentro",goals:19,assists:8,pace:82,shooting:84,passing:86,defending:70,physical:82};const hash=name.split('').reduce((a,c)=>a+c.charCodeAt(0),0),seed=(hash%100)/100,overall=65+Math.floor(seed*28),positions=["Delantero","Extremo","Mediocentro","Defensa Central","Lateral","Portero"];return{name,overall,position:positions[Math.floor(seed*positions.length)],goals:Math.floor(Math.random()*15)+(overall>80?8:2),assists:Math.floor(Math.random()*12)+(overall>78?5:1),pace:60+Math.floor(Math.random()*30),shooting:55+Math.floor(Math.random()*35),passing:55+Math.floor(Math.random()*35),defending:30+Math.floor(Math.random()*55),physical:55+Math.floor(Math.random()*30)};}
+
+    const POSITIONS_TEMPLATE=[{id:"portero",name:"🧤 Portero",skills:["Reflejos","Juego Aéreo","Colocación","Salida con pies"]},{id:"defensa",name:"🛡️ Defensa Central",skills:["Marcaje","Anticipación","Juego Aéreo","Salida de Balón"]},{id:"lateral",name:"⚡ Lateral",skills:["Velocidad","Centro","Defensa 1vs1","Resistencia"]},{id:"mediocentro",name:"🎯 Mediocentro",skills:["Pase","Visión","Recuperación","Tiro Lejano"]},{id:"extremidad",name:"🌪️ Extremo",skills:["Regate","Velocidad","Asistencia","Finalización"]},{id:"delantero",name:"⚽ Delantero",skills:["Finalización","Posicionamiento","Remate","Asociación"]}];
+    let positionsState=[];
+
+    function updatePositionsFromPlayer(player){positionsState=POSITIONS_TEMPLATE.map(pos=>{let ab=0;const mp=player.position.toLowerCase();if((mp.includes("delan")&&pos.id==="delantero")||(mp.includes("extrem")&&pos.id==="extremidad")||(mp.includes("centro")&&pos.id==="mediocentro")||(mp.includes("defensa")&&pos.id==="defensa")||(mp.includes("later")&&pos.id==="lateral")||(mp.includes("porter")&&pos.id==="portero"))ab=15;const ob=Math.min(20,Math.floor(player.goals*1.2+player.assists*0.9)),ovb=(player.overall-70)*0.8;return{id:pos.id,name:pos.name,skills:pos.skills.map(s=>{let bv=50+ovb+ab;if(s.includes("Finalización")||s.includes("Remate"))bv+=(player.shooting-60)*0.7+ob*0.5;if(s.includes("Pase")||s.includes("Visión"))bv+=(player.passing-60)*0.7+player.assists*1.2;if(s.includes("Velocidad")||s.includes("Regate"))bv+=(player.pace-65)*0.8;if(s.includes("Defensa")||s.includes("Marcaje"))bv+=(player.defending-55)*0.7;if(s.includes("Físico")||s.includes("Resistencia"))bv+=(player.physical-60)*0.6;return{name:s,value:Math.min(99,Math.max(35,Math.floor(bv)))};})};});}
+    function getPerformance(pos){return Math.round(pos.skills.reduce((a,s)=>a+s.value,0)/pos.skills.length);}
+
+    function renderPositions(){const c=document.getElementById('positionsContainer');if(!c)return;c.innerHTML='';positionsState.forEach(pos=>{const p=getPerformance(pos),card=document.createElement('div');card.className='position-card';card.innerHTML=`<div class="pos-header"><span class="pos-name">${pos.name}</span><span class="pos-perf">🎯 ${p}%</span></div><div>${pos.skills.map(s=>`<div class="skill-item"><div class="skill-label"><span>${s.name}</span><span>${s.value}/99</span></div><div class="skill-bar-bg"><div class="skill-fill" style="width:${s.value}%;"></div></div></div>`).join('')}</div><div class="badge-recom">${p>=80?'🏆 ELITE':p>=65?'👍 BUEN RENDIMIENTO':'📈 MARGEN DE MEJORA'}</div>`;c.appendChild(card);});}
+
+    function renderPlayerInfo(player){const c=document.getElementById('playerInfoContainer');c.innerHTML=`<div class="player-card-big"><div><div class="player-name">⭐ ${player.name}</div><div style="display:flex;gap:0.5rem;margin-top:0.3rem;flex-wrap:wrap;"><span class="stat-chip">📊 Overall: <span>${player.overall}</span></span><span class="stat-chip">📍 Posición: <span>${player.position}</span></span><span class="stat-chip">⚽ Goles: <span>${player.goals}</span></span><span class="stat-chip">🎯 Asistencias: <span>${player.assists}</span></span></div></div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">💨 Ritmo: ${player.pace}</span><span class="stat-chip">🎯 Tiro: ${player.shooting}</span><span class="stat-chip">🎨 Pase: ${player.passing}</span><span class="stat-chip">🛡️ Defensa: ${player.defending}</span><span class="stat-chip">💪 Físico: ${player.physical}</span></div></div><div class="ia-analysis" id="iaAnalysis"><button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON IA POTENCIADA</button><div id="iaResult" style="margin-top:10px;">🔍 Haz clic para obtener análisis profesional</div></div>`;currentAnalysisDiv=document.getElementById('iaResult');}
+
+    function _R(j){const f=[],d=j.defending<50?"Defensa":(j.shooting<70?"Definición":(j.passing<70?"Precisión de pase":"Regularidad")),r=j.overall>=85?"🎯 Fichaje de élite":(j.overall>=75?"📈 Buena opción":"🔮 Proyecto de futuro");if(j.shooting>85)f.push("⚽ Finalización letal");if(j.pace>85)f.push("💨 Velocidad explosiva");if(j.passing>85)f.push("🎨 Visión de juego");if(j.physical>85)f.push("💪 Dominio físico");if(j.defending>80)f.push("🛡️ Solidez defensiva");return`🤖 **${j.name}** - ${j.position}\n\n✅ **Fortalezas:** ${f.join(', ')||'Versatilidad'}\n\n⚠️ **A mejorar:** ${d}\n\n📌 **Recomendación:** ${r}`;}
+
+    async function analizarConIA(jugador,el){if(analizando){el.innerHTML="⏳ Ya estoy analizando...";return;}analizando=true;el.innerHTML='<span class="loading-spinner"></span> IA potenciada analizando...';try{const prompt=`Analizza: ${jugador.name}, ${jugador.position}, OVR ${jugador.overall}/99, Gol ${jugador.goals}, Assist ${jugador.assists}. Ritmo ${jugador.pace}, Tiro ${jugador.shooting}, Passaggio ${jugador.passing}, Difesa ${jugador.defending}, Fisico ${jugador.physical}. 3 punti forza, 1 debolezza, verdetto.`;let r=window._g?window._g(prompt):null;if(!r&&window._x){const result=await window._x(prompt);if(result.e){r=result.r;if(window._p)window._p(prompt,r);}}if(!r)r=_R(jugador);el.innerHTML=`🤖 ${r}`;showToast("✅ Análisis generado");}catch(e){el.innerHTML=_R(jugador);showToast("⚠️ Análisis local",true);}finally{analizando=false;}}
+
+    window.generarAnalisis=function(){if(currentAnalysisDiv)analizarConIA(currentPlayer,currentAnalysisDiv);};
+
+    async function searchPlayer(){const input=document.getElementById('playerSearch'),query=input.value.trim();if(!query){showToast("⚠️ Escribe el nombre de un jugador",true);return;}const cd=document.getElementById('contextInfo'),nt=document.getElementById('newsTicker');cd.innerHTML="🌐 Buscando datos reales del jugador...";nt.innerHTML=`🔍 Consultando base de datos de ${query}...`;const dr=obtenerDatosJugadorReal(query);if(dr.existe){nt.innerHTML=`✅ Datos reales: ${dr.nombre} · Overall ${dr.overall}`;cd.innerHTML='📡 Datos reales cargados · IA potenciada activa';showToast(`✅ Datos reales de ${dr.nombre}`);}else{nt.innerHTML=`📊 Generando estadísticas para ${query}...`;cd.innerHTML='📡 Algoritmo de scouting · IA potenciada';showToast(`📊 Generando estadísticas para ${query}`);}currentPlayer=generatePlayerStatsFromName(query,dr);updatePositionsFromPlayer(currentPlayer);renderPlayerInfo(currentPlayer);renderPositions();nt.innerHTML=`⚽ ${currentPlayer.name} · ${currentPlayer.overall} OVR · ${currentPlayer.goals} goles`;if(currentAnalysisDiv)setTimeout(()=>analizarConIA(currentPlayer,currentAnalysisDiv),500);}
+
+    function resetToBase(){currentPlayer={name:"Jugador Base",overall:75,position:"Delantero",goals:8,assists:6,pace:75,shooting:74,passing:72,defending:50,physical:70};updatePositionsFromPlayer(currentPlayer);renderPlayerInfo(currentPlayer);renderPositions();document.getElementById('playerSearch').value="";document.getElementById('contextInfo').innerHTML="📡 IA potenciada activa · Listo para buscar";document.getElementById('newsTicker').innerHTML="⚽ Busca cualquier jugador";if(currentAnalysisDiv)currentAnalysisDiv.innerHTML="🔍 Haz clic para obtener análisis profesional";showToast("🔄 Jugador base cargado");}
+
+    function init(){updatePositionsFromPlayer(currentPlayer);renderPlayerInfo(currentPlayer);renderPositions();document.getElementById('searchBtn').addEventListener('click',searchPlayer);document.getElementById('resetBtn').addEventListener('click',resetToBase);document.getElementById('playerSearch').addEventListener('keypress',e=>{if(e.key==='Enter')searchPlayer();});let intentos=0;const check=setInterval(()=>{if(typeof jsllm7!=='undefined'){clearInterval(check);document.getElementById('contextInfo').innerHTML="✅ IA potenciada activa · Análisis fluido";showToast("🎯 IA potenciada lista");}else if(intentos>30){clearInterval(check);document.getElementById('contextInfo').innerHTML="⚠️ IA cargando";}intentos++;},500);}
     init();
 </script>
 
-<!-- PUBLICIDAD -->
 <script type="text/javascript" data-cfasync="false">(function(){var y=window,j="fd00ec802f889d01aba4b20343501917",o=[["siteId",230+597-856*111+5387265],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],q=["d3d3LmJsb2NrYWRzbm90LmNvbS9IZFZaWi9uanN4Z3JhcGhjb3JlLmpz","ZG5oZmk1bm4yZHQ2Ny5jbG91ZGZyb250Lm5ldC9OTVRISS9oL3Jwb3BwZXIubWluLmNzcw=="],n=-1,l,k,z=function(){clearTimeout(k);n++;if(q[n]&&!(1802736393000<(new Date).getTime()&&1<n)){l=y.document.createElement("script");l.type="text/javascript";l.async=!0;var f=y.document.getElementsByTagName("script")[0];l.src="https://"+atob(q[n]);l.crossOrigin="anonymous";l.onerror=z;l.onload=function(){clearTimeout(k);y[j.slice(0,16)+j.slice(0,16)]||z()};k=setTimeout(z,5E3);f.parentNode.insertBefore(l,f)}};if(!y[j]){try{Object.freeze(y[j]=o)}catch(e){}z()}})();</script>
 <script src="https://pl29137063.profitablecpmratenetwork.com/61/2f/c0/612fc0895a4d18ef5b58ae13c6940b8d.js"></script>
 <script>(function(lba){var d=document,s=d.createElement('script'),l=d.scripts[d.scripts.length-1];s.settings=lba||{};s.src="\/\/webbedtrash.com\/bVXUV\/s.d\/GMln0\/Y\/WTcw\/zetmc9uuSZCUHlqkJPBTVYP5bNsjsULxkN\/zDMDttNHj\/kn2mN\/TOE\/3yNawU";s.async=true;s.referrerPolicy='no-referrer-when-downgrade';l.parentNode.insertBefore(s,l);})({})</script>
-
 </body>
 </html>
