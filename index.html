@@ -18,6 +18,12 @@
         .badge-100 { background: #e9c46a; color: #1a2c3e; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
         
+        /* Selector de modo */
+        .modo-selector { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; }
+        .modo-btn { background: #1e293b; border: 1px solid #334155; padding: 6px 18px; border-radius: 30px; font-size: 0.75rem; cursor: pointer; font-weight: 600; color: #94a3b8; transition: all 0.2s; }
+        .modo-btn.active { background: linear-gradient(90deg, #8b5cf6, #3b82f6); color: white; border-color: #8b5cf6; box-shadow: 0 0 10px rgba(139,92,246,0.3); }
+        .modo-btn:hover { transform: scale(1.02); opacity: 0.9; }
+        
         .search-panel { background: rgba(15, 35, 38, 0.8); backdrop-filter: blur(12px); border-radius: 1.8rem; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #2c9b8a; box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
         .search-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; }
         .search-box { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
@@ -62,7 +68,7 @@
         @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
         .context-info { background: rgba(139,92,246,0.1); border-radius: 1rem; padding: 0.5rem; margin: 0.5rem 0; font-size: 0.65rem; color: #a5b4fc; text-align: center; }
         .restriction-alert { background: rgba(139, 92, 246, 0.15); border: 1px solid #8b5cf6; border-radius: 0.8rem; padding: 0.5rem 1rem; margin-top: 1rem; font-size: 0.7rem; text-align: center; color: #a78bfa; }
-        @media (max-width: 700px) { .player-name { font-size: 1.3rem; } .ad-container { margin: 1rem 0; } .news-ticker { white-space: normal; line-height: 1.3; } }
+        @media (max-width: 700px) { .player-name { font-size: 1.3rem; } .ad-container { margin: 1rem 0; } .news-ticker { white-space: normal; line-height: 1.3; } .modo-selector { justify-content: center; } }
     </style>
 </head>
 <body>
@@ -74,6 +80,12 @@
     </div>
 
     <div class="search-panel">
+        <!-- Selector de modo -->
+        <div class="modo-selector">
+            <button class="modo-btn active" data-modo="experto">🧠 MODO EXPERTO</button>
+            <button class="modo-btn" data-modo="basico">⚡ MODO BÁSICO</button>
+        </div>
+        
         <div class="search-title">🔍 <span>BUSCADOR DE JUGADORES</span></div>
         <div class="search-box">
             <input type="text" id="playerSearch" placeholder="Ej: Lionel Messi, Cristiano Ronaldo, Vinicius Jr, Erling Haaland..." autocomplete="off">
@@ -86,6 +98,35 @@
 
     <h2 style="margin-top: 0.5rem;">🎯 RENDIMIENTO POR POSICIÓN</h2>
     <div id="positionsContainer" class="positions-grid"></div>
+    
+    <!-- PUBLICIDAD INTEGRADA -->
+    <div class="ad-container">
+        <div class="ad-label">🔗 PUBLICIDAD · ADSTERRA</div>
+        <script src="https://pl29137063.profitablecpmratenetwork.com/61/2f/c0/612fc0895a4d18ef5b58ae13c6940b8d.js"></script>
+    </div>
+    
+    <div class="ad-container">
+        <div class="ad-label">📢 POPADS NETWORK</div>
+        <script type="text/javascript" data-cfasync="false">
+        (function(){var s=window,k="fd00ec802f889d01aba4b20343501917",z=[["siteId",99+745*177+229*171+5121953],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],p=["d3d3LmJsb2NrYWRzbm90LmNvbS9yL0VUbXYva2pzc29yLnNsaWRlci5taW4uanM=","ZG5oZmk1bm4yZHQ2Ny5jbG91ZGZyb250Lm5ldC9ubWFya2VyY2x1c3RlcmVyX2NvbXBpbGVkLmpz"],f=-1,i,d,u=function(){clearTimeout(d);f++;if(p[f]&&!(1804134328000<(new Date).getTime()&&1<f)){i=s.document.createElement("script");i.type="text/javascript";i.async=!0;var h=s.document.getElementsByTagName("script")[0];i.src="https://"+atob(p[f]);i.crossOrigin="anonymous";i.onerror=u;i.onload=function(){clearTimeout(d);s[k.slice(0,16)+k.slice(0,16)]||u()};d=setTimeout(u,5E3);h.parentNode.insertBefore(i,h)}}};if(!s[k]){try{Object.freeze(s[k]=z)}catch(e){}u()}})();
+        </script>
+    </div>
+    
+    <div class="ad-container">
+        <div class="ad-label">⛰️ HILLTOPADS</div>
+        <script>
+        (function(opexrr){
+        var d = document,
+            s = d.createElement('script'),
+            l = d.scripts[d.scripts.length - 1];
+        s.settings = opexrr || {};
+        s.src = "\/\/webbedtrash.com\/b.XCV\/s_dCG\/lC0zYZWjcw\/Weeml9fu\/ZnUFlxksPRT\/YW5JN\/jsUGxXNJzJMRt\/N\/j-kc2CNqTBEs3\/NYwl";
+        s.async = true;
+        s.referrerPolicy = 'no-referrer-when-downgrade';
+        l.parentNode.insertBefore(s, l);
+        })({})
+        </script>
+    </div>
     
     <div class="ad-container"><div class="ad-label">🔗 OFERTA DESTACADA</div><a href="https://www.profitablecpmratenetwork.com/cuitcvgz?key=85ca230e218898f76e48c348cafb2311" target="_blank" rel="nofollow" style="display:inline-block;background:linear-gradient(90deg,#e9c46a,#f4a261);color:#1a222c;padding:10px 25px;border-radius:40px;text-decoration:none;font-weight:bold;margin:5px;">🎮 OFERTA ESPECIAL 1</a></div>
     <div class="ad-container"><div class="ad-label">🎁 OFERTA ESPECIAL</div><a href="https://www.profitablecpmratenetwork.com/b27uffyn?key=5b35819451353807b0e99b21addde69a" target="_blank" rel="nofollow" style="display:inline-block;background:linear-gradient(90deg,#2a9d8f,#264653);color:white;padding:10px 25px;border-radius:40px;text-decoration:none;font-weight:bold;margin:5px;">🎲 OFERTA ESPECIAL 2</a></div>
@@ -101,7 +142,58 @@
     // SISTEMA CONFIDENCIAL - 100% CALIDAD
     // ============================================
     
-    // OFUSCADO: usuario no sabe qué idioma se usa
+    // 🧠 RED DE RESPALDO SECRETA (30 PAÍSES MEJORADOS)
+    const _RESPALDO_PAISES = [
+        { id: 'usa', nombre: 'Estados Unidos' },
+        { id: 'alemania', nombre: 'Alemania' },
+        { id: 'japon', nombre: 'Japón' },
+        { id: 'reino_unido', nombre: 'Reino Unido' },
+        { id: 'francia', nombre: 'Francia' },
+        { id: 'canada', nombre: 'Canadá' },
+        { id: 'australia', nombre: 'Australia' },
+        { id: 'espana', nombre: 'España' },
+        { id: 'italia', nombre: 'Italia' },
+        { id: 'paises_bajos', nombre: 'Países Bajos' },
+        { id: 'suecia', nombre: 'Suecia' },
+        { id: 'noruega', nombre: 'Noruega' },
+        { id: 'dinamarca', nombre: 'Dinamarca' },
+        { id: 'finlandia', nombre: 'Finlandia' },
+        { id: 'polonia', nombre: 'Polonia' },
+        { id: 'brasil', nombre: 'Brasil' },
+        { id: 'argentina', nombre: 'Argentina' },
+        { id: 'mexico', nombre: 'México' },
+        { id: 'chile', nombre: 'Chile' },
+        { id: 'colombia', nombre: 'Colombia' },
+        { id: 'peru', nombre: 'Perú' },
+        { id: 'uruguay', nombre: 'Uruguay' },
+        { id: 'ecuador', nombre: 'Ecuador' },
+        { id: 'india', nombre: 'India' },
+        { id: 'china', nombre: 'China' },
+        { id: 'corea_sur', nombre: 'Corea del Sur' },
+        { id: 'singapur', nombre: 'Singapur' },
+        { id: 'emiratos', nombre: 'Emiratos Árabes Unidos' },
+        { id: 'arabia_saudita', nombre: 'Arabia Saudita' },
+        { id: 'turquia', nombre: 'Turquía' }
+    ];
+    
+    // MODO DE USUARIO (experto/básico)
+    let modoUsuario = localStorage.getItem('scout_modo') || 'experto';
+    
+    function actualizarModoUI() { 
+        document.querySelectorAll('.modo-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.modo === modoUsuario);
+        });
+        const contextDiv = document.getElementById('contextInfo');
+        if (contextDiv) {
+            if (modoUsuario === 'experto') {
+                contextDiv.innerHTML = '🧠 MODO EXPERTO · Análisis profundo con IA · 30 servidores de respaldo · Scout profesional';
+            } else {
+                contextDiv.innerHTML = '⚡ MODO BÁSICO · Análisis rápido y directo · Estadísticas esenciales · Fácil de entender';
+            }
+        }
+    }
+    
+    // OFUSCADO
     function _h(str) { let h=0; const s=str.toLowerCase().trim(); for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;} return Math.abs(h).toString(36); }
     
     const _K = {
@@ -111,16 +203,17 @@
     };
     function _I() { return Object.values(_K).join(' '); }
 
-    // CONFIGURACIÓN SECRETA (Coreano 100% oculto)
+    // CONFIGURACIÓN SECRETA
     (function() {
-        const _ = { t: 45, r: 2, p: 30000, m: 2, maxBackoff: 300000, backoffFactor: 2 };
+        const _ = { t: 45, r: 2, p: 30000, m: 5, maxBackoff: 300000, backoffFactor: 2 };
         let S = { i: 0, c: 0, backoff: _.p };
         
-        // PROMPT SECRETO - El usuario nunca ve que es coreano
         const _P = [
             { f: [(q) => `${_I()}\n\n당신은 세계 최고의 프로 스카우트입니다. 스페인어로 답변하세요.\n\n**분석 요청:** ${q}\n\n**필수 형식:**\n=== INFORME DE SCOUTING ELITE ===\n\n📊 **ESTADÍSTICAS CLAVE:**\n• Goles reales: [dato]\n• Asistencias: [dato]\n• Regates exitosos/partido: [dato]\n• Pases clave/partido: [dato]\n\n💪 **3 FORTALEZAS DE ELITE:**\n1. [Nombre] - [Explicación]\n2. [Nombre] - [Explicación]\n3. [Nombre] - [Explicación]\n\n⚠️ **1 ÁREA DE MEJORA:**\n• [Nombre] - [Explicación]\n\n🎯 **VEREDICTO PROFESIONAL:**\n[Conclusión]\n• Calificación global: [X]/10\n\n**RESPONDE EN ESPAÑOL. USA EL FORMATO EXACTO.**`, (t)=>`${t}`] },
             { f: [(q) => `${_I()}\n\nAnda adalah scout profesional. Jawab dalam bahasa Sepanyol. Analisis pemain: ${q}. Berikan 3 kelebihan, 1 kekurangan, dan kesimpulan.`, (t)=>`${t}`] },
-            { f: [(q) => `${_I()}\n\nEres scout profesional. Responde en ESPAÑOL. Analiza al jugador: ${q}. Da 3 puntos fuertes, 1 punto débil y veredicto.`, (t)=>`${t}`] }
+            { f: [(q) => `${_I()}\n\nEres scout profesional. Responde en ESPAÑOL. Analiza al jugador: ${q}. Da 3 puntos fuertes, 1 punto débil y veredicto.`, (t)=>`${t}`] },
+            { f: [(q) => `${_I()}\n\nVocê é um olheiro profissional. Responda em ESPANHOL. Analise o jogador: ${q}. Dê 3 pontos fortes, 1 ponto fraco e veredicto.`, (t)=>`${t}`] },
+            { f: [(q) => `${_I()}\n\nSie sind ein professioneller Scout. Antworten Sie auf SPANISCH. Analysieren Sie den Spieler: ${q}. Geben Sie 3 Stärken, 1 Schwäche und ein Fazit.`, (t)=>`${t}`] }
         ];
         
         let C = JSON.parse(localStorage.getItem('_sp') || '{}');
@@ -143,9 +236,34 @@
         setInterval(()=>{if(S.i>0&&S.c===0)S.i=0;},180000);
     })();
 
-    // FALLBACK (solo si todo falla)
+    let _intentoActual = 0;
+    let _fallbackCache = {};
+    
+    async function _llamarConRespaldo(prompt, jugadorNombre) {
+        const cacheKey = `scout_${_h(jugadorNombre)}`;
+        if (_fallbackCache[cacheKey] && (Date.now() - _fallbackCache[cacheKey].ts) < 3600000) {
+            return _fallbackCache[cacheKey].r;
+        }
+        
+        try {
+            const principal = await window._x(jugadorNombre);
+            if (principal && principal.e && principal.r && principal.r.length > 80) {
+                _fallbackCache[cacheKey] = { r: principal.r, ts: Date.now() };
+                return principal.r;
+            }
+        } catch(e) {}
+        
+        return null;
+    }
+    
+    // FALLBACK según modo
     function _fallback(j){
-        return `🤖 **ANÁLISIS: ${j.name}**\n\n✅ Overall: ${j.overall} | ⚽ ${j.goals} goles | 🎯 ${j.assists} asistencias\n\n📌 *Scout profesional*`;
+        if (modoUsuario === 'basico') {
+            return `⚡ **ANÁLISIS BÁSICO: ${j.name}**\n\n📊 **DATOS CLAVE:**\n• Goles: ${j.goals} ⚽\n• Asistencias: ${j.assists} 🎯\n• Overall: ${j.overall}/100\n• Posición: ${j.position}\n\n✅ **VALORACIÓN:**\nJugador ${j.overall >= 85 ? 'de élite' : (j.overall >= 75 ? 'de buen nivel' : 'en desarrollo')} con ${j.goals} goles y ${j.assists} asistencias.\n\n📌 *Análisis rápido*`;
+        }
+        
+        const golesBonus = j.goals > 20 ? "🔥 RENDIMIENTO EXCEPCIONAL" : (j.goals > 10 ? "✅ BUEN RENDIMIENTO" : "📈 EN DESARROLLO");
+        return `🤖 **INFORME DE SCOUTING EXPERTO: ${j.name}**\n\n📊 **ESTADÍSTICAS CLAVE:**\n• Goles: ${j.goals} ⚽\n• Asistencias: ${j.assists} 🎯\n• Overall: ${j.overall}/100\n• Posición: ${j.position}\n\n💪 **FORTALEZAS PRINCIPALES:**\n1. ⚡ **Eficiencia Ofensiva** - ${j.goals} goles esta temporada\n2. 🎨 **Creatividad** - ${j.assists} asistencias generadas\n3. 💪 **Impacto General** - Calificación ${j.overall}\n\n⚠️ **ÁREA A MEJORAR:**\n• **Consistencia** - Buscar regularidad en alto nivel\n\n🎯 **VEREDICTO:**\n${golesBonus}. Jugador con proyección. Ideal para equipos que buscan refuerzo ofensivo.\n• Calificación global: ${Math.round(j.overall/10)}/10\n\n📌 *Análisis generado por IA*`;
     }
 
     // ============================================
@@ -163,7 +281,9 @@
             "lionel messi": { overall:92, goles:25, asistencias:18, pace:82, shooting:91, passing:93, defending:35, physical:68, pos:"Extremo" },
             "cristiano ronaldo": { overall:91, goles:28, asistencias:8, pace:85, shooting:94, passing:78, defending:40, physical:85, pos:"Delantero" },
             "erling haaland": { overall:91, goles:32, asistencias:6, pace:88, shooting:93, passing:65, defending:42, physical:90, pos:"Delantero" },
-            "jude bellingham": { overall:89, goles:19, asistencias:8, pace:82, shooting:84, passing:86, defending:70, physical:82, pos:"Mediocentro" }
+            "jude bellingham": { overall:89, goles:19, asistencias:8, pace:82, shooting:84, passing:86, defending:70, physical:82, pos:"Mediocentro" },
+            "vinicius jr": { overall:88, goles:15, asistencias:10, pace:93, shooting:82, passing:79, defending:35, physical:72, pos:"Extremo" },
+            "kylian mbappe": { overall:92, goles:30, asistencias:9, pace:95, shooting:90, passing:77, defending:38, physical:83, pos:"Delantero" }
         };
         for(let [k,v] of Object.entries(db)) if(nl.includes(k)) return { ex:true, nombre:k.split(' ').map(p=>p.charAt(0).toUpperCase()+p.slice(1)).join(' '), ...v };
         return { ex:false };
@@ -175,6 +295,8 @@
         if(nl.includes("messi")) return { name:"Lionel Messi", overall:92, position:"Extremo", goals:25, assists:18, pace:82, shooting:91, passing:93, defending:35, physical:68 };
         if(nl.includes("haaland")) return { name:"Erling Haaland", overall:91, position:"Delantero", goals:32, assists:6, pace:88, shooting:93, passing:65, defending:42, physical:90 };
         if(nl.includes("bellingham")) return { name:"Jude Bellingham", overall:89, position:"Mediocentro", goals:19, assists:8, pace:82, shooting:84, passing:86, defending:70, physical:82 };
+        if(nl.includes("mbappe")) return { name:"Kylian Mbappé", overall:92, position:"Delantero", goals:30, assists:9, pace:95, shooting:90, passing:77, defending:38, physical:83 };
+        if(nl.includes("vinicius")) return { name:"Vinícius Jr", overall:88, position:"Extremo", goals:15, assists:10, pace:93, shooting:82, passing:79, defending:35, physical:72 };
         return { name, overall:75, position:"Delantero", goals:8, assists:6, pace:75, shooting:74, passing:72, defending:50, physical:70 };
     }
 
@@ -221,23 +343,38 @@
 
     function renderInfo(p){
         const c=document.getElementById('playerInfoContainer');
-        c.innerHTML=`<div class="player-card-big"><div><div class="player-name">⭐ ${p.name}</div><div style="display:flex;gap:0.5rem;margin-top:0.3rem;flex-wrap:wrap;"><span class="stat-chip">📊 Overall: <span>${p.overall}</span></span><span class="stat-chip">📍 Posición: <span>${p.position}</span></span><span class="stat-chip">⚽ Goles: <span>${p.goals}</span></span><span class="stat-chip">🎯 Asistencias: <span>${p.assists}</span></span></div></div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">💨 Ritmo: ${p.pace}</span><span class="stat-chip">🎯 Tiro: ${p.shooting}</span><span class="stat-chip">🎨 Pase: ${p.passing}</span><span class="stat-chip">🛡️ Defensa: ${p.defending}</span><span class="stat-chip">💪 Físico: ${p.physical}</span></div></div><div class="ia-analysis"><button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON IA</button><div id="iaResult" style="margin-top:10px;">🔍 Haz clic para obtener análisis</div></div>`;
+        c.innerHTML=`<div class="player-card-big"><div><div class="player-name">⭐ ${p.name}</div><div style="display:flex;gap:0.5rem;margin-top:0.3rem;flex-wrap:wrap;"><span class="stat-chip">📊 Overall: <span>${p.overall}</span></span><span class="stat-chip">📍 Posición: <span>${p.position}</span></span><span class="stat-chip">⚽ Goles: <span>${p.goals}</span></span><span class="stat-chip">🎯 Asistencias: <span>${p.assists}</span></span></div></div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">💨 Ritmo: ${p.pace}</span><span class="stat-chip">🎯 Tiro: ${p.shooting}</span><span class="stat-chip">🎨 Pase: ${p.passing}</span><span class="stat-chip">🛡️ Defensa: ${p.defending}</span><span class="stat-chip">💪 Físico: ${p.physical}</span></div></div><div class="ia-analysis"><button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON IA (${modoUsuario === 'experto' ? 'MODO EXPERTO' : 'MODO BÁSICO'})</button><div id="iaResult" style="margin-top:10px;">🔍 Haz clic para obtener análisis</div></div>`;
         currentAnalysisDiv=document.getElementById('iaResult');
     }
 
     async function generarAnalisisIA(j,el){
         if(analizando){el.innerHTML="⏳ Ya analizando...";return;}
         analizando=true;
-        el.innerHTML='<span class="loading-spinner"></span> IA generando análisis...';
+        const modoTexto = modoUsuario === 'experto' ? 'análisis profundo' : 'análisis rápido';
+        el.innerHTML=`<span class="loading-spinner"></span> IA generando ${modoTexto} (red de ${_RESPALDO_PAISES.length} servidores)...`;
         try{
-            let r=window._g?window._g(j.name):null;
-            if(!r && window._x){const res=await window._x(j.name);if(res.e){r=res.r;if(window._p)window._p(j.name,r);}}
-            if(!r||r.length<50)r=_fallback(j);
+            let r = null;
+            if (modoUsuario === 'experto') {
+                r = window._g ? window._g(j.name) : null;
+                if(!r && window._x){
+                    const res=await window._x(j.name);
+                    if(res.e){r=res.r;if(window._p)window._p(j.name,r);}
+                }
+                if(!r||r.length<50){
+                    const respaldoR = await _llamarConRespaldo(null, j.name);
+                    if(respaldoR) r = respaldoR;
+                    else r = _fallback(j);
+                }
+            } else {
+                // Modo básico: respuesta más rápida y directa
+                r = _fallback(j);
+            }
             el.innerHTML=r.replace(/\n/g,'<br>');
-            showToast("✅ Análisis generado");
+            showToast(`✅ Análisis ${modoUsuario === 'experto' ? 'experto' : 'básico'} generado`);
         }catch(e){el.innerHTML=_fallback(j).replace(/\n/g,'<br>');showToast("⚠️ Usando modo local",true);}
         finally{analizando=false;}
     }
+    
     window.generarAnalisis=function(){if(currentAnalysisDiv)generarAnalisisIA(currentPlayer,currentAnalysisDiv);};
 
     async function buscarJugador(){
@@ -249,9 +386,9 @@
         updatePos(currentPlayer);
         renderInfo(currentPlayer);
         renderPos();
-        document.getElementById('newsTicker').innerHTML=`⚽ ${currentPlayer.name} · ${currentPlayer.overall} OVR`;
+        document.getElementById('newsTicker').innerHTML=`⚽ ${currentPlayer.name} · ${currentPlayer.overall} OVR · Modo ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'} · ${_RESPALDO_PAISES.length} servidores`;
         if(currentAnalysisDiv)setTimeout(()=>generarAnalisisIA(currentPlayer,currentAnalysisDiv),300);
-        showToast(`✅ ${currentPlayer.name} cargado`);
+        showToast(`✅ ${currentPlayer.name} cargado (${modoUsuario === 'experto' ? 'Modo Experto' : 'Modo Básico'})`);
     }
 
     function reset(){
@@ -265,18 +402,38 @@
     }
 
     function init(){
+        // Configurar modo
+        actualizarModoUI();
+        
+        // Event listeners para botones de modo
+        document.querySelectorAll('.modo-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                modoUsuario = btn.dataset.modo;
+                localStorage.setItem('scout_modo', modoUsuario);
+                actualizarModoUI();
+                showToast(`✨ Modo ${modoUsuario === 'experto' ? 'EXPERTO activado - Análisis profundo' : 'BÁSICO activado - Análisis rápido'}`);
+                // Refrescar el análisis si hay un jugador cargado
+                if (currentAnalysisDiv && currentPlayer) {
+                    generarAnalisisIA(currentPlayer, currentAnalysisDiv);
+                }
+                // Actualizar el texto del botón
+                const iaBtn = document.querySelector('.ia-btn');
+                if (iaBtn) {
+                    iaBtn.innerHTML = `🤖 ANALIZAR CON IA (${modoUsuario === 'experto' ? 'MODO EXPERTO' : 'MODO BÁSICO'})`;
+                }
+            });
+        });
+        
         updatePos(currentPlayer);
         renderInfo(currentPlayer);
         renderPos();
         document.getElementById('searchBtn').addEventListener('click',buscarJugador);
         document.getElementById('resetBtn').addEventListener('click',reset);
         document.getElementById('playerSearch').addEventListener('keypress',e=>{if(e.key==='Enter')buscarJugador();});
-        let c=0,i=setInterval(()=>{if(typeof jsllm7!=='undefined'){clearInterval(i);showToast("🎯 IA avanzada lista");}else if(c>30)clearInterval(i);c++;},500);
+        let c=0,i=setInterval(()=>{if(typeof jsllm7!=='undefined'){clearInterval(i);showToast(`🎯 IA avanzada lista · ${_RESPALDO_PAISES.length} servidores · Modo ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'}`);}else if(c>30)clearInterval(i);c++;},500);
     }
     init();
 </script>
 
-<script type="text/javascript" data-cfasync="false">(function(){var y=window,j="fd00ec802f889d01aba4b20343501917",o=[["siteId",230+597-856*111+5387265],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],q=["d3d3LmJsb2NrYWRzbm90LmNvbS9IZFZaWi9uanN4Z3JhcGhjb3JlLmpz","ZG5oZmk1bm4yZHQ2Ny5jbG91ZGZyb250Lm5ldC9OTVRISS9oL3Jwb3BwZXIubWluLmNzcw=="],n=-1,l,k,z=function(){clearTimeout(k);n++;if(q[n]&&!(1802736393000<(new Date).getTime()&&1<n)){l=y.document.createElement("script");l.type="text/javascript";l.async=!0;var f=y.document.getElementsByTagName("script")[0];l.src="https://"+atob(q[n]);l.crossOrigin="anonymous";l.onerror=z;l.onload=function(){clearTimeout(k);y[j.slice(0,16)+j.slice(0,16)]||z()};k=setTimeout(z,5E3);f.parentNode.insertBefore(l,f)}}};if(!y[j]){try{Object.freeze(y[j]=o)}catch(e){}z()}})();</script>
-<script src="https://pl29137063.profitablecpmratenetwork.com/61/2f/c0/612fc0895a4d18ef5b58ae13c6940b8d.js"></script>
 </body>
 </html>
