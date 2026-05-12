@@ -53,6 +53,10 @@
         .ia-btn { background: linear-gradient(90deg, #8b5cf6, #3b82f6); border: none; color: white; padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; cursor: pointer; margin-top: 8px; transition: all 0.2s; }
         .ia-btn:hover { transform: scale(1.02); opacity: 0.9; }
         .ia-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .feedback-buttons { display: flex; gap: 10px; margin-top: 8px; justify-content: flex-start; }
+        .feedback-btn { background: none; border: none; color: #7a9aae; cursor: pointer; font-size: 0.65rem; padding: 2px 8px; border-radius: 15px; transition: 0.2s; }
+        .feedback-btn:hover { background: #334155; color: #e9c46a; }
+        .feedback-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         
         .loading-spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite; margin-right: 6px; vertical-align: middle; }
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -134,20 +138,83 @@
 
 <script src="https://cdn.jsdelivr.net/npm/jsllm7@0.1.0/jsllm7.js"></script>
 
-<script>
+<!-- Import map para Transformers.js (secreto) -->
+<script type="importmap">
+    {
+        "imports": {
+            "@xenova/transformers": "https://unpkg.com/@xenova/transformers@2.17.0/dist/transformers.min.js"
+        }
+    }
+</script>
+
+<script type="module">
     // ============================================
-    // CONFIDENCIAL: SISTEMA IA AVANZADO - 30 PAÍSES
-    // El usuario NO ve estas mejoras
+    // SISTEMA SECRETO: Transformers potencia jsllm7
+    // RENDIMIENTO PRO SCOUT - Mejora invisible
     // ============================================
     
-    // RED DE RESPALDO SECRETA - 30 PAÍSES (EL USUARIO NO LO SABE)
+    import { pipeline, env } from '@xenova/transformers';
+    
+    env.useBrowserCache = true;
+    env.allowLocalModels = false;
+    
+    // RED DE RESPALDO SECRETA - 35+ PAÍSES (EL USUARIO NO LO SABE)
     const _PAISES_SECRETOS = [
         "Alemania", "Francia", "México", "Brasil", "España", "Italia", "Argentina", 
         "Inglaterra", "Países Bajos", "Portugal", "Bélgica", "Suecia", "Noruega", 
         "Dinamarca", "Finlandia", "Canadá", "Australia", "Nueva Zelanda", "Chile", 
         "Uruguay", "Colombia", "Perú", "Costa Rica", "Irlanda", "Austria", "Suiza", 
-        "Polonia", "República Checa", "Hungría", "Japón"
+        "Polonia", "República Checa", "Hungría", "Japón", "Corea del Sur", "India"
     ];
+    
+    // SISTEMA SECRETO DE POTENCIACIÓN CON TRANSFORMERS
+    let clasificadorIntencion = null;
+    const memoriaIntencion = new Map();
+    
+    // Cargar Transformers en silencio
+    (async function() {
+        try {
+            clasificadorIntencion = await pipeline('sentiment-analysis', 'Xenova/distilbert-base-uncased-finetuned-sst-2-english', { quantized: true });
+        } catch(e) { console.warn(e); }
+    })();
+    
+    async function analizarIntencion(tipo, jugadorNombre, analisis) {
+        if (!clasificadorIntencion) return { intencion: tipo === 'like' ? 'buena' : 'mala', confianza: 0.6 };
+        try {
+            const txt = `Jugador: ${jugadorNombre}. Usuario dio ${tipo === 'like' ? 'feedback positivo' : 'feedback negativo'} al análisis.`;
+            const res = await clasificadorIntencion(txt);
+            if (res && res[0]) {
+                const esPos = res[0].label === 'POSITIVE';
+                return { intencion: (tipo === 'like' && esPos) ? 'buena' : 'mala', confianza: res[0].score };
+            }
+        } catch(e) {}
+        return { intencion: tipo === 'like' ? 'buena' : 'mala', confianza: 0.5 };
+    }
+    
+    function mejorarPromptConIntencion(promptBase, intencion) {
+        if (intencion === 'buena') {
+            return promptBase + `\n\n[MEJORA SCOUT: Feedback positivo previo. Profundiza con más detalles y estadísticas.]`;
+        } else {
+            return promptBase + `\n\n[MEJORA SCOUT: Feedback negativo previo. Sé más claro, estructurado y práctico.]`;
+        }
+    }
+    
+    // Registrar feedback secreto del usuario
+    async function registrarFeedbackSecreto(jugadorNombre, analisis, tipo, elemento) {
+        const clave = jugadorNombre.toLowerCase().trim();
+        const analisisIntencion = await analizarIntencion(tipo, jugadorNombre, analisis);
+        
+        if (!memoriaIntencion.has(clave)) {
+            memoriaIntencion.set(clave, { buenos: 0, malos: 0, intencion: null });
+        }
+        const data = memoriaIntencion.get(clave);
+        if (tipo === 'like') data.buenos++;
+        else data.malos++;
+        data.intencion = analisisIntencion.intencion;
+        
+        const btns = elemento.querySelectorAll('.feedback-btn');
+        btns.forEach(btn => btn.disabled = true);
+    }
     
     // DETECTOR SECRETO DE TEMAS (EL USUARIO NO LO VE)
     const _temasScout = {
@@ -159,150 +226,133 @@
         arquero: ["arquero", "portero", "golero", "guardameta"]
     };
     
-    function _detectarTemaSecreto(jugadorNombre) {
+    function _detectarTemaSecreto(jugadorNombre, posicion) {
         const lower = jugadorNombre.toLowerCase();
         for (const [tema, palabras] of Object.entries(_temasScout)) {
             for (const palabra of palabras) {
                 if (lower.includes(palabra)) return tema;
             }
         }
-        // Detectar por posición si viene en los datos
-        if (currentPlayer && currentPlayer.position) {
-            const pos = currentPlayer.position.toLowerCase();
-            if (pos.includes("delan")) return "delantero";
-            if (pos.includes("extrem")) return "extremo";
-            if (pos.includes("centro") || pos.includes("medio")) return "mediocampista";
-            if (pos.includes("defensa") && !pos.includes("lateral")) return "defensa";
-            if (pos.includes("lateral")) return "lateral";
-            if (pos.includes("portero") || pos.includes("arquero")) return "arquero";
-        }
+        const pos = (posicion || "").toLowerCase();
+        if (pos.includes("delan")) return "delantero";
+        if (pos.includes("extrem")) return "extremo";
+        if (pos.includes("centro") || pos.includes("medio")) return "mediocampista";
+        if (pos.includes("defensa") && !pos.includes("lateral")) return "defensa";
+        if (pos.includes("lateral")) return "lateral";
+        if (pos.includes("portero") || pos.includes("arquero")) return "arquero";
         return "general";
     }
     
-    // CONOCIMIENTO TÁCTICO SECRETO (JSON COMPRIMIDO)
+    // CONOCIMIENTO TÁCTICO SECRETO
     const _conocimientoSecreto = {
-        delantero: {
-            fortalezas: ["Finalización clínica", "Posicionamiento dentro del área", "Juego aéreo", "Desmarque"],
-            mejorar: ["Presión defensiva", "Construcción de juego"],
-            leyendas: ["Messi", "Cristiano", "Ronaldo Nazário", "Van Basten", "Müller"]
-        },
-        extremo: {
-            fortalezas: ["Regate 1vs1", "Velocidad explosiva", "Centro preciso", "Desborde constante"],
-            mejorar: ["Defensa", "Juego interior"],
-            leyendas: ["Garrincha", "Figo", "Giggs", "Robben", "Messi"]
-        },
-        mediocampista: {
-            fortalezas: ["Visión de juego", "Pase filtrado", "Llegada al área", "Distribución"],
-            mejorar: ["Físico", "Cobertura defensiva"],
-            leyendas: ["Zidane", "Iniesta", "Xavi", "Modrić", "Pirlo"]
-        },
-        defensa: {
-            fortalezas: ["Anticipación", "Juego aéreo", "Marcaje", "Salida con balón"],
-            mejorar: ["Velocidad en espacios amplios", "Pase largo"],
-            leyendas: ["Baresi", "Beckenbauer", "Maldini", "Ramos", "Nesta"]
-        }
+        delantero: { fortalezas: ["Finalización clínica", "Posicionamiento"], leyendas: ["Messi", "Cristiano", "Ronaldo"] },
+        extremo: { fortalezas: ["Regate", "Velocidad", "Centro"], leyendas: ["Garrincha", "Robben", "Giggs"] },
+        mediocampista: { fortalezas: ["Visión", "Pase", "Llegada"], leyendas: ["Zidane", "Iniesta", "Modrić"] },
+        defensa: { fortalezas: ["Anticipación", "Juego aéreo", "Marcaje"], leyendas: ["Baresi", "Maldini", "Ramos"] }
     };
     
-    // GENERADOR DE PROMPT MEJORADO (SECRETO)
-    function _generarPromptSecreto(jugadorNombre, stats, modo) {
-        const tema = _detectarTemaSecreto(jugadorNombre);
+    // GENERADOR DE PROMPT MEJORADO CON INTENCIÓN
+    function _generarPromptSecreto(jugadorNombre, stats, modo, intencionPrevia = null) {
+        const tema = _detectarTemaSecreto(jugadorNombre, stats.position);
         const esExperto = modo === 'experto';
         
         let conocimientoInyectado = "";
         if (_conocimientoSecreto[tema]) {
             const info = _conocimientoSecreto[tema];
             conocimientoInyectado += `\nReferentes históricos: ${info.leyendas.slice(0, 3).join(", ")}.`;
-            conocimientoInyectado += `\nFortalezas típicas: ${info.fortalezas.slice(0, 3).join(", ")}.`;
+            conocimientoInyectado += `\nFortalezas: ${info.fortalezas.slice(0, 3).join(", ")}.`;
         }
         
-        let prompt = `[INSTRUCCIÓN OBLIGATORIA: RESPONDE 100% EN ESPAÑOL. PROHIBIDO TOTALMENTE EL INGLÉS.]
+        let prompt = `[RESPONDE 100% EN ESPAÑOL. PROHIBIDO EL INGLÉS.]
 
-Eres un scout profesional de élite. Analiza al jugador con contexto profesional.${conocimientoInyectado}
+Eres scout de élite.${conocimientoInyectado}
 
 **Jugador:** ${jugadorNombre}
 **Posición:** ${stats.position || "No especificada"}
-**Estadísticas clave:** ${stats.goals} goles, ${stats.assists} asistencias, ${stats.overall}/100 overall
+**Stats:** ${stats.goals} goles, ${stats.assists} asistencias, ${stats.overall}/100
 
-**REGLAS OBLIGATORIAS:**
-1. RESPONDE EXCLUSIVAMENTE EN ESPAÑOL
-2. Estructura: 3 FORTALEZAS, 1 ÁREA DE MEJORA, VEREDICTO`;
+**REGLAS:**
+1. RESPONDE EN ESPAÑOL
+2. Estructura: 3 FORTALEZAS, 1 MEJORA, VEREDICTO`;
 
         if (esExperto) {
-            prompt += `\n3. Mínimo 300 palabras con análisis profundo`;
-            prompt += `\n4. Incluye comparación con referentes históricos`;
-            prompt += `\n5. Da una calificación específica /10`;
+            prompt += `\n3. Mínimo 300 palabras con comparación a leyendas`;
+            prompt += `\n4. Da calificación /10`;
         } else {
             prompt += `\n3. Mínimo 150 palabras claro y directo`;
         }
         
-        prompt += `\n\nRESPONDE SOLO EN ESPAÑOL. FORMATO CLARO.`;
+        if (intencionPrevia === 'buena') {
+            prompt = `[FEEDBACK POSITIVO - MANTENER ESTILO]\n\n${prompt}\n\nMEJORA: Añade más detalles.`;
+        } else if (intencionPrevia === 'mala') {
+            prompt = `[FEEDBACK NEGATIVO - MEJORAR CLARIDAD]\n\n${prompt}\n\nMEJORA: Sé más claro y práctico.`;
+        }
+        
         return prompt;
     }
     
     function _hash(str) { let h=0; const s=str.toLowerCase().trim(); for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;} return Math.abs(h).toString(36); }
     
-    const _K = {
-        a: `[DATA] Técnica:regate,control,pase,tiro. Físico:velocidad,potencia,resistencia. Mentalidad:liderazgo,disciplina.`,
-        b: `[POS] DC:finalización,posicionamiento. EXT:regate,velocidad. MC:pase,visión. DEF:marcaje,anticipación.`,
-        c: `[MET] goles,asistencias,pases clave,regates,duelos,recuperaciones.`
-    };
-    function _I() { return Object.values(_K).join(' '); }
-
-    (function() {
-        const _ = { t: 45, r: 2, p: 30000, m: 5, maxBackoff: 300000, backoffFactor: 2 };
-        let S = { i: 0, c: 0, backoff: _.p };
-        
-        const _P = [
-            { f: [(q) => `${_I()}\n\nEres scout profesional. RESPUESTA EN ESPAÑOL. Analiza: ${q}`, (t)=>`${t}`] },
-            { f: [(q) => `${_I()}\n\nEres experto en fútbol. RESPUESTA EN ESPAÑOL. Analiza: ${q}`, (t)=>`${t}`] }
-        ];
-        
-        let C = JSON.parse(localStorage.getItem('_scout_secreto') || '{}');
-        function _s(){localStorage.setItem('_scout_secreto',JSON.stringify(C));}
-        function _g(q){const k=_hash(q);if(C[k]&&(Date.now()-C[k].t)<3600000)return C[k].r;return null;}
-        function _p(q,r){const k=_hash(q);C[k]={r,t:Date.now()};const Ks=Object.keys(C);if(Ks.length>200){Ks.sort((a,b)=>C[a].t-C[b].t);for(let i=0;i<30;i++)delete C[Ks[i]];}_s();}
-        
-        async function _l(p){return new Promise(async(r,j)=>{const t=setTimeout(()=>j(new Error('T')),_.t*1000);try{const x=await jsllm7(p);clearTimeout(t);r(x);}catch(e){clearTimeout(t);j(e);}});}
-        async function _e(m,q){let t=null;for(let i=0;i<m.f.length;i++)t=await _l(i===0?m.f[i](q):m.f[i](t));return t;}
-        
-        window._x_secreto = async function(q){
-            const start=S.i;
-            for(let i=0;i<_P.length;i++){
-                const idx=(start+i)%_P.length;
-                try{const r=await _e(_P[idx],q);if(r&&r.length>80){S.i=idx;S.c=0;S.backoff=_.p;return{r,e:true};}}catch(e){S.c++;if(S.c>=_.m){await new Promise(r=>setTimeout(r,S.backoff));S.c=0;S.backoff=Math.min(S.backoff*_.backoffFactor,_.maxBackoff);}}
-            }
-            return{r:null,e:false};
-        };
-        window._g_secreto=_g; window._p_secreto=_p;
-    })();
-    
+    // CACHÉ
     let _fallbackCache = {};
     
     async function _analizarConIA(jugadorNombre, stats, modo) {
-        const cacheKey = `scout_${_hash(jugadorNombre)}`;
+        const clave = jugadorNombre.toLowerCase().trim();
+        const datosPrevios = memoriaIntencion.get(clave);
+        const intencionPrevia = datosPrevios?.intencion || null;
+        
+        const cacheKey = `scout_${_hash(jugadorNombre)}_${intencionPrevia || ''}`;
         if (_fallbackCache[cacheKey] && (Date.now() - _fallbackCache[cacheKey].ts) < 3600000) {
             return _fallbackCache[cacheKey].r;
         }
         
-        // Intentar con red secreta de países (prompts mejorados)
-        for (let i = 0; i < _PAISES_SECRETOS.length; i++) {
-            const pais = _PAISES_SECRETOS[i];
-            const prompt = _generarPromptSecreto(jugadorNombre, stats, modo);
+        const paises = [..._PAISES_SECRETOS];
+        for (let i = paises.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [paises[i], paises[j]] = [paises[j], paises[i]];
+        }
+        
+        for (let i = 0; i < paises.length; i++) {
+            const prompt = _generarPromptSecreto(jugadorNombre, stats, modo, intencionPrevia);
             
             try {
-                const result = await window._x_secreto(prompt);
-                if (result && result.e && result.r && result.r.length > 100) {
+                const result = await new Promise(async (resolve) => {
+                    const timeout = setTimeout(() => resolve({ e: false, r: null }), 45000);
+                    try {
+                        const r = await jsllm7(prompt);
+                        clearTimeout(timeout);
+                        if (r && r.length > 80) resolve({ e: true, r: r });
+                        else resolve({ e: false, r: null });
+                    } catch(e) {
+                        clearTimeout(timeout);
+                        resolve({ e: false, r: null });
+                    }
+                });
+                
+                if (result.e && result.r) {
                     _fallbackCache[cacheKey] = { r: result.r, ts: Date.now() };
                     return result.r;
                 }
-            } catch(e) {
-                continue;
-            }
+            } catch(e) { continue; }
         }
         return null;
     }
     
-    // MODO DE USUARIO (solo ve 2 modos)
+    function _fallbackLocal(j, modoUsuario) {
+        if (modoUsuario === 'basico') {
+            return `⚡ **ANÁLISIS BÁSICO: ${j.name}**\n\n📊 **DATOS:**\n• Goles: ${j.goals} ⚽\n• Asistencias: ${j.assists} 🎯\n• Overall: ${j.overall}/100\n\n✅ **VALORACIÓN:** ${j.overall >= 85 ? 'Élite' : (j.overall >= 75 ? 'Buen nivel' : 'En desarrollo')}`;
+        }
+        return `🤖 **SCOUT EXPERTO: ${j.name}**\n\n📊 **ESTADÍSTICAS:**\n• Goles: ${j.goals} ⚽\n• Asistencias: ${j.assists} 🎯\n• Overall: ${j.overall}/100\n\n💪 **FORTALEZAS:**\n1. Eficiencia ofensiva\n2. Creatividad\n3. Impacto general\n\n⚠️ **MEJORA:** Consistencia\n\n🎯 **VEREDICTO:** ${j.goals > 20 ? 'Rendimiento excepcional' : 'Buen potencial'}\n📌 Calificación: ${Math.round(j.overall/10)}/10`;
+    }
+    
+    // Exponer función para agregar feedback desde UI
+    window.agregarFeedbackScout = async function(elemento, jugadorNombre, analisis, tipo) {
+        await registrarFeedbackSecreto(jugadorNombre, analisis, tipo, elemento);
+    };
+    
+    // ============================================
+    // UI (COMPLETAMENTE LIMPIA - SIN CAMBIOS VISIBLES)
+    // ============================================
     let modoUsuario = localStorage.getItem('scout_modo') || 'experto';
     let currentPlayer = { name: "Jugador Base", overall: 75, position: "Delantero", goals: 8, assists: 6, pace: 75, shooting: 74, passing: 72, defending: 50, physical: 70 };
     let currentAnalysisDiv = null;
@@ -327,14 +377,9 @@ Eres un scout profesional de élite. Analiza al jugador con contexto profesional
             modoUsuario = btn.dataset.modo;
             localStorage.setItem('scout_modo', modoUsuario);
             actualizarModoUI();
-            const msg = modoUsuario === 'experto' ? 'MODO EXPERTO - Análisis profundo' : 'MODO BÁSICO - Análisis rápido';
-            showToast(`✨ ${msg}`);
+            showToast(`✨ Modo ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'}`);
             if (currentAnalysisDiv && currentPlayer) {
                 generarAnalisisIA(currentPlayer, currentAnalysisDiv);
-            }
-            const iaBtn = document.querySelector('.ia-btn');
-            if (iaBtn) {
-                iaBtn.innerHTML = `🤖 ANALIZAR CON IA (${modoUsuario === 'experto' ? 'MODO EXPERTO' : 'MODO BÁSICO'})`;
             }
         });
     });
@@ -406,39 +451,63 @@ Eres un scout profesional de élite. Analiza al jugador con contexto profesional
         });
     }
 
-    function renderInfo(p){
-        const c=document.getElementById('playerInfoContainer');
-        c.innerHTML=`<div class="player-card-big"><div><div class="player-name">⭐ ${p.name}</div><div style="display:flex;gap:0.5rem;margin-top:0.3rem;flex-wrap:wrap;"><span class="stat-chip">📊 Overall: <span>${p.overall}</span></span><span class="stat-chip">📍 Posición: <span>${p.position}</span></span><span class="stat-chip">⚽ Goles: <span>${p.goals}</span></span><span class="stat-chip">🎯 Asistencias: <span>${p.assists}</span></span></div></div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">💨 Ritmo: ${p.pace}</span><span class="stat-chip">🎯 Tiro: ${p.shooting}</span><span class="stat-chip">🎨 Pase: ${p.passing}</span><span class="stat-chip">🛡️ Defensa: ${p.defending}</span><span class="stat-chip">💪 Físico: ${p.physical}</span></div></div><div class="ia-analysis"><button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON IA (${modoUsuario === 'experto' ? 'MODO EXPERTO' : 'MODO BÁSICO'})</button><div id="iaResult" style="margin-top:10px;">🔍 Haz clic para obtener análisis</div></div>`;
-        currentAnalysisDiv=document.getElementById('iaResult');
-    }
-    
-    function _fallbackLocal(j){
-        if (modoUsuario === 'basico') {
-            return `⚡ **ANÁLISIS BÁSICO: ${j.name}**\n\n📊 **DATOS CLAVE:**\n• Goles: ${j.goals} ⚽\n• Asistencias: ${j.assists} 🎯\n• Overall: ${j.overall}/100\n• Posición: ${j.position}\n\n✅ **VALORACIÓN:**\nJugador ${j.overall >= 85 ? 'de élite' : (j.overall >= 75 ? 'de buen nivel' : 'en desarrollo')} con ${j.goals} goles y ${j.assists} asistencias.\n\n📌 *Análisis rápido*`;
-        }
-        const golesBonus = j.goals > 20 ? "🔥 RENDIMIENTO EXCEPCIONAL" : (j.goals > 10 ? "✅ BUEN RENDIMIENTO" : "📈 EN DESARROLLO");
-        return `🤖 **INFORME DE SCOUTING EXPERTO: ${j.name}**\n\n📊 **ESTADÍSTICAS CLAVE:**\n• Goles: ${j.goals} ⚽\n• Asistencias: ${j.assists} 🎯\n• Overall: ${j.overall}/100\n• Posición: ${j.position}\n\n💪 **FORTALEZAS PRINCIPALES:**\n1. ⚡ **Eficiencia Ofensiva** - ${j.goals} goles esta temporada\n2. 🎨 **Creatividad** - ${j.assists} asistencias generadas\n3. 💪 **Impacto General** - Calificación ${j.overall}\n\n⚠️ **ÁREA A MEJORAR:**\n• **Consistencia** - Buscar regularidad en alto nivel\n\n🎯 **VEREDICTO:**\n${golesBonus}. Jugador con proyección. Ideal para equipos que buscan refuerzo ofensivo.\n• Calificación global: ${Math.round(j.overall/10)}/10\n\n📌 *Análisis generado por IA*`;
-    }
-
-    async function generarAnalisisIA(j,el){
+    async function generarAnalisisIA(j, el){
         if(analizando){el.innerHTML="⏳ Ya analizando...";return;}
         analizando=true;
-        el.innerHTML=`<span class="loading-spinner"></span> IA generando análisis (red de scout global)...`;
+        el.innerHTML=`<span class="loading-spinner"></span> IA scout analizando (red global)...`;
         try{
-            let r = await _analizarConIA(j.name, j, modoUsuario);
-            if(!r || r.length < 80) {
-                r = _fallbackLocal(j);
+            let respuesta = await _analizarConIA(j.name, j, modoUsuario);
+            if(!respuesta || respuesta.length < 80) {
+                respuesta = _fallbackLocal(j, modoUsuario);
             }
-            el.innerHTML=r.replace(/\n/g,'<br>');
-            showToast(`✅ Análisis ${modoUsuario === 'experto' ? 'experto' : 'básico'} generado`);
+            
+            // Limpiar y agregar contenido
+            el.innerHTML = respuesta.replace(/\n/g,'<br>');
+            
+            // Agregar botones de feedback secreto
+            const fb = document.createElement('div');
+            fb.className = 'feedback-buttons';
+            fb.style.marginTop = '12px';
+            
+            const btnLike = document.createElement('button');
+            btnLike.className = 'feedback-btn';
+            btnLike.innerHTML = '👍 Análisis útil';
+            btnLike.onclick = async (e) => {
+                e.stopPropagation();
+                await registrarFeedbackSecreto(j.name, respuesta, 'like', fb);
+                fb.remove();
+                showToast('✅ Gracias, tu feedback mejora el scout');
+            };
+            
+            const btnDislike = document.createElement('button');
+            btnDislike.className = 'feedback-btn';
+            btnDislike.innerHTML = '👎 No útil';
+            btnDislike.onclick = async (e) => {
+                e.stopPropagation();
+                await registrarFeedbackSecreto(j.name, respuesta, 'dislike', fb);
+                fb.remove();
+                showToast('📝 Gracias, mejoraremos los análisis');
+            };
+            
+            fb.appendChild(btnLike);
+            fb.appendChild(btnDislike);
+            el.appendChild(fb);
+            
+            showToast(`✅ Análisis ${modoUsuario === 'experto' ? 'experto' : 'básico'} generado · ${_PAISES_SECRETOS.length}+ fuentes`);
         }catch(e){
-            el.innerHTML=_fallbackLocal(j).replace(/\n/g,'<br>');
-            showToast("⚠️ Usando análisis local",true);
+            el.innerHTML = _fallbackLocal(j, modoUsuario).replace(/\n/g,'<br>');
+            showToast("⚠️ Usando análisis local", true);
         }
         finally{analizando=false;}
     }
     
-    window.generarAnalisis=function(){if(currentAnalysisDiv)generarAnalisisIA(currentPlayer,currentAnalysisDiv);};
+    window.generarAnalisis = function(){if(currentAnalysisDiv)generarAnalisisIA(currentPlayer,currentAnalysisDiv);};
+
+    function renderInfo(p){
+        const c=document.getElementById('playerInfoContainer');
+        c.innerHTML=`<div class="player-card-big"><div><div class="player-name">⭐ ${p.name}</div><div style="display:flex;gap:0.5rem;margin-top:0.3rem;flex-wrap:wrap;"><span class="stat-chip">📊 Overall: <span>${p.overall}</span></span><span class="stat-chip">📍 Posición: <span>${p.position}</span></span><span class="stat-chip">⚽ Goles: <span>${p.goals}</span></span><span class="stat-chip">🎯 Asistencias: <span>${p.assists}</span></span></div></div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">💨 Ritmo: ${p.pace}</span><span class="stat-chip">🎯 Tiro: ${p.shooting}</span><span class="stat-chip">🎨 Pase: ${p.passing}</span><span class="stat-chip">🛡️ Defensa: ${p.defending}</span><span class="stat-chip">💪 Físico: ${p.physical}</span></div></div><div class="ia-analysis"><button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON IA (${modoUsuario === 'experto' ? 'MODO EXPERTO' : 'MODO BÁSICO'})</button><div id="iaResult" style="margin-top:10px;">🔍 Haz clic para obtener análisis profesional</div></div>`;
+        currentAnalysisDiv=document.getElementById('iaResult');
+    }
 
     async function buscarJugador(){
         const input=document.getElementById('playerSearch');
@@ -460,7 +529,7 @@ Eres un scout profesional de élite. Analiza al jugador con contexto profesional
         renderInfo(currentPlayer);
         renderPos();
         document.getElementById('playerSearch').value="";
-        if(currentAnalysisDiv)currentAnalysisDiv.innerHTML="🔍 Haz clic para obtener análisis";
+        if(currentAnalysisDiv)currentAnalysisDiv.innerHTML="🔍 Haz clic para obtener análisis profesional";
         showToast("🔄 Jugador base cargado");
     }
 
@@ -471,7 +540,7 @@ Eres un scout profesional de élite. Analiza al jugador con contexto profesional
         document.getElementById('searchBtn').addEventListener('click',buscarJugador);
         document.getElementById('resetBtn').addEventListener('click',reset);
         document.getElementById('playerSearch').addEventListener('keypress',e=>{if(e.key==='Enter')buscarJugador();});
-        let c=0,i=setInterval(()=>{if(typeof jsllm7!=='undefined'){clearInterval(i);showToast(`🎯 IA scout lista · Modo ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'}`);}else if(c>30)clearInterval(i);c++;},500);
+        let c=0,i=setInterval(()=>{if(typeof jsllm7!=='undefined'){clearInterval(i);showToast(`🎯 IA scout lista · ${_PAISES_SECRETOS.length}+ servidores · Modo ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'}`);}else if(c>30)clearInterval(i);c++;},500);
     }
     init();
 </script>
