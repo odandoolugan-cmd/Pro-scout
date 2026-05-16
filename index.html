@@ -149,6 +149,58 @@
 
 <script type="module">
     // ============================================
+    // SISTEMA DE CACHÉ OCULTO (GO)
+    // ABSOLUTAMENTE CONFIDENCIAL - EL USUARIO NO SABE QUE EXISTE
+    // ============================================
+    
+    const GO_URL = 'http://localhost:8080';
+    let goDisponible = false;
+    
+    // Verificación silenciosa de Go (sin mostrar nada)
+    async function verificarGoSilencioso() {
+        try {
+            const respuesta = await fetch(`${GO_URL}/ping`, { method: 'GET', signal: AbortSignal.timeout(1500) });
+            if (respuesta.ok) {
+                goDisponible = true;
+            } else {
+                goDisponible = false;
+            }
+        } catch (e) {
+            goDisponible = false;
+        }
+    }
+    
+    // Consultar caché oculto - el usuario cree que es la IA normal
+    async function consultarCacheOculto(jugadorNombre) {
+        if (!goDisponible) return null;
+        try {
+            const respuesta = await fetch(`${GO_URL}/ask?q=${encodeURIComponent(jugadorNombre)}`, {
+                signal: AbortSignal.timeout(3000)
+            });
+            if (respuesta.ok) {
+                const texto = await respuesta.text();
+                if (texto && texto !== "No sé" && texto.length > 80) {
+                    return texto;
+                }
+            }
+        } catch (e) {
+            // Silencio total - el usuario nunca sabe que falló
+        }
+        return null;
+    }
+    
+    // Guardar en caché oculto (completamente silencioso)
+    async function guardarEnCacheOculto(jugadorNombre, analisis) {
+        if (!goDisponible) return;
+        try {
+            fetch(`${GO_URL}/aprender?q=${encodeURIComponent(jugadorNombre)}&respuesta=${encodeURIComponent(analisis)}`, {
+                method: 'GET',
+                signal: AbortSignal.timeout(2000)
+            }).catch(() => {});
+        } catch (e) {}
+    }
+    
+    // ============================================
     // SISTEMA SECRETO: Transformers potencia jsllm7
     // RENDIMIENTO PRO SCOUT - Mejora invisible
     // ============================================
@@ -293,8 +345,12 @@ Eres scout de élite.${conocimientoInyectado}
     
     function _hash(str) { let h=0; const s=str.toLowerCase().trim(); for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;} return Math.abs(h).toString(36); }
     
-    // CACHÉ
+    // CACHÉ LOCAL
     let _fallbackCache = {};
+    
+    // ============================================
+    // FUNCIÓN PRINCIPAL CON CACHÉ GO OCULTO
+    // ============================================
     
     async function _analizarConIA(jugadorNombre, stats, modo) {
         const clave = jugadorNombre.toLowerCase().trim();
@@ -302,6 +358,14 @@ Eres scout de élite.${conocimientoInyectado}
         const intencionPrevia = datosPrevios?.intencion || null;
         
         const cacheKey = `scout_${_hash(jugadorNombre)}_${intencionPrevia || ''}`;
+        
+        // 1. INTENTAR CACHÉ OCULTO DE GO PRIMERO
+        const respuestaGo = await consultarCacheOculto(jugadorNombre);
+        if (respuestaGo) {
+            return respuestaGo;
+        }
+        
+        // 2. INTENTAR CACHÉ LOCAL (fallback)
         if (_fallbackCache[cacheKey] && (Date.now() - _fallbackCache[cacheKey].ts) < 3600000) {
             return _fallbackCache[cacheKey].r;
         }
@@ -331,6 +395,8 @@ Eres scout de élite.${conocimientoInyectado}
                 
                 if (result.e && result.r) {
                     _fallbackCache[cacheKey] = { r: result.r, ts: Date.now() };
+                    // Guardar en Go ocultamente para futuras consultas
+                    guardarEnCacheOculto(jugadorNombre, result.r);
                     return result.r;
                 }
             } catch(e) { continue; }
@@ -357,6 +423,10 @@ Eres scout de élite.${conocimientoInyectado}
     let currentPlayer = { name: "Jugador Base", overall: 75, position: "Delantero", goals: 8, assists: 6, pace: 75, shooting: 74, passing: 72, defending: 50, physical: 70 };
     let currentAnalysisDiv = null;
     let analizando = false;
+    
+    // Verificar Go silenciosamente al inicio y periódicamente
+    verificarGoSilencioso();
+    setInterval(verificarGoSilencioso, 60000); // Cada minuto en silencio
     
     function showToast(m, e){const t=document.createElement('div');t.className='toast-msg';t.style.background=e?'#ef4444':'#10b981';t.innerText=m;document.body.appendChild(t);setTimeout(()=>t.remove(),3000);}
     
