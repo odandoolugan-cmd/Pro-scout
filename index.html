@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="referrer" content="no-referrer-when-downgrade">
-    <title>🏆 RENDIMIENTO PRO · Scout IA · Sin Markdown</title>
+    <title>🏆 RENDIMIENTO PRO · SCOUT IA + 10 Herramientas · Sin Markdown</title>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, 'Segoe UI', sans-serif; }
@@ -21,20 +21,23 @@
         .modo-selector { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; }
         .modo-btn { background: #1e293b; border: 1px solid #334155; padding: 6px 18px; border-radius: 30px; font-size: 0.75rem; cursor: pointer; font-weight: 600; color: #94a3b8; transition: all 0.2s; }
         .modo-btn.active { background: linear-gradient(90deg, #8b5cf6, #3b82f6); color: white; border-color: #8b5cf6; box-shadow: 0 0 10px rgba(139,92,246,0.3); }
-        .modo-btn:hover { transform: scale(1.02); opacity: 0.9; }
         
-        .search-panel { background: rgba(15, 35, 38, 0.8); backdrop-filter: blur(12px); border-radius: 1.8rem; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #2c9b8a; box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+        /* BARRA DE HERRAMIENTAS */
+        .tools-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0; justify-content: center; }
+        .tool-btn { background: #1e293b; border: 1px solid #334155; padding: 6px 12px; border-radius: 20px; font-size: 0.65rem; cursor: pointer; font-weight: 500; color: #94a3b8; transition: 0.2s; }
+        .tool-btn:hover { background: #8b5cf6; color: white; border-color: #8b5cf6; transform: scale(1.02); }
+        
+        .search-panel { background: rgba(15, 35, 38, 0.8); backdrop-filter: blur(12px); border-radius: 1.8rem; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #2c9b8a; }
         .search-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; }
         .search-box { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
-        .search-box input { flex: 1; padding: 0.9rem 1.2rem; border-radius: 3rem; border: none; background: #1e3a3a; color: white; font-size: 1rem; outline: none; transition: 0.2s; }
+        .search-box input { flex: 1; padding: 0.9rem 1.2rem; border-radius: 3rem; border: none; background: #1e3a3a; color: white; font-size: 1rem; outline: none; }
         .search-box input:focus { background: #2a534b; box-shadow: 0 0 0 2px #5fe0c0; }
         .search-box button { background: linear-gradient(90deg, #2d8f7a, #3fb597); border: none; padding: 0 1.8rem; border-radius: 3rem; font-weight: bold; color: white; cursor: pointer; transition: 0.2s; }
         .search-box button:hover { transform: scale(0.96); }
-        .search-box button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
         
         .player-card-big { background: linear-gradient(135deg, #0d2a2a, #0b2222); border-radius: 1.5rem; padding: 1.2rem 1.8rem; margin-top: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; border-left: 5px solid #3bcb9b; }
-        .player-name { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; }
-        .stat-chip { background: #1e4a43; padding: 0.3rem 1rem; border-radius: 2rem; font-size: 0.9rem; }
+        .player-name { font-size: 1.8rem; font-weight: 800; }
+        .stat-chip { background: #1e4a43; padding: 0.3rem 1rem; border-radius: 2rem; font-size: 0.9rem; display: inline-block; }
         .stat-chip span { font-weight: bold; color: #ffd966; }
 
         .positions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
@@ -47,38 +50,39 @@
         .skill-label { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.2rem; }
         .skill-bar-bg { background: #1e4a43; height: 8px; border-radius: 20px; overflow: hidden; }
         .skill-fill { background: linear-gradient(90deg, #3bcb9b, #1f9979); width: 0%; height: 100%; transition: width 0.4s ease; }
-        .badge-recom { font-size: 0.7rem; background: #2c6e5d; padding: 0.2rem 0.6rem; border-radius: 20px; margin-top: 0.8rem; display: inline-block; }
         
         .ia-analysis { background: rgba(139, 92, 246, 0.2); border-left: 3px solid #8b5cf6; padding: 0.8rem; margin-top: 1rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.5; white-space: pre-wrap; }
         .ia-btn { background: linear-gradient(90deg, #8b5cf6, #3b82f6); border: none; color: white; padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; cursor: pointer; margin-top: 8px; transition: all 0.2s; }
-        .ia-btn:hover { transform: scale(1.02); opacity: 0.9; }
-        .ia-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .feedback-buttons { display: flex; gap: 10px; margin-top: 8px; justify-content: flex-start; }
         .feedback-btn { background: none; border: none; color: #7a9aae; cursor: pointer; font-size: 0.65rem; padding: 2px 8px; border-radius: 15px; transition: 0.2s; }
         .feedback-btn:hover { background: #334155; color: #e9c46a; }
-        .feedback-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         
         .loading-spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite; margin-right: 6px; vertical-align: middle; }
         @keyframes spin { to { transform: rotate(360deg); } }
         
         .ad-container { margin: 1.5rem 0; text-align: center; background: rgba(0,0,0,0.2); border-radius: 1rem; padding: 0.8rem; }
-        .ad-label { font-size: 0.7rem; color: #6c9e93; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px; }
-        .news-ticker { background: rgba(0,0,0,0.3); border-radius: 2rem; padding: 0.4rem 1rem; margin: 0.5rem auto; font-size: 0.7rem; text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-        .global-reset { background: #aa3e2e; border: none; padding: 0.6rem 1.5rem; border-radius: 3rem; color: white; margin-top: 1rem; cursor: pointer; font-weight: bold; transition: 0.2s; }
-        .global-reset:hover { background: #c55543; transform: scale(0.98); }
+        .news-ticker { background: rgba(0,0,0,0.3); border-radius: 2rem; padding: 0.4rem 1rem; margin: 0.5rem auto; font-size: 0.7rem; text-align: center; }
+        .global-reset { background: #aa3e2e; border: none; padding: 0.6rem 1.5rem; border-radius: 3rem; color: white; margin-top: 1rem; cursor: pointer; font-weight: bold; }
         .footer { text-align: center; margin-top: 2rem; font-size: 0.7rem; opacity: 0.6; }
         .toast-msg { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #10b981; color: white; padding: 8px 20px; border-radius: 50px; font-size: 0.8rem; z-index: 2000; animation: fadeOut 2s forwards; }
         @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
         .context-info { background: rgba(139,92,246,0.1); border-radius: 1rem; padding: 0.5rem; margin: 0.5rem 0; font-size: 0.65rem; color: #a5b4fc; text-align: center; }
         .restriction-alert { background: rgba(139, 92, 246, 0.15); border: 1px solid #8b5cf6; border-radius: 0.8rem; padding: 0.5rem 1rem; margin-top: 1rem; font-size: 0.7rem; text-align: center; color: #a78bfa; }
-        @media (max-width: 700px) { .player-name { font-size: 1.3rem; } .ad-container { margin: 1rem 0; } .news-ticker { white-space: normal; line-height: 1.3; } .modo-selector { justify-content: center; } }
+        
+        /* Modal */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; align-items: center; justify-content: center; }
+        .modal-content { background: #0f172a; border-radius: 1.5rem; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; padding: 1.5rem; border: 2px solid #8b5cf6; }
+        .modal-content h3 { color: #a78bfa; margin-bottom: 1rem; }
+        .modal-close { margin-top: 1rem; background: #8b5cf6; border: none; padding: 0.5rem 1rem; border-radius: 2rem; color: white; cursor: pointer; }
+        
+        @media (max-width: 700px) { .player-name { font-size: 1.3rem; } .modo-selector { justify-content: center; } }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="hero">
-        <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="ia-badge">IA POTENCIADA</span><span class="badge-100">🏆 100% CALIDAD</span><span class="live-badge" id="liveBadge">🌐 EN VIVO</span></h1>
-        <p>Estadísticas reales · Análisis profesional · IA avanzada · Sin markdown</p>
+        <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="ia-badge">10 HERRAMIENTAS</span><span class="badge-100">🏆 100% CALIDAD</span><span class="live-badge" id="liveBadge">🌐 EN VIVO</span></h1>
+        <p>Estadísticas reales · Análisis profesional · IA avanzada · 10 herramientas tácticas · Sin markdown</p>
         <div class="news-ticker" id="newsTicker">🌐 Conectando a fuentes de datos de fútbol...</div>
     </div>
 
@@ -88,13 +92,27 @@
             <button class="modo-btn" data-modo="basico">⚡ MODO BÁSICO</button>
         </div>
         
+        <!-- BARRA DE HERRAMIENTAS (10 MECANISMOS) -->
+        <div class="tools-bar">
+            <button class="tool-btn" id="btnComparar">🔄 Comparar Jugadores</button>
+            <button class="tool-btn" id="btnFormacion">📋 Formación Ideal</button>
+            <button class="tool-btn" id="btnRival">🎯 Análisis de Rival</button>
+            <button class="tool-btn" id="btnMercado">💰 Valor de Mercado</button>
+            <button class="tool-btn" id="btnLesiones">🩺 Riesgo Lesiones</button>
+            <button class="tool-btn" id="btnJovenes">🌟 Promesas</button>
+            <button class="tool-btn" id="btnEquipo">🏆 Mejor XI</button>
+            <button class="tool-btn" id="btnEstilo">🎭 Estilo Juego</button>
+            <button class="tool-btn" id="btnTransicion">🔄 Transiciones</button>
+            <button class="tool-btn" id="btnPrediccion">🔮 Predicción Carrera</button>
+        </div>
+        
         <div class="search-title">🔍 <span>BUSCADOR DE JUGADORES</span></div>
         <div class="search-box">
             <input type="text" id="playerSearch" placeholder="Ej: Lionel Messi, Cristiano Ronaldo, Vinicius Jr, Erling Haaland..." autocomplete="off">
             <button id="searchBtn">📊 BUSCAR DATOS REALES</button>
         </div>
-        <div class="context-info" id="contextInfo">📡 IA potenciada activa · Análisis profesional · Texto limpio sin asteriscos</div>
-        <div class="restriction-alert">🎯 IA Avanzada · Scout profesional · Calidad 100% · Sin markdown</div>
+        <div class="context-info" id="contextInfo">📡 IA potenciada activa · 10 herramientas tácticas · Texto limpio sin asteriscos</div>
+        <div class="restriction-alert">🎯 IA Avanzada · Scout profesional · 10 herramientas tácticas · Sin markdown</div>
         <div id="playerInfoContainer"></div>
     </div>
 
@@ -110,46 +128,32 @@
     </div>
     
     <div style="text-align:center;margin-top:1.5rem;"><button id="resetBtn" class="global-reset">🔄 REINICIAR A JUGADOR BASE</button></div>
-    <div class="footer">✨ Datos reales · Análisis con IA potenciada · Scout profesional · Sin markdown</div>
+    <div class="footer">✨ Datos reales · Análisis con IA potenciada · Scout profesional · 10 herramientas · Sin markdown</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/jsllm7@0.1.0/jsllm7.js"></script>
 
-<script type="importmap">
-    {
-        "imports": {
-            "@xenova/transformers": "https://unpkg.com/@xenova/transformers@2.17.0/dist/transformers.min.js"
-        }
-    }
-</script>
-
-<script type="module">
+<script>
     // ============================================
-    // LIMPIADOR DE MARKDOWN (SIN ASTERISCOS)
+    // LIMPIADOR DE MARKDOWN
     // ============================================
     
     function limpiarMarkdown(texto) {
         let limpio = texto;
-        // Eliminar asteriscos (negritas, cursivas)
         limpio = limpio.replace(/\*\*/g, '');
         limpio = limpio.replace(/\*/g, '');
-        // Eliminar numerales (títulos)
         limpio = limpio.replace(/^###\s*/gm, '');
         limpio = limpio.replace(/^##\s*/gm, '');
         limpio = limpio.replace(/^#\s*/gm, '');
-        // Eliminar backticks
         limpio = limpio.replace(/`/g, '');
-        // Eliminar líneas separadoras
         limpio = limpio.replace(/^---\s*$/gm, '');
-        // Convertir guiones de listas en viñetas
         limpio = limpio.replace(/^\s*-\s+/gm, '• ');
-        // Limpiar espacios múltiples
         limpio = limpio.replace(/\n{3,}/g, '\n\n');
         return limpio.trim();
     }
     
     // ============================================
-    // SISTEMA DE CACHÉ OCULTO (GO)
+    // SISTEMA DE CACHÉ
     // ============================================
     
     const GO_URL = 'http://localhost:8080';
@@ -159,7 +163,6 @@
         try {
             const respuesta = await fetch(`${GO_URL}/ping`, { method: 'GET', signal: AbortSignal.timeout(1500) });
             if (respuesta.ok) goDisponible = true;
-            else goDisponible = false;
         } catch (e) { goDisponible = false; }
     }
     
@@ -169,252 +172,130 @@
             const respuesta = await fetch(`${GO_URL}/ask?q=${encodeURIComponent(jugadorNombre)}`, { signal: AbortSignal.timeout(3000) });
             if (respuesta.ok) {
                 const texto = await respuesta.text();
-                if (texto && texto !== "No sé" && texto.length > 80) {
-                    return limpiarMarkdown(texto);
-                }
+                if (texto && texto !== "No sé" && texto.length > 80) return limpiarMarkdown(texto);
             }
         } catch (e) {}
         return null;
     }
     
-    async function guardarEnCacheOculto(jugadorNombre, analisis) {
-        if (!goDisponible) return;
-        try {
-            fetch(`${GO_URL}/aprender?q=${encodeURIComponent(jugadorNombre)}&respuesta=${encodeURIComponent(analisis)}`, {
-                method: 'GET',
-                signal: AbortSignal.timeout(2000)
-            }).catch(() => {});
-        } catch (e) {}
-    }
-    
     // ============================================
-    // SISTEMA SECRETO: Transformers
+    // BASE DE DATOS DE JUGADORES
     // ============================================
     
-    import { pipeline, env } from '@xenova/transformers';
+    const _PAISES_SECRETOS = ["Alemania", "Francia", "México", "Brasil", "España", "Italia", "Argentina", "Inglaterra", "Países Bajos", "Portugal"];
     
-    env.useBrowserCache = true;
-    env.allowLocalModels = false;
-    
-    const _PAISES_SECRETOS = [
-        "Alemania", "Francia", "México", "Brasil", "España", "Italia", "Argentina", 
-        "Inglaterra", "Países Bajos", "Portugal", "Bélgica", "Suecia", "Noruega", 
-        "Dinamarca", "Finlandia", "Canadá", "Australia", "Nueva Zelanda", "Chile", 
-        "Uruguay", "Colombia", "Perú", "Costa Rica", "Irlanda", "Austria", "Suiza", 
-        "Polonia", "República Checa", "Hungría", "Japón", "Corea del Sur", "India"
-    ];
-    
-    let clasificadorIntencion = null;
-    const memoriaIntencion = new Map();
-    
-    (async function() {
-        try {
-            clasificadorIntencion = await pipeline('sentiment-analysis', 'Xenova/distilbert-base-uncased-finetuned-sst-2-english', { quantized: true });
-        } catch(e) { console.warn(e); }
-    })();
-    
-    async function analizarIntencion(tipo, jugadorNombre, analisis) {
-        if (!clasificadorIntencion) return { intencion: tipo === 'like' ? 'buena' : 'mala', confianza: 0.6 };
-        try {
-            const txt = `Jugador: ${jugadorNombre}. Usuario dio ${tipo === 'like' ? 'feedback positivo' : 'feedback negativo'}.`;
-            const res = await clasificadorIntencion(txt);
-            if (res && res[0]) {
-                const esPos = res[0].label === 'POSITIVE';
-                return { intencion: (tipo === 'like' && esPos) ? 'buena' : 'mala', confianza: res[0].score };
-            }
-        } catch(e) {}
-        return { intencion: tipo === 'like' ? 'buena' : 'mala', confianza: 0.5 };
-    }
-    
-    function mejorarPromptConIntencion(promptBase, intencion) {
-        if (intencion === 'buena') {
-            return promptBase + `\n\n[MEJORA SCOUT: Feedback positivo previo. Profundiza con más detalles. NO uses asteriscos.]`;
-        } else {
-            return promptBase + `\n\n[MEJORA SCOUT: Feedback negativo previo. Sé más claro y práctico. NO uses asteriscos.]`;
-        }
-    }
-    
-    async function registrarFeedbackSecreto(jugadorNombre, analisis, tipo, elemento) {
-        const clave = jugadorNombre.toLowerCase().trim();
-        const analisisIntencion = await analizarIntencion(tipo, jugadorNombre, analisis);
-        
-        if (!memoriaIntencion.has(clave)) {
-            memoriaIntencion.set(clave, { buenos: 0, malos: 0, intencion: null });
-        }
-        const data = memoriaIntencion.get(clave);
-        if (tipo === 'like') data.buenos++;
-        else data.malos++;
-        data.intencion = analisisIntencion.intencion;
-        
-        const btns = elemento.querySelectorAll('.feedback-btn');
-        btns.forEach(btn => btn.disabled = true);
-    }
-    
-    const _temasScout = {
-        delantero: ["goleador", "delantero", "atacante", "9", "centrodelantero"],
-        extremo: ["extremo", "ala", "winger", "banda"],
-        mediocampista: ["mediocampo", "centrocampista", "mediapunta", "volante"],
-        defensa: ["defensa", "central", "zaguero", "defensor"]
-    };
-    
-    function _detectarTemaSecreto(jugadorNombre, posicion) {
-        const lower = jugadorNombre.toLowerCase();
-        for (const [tema, palabras] of Object.entries(_temasScout)) {
-            for (const palabra of palabras) {
-                if (lower.includes(palabra)) return tema;
-            }
-        }
-        const pos = (posicion || "").toLowerCase();
-        if (pos.includes("delan")) return "delantero";
-        if (pos.includes("extrem")) return "extremo";
-        if (pos.includes("centro") || pos.includes("medio")) return "mediocampista";
-        if (pos.includes("defensa")) return "defensa";
-        return "general";
-    }
-    
-    const _conocimientoSecreto = {
-        delantero: { fortalezas: ["Finalización clínica", "Posicionamiento"], leyendas: ["Messi", "Cristiano", "Ronaldo"] },
-        extremo: { fortalezas: ["Regate", "Velocidad", "Centro"], leyendas: ["Garrincha", "Robben", "Giggs"] },
-        mediocampista: { fortalezas: ["Visión", "Pase", "Llegada"], leyendas: ["Zidane", "Iniesta", "Modric"] },
-        defensa: { fortalezas: ["Anticipación", "Juego aéreo", "Marcaje"], leyendas: ["Baresi", "Maldini", "Ramos"] }
-    };
-    
-    function _generarPromptSecreto(jugadorNombre, stats, modo, intencionPrevia = null) {
-        const tema = _detectarTemaSecreto(jugadorNombre, stats.position);
-        const esExperto = modo === 'experto';
-        
-        let conocimientoInyectado = "";
-        if (_conocimientoSecreto[tema]) {
-            const info = _conocimientoSecreto[tema];
-            conocimientoInyectado += `\nReferentes históricos: ${info.leyendas.slice(0, 3).join(", ")}.`;
-            conocimientoInyectado += `\nFortalezas: ${info.fortalezas.slice(0, 3).join(", ")}.`;
-        }
-        
-        let prompt = `[RESPONDE 100% EN ESPAÑOL. PROHIBIDO EL INGLÉS.]
-
-REGLAS ESTRICTAS DE FORMATO:
-- NO USES ASTERISCOS (*) EN NINGUNA CIRCUNSTANCIA
-- NO USES NUMERALES (#) PARA TÍTULOS
-- NO USES MARKDOWN
-- USA SALTOS DE LÍNEA PARA SEPARAR IDEAS
-
-Eres scout de élite.${conocimientoInyectado}
-
-Jugador: ${jugadorNombre}
-Posición: ${stats.position || "No especificada"}
-Estadísticas: ${stats.goals} goles, ${stats.assists} asistencias, ${stats.overall}/100
-
-REGLAS:
-1. RESPONDE EN ESPAÑOL
-2. Estructura: FORTALEZAS, MEJORA, VEREDICTO`;
-
-        if (esExperto) {
-            prompt += `\n3. Mínimo 300 palabras con comparación a leyendas`;
-            prompt += `\n4. Da calificación /10`;
-        } else {
-            prompt += `\n3. Mínimo 150 palabras claro y directo`;
-        }
-        
-        if (intencionPrevia === 'buena') {
-            prompt = `[FEEDBACK POSITIVO]\n\n${prompt}\n\nMEJORA: Añade más detalles. NO USES ASTERISCOS.`;
-        } else if (intencionPrevia === 'mala') {
-            prompt = `[FEEDBACK NEGATIVO]\n\n${prompt}\n\nMEJORA: Sé más claro. NO USES ASTERISCOS.`;
-        }
-        
-        return prompt;
-    }
+    let _cacheIA = {};
+    try { _cacheIA = JSON.parse(localStorage.getItem('scout_cache_v5') || '{}'); } catch(e) {}
     
     function _hash(str) { let h=0; const s=str.toLowerCase().trim(); for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;} return Math.abs(h).toString(36); }
     
-    let _fallbackCache = {};
+    function _obtenerCache(key) { const item=_cacheIA[key]; if(item && (Date.now()-item.t)<86400000) return item.r; return null; }
+    function _guardarCache(key, r) { _cacheIA[key]={r,t:Date.now()}; localStorage.setItem('scout_cache_v5',JSON.stringify(_cacheIA)); }
     
-    async function _analizarConIA(jugadorNombre, stats, modo) {
-        const clave = jugadorNombre.toLowerCase().trim();
-        const datosPrevios = memoriaIntencion.get(clave);
-        const intencionPrevia = datosPrevios?.intencion || null;
-        
-        const cacheKey = `scout_${_hash(jugadorNombre)}_${intencionPrevia || ''}`;
-        
-        const respuestaGo = await consultarCacheOculto(jugadorNombre);
-        if (respuestaGo) {
-            return respuestaGo;
-        }
-        
-        if (_fallbackCache[cacheKey] && (Date.now() - _fallbackCache[cacheKey].ts) < 3600000) {
-            return _fallbackCache[cacheKey].r;
-        }
-        
-        const paises = [..._PAISES_SECRETOS];
-        for (let i = paises.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [paises[i], paises[j]] = [paises[j], paises[i]];
-        }
-        
-        for (let i = 0; i < paises.length; i++) {
-            const prompt = _generarPromptSecreto(jugadorNombre, stats, modo, intencionPrevia);
-            
-            try {
-                const result = await new Promise(async (resolve) => {
-                    const timeout = setTimeout(() => resolve({ e: false, r: null }), 45000);
-                    try {
-                        const r = await jsllm7(prompt);
-                        clearTimeout(timeout);
-                        if (r && r.length > 80) resolve({ e: true, r: r });
-                        else resolve({ e: false, r: null });
-                    } catch(e) {
-                        clearTimeout(timeout);
-                        resolve({ e: false, r: null });
-                    }
-                });
-                
-                if (result.e && result.r) {
-                    const respuestaLimpia = limpiarMarkdown(result.r);
-                    _fallbackCache[cacheKey] = { r: respuestaLimpia, ts: Date.now() };
-                    guardarEnCacheOculto(jugadorNombre, respuestaLimpia);
-                    return respuestaLimpia;
-                }
-            } catch(e) { continue; }
-        }
-        return null;
+    async function _llamadaIA(prompt) {
+        try {
+            const respuesta = await jsllm7(prompt);
+            return limpiarMarkdown(respuesta);
+        } catch(e) { return null; }
     }
     
-    function _fallbackLocal(j, modoUsuario) {
-        if (modoUsuario === 'basico') {
-            return `ANALISIS BASICO: ${j.name}
-
-DATOS:
-• Goles: ${j.goals}
-• Asistencias: ${j.assists}
-• Overall: ${j.overall}/100
-
-VALORACION: ${j.overall >= 85 ? 'Elite' : (j.overall >= 75 ? 'Buen nivel' : 'En desarrollo')}`;
-        }
-        return `SCOUT EXPERTO: ${j.name}
-
-ESTADISTICAS:
-• Goles: ${j.goals}
-• Asistencias: ${j.assists}
-• Overall: ${j.overall}/100
-
-FORTALEZAS:
-1. Eficiencia ofensiva
-2. Creatividad
-3. Impacto general
-
-MEJORA:
-Consistencia
-
-VEREDICTO: ${j.goals > 20 ? 'Rendimiento excepcional' : 'Buen potencial'}
-Calificacion: ${Math.round(j.overall/10)}/10`;
+    async function herramientaGenerica(promptText, titulo) {
+        showToast(`⏳ ${titulo}...`);
+        const respuesta = await _llamadaIA(promptText);
+        mostrarModal(titulo, respuesta || `No se pudo obtener ${titulo.toLowerCase()}. Intenta de nuevo.`);
     }
     
-    window.agregarFeedbackScout = async function(elemento, jugadorNombre, analisis, tipo) {
-        await registrarFeedbackSecreto(jugadorNombre, analisis, tipo, elemento);
-    };
+    function mostrarModal(titulo, contenido) {
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <h3>${titulo}</h3>
+                <div style="white-space:pre-wrap; font-size:0.85rem; line-height:1.5;">${contenido.replace(/\n/g, '<br>')}</div>
+                <button class="modal-close">Cerrar</button>
+            </div>
+        `;
+        modal.querySelector('.modal-close').onclick = () => modal.remove();
+        document.body.appendChild(modal);
+    }
     
     // ============================================
-    // UI
+    // 10 HERRAMIENTAS SCOUT
     // ============================================
+    
+    // 1. Comparar Jugadores
+    async function compararJugadores() {
+        const j1 = document.getElementById('playerSearch').value.trim() || currentPlayer?.name || "Messi";
+        const j2 = prompt("Segundo jugador a comparar (Ej: Cristiano Ronaldo, Haaland, Mbappe):", "Cristiano Ronaldo");
+        if (!j2) return;
+        const prompt = `Compara a ${j1} y ${j2} como futbolistas. Analiza: estilo de juego, estadísticas clave, logros, y quién es mejor en cada aspecto. Sé objetivo. Sin asteriscos.`;
+        await herramientaGenerica(prompt, `🔄 COMPARACIÓN: ${j1} vs ${j2}`);
+    }
+    
+    // 2. Formación Ideal
+    async function formacionIdeal() {
+        const prompt = `Sugiere una formación de fútbol ideal (4-3-3, 4-4-2, 3-5-2, etc.) para un equipo que quiere dominar la posesión. Explica por qué funciona y qué tipo de jugadores necesita cada posición. Sin asteriscos.`;
+        await herramientaGenerica(prompt, "📋 FORMACIÓN IDEAL");
+    }
+    
+    // 3. Análisis de Rival
+    async function analisisRival() {
+        const rival = prompt("Nombre del equipo rival a analizar:", "Real Madrid");
+        if (!rival) return;
+        const prompt = `Analiza al ${rival} como rival. Puntos fuertes, puntos débiles, formación típica, jugadores clave, y cómo contrarrestarlos tácticamente. Sin asteriscos.`;
+        await herramientaGenerica(prompt, `🎯 ANÁLISIS DE RIVAL: ${rival.toUpperCase()}`);
+    }
+    
+    // 4. Valor de Mercado
+    async function valorMercado() {
+        const jugador = document.getElementById('playerSearch').value.trim() || currentPlayer?.name || "Jugador";
+        const prompt = `Estima el valor de mercado actual de ${jugador} en el mercado de fichajes. Da un rango en euros, factores que influyen (edad, rendimiento, contrato), y si es momento de comprar o vender. Sin asteriscos.`;
+        await herramientaGenerica(prompt, `💰 VALOR DE MERCADO: ${jugador}`);
+    }
+    
+    // 5. Riesgo Lesiones
+    async function riesgoLesiones() {
+        const jugador = document.getElementById('playerSearch').value.trim() || currentPlayer?.name || "Jugador";
+        const prompt = `Analiza el riesgo de lesiones de ${jugador} basado en su historial, estilo de juego, edad y posición. Da un nivel de riesgo (bajo/medio/alto) y recomendaciones para prevenirlas. Sin asteriscos.`;
+        await herramientaGenerica(prompt, `🩺 RIESGO DE LESIONES: ${jugador}`);
+    }
+    
+    // 6. Promesas
+    async function jovenesPromesas() {
+        const prompt = `Recomienda 5 jóvenes promesas del fútbol mundial (menores de 21 años) con gran proyección. Para cada uno: nombre, posición, país, valor actual estimado y por qué es una promesa. Sin asteriscos.`;
+        await herramientaGenerica(prompt, "🌟 PROMESAS DEL FÚTBOL MUNDIAL");
+    }
+    
+    // 7. Mejor XI
+    async function mejorXI() {
+        const prompt = `Construye el mejor once inicial (Mejor XI) del fútbol actual (2024-2025). Formación 4-3-3. Para cada jugador: nombre, posición, y breve razón de su inclusión. Sin asteriscos.`;
+        await herramientaGenerica(prompt, "🏆 MEJOR XI DEL MUNDO");
+    }
+    
+    // 8. Estilo de Juego
+    async function estiloJuego() {
+        const jugador = document.getElementById('playerSearch').value.trim() || currentPlayer?.name || "Jugador";
+        const prompt = `Describe el estilo de juego de ${jugador}. Incluye: posición principal, puntos fuertes tácticos, debilidades, y con qué otros jugadores se le compara. Sin asteriscos.`;
+        await herramientaGenerica(prompt, `🎭 ESTILO DE JUEGO: ${jugador}`);
+    }
+    
+    // 9. Transiciones
+    async function transiciones() {
+        const prompt = `Explica la importancia de las transiciones ofensivas y defensivas en el fútbol moderno. Da 5 consejos para mejorar las transiciones en un equipo. Sin asteriscos.`;
+        await herramientaGenerica(prompt, "🔄 TRANSICIONES EN EL FÚTBOL");
+    }
+    
+    // 10. Predicción Carrera
+    async function prediccionCarrera() {
+        const jugador = document.getElementById('playerSearch').value.trim() || currentPlayer?.name || "Jugador";
+        const prompt = `Predice la trayectoria futura de ${jugador} en los próximos 5 años. Incluye: posibles equipos a los que podría ir, evolución de rendimiento, logros potenciales, y factores clave que determinarán su éxito. Sin asteriscos.`;
+        await herramientaGenerica(prompt, `🔮 PREDICCIÓN DE CARRERA: ${jugador}`);
+    }
+    
+    // ============================================
+    // UI PRINCIPAL
+    // ============================================
+    
     let modoUsuario = localStorage.getItem('scout_modo') || 'experto';
     let currentPlayer = { name: "Jugador Base", overall: 75, position: "Delantero", goals: 8, assists: 6, pace: 75, shooting: 74, passing: 72, defending: 50, physical: 70 };
     let currentAnalysisDiv = null;
@@ -426,15 +307,9 @@ Calificacion: ${Math.round(j.overall/10)}/10`;
     function showToast(m, e){const t=document.createElement('div');t.className='toast-msg';t.style.background=e?'#ef4444':'#10b981';t.innerText=m;document.body.appendChild(t);setTimeout(()=>t.remove(),3000);}
     
     function actualizarModoUI() { 
-        document.querySelectorAll('.modo-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.modo === modoUsuario);
-        });
+        document.querySelectorAll('.modo-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.modo === modoUsuario));
         const contextDiv = document.getElementById('contextInfo');
-        if (contextDiv) {
-            contextDiv.innerHTML = modoUsuario === 'experto' 
-                ? '🧠 MODO EXPERTO · Análisis profundo con IA · Scout profesional · Sin markdown'
-                : '⚡ MODO BÁSICO · Análisis rápido y directo · Estadísticas esenciales · Sin asteriscos';
-        }
+        if (contextDiv) contextDiv.innerHTML = modoUsuario === 'experto' ? '🧠 MODO EXPERTO · Análisis profundo · Scout profesional · 10 herramientas · Sin markdown' : '⚡ MODO BÁSICO · Análisis rápido · Estadísticas esenciales · Sin asteriscos';
     }
     
     document.querySelectorAll('.modo-btn').forEach(btn => {
@@ -443,13 +318,23 @@ Calificacion: ${Math.round(j.overall/10)}/10`;
             localStorage.setItem('scout_modo', modoUsuario);
             actualizarModoUI();
             showToast(`✨ Modo ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'}`);
-            if (currentAnalysisDiv && currentPlayer) {
-                generarAnalisisIA(currentPlayer, currentAnalysisDiv);
-            }
+            if (currentAnalysisDiv && currentPlayer) generarAnalisisIA(currentPlayer, currentAnalysisDiv);
         });
     });
     actualizarModoUI();
-
+    
+    // Asignar botones de herramientas
+    document.getElementById('btnComparar').onclick = compararJugadores;
+    document.getElementById('btnFormacion').onclick = formacionIdeal;
+    document.getElementById('btnRival').onclick = analisisRival;
+    document.getElementById('btnMercado').onclick = valorMercado;
+    document.getElementById('btnLesiones').onclick = riesgoLesiones;
+    document.getElementById('btnJovenes').onclick = jovenesPromesas;
+    document.getElementById('btnEquipo').onclick = mejorXI;
+    document.getElementById('btnEstilo').onclick = estiloJuego;
+    document.getElementById('btnTransicion').onclick = transiciones;
+    document.getElementById('btnPrediccion').onclick = prediccionCarrera;
+    
     function getPlayerData(nombre){
         const nl = nombre.toLowerCase();
         const db = { 
@@ -470,8 +355,6 @@ Calificacion: ${Math.round(j.overall/10)}/10`;
         if(nl.includes("messi")) return { name:"Lionel Messi", overall:92, position:"Extremo", goals:25, assists:18, pace:82, shooting:91, passing:93, defending:35, physical:68 };
         if(nl.includes("haaland")) return { name:"Erling Haaland", overall:91, position:"Delantero", goals:32, assists:6, pace:88, shooting:93, passing:65, defending:42, physical:90 };
         if(nl.includes("bellingham")) return { name:"Jude Bellingham", overall:89, position:"Mediocentro", goals:19, assists:8, pace:82, shooting:84, passing:86, defending:70, physical:82 };
-        if(nl.includes("mbappe")) return { name:"Kylian Mbappe", overall:92, position:"Delantero", goals:30, assists:9, pace:95, shooting:90, passing:77, defending:38, physical:83 };
-        if(nl.includes("vinicius")) return { name:"Vinícius Jr", overall:88, position:"Extremo", goals:15, assists:10, pace:93, shooting:82, passing:79, defending:35, physical:72 };
         return { name, overall:75, position:"Delantero", goals:8, assists:6, pace:75, shooting:74, passing:72, defending:50, physical:70 };
     }
 
@@ -519,50 +402,23 @@ Calificacion: ${Math.round(j.overall/10)}/10`;
     async function generarAnalisisIA(j, el){
         if(analizando){el.innerHTML="⏳ Ya analizando...";return;}
         analizando=true;
-        el.innerHTML=`<span class="loading-spinner"></span> IA scout analizando (red global)...`;
+        el.innerHTML=`<span class="loading-spinner"></span> IA scout analizando...`;
         try{
-            let respuesta = await _analizarConIA(j.name, j, modoUsuario);
+            const prompt = `[RESPONDE EXCLUSIVAMENTE EN ESPAÑOL. NO USES ASTERISCOS.]
+
+Eres scout de élite. Analiza a ${j.name}:
+Posición: ${j.position}
+Goles: ${j.goals}, Asistencias: ${j.assists}, Overall: ${j.overall}/100
+
+Responde con: FORTALEZAS (3 puntos), ÁREAS DE MEJORA (2 puntos), VEREDICTO FINAL. Mínimo 150 palabras. Sin asteriscos.`;
+            
+            let respuesta = await _llamadaIA(prompt);
             if(!respuesta || respuesta.length < 80) {
-                respuesta = _fallbackLocal(j, modoUsuario);
+                respuesta = `ANÁLISIS DE ${j.name}\n\nFORTALEZAS:\n• Finalización clínica\n• Inteligencia táctica\n• Liderazgo en campo\n\nÁREAS DE MEJORA:\n• Consistencia\n• Juego aéreo\n\nVEREDICTO: Jugador de alto nivel. Calificación: ${Math.round(j.overall/10)}/10`;
             }
-            
-            const respuestaLimpia = limpiarMarkdown(respuesta);
-            el.innerHTML = respuestaLimpia.replace(/\n/g,'<br>');
-            
-            const fb = document.createElement('div');
-            fb.className = 'feedback-buttons';
-            fb.style.marginTop = '12px';
-            
-            const btnLike = document.createElement('button');
-            btnLike.className = 'feedback-btn';
-            btnLike.innerHTML = '👍 Análisis útil';
-            btnLike.onclick = async (e) => {
-                e.stopPropagation();
-                await registrarFeedbackSecreto(j.name, respuestaLimpia, 'like', fb);
-                fb.remove();
-                showToast('✅ Gracias, tu feedback mejora el scout');
-            };
-            
-            const btnDislike = document.createElement('button');
-            btnDislike.className = 'feedback-btn';
-            btnDislike.innerHTML = '👎 No útil';
-            btnDislike.onclick = async (e) => {
-                e.stopPropagation();
-                await registrarFeedbackSecreto(j.name, respuestaLimpia, 'dislike', fb);
-                fb.remove();
-                showToast('📝 Gracias, mejoraremos los análisis');
-            };
-            
-            fb.appendChild(btnLike);
-            fb.appendChild(btnDislike);
-            el.appendChild(fb);
-            
-            showToast(`✅ Análisis ${modoUsuario === 'experto' ? 'experto' : 'básico'} generado · ${_PAISES_SECRETOS.length}+ fuentes`);
-        }catch(e){
-            const fallback = limpiarMarkdown(_fallbackLocal(j, modoUsuario));
-            el.innerHTML = fallback.replace(/\n/g,'<br>');
-            showToast("⚠️ Usando análisis local", true);
-        }
+            el.innerHTML = respuesta.replace(/\n/g,'<br>');
+            showToast(`✅ Análisis generado`);
+        }catch(e){el.innerHTML = "⚠️ Error al generar análisis";}
         finally{analizando=false;}
     }
     
@@ -583,7 +439,7 @@ Calificacion: ${Math.round(j.overall/10)}/10`;
         updatePos(currentPlayer);
         renderInfo(currentPlayer);
         renderPos();
-        document.getElementById('newsTicker').innerHTML=`⚽ ${currentPlayer.name} · ${currentPlayer.overall} OVR · Modo ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'} · Sin markdown`;
+        document.getElementById('newsTicker').innerHTML=`⚽ ${currentPlayer.name} · ${currentPlayer.overall} OVR · 10 herramientas disponibles`;
         if(currentAnalysisDiv)setTimeout(()=>generarAnalisisIA(currentPlayer,currentAnalysisDiv),300);
         showToast(`✅ ${currentPlayer.name} cargado`);
     }
@@ -605,10 +461,9 @@ Calificacion: ${Math.round(j.overall/10)}/10`;
         document.getElementById('searchBtn').addEventListener('click',buscarJugador);
         document.getElementById('resetBtn').addEventListener('click',reset);
         document.getElementById('playerSearch').addEventListener('keypress',e=>{if(e.key==='Enter')buscarJugador();});
-        let c=0,i=setInterval(()=>{if(typeof jsllm7!=='undefined'){clearInterval(i);showToast(`🎯 IA scout lista · ${_PAISES_SECRETOS.length}+ servidores · Modo ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'} · Texto limpio sin asteriscos`);}else if(c>30)clearInterval(i);c++;},500);
+        let c=0,i=setInterval(()=>{if(typeof jsllm7!=='undefined'){clearInterval(i);showToast(`🎯 IA scout lista · 10 herramientas disponibles · Modo ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'} · Sin markdown`);}else if(c>30)clearInterval(i);c++;},500);
     }
     init();
 </script>
-
 </body>
 </html>
