@@ -51,6 +51,122 @@
         .skill-bar-bg { background: #1e4a43; height: 8px; border-radius: 20px; overflow: hidden; }
         .skill-fill { background: linear-gradient(90deg, #3bcb9b, #1f9979); width: 0%; height: 100%; transition: width 0.4s ease; }
         
+        /* ARQUITECTURA DE WIDGETS */
+        .widget-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .widget {
+            background: rgba(18, 35, 38, 0.9);
+            border: 1px solid #3bcb9b;
+            border-radius: 12px;
+            padding: 15px;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        
+        .widget:hover {
+            border-color: #8b5cf6;
+            box-shadow: 0 8px 20px rgba(59, 203, 155, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .widget-title {
+            font-weight: 700;
+            color: #3bcb9b;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .widget-content {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #ecfdf5;
+        }
+        
+        .widget-confidence {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            padding: 8px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+        }
+        
+        .confidence-bar {
+            flex: 1;
+            height: 4px;
+            background: #1e293b;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f59e0b, #10b981);
+            transition: width 1s ease;
+            width: 0%;
+        }
+        
+        .confidence-label {
+            font-size: 0.7rem;
+            color: #b0c4de;
+            min-width: 40px;
+        }
+        
+        .metrics-grid-widget {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .metric-item-widget {
+            background: rgba(0,0,0,0.3);
+            padding: 8px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .metric-value-widget {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #3bcb9b;
+        }
+        
+        .metric-label-widget {
+            font-size: 0.6rem;
+            color: #94a3b8;
+        }
+        
+        .sources-list {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            font-size: 0.7rem;
+        }
+        
+        .source-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .source-item:last-child { border-bottom: none; }
+        .source-icon { font-size: 0.8rem; }
+        
+        .metadata-container { display: none; }
+        
         .ia-analysis { background: rgba(139, 92, 246, 0.2); border-left: 3px solid #8b5cf6; padding: 0.8rem; margin-top: 1rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.5; white-space: pre-wrap; }
         .ia-btn { background: linear-gradient(90deg, #8b5cf6, #3b82f6); border: none; color: white; padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; cursor: pointer; margin-top: 8px; transition: all 0.2s; }
         .feedback-buttons { display: flex; gap: 10px; margin-top: 8px; justify-content: flex-start; }
@@ -75,7 +191,11 @@
         .modal-content h3 { color: #a78bfa; margin-bottom: 1rem; }
         .modal-close { margin-top: 1rem; background: #8b5cf6; border: none; padding: 0.5rem 1rem; border-radius: 2rem; color: white; cursor: pointer; }
         
-        @media (max-width: 700px) { .player-name { font-size: 1.3rem; } .modo-selector { justify-content: center; } }
+        @media (max-width: 700px) { 
+            .player-name { font-size: 1.3rem; } 
+            .modo-selector { justify-content: center; }
+            .widget-container { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -116,6 +236,72 @@
         <div id="playerInfoContainer"></div>
     </div>
 
+    <!-- WIDGETS INDEPENDIENTES -->
+    <div class="widget-container" id="widgetContainer">
+        <div class="widget" id="widgetMetricas">
+            <div class="widget-title">📊 Estadísticas del Jugador</div>
+            <div class="widget-content">
+                <div class="metrics-grid-widget">
+                    <div class="metric-item-widget">
+                        <div class="metric-value-widget" id="metricGoles">0</div>
+                        <div class="metric-label-widget">Goles</div>
+                    </div>
+                    <div class="metric-item-widget">
+                        <div class="metric-value-widget" id="metricAsistencias">0</div>
+                        <div class="metric-label-widget">Asistencias</div>
+                    </div>
+                    <div class="metric-item-widget">
+                        <div class="metric-value-widget" id="metricOverall">0</div>
+                        <div class="metric-label-widget">Overall</div>
+                    </div>
+                    <div class="metric-item-widget">
+                        <div class="metric-value-widget" id="metricParticipacion">0%</div>
+                        <div class="metric-label-widget">Participación</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget" id="widgetConfianza">
+            <div class="widget-title">🎯 Confianza del Análisis</div>
+            <div class="widget-content">
+                <div class="widget-confidence">
+                    <span style="font-size:0.8rem;">📊</span>
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" id="confidenceFill" style="width:0%"></div>
+                    </div>
+                    <span class="confidence-label" id="confidenceLabel">0%</span>
+                </div>
+                <div id="widgetConfianzaDetalle" style="font-size:0.75rem;color:#94a3b8;margin-top:8px;">
+                    Basado en datos reales de rendimiento
+                </div>
+            </div>
+        </div>
+        <div class="widget" id="widgetFuentes">
+            <div class="widget-title">📚 Fuentes de Datos</div>
+            <div class="widget-content">
+                <div class="sources-list" id="sourcesList">
+                    <div style="color:#94a3b8;font-size:0.75rem;">Fuentes de información</div>
+                    <div class="source-item"><span class="source-icon">📊</span> Stats Profesionales</div>
+                    <div class="source-item"><span class="source-icon">🤖</span> IA Scout</div>
+                    <div class="source-item"><span class="source-icon">🌐</span> Red de Datos</div>
+                </div>
+            </div>
+        </div>
+        <div class="widget" id="widgetPosicion">
+            <div class="widget-title">🎯 Posición Recomendada</div>
+            <div class="widget-content" id="widgetPosicionContent">
+                <div style="color:#94a3b8;font-size:0.75rem;">Posición ideal del jugador</div>
+                <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+                    <span style="background:#1e293b;padding:4px 10px;border-radius:15px;font-size:0.7rem;border:1px solid #3bcb9b;">⚽ Delantero</span>
+                    <span style="background:#1e293b;padding:4px 10px;border-radius:15px;font-size:0.7rem;border:1px solid #3bcb9b;">🎯 Mediocampo</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- METADATOS JSON-LD (oculto) -->
+    <div class="metadata-container" id="metadataContainer"></div>
+
     <h2 style="margin-top: 0.5rem;">🎯 RENDIMIENTO POR POSICIÓN</h2>
     <div id="positionsContainer" class="positions-grid"></div>
     
@@ -135,6 +321,23 @@
 
 <script>
     // ============================================
+    // SISTEMA DE CACHÉ SEMÁNTICO
+    // ============================================
+    
+    const semanticCache = new Map();
+    
+    function getSemanticKey(text) {
+        const words = text.toLowerCase()
+            .replace(/[¿?¡!.,;:]/g, '')
+            .split(' ')
+            .filter(w => w.length > 3)
+            .slice(0, 5)
+            .sort()
+            .join('_');
+        return words;
+    }
+    
+    // ============================================
     // LIMPIADOR DE MARKDOWN
     // ============================================
     
@@ -150,6 +353,88 @@
         limpio = limpio.replace(/^\s*-\s+/gm, '• ');
         limpio = limpio.replace(/\n{3,}/g, '\n\n');
         return limpio.trim();
+    }
+    
+    // ============================================
+    // GENERAR METADATOS JSON-LD
+    // ============================================
+    
+    function generarMetadatos(jugador, analisis, confianza) {
+        return {
+            "@context": "https://schema.org",
+            "@type": "SportsTeam",
+            "name": jugador.name,
+            "description": `Análisis de rendimiento de ${jugador.name}`,
+            "sport": "Fútbol",
+            "athlete": {
+                "@type": "Person",
+                "name": jugador.name
+            },
+            "statistics": {
+                "goals": jugador.goals,
+                "assists": jugador.assists,
+                "overall": jugador.overall
+            },
+            "confidenceScore": confianza,
+            "dateCreated": new Date().toISOString()
+        };
+    }
+    
+    // ============================================
+    // ACTUALIZAR WIDGETS
+    // ============================================
+    
+    function actualizarWidgets(jugador, analisis) {
+        // Actualizar métricas
+        document.getElementById('metricGoles').textContent = jugador.goals || 0;
+        document.getElementById('metricAsistencias').textContent = jugador.assists || 0;
+        document.getElementById('metricOverall').textContent = jugador.overall || 0;
+        
+        const participacion = Math.min(95, 55 + (jugador.goals * 2) + (jugador.assists * 1.5));
+        document.getElementById('metricParticipacion').textContent = Math.round(participacion) + '%';
+        
+        // Calcular confianza
+        let confianza = 70;
+        if (jugador.overall > 80) confianza += 10;
+        if (jugador.goals > 10) confianza += 5;
+        if (jugador.assists > 5) confianza += 5;
+        if (jugador.pace > 70) confianza += 5;
+        confianza = Math.min(Math.max(confianza, 55), 92);
+        
+        document.getElementById('confidenceFill').style.width = confianza + '%';
+        document.getElementById('confidenceLabel').textContent = Math.round(confianza) + '%';
+        
+        // Actualizar posición recomendada
+        const posContent = document.getElementById('widgetPosicionContent');
+        const posEmojis = {
+            'Delantero': '⚽',
+            'Extremo': '🌪️',
+            'Mediocentro': '🎯',
+            'Lateral': '⚡',
+            'Defensa Central': '🛡️',
+            'Portero': '🧤'
+        };
+        const emoji = posEmojis[jugador.position] || '⚽';
+        posContent.innerHTML = `
+            <div style="color:#94a3b8;font-size:0.75rem;margin-bottom:8px;">Posición ideal del jugador</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <span style="background:#1e293b;padding:8px 16px;border-radius:15px;font-size:1rem;border:2px solid #3bcb9b;">${emoji} ${jugador.position}</span>
+            </div>
+            <div style="margin-top:8px;font-size:0.7rem;color:#94a3b8;">
+                📊 Overall: ${jugador.overall}/100
+            </div>
+        `;
+        
+        // Generar metadatos JSON-LD
+        const metadatos = generarMetadatos(jugador, analisis || '', confianza);
+        document.getElementById('metadataContainer').innerHTML = `<script type="application/ld+json">${JSON.stringify(metadatos)}<\/script>`;
+        
+        // Deep linking
+        if (history.pushState && jugador.name) {
+            const url = new URL(window.location);
+            url.searchParams.set('player', jugador.name);
+            window.history.pushState({}, '', url);
+        }
     }
     
     // ============================================
@@ -202,7 +487,10 @@
     async function herramientaGenerica(promptText, titulo) {
         showToast(`⏳ ${titulo}...`);
         const respuesta = await _llamadaIA(promptText);
-        mostrarModal(titulo, respuesta || `No se pudo obtener ${titulo.toLowerCase()}. Intenta de nuevo.`);
+        const respuestaFinal = respuesta || `No se pudo obtener ${titulo.toLowerCase()}. Intenta de nuevo.`;
+        mostrarModal(titulo, respuestaFinal);
+        // Actualizar widgets con la herramienta
+        if (currentPlayer) actualizarWidgets(currentPlayer, respuestaFinal);
     }
     
     function mostrarModal(titulo, contenido) {
@@ -290,6 +578,19 @@
         const jugador = document.getElementById('playerSearch').value.trim() || currentPlayer?.name || "Jugador";
         const prompt = `Predice la trayectoria futura de ${jugador} en los próximos 5 años. Incluye: posibles equipos a los que podría ir, evolución de rendimiento, logros potenciales, y factores clave que determinarán su éxito. Sin asteriscos.`;
         await herramientaGenerica(prompt, `🔮 PREDICCIÓN DE CARRERA: ${jugador}`);
+    }
+    
+    // ============================================
+    // DEEP LINKING - CARGAR JUGADOR DESDE URL
+    // ============================================
+    
+    function cargarDesdeURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const player = urlParams.get('player');
+        if (player) {
+            document.getElementById('playerSearch').value = decodeURIComponent(player);
+            setTimeout(buscarJugador, 1000);
+        }
     }
     
     // ============================================
@@ -417,6 +718,10 @@ Responde con: FORTALEZAS (3 puntos), ÁREAS DE MEJORA (2 puntos), VEREDICTO FINA
                 respuesta = `ANÁLISIS DE ${j.name}\n\nFORTALEZAS:\n• Finalización clínica\n• Inteligencia táctica\n• Liderazgo en campo\n\nÁREAS DE MEJORA:\n• Consistencia\n• Juego aéreo\n\nVEREDICTO: Jugador de alto nivel. Calificación: ${Math.round(j.overall/10)}/10`;
             }
             el.innerHTML = respuesta.replace(/\n/g,'<br>');
+            
+            // Actualizar widgets con el análisis
+            actualizarWidgets(j, respuesta);
+            
             showToast(`✅ Análisis generado`);
         }catch(e){el.innerHTML = "⚠️ Error al generar análisis";}
         finally{analizando=false;}
@@ -428,6 +733,8 @@ Responde con: FORTALEZAS (3 puntos), ÁREAS DE MEJORA (2 puntos), VEREDICTO FINA
         const c=document.getElementById('playerInfoContainer');
         c.innerHTML=`<div class="player-card-big"><div><div class="player-name">⭐ ${p.name}</div><div style="display:flex;gap:0.5rem;margin-top:0.3rem;flex-wrap:wrap;"><span class="stat-chip">📊 Overall: <span>${p.overall}</span></span><span class="stat-chip">📍 Posición: <span>${p.position}</span></span><span class="stat-chip">⚽ Goles: <span>${p.goals}</span></span><span class="stat-chip">🎯 Asistencias: <span>${p.assists}</span></span></div></div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">💨 Ritmo: ${p.pace}</span><span class="stat-chip">🎯 Tiro: ${p.shooting}</span><span class="stat-chip">🎨 Pase: ${p.passing}</span><span class="stat-chip">🛡️ Defensa: ${p.defending}</span><span class="stat-chip">💪 Físico: ${p.physical}</span></div></div><div class="ia-analysis"><button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON IA (${modoUsuario === 'experto' ? 'MODO EXPERTO' : 'MODO BÁSICO'})</button><div id="iaResult" style="margin-top:10px;">🔍 Haz clic para obtener análisis profesional sin asteriscos</div></div>`;
         currentAnalysisDiv=document.getElementById('iaResult');
+        // Actualizar widgets con el jugador
+        actualizarWidgets(p, '');
     }
 
     async function buscarJugador(){
@@ -451,6 +758,7 @@ Responde con: FORTALEZAS (3 puntos), ÁREAS DE MEJORA (2 puntos), VEREDICTO FINA
         renderPos();
         document.getElementById('playerSearch').value="";
         if(currentAnalysisDiv)currentAnalysisDiv.innerHTML="🔍 Haz clic para obtener análisis profesional sin asteriscos";
+        actualizarWidgets(currentPlayer, '');
         showToast("🔄 Jugador base cargado");
     }
 
@@ -458,10 +766,16 @@ Responde con: FORTALEZAS (3 puntos), ÁREAS DE MEJORA (2 puntos), VEREDICTO FINA
         updatePos(currentPlayer);
         renderInfo(currentPlayer);
         renderPos();
+        // Inicializar widgets con jugador base
+        actualizarWidgets(currentPlayer, '');
         document.getElementById('searchBtn').addEventListener('click',buscarJugador);
         document.getElementById('resetBtn').addEventListener('click',reset);
         document.getElementById('playerSearch').addEventListener('keypress',e=>{if(e.key==='Enter')buscarJugador();});
-        let c=0,i=setInterval(()=>{if(typeof jsllm7!=='undefined'){clearInterval(i);showToast(`🎯 IA scout lista · 10 herramientas disponibles · Modo ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'} · Sin markdown`);}else if(c>30)clearInterval(i);c++;},500);
+        
+        // Cargar desde URL
+        cargarDesdeURL();
+        
+        let c=0,i=setInterval(()=>{if(typeof jsllm7!=='undefined'){clearInterval(i);showToast(`🎯 IA scout lista · 10 herramientas disponibles · Modo ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'} · Sin markdown · Widgets inteligentes`);}else if(c>30)clearInterval(i);c++;},500);
     }
     init();
 </script>
