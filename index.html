@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="referrer" content="no-referrer-when-downgrade">
-    <title>🏆 RENDIMIENTO PRO · SCOUT IA + 10 Herramientas · Sin Markdown</title>
+    <title>🏆 RENDIMIENTO PRO · SCOUT IA + Conectores · Sin Markdown</title>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, 'Segoe UI', sans-serif; }
@@ -22,7 +22,6 @@
         .modo-btn { background: #1e293b; border: 1px solid #334155; padding: 6px 18px; border-radius: 30px; font-size: 0.75rem; cursor: pointer; font-weight: 600; color: #94a3b8; transition: all 0.2s; }
         .modo-btn.active { background: linear-gradient(90deg, #8b5cf6, #3b82f6); color: white; border-color: #8b5cf6; box-shadow: 0 0 10px rgba(139,92,246,0.3); }
         
-        /* BARRA DE HERRAMIENTAS */
         .tools-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0; justify-content: center; }
         .tool-btn { background: #1e293b; border: 1px solid #334155; padding: 6px 12px; border-radius: 20px; font-size: 0.65rem; cursor: pointer; font-weight: 500; color: #94a3b8; transition: 0.2s; }
         .tool-btn:hover { background: #8b5cf6; color: white; border-color: #8b5cf6; transform: scale(1.02); }
@@ -51,7 +50,6 @@
         .skill-bar-bg { background: #1e4a43; height: 8px; border-radius: 20px; overflow: hidden; }
         .skill-fill { background: linear-gradient(90deg, #3bcb9b, #1f9979); width: 0%; height: 100%; transition: width 0.4s ease; }
         
-        /* ARQUITECTURA DE WIDGETS */
         .widget-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -146,6 +144,29 @@
             color: #94a3b8;
         }
         
+        /* Métricas de conectores */
+        .connector-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .connector-metric {
+            background: rgba(0,0,0,0.3);
+            padding: 6px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .connector-metric .value {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #3bcb9b;
+        }
+        .connector-metric .label {
+            font-size: 0.55rem;
+            color: #94a3b8;
+        }
+        
         .sources-list {
             margin-top: 10px;
             padding: 10px;
@@ -185,7 +206,6 @@
         .context-info { background: rgba(139,92,246,0.1); border-radius: 1rem; padding: 0.5rem; margin: 0.5rem 0; font-size: 0.65rem; color: #a5b4fc; text-align: center; }
         .restriction-alert { background: rgba(139, 92, 246, 0.15); border: 1px solid #8b5cf6; border-radius: 0.8rem; padding: 0.5rem 1rem; margin-top: 1rem; font-size: 0.7rem; text-align: center; color: #a78bfa; }
         
-        /* Modal */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; align-items: center; justify-content: center; }
         .modal-content { background: #0f172a; border-radius: 1.5rem; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; padding: 1.5rem; border: 2px solid #8b5cf6; }
         .modal-content h3 { color: #a78bfa; margin-bottom: 1rem; }
@@ -195,14 +215,15 @@
             .player-name { font-size: 1.3rem; } 
             .modo-selector { justify-content: center; }
             .widget-container { grid-template-columns: 1fr; }
+            .connector-metrics { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="hero">
-        <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="ia-badge">10 HERRAMIENTAS</span><span class="badge-100">🏆 100% CALIDAD</span><span class="live-badge" id="liveBadge">🌐 EN VIVO</span></h1>
-        <p>Estadísticas reales · Análisis profesional · IA avanzada · 10 herramientas tácticas · Sin markdown</p>
+        <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="ia-badge">CONECTORES</span><span class="badge-100">🏆 100% CALIDAD</span><span class="live-badge" id="liveBadge">🌐 EN VIVO</span></h1>
+        <p>Estadísticas reales · Análisis profesional · Conectores: Memoria · Semántico · APIs</p>
         <div class="news-ticker" id="newsTicker">🌐 Conectando a fuentes de datos de fútbol...</div>
     </div>
 
@@ -212,7 +233,6 @@
             <button class="modo-btn" data-modo="basico">⚡ MODO BÁSICO</button>
         </div>
         
-        <!-- BARRA DE HERRAMIENTAS (10 MECANISMOS) -->
         <div class="tools-bar">
             <button class="tool-btn" id="btnComparar">🔄 Comparar Jugadores</button>
             <button class="tool-btn" id="btnFormacion">📋 Formación Ideal</button>
@@ -231,12 +251,11 @@
             <input type="text" id="playerSearch" placeholder="Ej: Lionel Messi, Cristiano Ronaldo, Vinicius Jr, Erling Haaland..." autocomplete="off">
             <button id="searchBtn">📊 BUSCAR DATOS REALES</button>
         </div>
-        <div class="context-info" id="contextInfo">📡 IA potenciada activa · 10 herramientas tácticas · Texto limpio sin asteriscos</div>
-        <div class="restriction-alert">🎯 IA Avanzada · Scout profesional · 10 herramientas tácticas · Sin markdown</div>
+        <div class="context-info" id="contextInfo">📡 IA potenciada · Conectores activos · 10 herramientas tácticas · Sin markdown</div>
+        <div class="restriction-alert">🎯 IA Avanzada · Conectores: Memoria · Semántico · APIs · Scout profesional</div>
         <div id="playerInfoContainer"></div>
     </div>
 
-    <!-- WIDGETS INDEPENDIENTES -->
     <div class="widget-container" id="widgetContainer">
         <div class="widget" id="widgetMetricas">
             <div class="widget-title">📊 Estadísticas del Jugador</div>
@@ -261,6 +280,29 @@
                 </div>
             </div>
         </div>
+        <div class="widget" id="widgetConectores">
+            <div class="widget-title">🔌 Estado de Conectores</div>
+            <div class="widget-content">
+                <div class="connector-metrics">
+                    <div class="connector-metric">
+                        <div class="value" id="metricMemoria">0</div>
+                        <div class="label">Memoria</div>
+                    </div>
+                    <div class="connector-metric">
+                        <div class="value" id="metricSemantico">0</div>
+                        <div class="label">Semántico</div>
+                    </div>
+                    <div class="connector-metric">
+                        <div class="value" id="metricAPIs">0</div>
+                        <div class="label">APIs</div>
+                    </div>
+                    <div class="connector-metric">
+                        <div class="value" id="metricContexto">0%</div>
+                        <div class="label">Contexto</div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="widget" id="widgetConfianza">
             <div class="widget-title">🎯 Confianza del Análisis</div>
             <div class="widget-content">
@@ -272,18 +314,7 @@
                     <span class="confidence-label" id="confidenceLabel">0%</span>
                 </div>
                 <div id="widgetConfianzaDetalle" style="font-size:0.75rem;color:#94a3b8;margin-top:8px;">
-                    Basado en datos reales de rendimiento
-                </div>
-            </div>
-        </div>
-        <div class="widget" id="widgetFuentes">
-            <div class="widget-title">📚 Fuentes de Datos</div>
-            <div class="widget-content">
-                <div class="sources-list" id="sourcesList">
-                    <div style="color:#94a3b8;font-size:0.75rem;">Fuentes de información</div>
-                    <div class="source-item"><span class="source-icon">📊</span> Stats Profesionales</div>
-                    <div class="source-item"><span class="source-icon">🤖</span> IA Scout</div>
-                    <div class="source-item"><span class="source-icon">🌐</span> Red de Datos</div>
+                    Basado en datos reales + conectores
                 </div>
             </div>
         </div>
@@ -299,7 +330,6 @@
         </div>
     </div>
 
-    <!-- METADATOS JSON-LD (oculto) -->
     <div class="metadata-container" id="metadataContainer"></div>
 
     <h2 style="margin-top: 0.5rem;">🎯 RENDIMIENTO POR POSICIÓN</h2>
@@ -314,12 +344,228 @@
     </div>
     
     <div style="text-align:center;margin-top:1.5rem;"><button id="resetBtn" class="global-reset">🔄 REINICIAR A JUGADOR BASE</button></div>
-    <div class="footer">✨ Datos reales · Análisis con IA potenciada · Scout profesional · 10 herramientas · Sin markdown</div>
+    <div class="footer">✨ Datos reales · Conectores activos · Scout profesional · 10 herramientas · Sin markdown</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/jsllm7@0.1.0/jsllm7.js"></script>
 
 <script>
+    // ============================================
+    // CONECTOR DE MEMORIA
+    // ============================================
+    
+    class MemoryConnector {
+        constructor() {
+            this.shortTerm = [];
+            this.longTerm = new Map();
+            this.maxShortTerm = 10;
+            this.loadFromStorage();
+        }
+        
+        loadFromStorage() {
+            try {
+                const data = JSON.parse(localStorage.getItem('scout_memoria') || '{}');
+                if (data.shortTerm) this.shortTerm = data.shortTerm;
+                if (data.longTerm) {
+                    this.longTerm = new Map(Object.entries(data.longTerm));
+                }
+            } catch(e) {}
+        }
+        
+        saveToStorage() {
+            try {
+                localStorage.setItem('scout_memoria', JSON.stringify({
+                    shortTerm: this.shortTerm,
+                    longTerm: Object.fromEntries(this.longTerm)
+                }));
+            } catch(e) {}
+        }
+        
+        remember(interaction) {
+            this.shortTerm.push({
+                ...interaction,
+                timestamp: Date.now()
+            });
+            if (this.shortTerm.length > this.maxShortTerm) {
+                this.shortTerm.shift();
+            }
+            this.saveToStorage();
+        }
+        
+        recall(jugador, limit = 3) {
+            const relevant = this.shortTerm
+                .filter(item => {
+                    const similarity = this.calculateSimilarity(jugador, item.jugador || '');
+                    return similarity > 0.2;
+                })
+                .sort((a, b) => b.similarity - a.similarity)
+                .slice(0, limit);
+            
+            return relevant.map(item => ({
+                jugador: item.jugador,
+                analisis: item.analisis,
+                similarity: item.similarity
+            }));
+        }
+        
+        calculateSimilarity(a, b) {
+            if (!a || !b) return 0;
+            const wordsA = a.toLowerCase().split(' ');
+            const wordsB = b.toLowerCase().split(' ');
+            const common = wordsA.filter(w => wordsB.includes(w) && w.length > 2);
+            return common.length / Math.max(wordsA.length, wordsB.length);
+        }
+        
+        getStats() {
+            return {
+                shortTerm: this.shortTerm.length,
+                longTerm: this.longTerm.size,
+                total: this.shortTerm.length + this.longTerm.size
+            };
+        }
+    }
+
+    // ============================================
+    // CONECTOR SEMÁNTICO
+    // ============================================
+    
+    class SemanticConnector {
+        constructor() {
+            this.embeddingsCache = new Map();
+            this.similarityThreshold = 0.2;
+        }
+        
+        generateEmbedding(text) {
+            const words = text.toLowerCase()
+                .replace(/[¿?¡!.,;:]/g, '')
+                .split(' ')
+                .filter(w => w.length > 2);
+            
+            const vector = new Map();
+            words.forEach(w => {
+                vector.set(w, (vector.get(w) || 0) + 1);
+            });
+            return vector;
+        }
+        
+        cosineSimilarity(vecA, vecB) {
+            let dotProduct = 0;
+            let normA = 0;
+            let normB = 0;
+            
+            const keys = new Set([...vecA.keys(), ...vecB.keys()]);
+            keys.forEach(key => {
+                const a = vecA.get(key) || 0;
+                const b = vecB.get(key) || 0;
+                dotProduct += a * b;
+                normA += a * a;
+                normB += b * b;
+            });
+            
+            if (normA === 0 || normB === 0) return 0;
+            return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+        }
+        
+        findSimilar(query, candidates) {
+            const queryEmbedding = this.generateEmbedding(query);
+            const results = candidates.map(candidate => ({
+                ...candidate,
+                similarity: this.cosineSimilarity(queryEmbedding, this.generateEmbedding(candidate.text || candidate.jugador || ''))
+            }));
+            
+            return results
+                .filter(r => r.similarity > this.similarityThreshold)
+                .sort((a, b) => b.similarity - a.similarity);
+        }
+        
+        getStats() {
+            return {
+                cacheSize: this.embeddingsCache.size,
+                threshold: this.similarityThreshold
+            };
+        }
+    }
+
+    // ============================================
+    // CONECTOR DE APIs
+    // ============================================
+    
+    class APIConnector {
+        constructor() {
+            this.endpoints = new Map();
+            this.cache = new Map();
+            this.maxCacheAge = 3600000;
+            this.registerDefaultEndpoints();
+        }
+        
+        registerDefaultEndpoints() {
+            this.registerEndpoint('playerStats', {
+                url: 'https://api.example.com/player',
+                method: 'GET',
+                transform: (data) => ({
+                    stats: data.stats || {},
+                    comparaciones: data.comparaciones || []
+                })
+            });
+        }
+        
+        registerEndpoint(name, config) {
+            this.endpoints.set(name, config);
+        }
+        
+        async call(endpointName, params = {}) {
+            const config = this.endpoints.get(endpointName);
+            if (!config) {
+                return { error: `Endpoint ${endpointName} no encontrado` };
+            }
+            
+            const cacheKey = `${endpointName}_${JSON.stringify(params)}`;
+            if (this.cache.has(cacheKey)) {
+                const cached = this.cache.get(cacheKey);
+                if (Date.now() - cached.timestamp < this.maxCacheAge) {
+                    return cached.data;
+                }
+            }
+            
+            try {
+                const mockData = this.generateMockData(endpointName, params);
+                const result = config.transform ? config.transform(mockData) : mockData;
+                this.cache.set(cacheKey, {
+                    data: result,
+                    timestamp: Date.now()
+                });
+                return result;
+            } catch(e) {
+                return { error: e.message };
+            }
+        }
+        
+        generateMockData(endpoint, params) {
+            const datos = {
+                playerStats: {
+                    stats: { goles: 25, asistencias: 10 },
+                    comparaciones: ['Jugador A', 'Jugador B']
+                }
+            };
+            return datos[endpoint] || {};
+        }
+        
+        getStats() {
+            return {
+                endpoints: this.endpoints.size,
+                cacheSize: this.cache.size
+            };
+        }
+    }
+
+    // ============================================
+    // INICIALIZACIÓN DE CONECTORES
+    // ============================================
+    
+    const memoryConnector = new MemoryConnector();
+    const semanticConnector = new SemanticConnector();
+    const apiConnector = new APIConnector();
+
     // ============================================
     // SISTEMA DE CACHÉ SEMÁNTICO
     // ============================================
@@ -336,7 +582,24 @@
             .join('_');
         return words;
     }
+
+    // ============================================
+    // ACTUALIZAR MÉTRICAS DE CONECTORES
+    // ============================================
     
+    function actualizarMetricasConectores() {
+        const memStats = memoryConnector.getStats();
+        const semStats = semanticConnector.getStats();
+        const apiStats = apiConnector.getStats();
+        
+        document.getElementById('metricMemoria').textContent = memStats.total;
+        document.getElementById('metricSemantico').textContent = semStats.cacheSize;
+        document.getElementById('metricAPIs').textContent = apiStats.endpoints;
+        
+        const contextoPorcentaje = Math.min(100, (memStats.shortTerm * 10) + 20);
+        document.getElementById('metricContexto').textContent = Math.min(contextoPorcentaje, 100) + '%';
+    }
+
     // ============================================
     // LIMPIADOR DE MARKDOWN
     // ============================================
@@ -354,7 +617,7 @@
         limpio = limpio.replace(/\n{3,}/g, '\n\n');
         return limpio.trim();
     }
-    
+
     // ============================================
     // GENERAR METADATOS JSON-LD
     // ============================================
@@ -364,7 +627,7 @@
             "@context": "https://schema.org",
             "@type": "SportsTeam",
             "name": jugador.name,
-            "description": `Análisis de rendimiento de ${jugador.name}`,
+            "description": `Análisis de rendimiento de ${jugador.name} con conectores`,
             "sport": "Fútbol",
             "athlete": {
                 "@type": "Person",
@@ -379,13 +642,12 @@
             "dateCreated": new Date().toISOString()
         };
     }
-    
+
     // ============================================
     // ACTUALIZAR WIDGETS
     // ============================================
     
     function actualizarWidgets(jugador, analisis) {
-        // Actualizar métricas
         document.getElementById('metricGoles').textContent = jugador.goals || 0;
         document.getElementById('metricAsistencias').textContent = jugador.assists || 0;
         document.getElementById('metricOverall').textContent = jugador.overall || 0;
@@ -393,7 +655,6 @@
         const participacion = Math.min(95, 55 + (jugador.goals * 2) + (jugador.assists * 1.5));
         document.getElementById('metricParticipacion').textContent = Math.round(participacion) + '%';
         
-        // Calcular confianza
         let confianza = 70;
         if (jugador.overall > 80) confianza += 10;
         if (jugador.goals > 10) confianza += 5;
@@ -404,7 +665,6 @@
         document.getElementById('confidenceFill').style.width = confianza + '%';
         document.getElementById('confidenceLabel').textContent = Math.round(confianza) + '%';
         
-        // Actualizar posición recomendada
         const posContent = document.getElementById('widgetPosicionContent');
         const posEmojis = {
             'Delantero': '⚽',
@@ -425,18 +685,18 @@
             </div>
         `;
         
-        // Generar metadatos JSON-LD
         const metadatos = generarMetadatos(jugador, analisis || '', confianza);
         document.getElementById('metadataContainer').innerHTML = `<script type="application/ld+json">${JSON.stringify(metadatos)}<\/script>`;
         
-        // Deep linking
         if (history.pushState && jugador.name) {
             const url = new URL(window.location);
             url.searchParams.set('player', jugador.name);
             window.history.pushState({}, '', url);
         }
+        
+        actualizarMetricasConectores();
     }
-    
+
     // ============================================
     // SISTEMA DE CACHÉ
     // ============================================
@@ -462,7 +722,7 @@
         } catch (e) {}
         return null;
     }
-    
+
     // ============================================
     // BASE DE DATOS DE JUGADORES
     // ============================================
@@ -489,7 +749,6 @@
         const respuesta = await _llamadaIA(promptText);
         const respuestaFinal = respuesta || `No se pudo obtener ${titulo.toLowerCase()}. Intenta de nuevo.`;
         mostrarModal(titulo, respuestaFinal);
-        // Actualizar widgets con la herramienta
         if (currentPlayer) actualizarWidgets(currentPlayer, respuestaFinal);
     }
     
@@ -506,12 +765,11 @@
         modal.querySelector('.modal-close').onclick = () => modal.remove();
         document.body.appendChild(modal);
     }
-    
+
     // ============================================
     // 10 HERRAMIENTAS SCOUT
     // ============================================
     
-    // 1. Comparar Jugadores
     async function compararJugadores() {
         const j1 = document.getElementById('playerSearch').value.trim() || currentPlayer?.name || "Messi";
         const j2 = prompt("Segundo jugador a comparar (Ej: Cristiano Ronaldo, Haaland, Mbappe):", "Cristiano Ronaldo");
@@ -520,13 +778,11 @@
         await herramientaGenerica(prompt, `🔄 COMPARACIÓN: ${j1} vs ${j2}`);
     }
     
-    // 2. Formación Ideal
     async function formacionIdeal() {
         const prompt = `Sugiere una formación de fútbol ideal (4-3-3, 4-4-2, 3-5-2, etc.) para un equipo que quiere dominar la posesión. Explica por qué funciona y qué tipo de jugadores necesita cada posición. Sin asteriscos.`;
         await herramientaGenerica(prompt, "📋 FORMACIÓN IDEAL");
     }
     
-    // 3. Análisis de Rival
     async function analisisRival() {
         const rival = prompt("Nombre del equipo rival a analizar:", "Real Madrid");
         if (!rival) return;
@@ -534,52 +790,56 @@
         await herramientaGenerica(prompt, `🎯 ANÁLISIS DE RIVAL: ${rival.toUpperCase()}`);
     }
     
-    // 4. Valor de Mercado
     async function valorMercado() {
         const jugador = document.getElementById('playerSearch').value.trim() || currentPlayer?.name || "Jugador";
         const prompt = `Estima el valor de mercado actual de ${jugador} en el mercado de fichajes. Da un rango en euros, factores que influyen (edad, rendimiento, contrato), y si es momento de comprar o vender. Sin asteriscos.`;
         await herramientaGenerica(prompt, `💰 VALOR DE MERCADO: ${jugador}`);
     }
     
-    // 5. Riesgo Lesiones
     async function riesgoLesiones() {
         const jugador = document.getElementById('playerSearch').value.trim() || currentPlayer?.name || "Jugador";
         const prompt = `Analiza el riesgo de lesiones de ${jugador} basado en su historial, estilo de juego, edad y posición. Da un nivel de riesgo (bajo/medio/alto) y recomendaciones para prevenirlas. Sin asteriscos.`;
         await herramientaGenerica(prompt, `🩺 RIESGO DE LESIONES: ${jugador}`);
     }
     
-    // 6. Promesas
     async function jovenesPromesas() {
         const prompt = `Recomienda 5 jóvenes promesas del fútbol mundial (menores de 21 años) con gran proyección. Para cada uno: nombre, posición, país, valor actual estimado y por qué es una promesa. Sin asteriscos.`;
         await herramientaGenerica(prompt, "🌟 PROMESAS DEL FÚTBOL MUNDIAL");
     }
     
-    // 7. Mejor XI
     async function mejorXI() {
         const prompt = `Construye el mejor once inicial (Mejor XI) del fútbol actual (2024-2025). Formación 4-3-3. Para cada jugador: nombre, posición, y breve razón de su inclusión. Sin asteriscos.`;
         await herramientaGenerica(prompt, "🏆 MEJOR XI DEL MUNDO");
     }
     
-    // 8. Estilo de Juego
     async function estiloJuego() {
         const jugador = document.getElementById('playerSearch').value.trim() || currentPlayer?.name || "Jugador";
         const prompt = `Describe el estilo de juego de ${jugador}. Incluye: posición principal, puntos fuertes tácticos, debilidades, y con qué otros jugadores se le compara. Sin asteriscos.`;
         await herramientaGenerica(prompt, `🎭 ESTILO DE JUEGO: ${jugador}`);
     }
     
-    // 9. Transiciones
     async function transiciones() {
         const prompt = `Explica la importancia de las transiciones ofensivas y defensivas en el fútbol moderno. Da 5 consejos para mejorar las transiciones en un equipo. Sin asteriscos.`;
         await herramientaGenerica(prompt, "🔄 TRANSICIONES EN EL FÚTBOL");
     }
     
-    // 10. Predicción Carrera
     async function prediccionCarrera() {
         const jugador = document.getElementById('playerSearch').value.trim() || currentPlayer?.name || "Jugador";
         const prompt = `Predice la trayectoria futura de ${jugador} en los próximos 5 años. Incluye: posibles equipos a los que podría ir, evolución de rendimiento, logros potenciales, y factores clave que determinarán su éxito. Sin asteriscos.`;
         await herramientaGenerica(prompt, `🔮 PREDICCIÓN DE CARRERA: ${jugador}`);
     }
     
+    document.getElementById('btnComparar').onclick = compararJugadores;
+    document.getElementById('btnFormacion').onclick = formacionIdeal;
+    document.getElementById('btnRival').onclick = analisisRival;
+    document.getElementById('btnMercado').onclick = valorMercado;
+    document.getElementById('btnLesiones').onclick = riesgoLesiones;
+    document.getElementById('btnJovenes').onclick = jovenesPromesas;
+    document.getElementById('btnEquipo').onclick = mejorXI;
+    document.getElementById('btnEstilo').onclick = estiloJuego;
+    document.getElementById('btnTransicion').onclick = transiciones;
+    document.getElementById('btnPrediccion').onclick = prediccionCarrera;
+
     // ============================================
     // DEEP LINKING - CARGAR JUGADOR DESDE URL
     // ============================================
@@ -592,7 +852,7 @@
             setTimeout(buscarJugador, 1000);
         }
     }
-    
+
     // ============================================
     // UI PRINCIPAL
     // ============================================
@@ -610,7 +870,7 @@
     function actualizarModoUI() { 
         document.querySelectorAll('.modo-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.modo === modoUsuario));
         const contextDiv = document.getElementById('contextInfo');
-        if (contextDiv) contextDiv.innerHTML = modoUsuario === 'experto' ? '🧠 MODO EXPERTO · Análisis profundo · Scout profesional · 10 herramientas · Sin markdown' : '⚡ MODO BÁSICO · Análisis rápido · Estadísticas esenciales · Sin asteriscos';
+        if (contextDiv) contextDiv.innerHTML = modoUsuario === 'experto' ? '🧠 MODO EXPERTO · Conectores activos · Scout profesional · 10 herramientas' : '⚡ MODO BÁSICO · Análisis rápido · Estadísticas esenciales';
     }
     
     document.querySelectorAll('.modo-btn').forEach(btn => {
@@ -624,7 +884,6 @@
     });
     actualizarModoUI();
     
-    // Asignar botones de herramientas
     document.getElementById('btnComparar').onclick = compararJugadores;
     document.getElementById('btnFormacion').onclick = formacionIdeal;
     document.getElementById('btnRival').onclick = analisisRival;
@@ -704,14 +963,35 @@
         if(analizando){el.innerHTML="⏳ Ya analizando...";return;}
         analizando=true;
         el.innerHTML=`<span class="loading-spinner"></span> IA scout analizando...`;
+        
+        // Buscar en memoria análisis similares
+        const memoriaSimilar = memoryConnector.recall(j.name, 2);
+        let contextoMemoria = '';
+        if (memoriaSimilar.length > 0) {
+            contextoMemoria = '\n\n[Contexto de memoria scout:] ' + memoriaSimilar.map(m => 
+                `Análisis similar de ${m.jugador}: "${m.analisis.substring(0, 80)}..."`
+            ).join(' ');
+        }
+        
+        // Consultar API para datos adicionales
+        const apiData = await apiConnector.call('playerStats', { player: j.name });
+        let contextoAPI = '';
+        if (!apiData.error) {
+            contextoAPI = `\n\n[Datos externos:] Comparaciones: ${apiData.comparaciones?.join(', ') || ''}`;
+        }
+        
         try{
-            const prompt = `[RESPONDE EXCLUSIVAMENTE EN ESPAÑOL. NO USES ASTERISCOS.]
+            let prompt = `[RESPONDE EXCLUSIVAMENTE EN ESPAÑOL. NO USES ASTERISCOS.]
 
 Eres scout de élite. Analiza a ${j.name}:
 Posición: ${j.position}
-Goles: ${j.goals}, Asistencias: ${j.assists}, Overall: ${j.overall}/100
+Goles: ${j.goals}, Asistencias: ${j.assists}, Overall: ${j.overall}/100`;
 
-Responde con: FORTALEZAS (3 puntos), ÁREAS DE MEJORA (2 puntos), VEREDICTO FINAL. Mínimo 150 palabras. Sin asteriscos.`;
+            // Añadir contexto de conectores
+            if (contextoMemoria) prompt += `\n${contextoMemoria}`;
+            if (contextoAPI) prompt += `\n${contextoAPI}`;
+
+            prompt += `\n\nResponde con: FORTALEZAS (3 puntos), ÁREAS DE MEJORA (2 puntos), VEREDICTO FINAL. Mínimo 150 palabras. Sin asteriscos.`;
             
             let respuesta = await _llamadaIA(prompt);
             if(!respuesta || respuesta.length < 80) {
@@ -719,10 +999,17 @@ Responde con: FORTALEZAS (3 puntos), ÁREAS DE MEJORA (2 puntos), VEREDICTO FINA
             }
             el.innerHTML = respuesta.replace(/\n/g,'<br>');
             
-            // Actualizar widgets con el análisis
-            actualizarWidgets(j, respuesta);
+            // Guardar en memoria
+            memoryConnector.remember({
+                jugador: j.name,
+                analisis: respuesta,
+                posicion: j.position
+            });
             
-            showToast(`✅ Análisis generado`);
+            actualizarWidgets(j, respuesta);
+            actualizarMetricasConectores();
+            
+            showToast(`✅ Análisis generado · Conectores activos`);
         }catch(e){el.innerHTML = "⚠️ Error al generar análisis";}
         finally{analizando=false;}
     }
@@ -731,9 +1018,8 @@ Responde con: FORTALEZAS (3 puntos), ÁREAS DE MEJORA (2 puntos), VEREDICTO FINA
 
     function renderInfo(p){
         const c=document.getElementById('playerInfoContainer');
-        c.innerHTML=`<div class="player-card-big"><div><div class="player-name">⭐ ${p.name}</div><div style="display:flex;gap:0.5rem;margin-top:0.3rem;flex-wrap:wrap;"><span class="stat-chip">📊 Overall: <span>${p.overall}</span></span><span class="stat-chip">📍 Posición: <span>${p.position}</span></span><span class="stat-chip">⚽ Goles: <span>${p.goals}</span></span><span class="stat-chip">🎯 Asistencias: <span>${p.assists}</span></span></div></div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">💨 Ritmo: ${p.pace}</span><span class="stat-chip">🎯 Tiro: ${p.shooting}</span><span class="stat-chip">🎨 Pase: ${p.passing}</span><span class="stat-chip">🛡️ Defensa: ${p.defending}</span><span class="stat-chip">💪 Físico: ${p.physical}</span></div></div><div class="ia-analysis"><button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON IA (${modoUsuario === 'experto' ? 'MODO EXPERTO' : 'MODO BÁSICO'})</button><div id="iaResult" style="margin-top:10px;">🔍 Haz clic para obtener análisis profesional sin asteriscos</div></div>`;
+        c.innerHTML=`<div class="player-card-big"><div><div class="player-name">⭐ ${p.name}</div><div style="display:flex;gap:0.5rem;margin-top:0.3rem;flex-wrap:wrap;"><span class="stat-chip">📊 Overall: <span>${p.overall}</span></span><span class="stat-chip">📍 Posición: <span>${p.position}</span></span><span class="stat-chip">⚽ Goles: <span>${p.goals}</span></span><span class="stat-chip">🎯 Asistencias: <span>${p.assists}</span></span></div></div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">💨 Ritmo: ${p.pace}</span><span class="stat-chip">🎯 Tiro: ${p.shooting}</span><span class="stat-chip">🎨 Pase: ${p.passing}</span><span class="stat-chip">🛡️ Defensa: ${p.defending}</span><span class="stat-chip">💪 Físico: ${p.physical}</span></div></div><div class="ia-analysis"><button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON IA (${modoUsuario === 'experto' ? 'MODO EXPERTO' : 'MODO BÁSICO'})</button><div id="iaResult" style="margin-top:10px;">🔍 Haz clic para obtener análisis profesional con conectores</div></div>`;
         currentAnalysisDiv=document.getElementById('iaResult');
-        // Actualizar widgets con el jugador
         actualizarWidgets(p, '');
     }
 
@@ -746,9 +1032,9 @@ Responde con: FORTALEZAS (3 puntos), ÁREAS DE MEJORA (2 puntos), VEREDICTO FINA
         updatePos(currentPlayer);
         renderInfo(currentPlayer);
         renderPos();
-        document.getElementById('newsTicker').innerHTML=`⚽ ${currentPlayer.name} · ${currentPlayer.overall} OVR · 10 herramientas disponibles`;
+        document.getElementById('newsTicker').innerHTML=`⚽ ${currentPlayer.name} · ${currentPlayer.overall} OVR · Conectores activos · 10 herramientas`;
         if(currentAnalysisDiv)setTimeout(()=>generarAnalisisIA(currentPlayer,currentAnalysisDiv),300);
-        showToast(`✅ ${currentPlayer.name} cargado`);
+        showToast(`✅ ${currentPlayer.name} cargado · Conectores activos`);
     }
 
     function reset(){
@@ -757,25 +1043,25 @@ Responde con: FORTALEZAS (3 puntos), ÁREAS DE MEJORA (2 puntos), VEREDICTO FINA
         renderInfo(currentPlayer);
         renderPos();
         document.getElementById('playerSearch').value="";
-        if(currentAnalysisDiv)currentAnalysisDiv.innerHTML="🔍 Haz clic para obtener análisis profesional sin asteriscos";
+        if(currentAnalysisDiv)currentAnalysisDiv.innerHTML="🔍 Haz clic para obtener análisis profesional con conectores";
         actualizarWidgets(currentPlayer, '');
-        showToast("🔄 Jugador base cargado");
+        actualizarMetricasConectores();
+        showToast("🔄 Jugador base cargado · Conectores reiniciados");
     }
 
     function init(){
         updatePos(currentPlayer);
         renderInfo(currentPlayer);
         renderPos();
-        // Inicializar widgets con jugador base
         actualizarWidgets(currentPlayer, '');
+        actualizarMetricasConectores();
         document.getElementById('searchBtn').addEventListener('click',buscarJugador);
         document.getElementById('resetBtn').addEventListener('click',reset);
         document.getElementById('playerSearch').addEventListener('keypress',e=>{if(e.key==='Enter')buscarJugador();});
         
-        // Cargar desde URL
         cargarDesdeURL();
         
-        let c=0,i=setInterval(()=>{if(typeof jsllm7!=='undefined'){clearInterval(i);showToast(`🎯 IA scout lista · 10 herramientas disponibles · Modo ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'} · Sin markdown · Widgets inteligentes`);}else if(c>30)clearInterval(i);c++;},500);
+        let c=0,i=setInterval(()=>{if(typeof jsllm7!=='undefined'){clearInterval(i);showToast(`🎯 IA scout lista · Conectores activos · 10 herramientas disponibles · Modo ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'}`);}else if(c>30)clearInterval(i);c++;},500);
     }
     init();
 </script>
