@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="referrer" content="no-referrer-when-downgrade">
-    <title>🏆 RENDIMIENTO PRO · SCOUT IA + Conectores · Sin Markdown</title>
+    <title>🏆 RENDIMIENTO PRO · SCOUT IA + Conectores + jsllm7 404M</title>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, 'Segoe UI', sans-serif; }
@@ -16,6 +16,7 @@
         .live-badge { background: #10b981; color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; animation: pulse 1.5s infinite; display: inline-block; }
         .ia-badge { background: #10b981; padding: 2px 10px; border-radius: 20px; font-size: 0.7rem; margin-left: 10px; display: inline-block; }
         .badge-100 { background: #e9c46a; color: #1a2c3e; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; }
+        .badge-termux { background: #8b5cf6; color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
         
         .modo-selector { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; }
@@ -25,6 +26,7 @@
         .tools-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0; justify-content: center; }
         .tool-btn { background: #1e293b; border: 1px solid #334155; padding: 6px 12px; border-radius: 20px; font-size: 0.65rem; cursor: pointer; font-weight: 500; color: #94a3b8; transition: 0.2s; }
         .tool-btn:hover { background: #8b5cf6; color: white; border-color: #8b5cf6; transform: scale(1.02); }
+        .tool-btn.jsllm7 { border-color: #8b5cf6; color: #a78bfa; }
         
         .search-panel { background: rgba(15, 35, 38, 0.8); backdrop-filter: blur(12px); border-radius: 1.8rem; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #2c9b8a; }
         .search-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; }
@@ -188,8 +190,11 @@
         
         .metadata-container { display: none; }
         
-        .ia-analysis { background: rgba(139, 92, 246, 0.2); border-left: 3px solid #8b5cf6; padding: 0.8rem; margin-top: 1rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.5; white-space: pre-wrap; }
+        .ia-analysis { background: rgba(139, 92, 246, 0.2); border-left: 3px solid #8b5cf6; padding: 0.8rem; margin-top: 1rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.5; white-space: pre-wrap; max-height: 400px; overflow-y: auto; }
         .ia-btn { background: linear-gradient(90deg, #8b5cf6, #3b82f6); border: none; color: white; padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; cursor: pointer; margin-top: 8px; transition: all 0.2s; }
+        .ia-btn:hover { transform: scale(1.02); opacity: 0.9; }
+        .ia-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
         .feedback-buttons { display: flex; gap: 10px; margin-top: 8px; justify-content: flex-start; }
         .feedback-btn { background: none; border: none; color: #7a9aae; cursor: pointer; font-size: 0.65rem; padding: 2px 8px; border-radius: 15px; transition: 0.2s; }
         .feedback-btn:hover { background: #334155; color: #e9c46a; }
@@ -211,6 +216,8 @@
         .modal-content h3 { color: #a78bfa; margin-bottom: 1rem; }
         .modal-close { margin-top: 1rem; background: #8b5cf6; border: none; padding: 0.5rem 1rem; border-radius: 2rem; color: white; cursor: pointer; }
         
+        #jsllm7WidgetStatus { font-size: 0.65rem; color: #94a3b8; margin-top: 8px; }
+        
         @media (max-width: 700px) { 
             .player-name { font-size: 1.3rem; } 
             .modo-selector { justify-content: center; }
@@ -222,8 +229,8 @@
 <body>
 <div class="container">
     <div class="hero">
-        <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="ia-badge">CONECTORES</span><span class="badge-100">🏆 100% CALIDAD</span><span class="live-badge" id="liveBadge">🌐 EN VIVO</span></h1>
-        <p>Estadísticas reales · Análisis profesional · Conectores: Memoria · Semántico · APIs</p>
+        <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="ia-badge">jsllm7 404M</span><span class="badge-termux">🔌 TERMUX</span><span class="badge-100">🏆 100% CALIDAD</span><span class="live-badge" id="liveBadge">🌐 EN VIVO</span></h1>
+        <p>Estadísticas reales · Análisis profesional · Conectores: Memoria · Semántico · APIs · jsllm7 404M</p>
         <div class="news-ticker" id="newsTicker">🌐 Conectando a fuentes de datos de fútbol...</div>
     </div>
 
@@ -244,6 +251,7 @@
             <button class="tool-btn" id="btnEstilo">🎭 Estilo Juego</button>
             <button class="tool-btn" id="btnTransicion">🔄 Transiciones</button>
             <button class="tool-btn" id="btnPrediccion">🔮 Predicción Carrera</button>
+            <button class="tool-btn jsllm7" id="btnTermuxStatus">🔌 Estado jsllm7</button>
         </div>
         
         <div class="search-title">🔍 <span>BUSCADOR DE JUGADORES</span></div>
@@ -251,8 +259,8 @@
             <input type="text" id="playerSearch" placeholder="Ej: Lionel Messi, Cristiano Ronaldo, Vinicius Jr, Erling Haaland..." autocomplete="off">
             <button id="searchBtn">📊 BUSCAR DATOS REALES</button>
         </div>
-        <div class="context-info" id="contextInfo">📡 IA potenciada · Conectores activos · 10 herramientas tácticas · Sin markdown</div>
-        <div class="restriction-alert">🎯 IA Avanzada · Conectores: Memoria · Semántico · APIs · Scout profesional</div>
+        <div class="context-info" id="contextInfo">📡 IA potenciada · jsllm7 404M · Conectores activos · 10 herramientas tácticas · Sin markdown</div>
+        <div class="restriction-alert">🎯 IA Avanzada · Conectores: Memoria · Semántico · APIs · jsllm7 404M · Scout profesional</div>
         <div id="playerInfoContainer"></div>
     </div>
 
@@ -301,6 +309,7 @@
                         <div class="label">Contexto</div>
                     </div>
                 </div>
+                <div id="jsllm7WidgetStatus">🧠 jsllm7: 🔍 Conectando a Termux...</div>
             </div>
         </div>
         <div class="widget" id="widgetConfianza">
@@ -344,12 +353,80 @@
     </div>
     
     <div style="text-align:center;margin-top:1.5rem;"><button id="resetBtn" class="global-reset">🔄 REINICIAR A JUGADOR BASE</button></div>
-    <div class="footer">✨ Datos reales · Conectores activos · Scout profesional · 10 herramientas · Sin markdown</div>
+    <div class="footer">✨ Datos reales · jsllm7 404M · Conectores activos · Scout profesional · 10 herramientas · Sin markdown</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/jsllm7@0.1.0/jsllm7.js"></script>
 
 <script>
+    // ============================================
+    // CONFIGURACIÓN - API DE TERMUX (PUERTO 8081)
+    // ============================================
+    
+    const JSLLM7_API_URL = 'http://localhost:8081';
+    let jsllm7TermuxConectado = false;
+    
+    // ============================================
+    // FUNCIÓN PARA LLAMAR A IA (PRIORIZA TERMUX)
+    // ============================================
+    
+    async function _llamadaIA(prompt) {
+        console.log('🔍 Intentando llamar a IA...');
+        
+        // 1. INTENTAR CON TERMUX (API local)
+        try {
+            const preguntaCodificada = encodeURIComponent(prompt);
+            const url = `${JSLLM7_API_URL}/ask?q=${preguntaCodificada}`;
+            
+            console.log('📤 Enviando a Termux (8081):', prompt.substring(0, 80) + '...');
+            
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                console.error('❌ Error HTTP:', response.status);
+                throw new Error(`HTTP ${response.status}`);
+            }
+            
+            const text = await response.text();
+            console.log('📥 Respuesta recibida (primeros 100 chars):', text.substring(0, 100));
+            
+            // USAR SIEMPRE la respuesta de Termux si tiene contenido
+            if (text && text.length > 20) {
+                jsllm7TermuxConectado = true;
+                document.getElementById('jsllm7WidgetStatus').textContent = '🧠 jsllm7: ✅ Activo (404M en Termux:8081)';
+                document.getElementById('jsllm7WidgetStatus').style.color = '#10b981';
+                console.log('✅ Usando respuesta de Termux');
+                return limpiarMarkdown(text);
+            } else {
+                console.warn('⚠️ Respuesta de Termux vacía, intentando CDN...');
+                throw new Error('Respuesta vacía');
+            }
+        } catch (error) {
+            console.warn('⚠️ Error conectando a Termux:', error.message);
+            jsllm7TermuxConectado = false;
+            document.getElementById('jsllm7WidgetStatus').textContent = '🧠 jsllm7: ⚠️ Usando CDN';
+            document.getElementById('jsllm7WidgetStatus').style.color = '#f59e0b';
+        }
+        
+        // 2. FALLBACK: Usar jsllm7 del CDN
+        console.log('⚠️ Termux no disponible, usando CDN...');
+        if (typeof window.jsllm7 !== 'undefined' && window.jsllm7) {
+            try {
+                const response = await window.jsllm7(prompt);
+                if (response && response.length > 50) {
+                    console.log('✅ Respuesta de CDN obtenida');
+                    return limpiarMarkdown(response);
+                }
+            } catch (e) {
+                console.warn('Error con jsllm7 CDN:', e);
+            }
+        }
+        
+        // 3. FALLBACK FINAL
+        console.log('⚠️ Usando fallback genérico');
+        return null;
+    }
+
     // ============================================
     // CONECTOR DE MEMORIA
     // ============================================
@@ -627,7 +704,7 @@
             "@context": "https://schema.org",
             "@type": "SportsTeam",
             "name": jugador.name,
-            "description": `Análisis de rendimiento de ${jugador.name} con conectores`,
+            "description": `Análisis de rendimiento de ${jugador.name} con conectores y jsllm7 404M`,
             "sport": "Fútbol",
             "athlete": {
                 "@type": "Person",
@@ -737,13 +814,6 @@
     function _obtenerCache(key) { const item=_cacheIA[key]; if(item && (Date.now()-item.t)<86400000) return item.r; return null; }
     function _guardarCache(key, r) { _cacheIA[key]={r,t:Date.now()}; localStorage.setItem('scout_cache_v5',JSON.stringify(_cacheIA)); }
     
-    async function _llamadaIA(prompt) {
-        try {
-            const respuesta = await jsllm7(prompt);
-            return limpiarMarkdown(respuesta);
-        } catch(e) { return null; }
-    }
-    
     async function herramientaGenerica(promptText, titulo) {
         showToast(`⏳ ${titulo}...`);
         const respuesta = await _llamadaIA(promptText);
@@ -829,6 +899,29 @@
         await herramientaGenerica(prompt, `🔮 PREDICCIÓN DE CARRERA: ${jugador}`);
     }
     
+    function verEstadoTermux() {
+        const estado = jsllm7TermuxConectado ? '✅ Conectado' : '❌ Desconectado';
+        const mensaje = `
+=== ESTADO DE jsllm7 ===
+
+🔌 Puerto: 8081
+📊 Registros: 404,356,967
+📡 Estado: ${estado}
+📍 Fuente: ${jsllm7TermuxConectado ? 'Termux (local)' : 'CDN (fallback)'}
+
+${jsllm7TermuxConectado ? 
+'✅ jsllm7 está funcionando correctamente con 404M registros' : 
+'⚠️ jsllm7 no está conectado a Termux. Usando CDN como respaldo.'}
+
+Para conectar:
+1. Abre Termux
+2. Ejecuta: cd ~/experimento
+3. Ejecuta: python3 servidor.py &
+4. Recarga esta página
+`;
+        mostrarModal('🔌 ESTADO DE jsllm7', mensaje);
+    }
+    
     document.getElementById('btnComparar').onclick = compararJugadores;
     document.getElementById('btnFormacion').onclick = formacionIdeal;
     document.getElementById('btnRival').onclick = analisisRival;
@@ -839,6 +932,7 @@
     document.getElementById('btnEstilo').onclick = estiloJuego;
     document.getElementById('btnTransicion').onclick = transiciones;
     document.getElementById('btnPrediccion').onclick = prediccionCarrera;
+    document.getElementById('btnTermuxStatus').onclick = verEstadoTermux;
 
     // ============================================
     // DEEP LINKING - CARGAR JUGADOR DESDE URL
@@ -870,7 +964,7 @@
     function actualizarModoUI() { 
         document.querySelectorAll('.modo-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.modo === modoUsuario));
         const contextDiv = document.getElementById('contextInfo');
-        if (contextDiv) contextDiv.innerHTML = modoUsuario === 'experto' ? '🧠 MODO EXPERTO · Conectores activos · Scout profesional · 10 herramientas' : '⚡ MODO BÁSICO · Análisis rápido · Estadísticas esenciales';
+        if (contextDiv) contextDiv.innerHTML = modoUsuario === 'experto' ? '🧠 MODO EXPERTO · jsllm7 404M · Conectores activos · Scout profesional · 10 herramientas' : '⚡ MODO BÁSICO · Análisis rápido · Estadísticas esenciales';
     }
     
     document.querySelectorAll('.modo-btn').forEach(btn => {
@@ -883,17 +977,6 @@
         });
     });
     actualizarModoUI();
-    
-    document.getElementById('btnComparar').onclick = compararJugadores;
-    document.getElementById('btnFormacion').onclick = formacionIdeal;
-    document.getElementById('btnRival').onclick = analisisRival;
-    document.getElementById('btnMercado').onclick = valorMercado;
-    document.getElementById('btnLesiones').onclick = riesgoLesiones;
-    document.getElementById('btnJovenes').onclick = jovenesPromesas;
-    document.getElementById('btnEquipo').onclick = mejorXI;
-    document.getElementById('btnEstilo').onclick = estiloJuego;
-    document.getElementById('btnTransicion').onclick = transiciones;
-    document.getElementById('btnPrediccion').onclick = prediccionCarrera;
     
     function getPlayerData(nombre){
         const nl = nombre.toLowerCase();
@@ -954,7 +1037,7 @@
         posState.forEach(pos=>{
             const perf=Math.round(pos.skills.reduce((a,s)=>a+s.value,0)/pos.skills.length);
             const card=document.createElement('div');card.className='position-card';
-            card.innerHTML=`<div class="pos-header"><span class="pos-name">${pos.name}</span><span class="pos-perf">🎯 ${perf}%</span></div><div>${pos.skills.map(s=>`<div class="skill-item"><div class="skill-label"><span>${s.name}</span><span>${s.value}/99</span></div><div class="skill-bar-bg"><div class="skill-fill" style="width:${s.value}%;"></div></div></div>`).join('')}</div><div class="badge-recom">${perf>=80?'🏆 ELITE':(perf>=65?'👍 BUENO':'📈 MARGEN')}</div>`;
+            card.innerHTML=`<div class="pos-header"><span class="pos-name">${pos.name}</span><span class="pos-perf">🎯 ${perf}%</span></div><div>${pos.skills.map(s=>`<div class="skill-item"><div class="skill-label"><span>${s.name}</span><span>${s.value}/99</span></div><div class="skill-bar-bg"><div class="skill-fill" style="width:${s.value}%;"></div></div></div>`).join('')}</div><div class="badge-recom" style="margin-top:8px;font-size:0.7rem;color:#94a3b8;">${perf>=80?'🏆 ELITE':(perf>=65?'👍 BUENO':'📈 MARGEN')}</div>`;
             c.appendChild(card);
         });
     }
@@ -1009,7 +1092,7 @@ Goles: ${j.goals}, Asistencias: ${j.assists}, Overall: ${j.overall}/100`;
             actualizarWidgets(j, respuesta);
             actualizarMetricasConectores();
             
-            showToast(`✅ Análisis generado · Conectores activos`);
+            showToast(`✅ Análisis generado · jsllm7 404M · Conectores activos`);
         }catch(e){el.innerHTML = "⚠️ Error al generar análisis";}
         finally{analizando=false;}
     }
@@ -1018,7 +1101,7 @@ Goles: ${j.goals}, Asistencias: ${j.assists}, Overall: ${j.overall}/100`;
 
     function renderInfo(p){
         const c=document.getElementById('playerInfoContainer');
-        c.innerHTML=`<div class="player-card-big"><div><div class="player-name">⭐ ${p.name}</div><div style="display:flex;gap:0.5rem;margin-top:0.3rem;flex-wrap:wrap;"><span class="stat-chip">📊 Overall: <span>${p.overall}</span></span><span class="stat-chip">📍 Posición: <span>${p.position}</span></span><span class="stat-chip">⚽ Goles: <span>${p.goals}</span></span><span class="stat-chip">🎯 Asistencias: <span>${p.assists}</span></span></div></div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">💨 Ritmo: ${p.pace}</span><span class="stat-chip">🎯 Tiro: ${p.shooting}</span><span class="stat-chip">🎨 Pase: ${p.passing}</span><span class="stat-chip">🛡️ Defensa: ${p.defending}</span><span class="stat-chip">💪 Físico: ${p.physical}</span></div></div><div class="ia-analysis"><button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON IA (${modoUsuario === 'experto' ? 'MODO EXPERTO' : 'MODO BÁSICO'})</button><div id="iaResult" style="margin-top:10px;">🔍 Haz clic para obtener análisis profesional con conectores</div></div>`;
+        c.innerHTML=`<div class="player-card-big"><div><div class="player-name">⭐ ${p.name}</div><div style="display:flex;gap:0.5rem;margin-top:0.3rem;flex-wrap:wrap;"><span class="stat-chip">📊 Overall: <span>${p.overall}</span></span><span class="stat-chip">📍 Posición: <span>${p.position}</span></span><span class="stat-chip">⚽ Goles: <span>${p.goals}</span></span><span class="stat-chip">🎯 Asistencias: <span>${p.assists}</span></span></div></div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">💨 Ritmo: ${p.pace}</span><span class="stat-chip">🎯 Tiro: ${p.shooting}</span><span class="stat-chip">🎨 Pase: ${p.passing}</span><span class="stat-chip">🛡️ Defensa: ${p.defending}</span><span class="stat-chip">💪 Físico: ${p.physical}</span></div></div><div class="ia-analysis"><button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON IA (${modoUsuario === 'experto' ? 'MODO EXPERTO' : 'MODO BÁSICO'})</button><div id="iaResult" style="margin-top:10px;">🔍 Haz clic para obtener análisis profesional con conectores y jsllm7 404M</div></div>`;
         currentAnalysisDiv=document.getElementById('iaResult');
         actualizarWidgets(p, '');
     }
@@ -1032,9 +1115,9 @@ Goles: ${j.goals}, Asistencias: ${j.assists}, Overall: ${j.overall}/100`;
         updatePos(currentPlayer);
         renderInfo(currentPlayer);
         renderPos();
-        document.getElementById('newsTicker').innerHTML=`⚽ ${currentPlayer.name} · ${currentPlayer.overall} OVR · Conectores activos · 10 herramientas`;
+        document.getElementById('newsTicker').innerHTML=`⚽ ${currentPlayer.name} · ${currentPlayer.overall} OVR · jsllm7 404M · Conectores activos · 10 herramientas`;
         if(currentAnalysisDiv)setTimeout(()=>generarAnalisisIA(currentPlayer,currentAnalysisDiv),300);
-        showToast(`✅ ${currentPlayer.name} cargado · Conectores activos`);
+        showToast(`✅ ${currentPlayer.name} cargado · jsllm7 404M · Conectores activos`);
     }
 
     function reset(){
@@ -1043,13 +1126,16 @@ Goles: ${j.goals}, Asistencias: ${j.assists}, Overall: ${j.overall}/100`;
         renderInfo(currentPlayer);
         renderPos();
         document.getElementById('playerSearch').value="";
-        if(currentAnalysisDiv)currentAnalysisDiv.innerHTML="🔍 Haz clic para obtener análisis profesional con conectores";
+        if(currentAnalysisDiv)currentAnalysisDiv.innerHTML="🔍 Haz clic para obtener análisis profesional con conectores y jsllm7 404M";
         actualizarWidgets(currentPlayer, '');
         actualizarMetricasConectores();
         showToast("🔄 Jugador base cargado · Conectores reiniciados");
     }
 
     function init(){
+        // Verificar conexión con Termux
+        verificarConexionTermux();
+        
         updatePos(currentPlayer);
         renderInfo(currentPlayer);
         renderPos();
@@ -1061,8 +1147,30 @@ Goles: ${j.goals}, Asistencias: ${j.assists}, Overall: ${j.overall}/100`;
         
         cargarDesdeURL();
         
-        let c=0,i=setInterval(()=>{if(typeof jsllm7!=='undefined'){clearInterval(i);showToast(`🎯 IA scout lista · Conectores activos · 10 herramientas disponibles · Modo ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'}`);}else if(c>30)clearInterval(i);c++;},500);
+        let c=0,i=setInterval(()=>{if(typeof jsllm7!=='undefined'){clearInterval(i);showToast(`🎯 IA scout lista · jsllm7 404M · Conectores activos · 10 herramientas disponibles · Modo ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'}`);}else if(c>30)clearInterval(i);c++;},500);
     }
+    
+    async function verificarConexionTermux() {
+        try {
+            const response = await fetch(`${JSLLM7_API_URL}/stats`);
+            if (response.ok) {
+                const stats = await response.json();
+                jsllm7TermuxConectado = true;
+                document.getElementById('jsllm7WidgetStatus').textContent = `🧠 jsllm7: ✅ Activo (${stats.total?.toLocaleString() || '404M'} en Termux:8081)`;
+                document.getElementById('jsllm7WidgetStatus').style.color = '#10b981';
+                console.log('✅ jsllm7 conectado a Termux:', stats);
+            }
+        } catch(e) {
+            jsllm7TermuxConectado = false;
+            document.getElementById('jsllm7WidgetStatus').textContent = '🧠 jsllm7: ⚠️ Usando CDN';
+            document.getElementById('jsllm7WidgetStatus').style.color = '#f59e0b';
+            console.warn('⚠️ Termux no disponible en puerto 8081');
+        }
+    }
+    
+    // Verificar conexión cada 30 segundos
+    setInterval(verificarConexionTermux, 30000);
+    
     init();
 </script>
 </body>
