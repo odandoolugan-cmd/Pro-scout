@@ -4,15 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="referrer" content="no-referrer-when-downgrade">
-    <title>🏆 RENDIMIENTO PRO · SCOUT IA + Conectores + jsllm7 404M</title>
+    <title>🏆 RENDIMIENTO PRO · 403M DECIDE · SCOUT IA</title>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, 'Segoe UI', sans-serif; }
         body { background: linear-gradient(145deg, #0a1217 0%, #0a1f23 100%); min-height: 100vh; padding: 1.5rem; color: #ecfdf5; }
         .container { max-width: 1400px; margin: 0 auto; }
         .hero { text-align: center; margin-bottom: 2rem; }
-        .hero h1 { font-size: 2.3rem; background: linear-gradient(135deg, #60e0c0, #ffd966); background-clip: text; -webkit-background-clip: text; color: transparent; }
+        .hero h1 { font-size: 2.3rem; background: linear-gradient(135deg, #60e0c0, #ffd966, #8b5cf6, #ec4899); background-clip: text; -webkit-background-clip: text; color: transparent; }
         .hero p { color: #9bd5c9; margin-top: 0.5rem; }
+        .badge-decision { background: linear-gradient(90deg, #8b5cf6, #ec4899); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; animation: glow 2s infinite; }
+        @keyframes glow { 0%, 100% { box-shadow: 0 0 10px #8b5cf6; } 50% { box-shadow: 0 0 25px #ec4899; } }
         .live-badge { background: #10b981; color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; animation: pulse 1.5s infinite; display: inline-block; }
         .ia-badge { background: #10b981; padding: 2px 10px; border-radius: 20px; font-size: 0.7rem; margin-left: 10px; display: inline-block; }
         .badge-100 { background: #e9c46a; color: #1a2c3e; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; }
@@ -27,6 +29,8 @@
         .tool-btn { background: #1e293b; border: 1px solid #334155; padding: 6px 12px; border-radius: 20px; font-size: 0.65rem; cursor: pointer; font-weight: 500; color: #94a3b8; transition: 0.2s; }
         .tool-btn:hover { background: #8b5cf6; color: white; border-color: #8b5cf6; transform: scale(1.02); }
         .tool-btn.jsllm7 { border-color: #8b5cf6; color: #a78bfa; }
+        .tool-btn.decision { border-color: #ec4899; color: #f472b6; }
+        .tool-btn.decision:hover { background: linear-gradient(135deg, #8b5cf6, #ec4899); color: white; border-color: #8b5cf6; }
         
         .search-panel { background: rgba(15, 35, 38, 0.8); backdrop-filter: blur(12px); border-radius: 1.8rem; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #2c9b8a; }
         .search-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; }
@@ -35,6 +39,8 @@
         .search-box input:focus { background: #2a534b; box-shadow: 0 0 0 2px #5fe0c0; }
         .search-box button { background: linear-gradient(90deg, #2d8f7a, #3fb597); border: none; padding: 0 1.8rem; border-radius: 3rem; font-weight: bold; color: white; cursor: pointer; transition: 0.2s; }
         .search-box button:hover { transform: scale(0.96); }
+        
+        #decisionStatus { font-size: 0.65rem; color: #ec4899; text-align: center; margin-bottom: 10px; }
         
         .player-card-big { background: linear-gradient(135deg, #0d2a2a, #0b2222); border-radius: 1.5rem; padding: 1.2rem 1.8rem; margin-top: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; border-left: 5px solid #3bcb9b; }
         .player-name { font-size: 1.8rem; font-weight: 800; }
@@ -59,137 +65,24 @@
             margin: 15px 0;
         }
         
-        .widget {
-            background: rgba(18, 35, 38, 0.9);
-            border: 1px solid #3bcb9b;
-            border-radius: 12px;
-            padding: 15px;
-            transition: all 0.3s;
-            backdrop-filter: blur(10px);
-        }
-        
-        .widget:hover {
-            border-color: #8b5cf6;
-            box-shadow: 0 8px 20px rgba(59, 203, 155, 0.1);
-            transform: translateY(-2px);
-        }
-        
-        .widget-title {
-            font-weight: 700;
-            color: #3bcb9b;
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .widget-content {
-            font-size: 0.85rem;
-            line-height: 1.6;
-            color: #ecfdf5;
-        }
-        
-        .widget-confidence {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 10px;
-            padding: 8px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 8px;
-        }
-        
-        .confidence-bar {
-            flex: 1;
-            height: 4px;
-            background: #1e293b;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-        
-        .confidence-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #f59e0b, #10b981);
-            transition: width 1s ease;
-            width: 0%;
-        }
-        
-        .confidence-label {
-            font-size: 0.7rem;
-            color: #b0c4de;
-            min-width: 40px;
-        }
-        
-        .metrics-grid-widget {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 10px;
-        }
-        
-        .metric-item-widget {
-            background: rgba(0,0,0,0.3);
-            padding: 8px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        
-        .metric-value-widget {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #3bcb9b;
-        }
-        
-        .metric-label-widget {
-            font-size: 0.6rem;
-            color: #94a3b8;
-        }
-        
-        /* Métricas de conectores */
-        .connector-metrics {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin-top: 10px;
-        }
-        .connector-metric {
-            background: rgba(0,0,0,0.3);
-            padding: 6px;
-            border-radius: 6px;
-            text-align: center;
-        }
-        .connector-metric .value {
-            font-size: 1rem;
-            font-weight: bold;
-            color: #3bcb9b;
-        }
-        .connector-metric .label {
-            font-size: 0.55rem;
-            color: #94a3b8;
-        }
-        
-        .sources-list {
-            margin-top: 10px;
-            padding: 10px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 8px;
-            font-size: 0.7rem;
-        }
-        
-        .source-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 4px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        
-        .source-item:last-child { border-bottom: none; }
-        .source-icon { font-size: 0.8rem; }
+        .widget { background: rgba(18, 35, 38, 0.9); border: 1px solid #3bcb9b; border-radius: 12px; padding: 15px; transition: all 0.3s; backdrop-filter: blur(10px); }
+        .widget:hover { border-color: #8b5cf6; box-shadow: 0 8px 20px rgba(59, 203, 155, 0.1); transform: translateY(-2px); }
+        .widget-title { font-weight: 700; color: #3bcb9b; font-size: 0.8rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .widget-content { font-size: 0.85rem; line-height: 1.6; color: #ecfdf5; }
+        .widget-confidence { display: flex; align-items: center; gap: 10px; margin-top: 10px; padding: 8px; background: rgba(0,0,0,0.3); border-radius: 8px; }
+        .confidence-bar { flex: 1; height: 4px; background: #1e293b; border-radius: 2px; overflow: hidden; }
+        .confidence-fill { height: 100%; background: linear-gradient(90deg, #f59e0b, #10b981); transition: width 1s ease; width: 0%; }
+        .confidence-label { font-size: 0.7rem; color: #b0c4de; min-width: 40px; }
+        .metrics-grid-widget { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+        .metric-item-widget { background: rgba(0,0,0,0.3); padding: 8px; border-radius: 8px; text-align: center; }
+        .metric-value-widget { font-size: 1.2rem; font-weight: bold; color: #3bcb9b; }
+        .metric-label-widget { font-size: 0.6rem; color: #94a3b8; }
+        .connector-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
+        .connector-metric { background: rgba(0,0,0,0.3); padding: 6px; border-radius: 6px; text-align: center; }
+        .connector-metric .value { font-size: 1rem; font-weight: bold; color: #3bcb9b; }
+        .connector-metric .label { font-size: 0.55rem; color: #94a3b8; }
         
         .metadata-container { display: none; }
-        
         .ia-analysis { background: rgba(139, 92, 246, 0.2); border-left: 3px solid #8b5cf6; padding: 0.8rem; margin-top: 1rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.5; white-space: pre-wrap; max-height: 400px; overflow-y: auto; }
         .ia-btn { background: linear-gradient(90deg, #8b5cf6, #3b82f6); border: none; color: white; padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; cursor: pointer; margin-top: 8px; transition: all 0.2s; }
         .ia-btn:hover { transform: scale(1.02); opacity: 0.9; }
@@ -229,12 +122,14 @@
 <body>
 <div class="container">
     <div class="hero">
-        <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="ia-badge">jsllm7 404M</span><span class="badge-termux">🔌 TERMUX</span><span class="badge-100">🏆 100% CALIDAD</span><span class="live-badge" id="liveBadge">🌐 EN VIVO</span></h1>
-        <p>Estadísticas reales · Análisis profesional · Conectores: Memoria · Semántico · APIs · jsllm7 404M</p>
-        <div class="news-ticker" id="newsTicker">🌐 Conectando a fuentes de datos de fútbol...</div>
+        <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="ia-badge">jsllm7 404M</span><span class="badge-termux">🔌 TERMUX</span><span class="badge-decision">🧠 403M DECIDE</span><span class="badge-100">🏆 100% CALIDAD</span><span class="live-badge" id="liveBadge">🌐 EN VIVO</span></h1>
+        <p>403M DECIDE · Estadísticas reales · Análisis profesional · Conectores: Memoria · Semántico · APIs · jsllm7 404M</p>
+        <div class="news-ticker" id="newsTicker">🌐 403M DECIDE · Conectando a fuentes de datos de fútbol...</div>
     </div>
 
     <div class="search-panel">
+        <div id="decisionStatus" style="font-size:0.65rem;color:#ec4899;text-align:center;margin-bottom:10px;">🧠 403M DECIDE: Listo para analizar jugadores</div>
+        
         <div class="modo-selector">
             <button class="modo-btn active" data-modo="experto">🧠 MODO EXPERTO</button>
             <button class="modo-btn" data-modo="basico">⚡ MODO BÁSICO</button>
@@ -251,6 +146,7 @@
             <button class="tool-btn" id="btnEstilo">🎭 Estilo Juego</button>
             <button class="tool-btn" id="btnTransicion">🔄 Transiciones</button>
             <button class="tool-btn" id="btnPrediccion">🔮 Predicción Carrera</button>
+            <button class="tool-btn decision" id="btnDecisionStatus">🧠 403M Decide</button>
             <button class="tool-btn jsllm7" id="btnTermuxStatus">🔌 Estado jsllm7</button>
         </div>
         
@@ -259,8 +155,8 @@
             <input type="text" id="playerSearch" placeholder="Ej: Lionel Messi, Cristiano Ronaldo, Vinicius Jr, Erling Haaland..." autocomplete="off">
             <button id="searchBtn">📊 BUSCAR DATOS REALES</button>
         </div>
-        <div class="context-info" id="contextInfo">📡 IA potenciada · jsllm7 404M · Conectores activos · 10 herramientas tácticas · Sin markdown</div>
-        <div class="restriction-alert">🎯 IA Avanzada · Conectores: Memoria · Semántico · APIs · jsllm7 404M · Scout profesional</div>
+        <div class="context-info" id="contextInfo">🧠 403M DECIDE · IA potenciada · jsllm7 404M · Conectores activos · 10 herramientas tácticas · Sin markdown</div>
+        <div class="restriction-alert">🎯 403M DECIDE qué BIG TECH usar · IA Avanzada · Conectores: Memoria · Semántico · APIs · jsllm7 404M · Scout profesional</div>
         <div id="playerInfoContainer"></div>
     </div>
 
@@ -306,7 +202,7 @@
                     </div>
                     <div class="connector-metric">
                         <div class="value" id="metricContexto">0%</div>
-                        <div class="label">Contexto</div>
+                        <div class="label">Contexto 403M</div>
                     </div>
                 </div>
                 <div id="jsllm7WidgetStatus">🧠 jsllm7: 🔍 Conectando a Termux...</div>
@@ -323,7 +219,7 @@
                     <span class="confidence-label" id="confidenceLabel">0%</span>
                 </div>
                 <div id="widgetConfianzaDetalle" style="font-size:0.75rem;color:#94a3b8;margin-top:8px;">
-                    Basado en datos reales + conectores
+                    Basado en datos reales + 403M DECIDE
                 </div>
             </div>
         </div>
@@ -353,7 +249,7 @@
     </div>
     
     <div style="text-align:center;margin-top:1.5rem;"><button id="resetBtn" class="global-reset">🔄 REINICIAR A JUGADOR BASE</button></div>
-    <div class="footer">✨ Datos reales · jsllm7 404M · Conectores activos · Scout profesional · 10 herramientas · Sin markdown</div>
+    <div class="footer">✨ 403M DECIDE · Datos reales · jsllm7 404M · Conectores activos · Scout profesional · 10 herramientas · Sin markdown</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/jsllm7@0.1.0/jsllm7.js"></script>
@@ -367,13 +263,133 @@
     let jsllm7TermuxConectado = false;
     
     // ============================================
+    // NÚCLEO 403M DECIDE
+    // ============================================
+    
+    class Nucleo403MDecisor {
+        constructor() {
+            this.nucleo = { activo: true, parametros: 403000000, decisiones: 0 };
+            this.bigTech = {
+                nvidia: { activo: false, usos: 0, nombre: 'NVIDIA (Visualización)' },
+                google: { activo: false, usos: 0, nombre: 'Google (Búsqueda)' },
+                meta: { activo: false, usos: 0, nombre: 'Meta (Comunidad)' },
+                amazon: { activo: false, usos: 0, nombre: 'Amazon (Recursos)' },
+                microsoft: { activo: false, usos: 0, nombre: 'Microsoft (Análisis)' },
+                apple: { activo: false, usos: 0, nombre: 'Apple (Experiencia)' }
+            };
+            this.historialDecisiones = [];
+            console.log('🧠 NÚCLEO 403M DECIDE inicializado para SCOUT IA');
+        }
+        
+        async analizarYDecidir(pregunta, jugador, modo) {
+            this.nucleo.decisiones++;
+            console.log(`🧠 403M analizando consulta scout: "${pregunta.substring(0, 50)}..."`);
+            document.getElementById('decisionStatus').textContent = '🧠 403M DECIDE: Analizando consulta scout...';
+            
+            const promptDecision = `[DECISIÓN AUTÓNOMA 403M - SCOUT]
+Analiza la siguiente consulta sobre ${jugador} y decide qué BIG TECH activar:
+
+CONSULTA: "${pregunta}"
+JUGADOR: ${jugador}
+MODO: ${modo}
+
+BIG TECH DISPONIBLES:
+1. NVIDIA - Para visualización de datos, gráficos de rendimiento
+2. Google - Para búsqueda de información, estadísticas
+3. Meta - Para conectar con comunidades de scouts
+4. Amazon - Para acceso a recursos, análisis de mercado
+5. Microsoft - Para análisis de datos, herramientas de scouting
+6. Apple - Para diseño de dashboards, experiencia visual
+
+DECIDE:
+- Si es sobre visualización de datos → NVIDIA
+- Si es sobre búsqueda de información → Google
+- Si es sobre comunidad de scouts → Meta
+- Si es sobre recursos → Amazon
+- Si es sobre análisis de datos → Microsoft
+- Si es sobre experiencia de usuario → Apple
+
+Responde SOLO con los nombres separados por comas.
+Ejemplo: "Google, Microsoft" o "NVIDIA"
+
+DECISIÓN:`;
+
+            const decision = await _llamadaIA(promptDecision);
+            console.log(`🧠 Decisión 403M: ${decision}`);
+            
+            const techsActivar = this.procesarDecision(decision);
+            
+            if (techsActivar.length > 0) {
+                document.getElementById('decisionStatus').textContent = `🧠 403M DECIDE: Activando ${techsActivar.join(', ')} para ${jugador}`;
+            }
+            
+            for (const tech of techsActivar) {
+                if (this.bigTech[tech] && !this.bigTech[tech].activo) {
+                    this.bigTech[tech].activo = true;
+                    this.bigTech[tech].usos++;
+                    console.log(`🚀 403M activó: ${tech.toUpperCase()} para ${jugador}`);
+                }
+            }
+            
+            this.historialDecisiones.push({
+                jugador: jugador,
+                pregunta: pregunta.substring(0, 50),
+                decision: techsActivar,
+                timestamp: new Date().toISOString()
+            });
+            
+            return techsActivar;
+        }
+        
+        procesarDecision(decision) {
+            if (!decision) return ['google'];
+            const techs = [];
+            const d = decision.toLowerCase();
+            const mapeo = { 'nvidia': 'nvidia', 'google': 'google', 'meta': 'meta', 'amazon': 'amazon', 'microsoft': 'microsoft', 'apple': 'apple' };
+            for (const [key, value] of Object.entries(mapeo)) {
+                if (d.includes(key) || d.includes(value)) techs.push(value);
+            }
+            return techs.length > 0 ? techs : ['google'];
+        }
+        
+        getEstado() {
+            const activos = Object.entries(this.bigTech).filter(([k, v]) => v.activo).map(([k]) => k);
+            return {
+                decisiones: this.nucleo.decisiones,
+                bigTechActivos: activos,
+                usos: Object.fromEntries(Object.entries(this.bigTech).map(([k, v]) => [k, v.usos])),
+                historial: this.historialDecisiones.slice(-5)
+            };
+        }
+        
+        mostrarEstado() {
+            const e = this.getEstado();
+            let mensaje = `
+=== 🧠 403M DECIDE (SCOUT) ===
+
+📊 Decisiones tomadas: ${e.decisiones}
+
+🏢 BIG TECH ACTIVADOS POR 403M:
+${Object.entries(e.usos).map(([k, v]) => `   • ${k}: ${v} usos`).join('\n')}
+
+📜 ÚLTIMAS DECISIONES:
+${e.historial.map(h => `   • ${h.jugador}: "${h.pregunta}..." → ${h.decision.join(', ')}`).join('\n')}
+
+${e.bigTechActivos.length > 0 ? '✅ 403M está activando BIG TECH automáticamente' : '⚠️ 403M aún no ha activado BIG TECH'}
+`;
+            return mensaje;
+        }
+    }
+
+    const nucleoDecisor = new Nucleo403MDecisor();
+
+    // ============================================
     // FUNCIÓN PARA LLAMAR A IA (PRIORIZA TERMUX)
     // ============================================
     
     async function _llamadaIA(prompt) {
         console.log('🔍 Intentando llamar a IA...');
         
-        // 1. INTENTAR CON TERMUX (API local)
         try {
             const preguntaCodificada = encodeURIComponent(prompt);
             const url = `${JSLLM7_API_URL}/ask?q=${preguntaCodificada}`;
@@ -390,7 +406,6 @@
             const text = await response.text();
             console.log('📥 Respuesta recibida (primeros 100 chars):', text.substring(0, 100));
             
-            // USAR SIEMPRE la respuesta de Termux si tiene contenido
             if (text && text.length > 20) {
                 jsllm7TermuxConectado = true;
                 document.getElementById('jsllm7WidgetStatus').textContent = '🧠 jsllm7: ✅ Activo (404M en Termux:8081)';
@@ -398,7 +413,6 @@
                 console.log('✅ Usando respuesta de Termux');
                 return limpiarMarkdown(text);
             } else {
-                console.warn('⚠️ Respuesta de Termux vacía, intentando CDN...');
                 throw new Error('Respuesta vacía');
             }
         } catch (error) {
@@ -408,7 +422,6 @@
             document.getElementById('jsllm7WidgetStatus').style.color = '#f59e0b';
         }
         
-        // 2. FALLBACK: Usar jsllm7 del CDN
         console.log('⚠️ Termux no disponible, usando CDN...');
         if (typeof window.jsllm7 !== 'undefined' && window.jsllm7) {
             try {
@@ -422,13 +435,12 @@
             }
         }
         
-        // 3. FALLBACK FINAL
         console.log('⚠️ Usando fallback genérico');
         return null;
     }
 
     // ============================================
-    // CONECTOR DE MEMORIA
+    // CONECTORES (MEMORIA, SEMÁNTICO, APIs)
     // ============================================
     
     class MemoryConnector {
@@ -438,17 +450,13 @@
             this.maxShortTerm = 10;
             this.loadFromStorage();
         }
-        
         loadFromStorage() {
             try {
                 const data = JSON.parse(localStorage.getItem('scout_memoria') || '{}');
                 if (data.shortTerm) this.shortTerm = data.shortTerm;
-                if (data.longTerm) {
-                    this.longTerm = new Map(Object.entries(data.longTerm));
-                }
+                if (data.longTerm) this.longTerm = new Map(Object.entries(data.longTerm));
             } catch(e) {}
         }
-        
         saveToStorage() {
             try {
                 localStorage.setItem('scout_memoria', JSON.stringify({
@@ -457,18 +465,11 @@
                 }));
             } catch(e) {}
         }
-        
         remember(interaction) {
-            this.shortTerm.push({
-                ...interaction,
-                timestamp: Date.now()
-            });
-            if (this.shortTerm.length > this.maxShortTerm) {
-                this.shortTerm.shift();
-            }
+            this.shortTerm.push({ ...interaction, timestamp: Date.now() });
+            if (this.shortTerm.length > this.maxShortTerm) this.shortTerm.shift();
             this.saveToStorage();
         }
-        
         recall(jugador, limit = 3) {
             const relevant = this.shortTerm
                 .filter(item => {
@@ -477,14 +478,8 @@
                 })
                 .sort((a, b) => b.similarity - a.similarity)
                 .slice(0, limit);
-            
-            return relevant.map(item => ({
-                jugador: item.jugador,
-                analisis: item.analisis,
-                similarity: item.similarity
-            }));
+            return relevant.map(item => ({ jugador: item.jugador, analisis: item.analisis, similarity: item.similarity }));
         }
-        
         calculateSimilarity(a, b) {
             if (!a || !b) return 0;
             const wordsA = a.toLowerCase().split(' ');
@@ -492,44 +487,24 @@
             const common = wordsA.filter(w => wordsB.includes(w) && w.length > 2);
             return common.length / Math.max(wordsA.length, wordsB.length);
         }
-        
         getStats() {
-            return {
-                shortTerm: this.shortTerm.length,
-                longTerm: this.longTerm.size,
-                total: this.shortTerm.length + this.longTerm.size
-            };
+            return { shortTerm: this.shortTerm.length, longTerm: this.longTerm.size, total: this.shortTerm.length + this.longTerm.size };
         }
     }
 
-    // ============================================
-    // CONECTOR SEMÁNTICO
-    // ============================================
-    
     class SemanticConnector {
         constructor() {
             this.embeddingsCache = new Map();
             this.similarityThreshold = 0.2;
         }
-        
         generateEmbedding(text) {
-            const words = text.toLowerCase()
-                .replace(/[¿?¡!.,;:]/g, '')
-                .split(' ')
-                .filter(w => w.length > 2);
-            
+            const words = text.toLowerCase().replace(/[¿?¡!.,;:]/g, '').split(' ').filter(w => w.length > 2);
             const vector = new Map();
-            words.forEach(w => {
-                vector.set(w, (vector.get(w) || 0) + 1);
-            });
+            words.forEach(w => vector.set(w, (vector.get(w) || 0) + 1));
             return vector;
         }
-        
         cosineSimilarity(vecA, vecB) {
-            let dotProduct = 0;
-            let normA = 0;
-            let normB = 0;
-            
+            let dotProduct = 0, normA = 0, normB = 0;
             const keys = new Set([...vecA.keys(), ...vecB.keys()]);
             keys.forEach(key => {
                 const a = vecA.get(key) || 0;
@@ -538,35 +513,20 @@
                 normA += a * a;
                 normB += b * b;
             });
-            
             if (normA === 0 || normB === 0) return 0;
             return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
         }
-        
         findSimilar(query, candidates) {
             const queryEmbedding = this.generateEmbedding(query);
             const results = candidates.map(candidate => ({
                 ...candidate,
                 similarity: this.cosineSimilarity(queryEmbedding, this.generateEmbedding(candidate.text || candidate.jugador || ''))
             }));
-            
-            return results
-                .filter(r => r.similarity > this.similarityThreshold)
-                .sort((a, b) => b.similarity - a.similarity);
+            return results.filter(r => r.similarity > this.similarityThreshold).sort((a, b) => b.similarity - a.similarity);
         }
-        
-        getStats() {
-            return {
-                cacheSize: this.embeddingsCache.size,
-                threshold: this.similarityThreshold
-            };
-        }
+        getStats() { return { cacheSize: this.embeddingsCache.size, threshold: this.similarityThreshold }; }
     }
 
-    // ============================================
-    // CONECTOR DE APIs
-    // ============================================
-    
     class APIConnector {
         constructor() {
             this.endpoints = new Map();
@@ -574,113 +534,51 @@
             this.maxCacheAge = 3600000;
             this.registerDefaultEndpoints();
         }
-        
         registerDefaultEndpoints() {
             this.registerEndpoint('playerStats', {
                 url: 'https://api.example.com/player',
                 method: 'GET',
-                transform: (data) => ({
-                    stats: data.stats || {},
-                    comparaciones: data.comparaciones || []
-                })
+                transform: (data) => ({ stats: data.stats || {}, comparaciones: data.comparaciones || [] })
             });
         }
-        
-        registerEndpoint(name, config) {
-            this.endpoints.set(name, config);
-        }
-        
+        registerEndpoint(name, config) { this.endpoints.set(name, config); }
         async call(endpointName, params = {}) {
             const config = this.endpoints.get(endpointName);
-            if (!config) {
-                return { error: `Endpoint ${endpointName} no encontrado` };
-            }
-            
+            if (!config) return { error: `Endpoint ${endpointName} no encontrado` };
             const cacheKey = `${endpointName}_${JSON.stringify(params)}`;
             if (this.cache.has(cacheKey)) {
                 const cached = this.cache.get(cacheKey);
-                if (Date.now() - cached.timestamp < this.maxCacheAge) {
-                    return cached.data;
-                }
+                if (Date.now() - cached.timestamp < this.maxCacheAge) return cached.data;
             }
-            
             try {
                 const mockData = this.generateMockData(endpointName, params);
                 const result = config.transform ? config.transform(mockData) : mockData;
-                this.cache.set(cacheKey, {
-                    data: result,
-                    timestamp: Date.now()
-                });
+                this.cache.set(cacheKey, { data: result, timestamp: Date.now() });
                 return result;
-            } catch(e) {
-                return { error: e.message };
-            }
+            } catch(e) { return { error: e.message }; }
         }
-        
         generateMockData(endpoint, params) {
-            const datos = {
-                playerStats: {
-                    stats: { goles: 25, asistencias: 10 },
-                    comparaciones: ['Jugador A', 'Jugador B']
-                }
-            };
+            const datos = { playerStats: { stats: { goles: 25, asistencias: 10 }, comparaciones: ['Jugador A', 'Jugador B'] } };
             return datos[endpoint] || {};
         }
-        
-        getStats() {
-            return {
-                endpoints: this.endpoints.size,
-                cacheSize: this.cache.size
-            };
-        }
+        getStats() { return { endpoints: this.endpoints.size, cacheSize: this.cache.size }; }
     }
 
-    // ============================================
-    // INICIALIZACIÓN DE CONECTORES
-    // ============================================
-    
     const memoryConnector = new MemoryConnector();
     const semanticConnector = new SemanticConnector();
     const apiConnector = new APIConnector();
 
-    // ============================================
-    // SISTEMA DE CACHÉ SEMÁNTICO
-    // ============================================
-    
-    const semanticCache = new Map();
-    
-    function getSemanticKey(text) {
-        const words = text.toLowerCase()
-            .replace(/[¿?¡!.,;:]/g, '')
-            .split(' ')
-            .filter(w => w.length > 3)
-            .slice(0, 5)
-            .sort()
-            .join('_');
-        return words;
-    }
-
-    // ============================================
-    // ACTUALIZAR MÉTRICAS DE CONECTORES
-    // ============================================
-    
     function actualizarMetricasConectores() {
         const memStats = memoryConnector.getStats();
         const semStats = semanticConnector.getStats();
         const apiStats = apiConnector.getStats();
-        
         document.getElementById('metricMemoria').textContent = memStats.total;
         document.getElementById('metricSemantico').textContent = semStats.cacheSize;
         document.getElementById('metricAPIs').textContent = apiStats.endpoints;
-        
         const contextoPorcentaje = Math.min(100, (memStats.shortTerm * 10) + 20);
         document.getElementById('metricContexto').textContent = Math.min(contextoPorcentaje, 100) + '%';
     }
 
-    // ============================================
-    // LIMPIADOR DE MARKDOWN
-    // ============================================
-    
     function limpiarMarkdown(texto) {
         let limpio = texto;
         limpio = limpio.replace(/\*\*/g, '');
@@ -695,35 +593,20 @@
         return limpio.trim();
     }
 
-    // ============================================
-    // GENERAR METADATOS JSON-LD
-    // ============================================
-    
     function generarMetadatos(jugador, analisis, confianza) {
         return {
             "@context": "https://schema.org",
             "@type": "SportsTeam",
             "name": jugador.name,
-            "description": `Análisis de rendimiento de ${jugador.name} con conectores y jsllm7 404M`,
+            "description": `Análisis de rendimiento de ${jugador.name} con 403M DECIDE y jsllm7 404M`,
             "sport": "Fútbol",
-            "athlete": {
-                "@type": "Person",
-                "name": jugador.name
-            },
-            "statistics": {
-                "goals": jugador.goals,
-                "assists": jugador.assists,
-                "overall": jugador.overall
-            },
+            "athlete": { "@type": "Person", "name": jugador.name },
+            "statistics": { "goals": jugador.goals, "assists": jugador.assists, "overall": jugador.overall },
             "confidenceScore": confianza,
             "dateCreated": new Date().toISOString()
         };
     }
 
-    // ============================================
-    // ACTUALIZAR WIDGETS
-    // ============================================
-    
     function actualizarWidgets(jugador, analisis) {
         document.getElementById('metricGoles').textContent = jugador.goals || 0;
         document.getElementById('metricAsistencias').textContent = jugador.assists || 0;
@@ -743,14 +626,7 @@
         document.getElementById('confidenceLabel').textContent = Math.round(confianza) + '%';
         
         const posContent = document.getElementById('widgetPosicionContent');
-        const posEmojis = {
-            'Delantero': '⚽',
-            'Extremo': '🌪️',
-            'Mediocentro': '🎯',
-            'Lateral': '⚡',
-            'Defensa Central': '🛡️',
-            'Portero': '🧤'
-        };
+        const posEmojis = { 'Delantero': '⚽', 'Extremo': '🌪️', 'Mediocentro': '🎯', 'Lateral': '⚡', 'Defensa Central': '🛡️', 'Portero': '🧤' };
         const emoji = posEmojis[jugador.position] || '⚽';
         posContent.innerHTML = `
             <div style="color:#94a3b8;font-size:0.75rem;margin-bottom:8px;">Posición ideal del jugador</div>
@@ -787,18 +663,6 @@
             if (respuesta.ok) goDisponible = true;
         } catch (e) { goDisponible = false; }
     }
-    
-    async function consultarCacheOculto(jugadorNombre) {
-        if (!goDisponible) return null;
-        try {
-            const respuesta = await fetch(`${GO_URL}/ask?q=${encodeURIComponent(jugadorNombre)}`, { signal: AbortSignal.timeout(3000) });
-            if (respuesta.ok) {
-                const texto = await respuesta.text();
-                if (texto && texto !== "No sé" && texto.length > 80) return limpiarMarkdown(texto);
-            }
-        } catch (e) {}
-        return null;
-    }
 
     // ============================================
     // BASE DE DATOS DE JUGADORES
@@ -810,14 +674,16 @@
     try { _cacheIA = JSON.parse(localStorage.getItem('scout_cache_v5') || '{}'); } catch(e) {}
     
     function _hash(str) { let h=0; const s=str.toLowerCase().trim(); for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;} return Math.abs(h).toString(36); }
-    
     function _obtenerCache(key) { const item=_cacheIA[key]; if(item && (Date.now()-item.t)<86400000) return item.r; return null; }
     function _guardarCache(key, r) { _cacheIA[key]={r,t:Date.now()}; localStorage.setItem('scout_cache_v5',JSON.stringify(_cacheIA)); }
     
-    async function herramientaGenerica(promptText, titulo) {
-        showToast(`⏳ ${titulo}...`);
+    async function herramientaGenerica(promptText, titulo, jugadorNombre) {
+        // 403M DECIDE qué BIG TECH usar para esta herramienta
+        await nucleoDecisor.analizarYDecidir(titulo, jugadorNombre || currentPlayer?.name || 'Jugador', modoUsuario);
+        
+        showToast(`⏳ ${titulo} con 403M...`);
         const respuesta = await _llamadaIA(promptText);
-        const respuestaFinal = respuesta || `No se pudo obtener ${titulo.toLowerCase()}. Intenta de nuevo.`;
+        const respuestaFinal = limpiarMarkdown(respuesta) || `No se pudo obtener ${titulo.toLowerCase()}. Intenta de nuevo.`;
         mostrarModal(titulo, respuestaFinal);
         if (currentPlayer) actualizarWidgets(currentPlayer, respuestaFinal);
     }
@@ -845,58 +711,58 @@
         const j2 = prompt("Segundo jugador a comparar (Ej: Cristiano Ronaldo, Haaland, Mbappe):", "Cristiano Ronaldo");
         if (!j2) return;
         const prompt = `Compara a ${j1} y ${j2} como futbolistas. Analiza: estilo de juego, estadísticas clave, logros, y quién es mejor en cada aspecto. Sé objetivo. Sin asteriscos.`;
-        await herramientaGenerica(prompt, `🔄 COMPARACIÓN: ${j1} vs ${j2}`);
+        await herramientaGenerica(prompt, `🔄 COMPARACIÓN: ${j1} vs ${j2}`, j1);
     }
     
     async function formacionIdeal() {
         const prompt = `Sugiere una formación de fútbol ideal (4-3-3, 4-4-2, 3-5-2, etc.) para un equipo que quiere dominar la posesión. Explica por qué funciona y qué tipo de jugadores necesita cada posición. Sin asteriscos.`;
-        await herramientaGenerica(prompt, "📋 FORMACIÓN IDEAL");
+        await herramientaGenerica(prompt, "📋 FORMACIÓN IDEAL", "Formación");
     }
     
     async function analisisRival() {
         const rival = prompt("Nombre del equipo rival a analizar:", "Real Madrid");
         if (!rival) return;
         const prompt = `Analiza al ${rival} como rival. Puntos fuertes, puntos débiles, formación típica, jugadores clave, y cómo contrarrestarlos tácticamente. Sin asteriscos.`;
-        await herramientaGenerica(prompt, `🎯 ANÁLISIS DE RIVAL: ${rival.toUpperCase()}`);
+        await herramientaGenerica(prompt, `🎯 ANÁLISIS DE RIVAL: ${rival.toUpperCase()}`, rival);
     }
     
     async function valorMercado() {
         const jugador = document.getElementById('playerSearch').value.trim() || currentPlayer?.name || "Jugador";
         const prompt = `Estima el valor de mercado actual de ${jugador} en el mercado de fichajes. Da un rango en euros, factores que influyen (edad, rendimiento, contrato), y si es momento de comprar o vender. Sin asteriscos.`;
-        await herramientaGenerica(prompt, `💰 VALOR DE MERCADO: ${jugador}`);
+        await herramientaGenerica(prompt, `💰 VALOR DE MERCADO: ${jugador}`, jugador);
     }
     
     async function riesgoLesiones() {
         const jugador = document.getElementById('playerSearch').value.trim() || currentPlayer?.name || "Jugador";
         const prompt = `Analiza el riesgo de lesiones de ${jugador} basado en su historial, estilo de juego, edad y posición. Da un nivel de riesgo (bajo/medio/alto) y recomendaciones para prevenirlas. Sin asteriscos.`;
-        await herramientaGenerica(prompt, `🩺 RIESGO DE LESIONES: ${jugador}`);
+        await herramientaGenerica(prompt, `🩺 RIESGO DE LESIONES: ${jugador}`, jugador);
     }
     
     async function jovenesPromesas() {
         const prompt = `Recomienda 5 jóvenes promesas del fútbol mundial (menores de 21 años) con gran proyección. Para cada uno: nombre, posición, país, valor actual estimado y por qué es una promesa. Sin asteriscos.`;
-        await herramientaGenerica(prompt, "🌟 PROMESAS DEL FÚTBOL MUNDIAL");
+        await herramientaGenerica(prompt, "🌟 PROMESAS DEL FÚTBOL MUNDIAL", "Promesas");
     }
     
     async function mejorXI() {
         const prompt = `Construye el mejor once inicial (Mejor XI) del fútbol actual (2024-2025). Formación 4-3-3. Para cada jugador: nombre, posición, y breve razón de su inclusión. Sin asteriscos.`;
-        await herramientaGenerica(prompt, "🏆 MEJOR XI DEL MUNDO");
+        await herramientaGenerica(prompt, "🏆 MEJOR XI DEL MUNDO", "Mejor XI");
     }
     
     async function estiloJuego() {
         const jugador = document.getElementById('playerSearch').value.trim() || currentPlayer?.name || "Jugador";
         const prompt = `Describe el estilo de juego de ${jugador}. Incluye: posición principal, puntos fuertes tácticos, debilidades, y con qué otros jugadores se le compara. Sin asteriscos.`;
-        await herramientaGenerica(prompt, `🎭 ESTILO DE JUEGO: ${jugador}`);
+        await herramientaGenerica(prompt, `🎭 ESTILO DE JUEGO: ${jugador}`, jugador);
     }
     
     async function transiciones() {
         const prompt = `Explica la importancia de las transiciones ofensivas y defensivas en el fútbol moderno. Da 5 consejos para mejorar las transiciones en un equipo. Sin asteriscos.`;
-        await herramientaGenerica(prompt, "🔄 TRANSICIONES EN EL FÚTBOL");
+        await herramientaGenerica(prompt, "🔄 TRANSICIONES EN EL FÚTBOL", "Transiciones");
     }
     
     async function prediccionCarrera() {
         const jugador = document.getElementById('playerSearch').value.trim() || currentPlayer?.name || "Jugador";
         const prompt = `Predice la trayectoria futura de ${jugador} en los próximos 5 años. Incluye: posibles equipos a los que podría ir, evolución de rendimiento, logros potenciales, y factores clave que determinarán su éxito. Sin asteriscos.`;
-        await herramientaGenerica(prompt, `🔮 PREDICCIÓN DE CARRERA: ${jugador}`);
+        await herramientaGenerica(prompt, `🔮 PREDICCIÓN DE CARRERA: ${jugador}`, jugador);
     }
     
     function verEstadoTermux() {
@@ -909,9 +775,7 @@
 📡 Estado: ${estado}
 📍 Fuente: ${jsllm7TermuxConectado ? 'Termux (local)' : 'CDN (fallback)'}
 
-${jsllm7TermuxConectado ? 
-'✅ jsllm7 está funcionando correctamente con 404M registros' : 
-'⚠️ jsllm7 no está conectado a Termux. Usando CDN como respaldo.'}
+${jsllm7TermuxConectado ? '✅ jsllm7 funcionando correctamente' : '⚠️ jsllm7 no conectado a Termux.'}
 
 Para conectar:
 1. Abre Termux
@@ -921,7 +785,16 @@ Para conectar:
 `;
         mostrarModal('🔌 ESTADO DE jsllm7', mensaje);
     }
+
+    // ============================================
+    // BOTÓN 403M DECIDE
+    // ============================================
     
+    document.getElementById('btnDecisionStatus').onclick = () => {
+        const estado = nucleoDecisor.mostrarEstado();
+        mostrarModal('🧠 403M DECIDE (SCOUT)', estado);
+    };
+
     document.getElementById('btnComparar').onclick = compararJugadores;
     document.getElementById('btnFormacion').onclick = formacionIdeal;
     document.getElementById('btnRival').onclick = analisisRival;
@@ -964,7 +837,7 @@ Para conectar:
     function actualizarModoUI() { 
         document.querySelectorAll('.modo-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.modo === modoUsuario));
         const contextDiv = document.getElementById('contextInfo');
-        if (contextDiv) contextDiv.innerHTML = modoUsuario === 'experto' ? '🧠 MODO EXPERTO · jsllm7 404M · Conectores activos · Scout profesional · 10 herramientas' : '⚡ MODO BÁSICO · Análisis rápido · Estadísticas esenciales';
+        if (contextDiv) contextDiv.innerHTML = modoUsuario === 'experto' ? '🧠 403M DECIDE · MODO EXPERTO · jsllm7 404M · Conectores activos · Scout profesional · 10 herramientas' : '⚡ MODO BÁSICO · Análisis rápido · Estadísticas esenciales';
     }
     
     document.querySelectorAll('.modo-btn').forEach(btn => {
@@ -1045,9 +918,11 @@ Para conectar:
     async function generarAnalisisIA(j, el){
         if(analizando){el.innerHTML="⏳ Ya analizando...";return;}
         analizando=true;
-        el.innerHTML=`<span class="loading-spinner"></span> IA scout analizando...`;
+        el.innerHTML=`<span class="loading-spinner"></span> 403M DECIDE analizando...`;
         
-        // Buscar en memoria análisis similares
+        // 403M DECIDE qué BIG TECH usar
+        await nucleoDecisor.analizarYDecidir(`Analizar jugador ${j.name}`, j.name, modoUsuario);
+        
         const memoriaSimilar = memoryConnector.recall(j.name, 2);
         let contextoMemoria = '';
         if (memoriaSimilar.length > 0) {
@@ -1056,7 +931,6 @@ Para conectar:
             ).join(' ');
         }
         
-        // Consultar API para datos adicionales
         const apiData = await apiConnector.call('playerStats', { player: j.name });
         let contextoAPI = '';
         if (!apiData.error) {
@@ -1066,11 +940,12 @@ Para conectar:
         try{
             let prompt = `[RESPONDE EXCLUSIVAMENTE EN ESPAÑOL. NO USES ASTERISCOS.]
 
+403M DECIDIÓ ACTIVAR: ${nucleoDecisor.getEstado().bigTechActivos.join(', ') || 'Ninguno'}
+
 Eres scout de élite. Analiza a ${j.name}:
 Posición: ${j.position}
 Goles: ${j.goals}, Asistencias: ${j.assists}, Overall: ${j.overall}/100`;
 
-            // Añadir contexto de conectores
             if (contextoMemoria) prompt += `\n${contextoMemoria}`;
             if (contextoAPI) prompt += `\n${contextoAPI}`;
 
@@ -1078,11 +953,10 @@ Goles: ${j.goals}, Asistencias: ${j.assists}, Overall: ${j.overall}/100`;
             
             let respuesta = await _llamadaIA(prompt);
             if(!respuesta || respuesta.length < 80) {
-                respuesta = `ANÁLISIS DE ${j.name}\n\nFORTALEZAS:\n• Finalización clínica\n• Inteligencia táctica\n• Liderazgo en campo\n\nÁREAS DE MEJORA:\n• Consistencia\n• Juego aéreo\n\nVEREDICTO: Jugador de alto nivel. Calificación: ${Math.round(j.overall/10)}/10`;
+                respuesta = `ANÁLISIS DE ${j.name} CON 403M DECIDE\n\nFORTALEZAS:\n• Finalización clínica\n• Inteligencia táctica\n• Liderazgo en campo\n\nÁREAS DE MEJORA:\n• Consistencia\n• Juego aéreo\n\nVEREDICTO: Jugador de alto nivel. Calificación: ${Math.round(j.overall/10)}/10`;
             }
             el.innerHTML = respuesta.replace(/\n/g,'<br>');
             
-            // Guardar en memoria
             memoryConnector.remember({
                 jugador: j.name,
                 analisis: respuesta,
@@ -1092,7 +966,7 @@ Goles: ${j.goals}, Asistencias: ${j.assists}, Overall: ${j.overall}/100`;
             actualizarWidgets(j, respuesta);
             actualizarMetricasConectores();
             
-            showToast(`✅ Análisis generado · jsllm7 404M · Conectores activos`);
+            showToast(`✅ 403M DECIDE · Análisis generado · jsllm7 404M · Conectores activos`);
         }catch(e){el.innerHTML = "⚠️ Error al generar análisis";}
         finally{analizando=false;}
     }
@@ -1101,7 +975,7 @@ Goles: ${j.goals}, Asistencias: ${j.assists}, Overall: ${j.overall}/100`;
 
     function renderInfo(p){
         const c=document.getElementById('playerInfoContainer');
-        c.innerHTML=`<div class="player-card-big"><div><div class="player-name">⭐ ${p.name}</div><div style="display:flex;gap:0.5rem;margin-top:0.3rem;flex-wrap:wrap;"><span class="stat-chip">📊 Overall: <span>${p.overall}</span></span><span class="stat-chip">📍 Posición: <span>${p.position}</span></span><span class="stat-chip">⚽ Goles: <span>${p.goals}</span></span><span class="stat-chip">🎯 Asistencias: <span>${p.assists}</span></span></div></div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">💨 Ritmo: ${p.pace}</span><span class="stat-chip">🎯 Tiro: ${p.shooting}</span><span class="stat-chip">🎨 Pase: ${p.passing}</span><span class="stat-chip">🛡️ Defensa: ${p.defending}</span><span class="stat-chip">💪 Físico: ${p.physical}</span></div></div><div class="ia-analysis"><button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON IA (${modoUsuario === 'experto' ? 'MODO EXPERTO' : 'MODO BÁSICO'})</button><div id="iaResult" style="margin-top:10px;">🔍 Haz clic para obtener análisis profesional con conectores y jsllm7 404M</div></div>`;
+        c.innerHTML=`<div class="player-card-big"><div><div class="player-name">⭐ ${p.name}</div><div style="display:flex;gap:0.5rem;margin-top:0.3rem;flex-wrap:wrap;"><span class="stat-chip">📊 Overall: <span>${p.overall}</span></span><span class="stat-chip">📍 Posición: <span>${p.position}</span></span><span class="stat-chip">⚽ Goles: <span>${p.goals}</span></span><span class="stat-chip">🎯 Asistencias: <span>${p.assists}</span></span></div></div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">💨 Ritmo: ${p.pace}</span><span class="stat-chip">🎯 Tiro: ${p.shooting}</span><span class="stat-chip">🎨 Pase: ${p.passing}</span><span class="stat-chip">🛡️ Defensa: ${p.defending}</span><span class="stat-chip">💪 Físico: ${p.physical}</span></div></div><div class="ia-analysis"><button class="ia-btn" onclick="generarAnalisis()">🤖 403M DECIDE · ANALIZAR (${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'})</button><div id="iaResult" style="margin-top:10px;">🔍 403M DECIDE analizará con conectores y jsllm7 404M</div></div>`;
         currentAnalysisDiv=document.getElementById('iaResult');
         actualizarWidgets(p, '');
     }
@@ -1115,9 +989,9 @@ Goles: ${j.goals}, Asistencias: ${j.assists}, Overall: ${j.overall}/100`;
         updatePos(currentPlayer);
         renderInfo(currentPlayer);
         renderPos();
-        document.getElementById('newsTicker').innerHTML=`⚽ ${currentPlayer.name} · ${currentPlayer.overall} OVR · jsllm7 404M · Conectores activos · 10 herramientas`;
+        document.getElementById('newsTicker').innerHTML=`⚽ 403M DECIDE · ${currentPlayer.name} · ${currentPlayer.overall} OVR · jsllm7 404M · Conectores activos · 10 herramientas`;
         if(currentAnalysisDiv)setTimeout(()=>generarAnalisisIA(currentPlayer,currentAnalysisDiv),300);
-        showToast(`✅ ${currentPlayer.name} cargado · jsllm7 404M · Conectores activos`);
+        showToast(`✅ ${currentPlayer.name} cargado · 403M DECIDE · jsllm7 404M · Conectores activos`);
     }
 
     function reset(){
@@ -1126,14 +1000,13 @@ Goles: ${j.goals}, Asistencias: ${j.assists}, Overall: ${j.overall}/100`;
         renderInfo(currentPlayer);
         renderPos();
         document.getElementById('playerSearch').value="";
-        if(currentAnalysisDiv)currentAnalysisDiv.innerHTML="🔍 Haz clic para obtener análisis profesional con conectores y jsllm7 404M";
+        if(currentAnalysisDiv)currentAnalysisDiv.innerHTML="🔍 403M DECIDE analizará con conectores y jsllm7 404M";
         actualizarWidgets(currentPlayer, '');
         actualizarMetricasConectores();
-        showToast("🔄 Jugador base cargado · Conectores reiniciados");
+        showToast("🔄 Jugador base cargado · 403M DECIDE reiniciado");
     }
 
     function init(){
-        // Verificar conexión con Termux
         verificarConexionTermux();
         
         updatePos(currentPlayer);
@@ -1147,7 +1020,7 @@ Goles: ${j.goals}, Asistencias: ${j.assists}, Overall: ${j.overall}/100`;
         
         cargarDesdeURL();
         
-        let c=0,i=setInterval(()=>{if(typeof jsllm7!=='undefined'){clearInterval(i);showToast(`🎯 IA scout lista · jsllm7 404M · Conectores activos · 10 herramientas disponibles · Modo ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'}`);}else if(c>30)clearInterval(i);c++;},500);
+        let c=0,i=setInterval(()=>{if(typeof jsllm7!=='undefined'){clearInterval(i);showToast(`🎯 403M DECIDE · Scout IA · jsllm7 404M · Conectores activos · 10 herramientas · Modo ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'}`);}else if(c>30)clearInterval(i);c++;},500);
     }
     
     async function verificarConexionTermux() {
@@ -1168,7 +1041,6 @@ Goles: ${j.goals}, Asistencias: ${j.assists}, Overall: ${j.overall}/100`;
         }
     }
     
-    // Verificar conexión cada 30 segundos
     setInterval(verificarConexionTermux, 30000);
     
     init();
