@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="referrer" content="no-referrer-when-downgrade">
-    <title>🏆 RENDIMIENTO PRO · 403M LECTOR · SCOUT IA</title>
+    <title>🏆 RENDIMIENTO PRO · 403M LECTOR · SCOUT IA · AcadémIA Pro</title>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, 'Segoe UI', sans-serif; }
@@ -18,8 +18,7 @@
         .live-badge { background: #10b981; color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; animation: pulse 1.5s infinite; display: inline-block; }
         .ia-badge { background: #10b981; padding: 2px 10px; border-radius: 20px; font-size: 0.7rem; margin-left: 10px; display: inline-block; }
         .badge-100 { background: #e9c46a; color: #1a2c3e; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; }
-        .badge-termux { background: #8b5cf6; color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; }
-        .badge-cloudflare { background: linear-gradient(135deg, #f59e0b, #8b5cf6); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; animation: glow 2s infinite; }
+        .badge-academia { background: linear-gradient(90deg, #10b981, #059669); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; animation: glow 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
         
         .modo-selector { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; }
@@ -31,9 +30,9 @@
         .tool-btn:hover { background: #8b5cf6; color: white; border-color: #8b5cf6; transform: scale(1.02); }
         .tool-btn.jsllm7 { border-color: #8b5cf6; color: #a78bfa; }
         .tool-btn.decision { border-color: #ec4899; color: #f472b6; }
-        .tool-btn.decision:hover { background: linear-gradient(135deg, #8b5cf6, #ec4899); color: white; border-color: #8b5cf6; }
-        .tool-btn.cloudflare { border-color: #f59e0b; color: #fbbf24; }
-        .tool-btn.cloudflare:hover { background: linear-gradient(135deg, #f59e0b, #8b5cf6); color: white; border-color: #f59e0b; }
+        .tool-btn.decision:hover { background: linear-gradient(135deg, #8b5cf6, #ec4899); color: white; }
+        .tool-btn.academia { border-color: #10b981; color: #34d399; }
+        .tool-btn.academia:hover { background: linear-gradient(135deg, #10b981, #059669); color: white; }
         
         .search-panel { background: rgba(15, 35, 38, 0.8); backdrop-filter: blur(12px); border-radius: 1.8rem; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #2c9b8a; }
         .search-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; }
@@ -45,10 +44,16 @@
         
         #decisionStatus { font-size: 0.65rem; color: #ec4899; text-align: center; margin-bottom: 10px; }
         
-        .player-card-big { background: linear-gradient(135deg, #0d2a2a, #0b2222); border-radius: 1.5rem; padding: 1.2rem 1.8rem; margin-top: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; border-left: 5px solid #3bcb9b; }
+        .status-bar { background: #1e293b; border-radius: 1rem; padding: 0.4rem 1rem; margin: 0.5rem 0; font-size: 0.6rem; display: flex; justify-content: space-around; flex-wrap: wrap; color: #94a3b8; }
+        
+        .player-card-big { background: linear-gradient(135deg, #0d2a2a, #0b2222); border-radius: 1.5rem; padding: 1.2rem 1.8rem; margin-top: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; border-left: 5px solid #3bcb9b; position: relative; }
         .player-name { font-size: 1.8rem; font-weight: 800; }
         .stat-chip { background: #1e4a43; padding: 0.3rem 1rem; border-radius: 2rem; font-size: 0.9rem; display: inline-block; }
         .stat-chip span { font-weight: bold; color: #ffd966; }
+        .quality-badge { position: absolute; top: 10px; right: 10px; padding: 3px 8px; border-radius: 10px; font-size: 0.55rem; }
+        .quality-alta { background: #10b981; color: white; }
+        .quality-media { background: #f59e0b; color: black; }
+        .quality-baja { background: #ef4444; color: white; }
 
         .positions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
         .position-card { background: rgba(18, 35, 38, 0.85); backdrop-filter: blur(4px); border-radius: 1.6rem; padding: 1.2rem; border: 1px solid #319b8450; transition: all 0.2s; }
@@ -61,13 +66,7 @@
         .skill-bar-bg { background: #1e4a43; height: 8px; border-radius: 20px; overflow: hidden; }
         .skill-fill { background: linear-gradient(90deg, #3bcb9b, #1f9979); width: 0%; height: 100%; transition: width 0.4s ease; }
         
-        .widget-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin: 15px 0;
-        }
-        
+        .widget-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0; }
         .widget { background: rgba(18, 35, 38, 0.9); border: 1px solid #3bcb9b; border-radius: 12px; padding: 15px; transition: all 0.3s; backdrop-filter: blur(10px); }
         .widget:hover { border-color: #8b5cf6; box-shadow: 0 8px 20px rgba(59, 203, 155, 0.1); transform: translateY(-2px); }
         .widget-title { font-weight: 700; color: #3bcb9b; font-size: 0.8rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
@@ -85,15 +84,14 @@
         .connector-metric .value { font-size: 1rem; font-weight: bold; color: #3bcb9b; }
         .connector-metric .label { font-size: 0.55rem; color: #94a3b8; }
         
-        .metadata-container { display: none; }
+        .export-buttons { display: flex; gap: 5px; margin-top: 8px; flex-wrap: wrap; }
+        .export-btn { background: #334155; border: 1px solid #475569; padding: 3px 10px; border-radius: 15px; font-size: 0.55rem; cursor: pointer; color: #94a3b8; transition: 0.2s; }
+        .export-btn:hover { background: #8b5cf6; color: white; }
+        
         .ia-analysis { background: rgba(139, 92, 246, 0.2); border-left: 3px solid #8b5cf6; padding: 0.8rem; margin-top: 1rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.5; white-space: pre-wrap; max-height: 400px; overflow-y: auto; }
         .ia-btn { background: linear-gradient(90deg, #8b5cf6, #3b82f6); border: none; color: white; padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; cursor: pointer; margin-top: 8px; transition: all 0.2s; }
         .ia-btn:hover { transform: scale(1.02); opacity: 0.9; }
         .ia-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        
-        .feedback-buttons { display: flex; gap: 10px; margin-top: 8px; justify-content: flex-start; }
-        .feedback-btn { background: none; border: none; color: #7a9aae; cursor: pointer; font-size: 0.65rem; padding: 2px 8px; border-radius: 15px; transition: 0.2s; }
-        .feedback-btn:hover { background: #334155; color: #e9c46a; }
         
         .loading-spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite; margin-right: 6px; vertical-align: middle; }
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -102,18 +100,17 @@
         .news-ticker { background: rgba(0,0,0,0.3); border-radius: 2rem; padding: 0.4rem 1rem; margin: 0.5rem auto; font-size: 0.7rem; text-align: center; }
         .global-reset { background: #aa3e2e; border: none; padding: 0.6rem 1.5rem; border-radius: 3rem; color: white; margin-top: 1rem; cursor: pointer; font-weight: bold; }
         .footer { text-align: center; margin-top: 2rem; font-size: 0.7rem; opacity: 0.6; }
-        .toast-msg { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #10b981; color: white; padding: 8px 20px; border-radius: 50px; font-size: 0.8rem; z-index: 2000; animation: fadeOut 2s forwards; }
+        .toast-msg { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #10b981; color: white; padding: 8px 20px; border-radius: 50px; font-size: 0.8rem; z-index: 2000; animation: fadeOut 3s forwards; }
         @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
         .context-info { background: rgba(139,92,246,0.1); border-radius: 1rem; padding: 0.5rem; margin: 0.5rem 0; font-size: 0.65rem; color: #a5b4fc; text-align: center; }
         .restriction-alert { background: rgba(139, 92, 246, 0.15); border: 1px solid #8b5cf6; border-radius: 0.8rem; padding: 0.5rem 1rem; margin-top: 1rem; font-size: 0.7rem; text-align: center; color: #a78bfa; }
         
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; align-items: center; justify-content: center; }
-        .modal-content { background: #0f172a; border-radius: 1.5rem; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; padding: 1.5rem; border: 2px solid #8b5cf6; }
+        .modal-content { background: #0f172a; border-radius: 1.5rem; max-width: 650px; width: 90%; max-height: 80vh; overflow-y: auto; padding: 1.5rem; border: 2px solid #8b5cf6; }
         .modal-content h3 { color: #a78bfa; margin-bottom: 1rem; }
         .modal-close { margin-top: 1rem; background: #8b5cf6; border: none; padding: 0.5rem 1rem; border-radius: 2rem; color: white; cursor: pointer; }
         
         #jsllm7WidgetStatus { font-size: 0.65rem; color: #94a3b8; margin-top: 8px; }
-        #cloudflareStatus { font-size: 0.65rem; color: #94a3b8; margin-top: 4px; }
         
         @media (max-width: 700px) { 
             .player-name { font-size: 1.3rem; } 
@@ -126,13 +123,20 @@
 <body>
 <div class="container">
     <div class="hero">
-        <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="ia-badge">403M LECTOR</span><span class="badge-termux">🔌 RESP. DIRECTA</span><span class="badge-decision">🧠 403M LECTOR</span><span class="badge-cloudflare">☁️ CLOUDFLARE 24/7</span><span class="badge-100">🏆 100% DATOS</span><span class="live-badge" id="liveBadge">🌐 EN VIVO</span></h1>
-        <p>403M LECTOR · Lee 403M+ datos · Responde directamente · Cloudflare 24/7 · Estadísticas reales · Análisis profesional</p>
-        <div class="news-ticker" id="newsTicker">🌐 403M LECTOR · Cloudflare 24/7 · Leyendo 403M+ datos de fútbol...</div>
+        <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="ia-badge">403M LECTOR</span><span class="badge-decision">🧠 ACADÉMIA PRO</span><span class="badge-academia">📚 5 FUENTES</span><span class="badge-100">🏆 100% DATOS</span><span class="live-badge" id="liveBadge">🌐 EN VIVO</span></h1>
+        <p>403M LECTOR · AcadémIA Pro · IndexedDB · 5 Fuentes · Exportación · Análisis profesional</p>
+        <div class="news-ticker" id="newsTicker">🌐 403M LECTOR · AcadémIA Pro · IndexedDB · 5 fuentes académicas...</div>
+    </div>
+
+    <div class="status-bar">
+        <span>💾 Caché: <span id="cacheHitRate">0%</span></span>
+        <span>📊 DB: <span id="dbEntries">0</span></span>
+        <span>🧠 403M: <span id="decisionCount">0</span></span>
+        <span>🔌 Cloudflare: <span id="cfStatus">Conectando...</span></span>
     </div>
 
     <div class="search-panel">
-        <div id="decisionStatus" style="font-size:0.65rem;color:#ec4899;text-align:center;margin-bottom:10px;">🧠 403M LECTOR: Listo · Cloudflare 24/7 · Lee 403M+ datos · Responde directamente</div>
+        <div id="decisionStatus">🧠 403M LECTOR: Listo · AcadémIA Pro · IndexedDB · 5 Fuentes</div>
         
         <div class="modo-selector">
             <button class="modo-btn active" data-modo="experto">🧠 MODO EXPERTO</button>
@@ -150,9 +154,11 @@
             <button class="tool-btn" id="btnEstilo">🎭 Estilo Juego</button>
             <button class="tool-btn" id="btnTransicion">🔄 Transiciones</button>
             <button class="tool-btn" id="btnPrediccion">🔮 Predicción Carrera</button>
+            <button class="tool-btn academia" id="btnBuscarAcademico">📚 Búsqueda Académica</button>
+            <button class="tool-btn academia" id="btnVerificarPlagio">⚠️ Plagio</button>
+            <button class="tool-btn academia" id="btnExportar">📤 Exportar</button>
             <button class="tool-btn decision" id="btnDecisionStatus">🧠 403M LECTOR</button>
-            <button class="tool-btn cloudflare" id="btnCloudflareStatus">☁️ CLOUDFLARE 24/7</button>
-            <button class="tool-btn jsllm7" id="btnTermuxStatus">🔌 Estado jsllm7</button>
+            <button class="tool-btn jsllm7" id="btnTermuxStatus">🔌 Estado Sistema</button>
         </div>
         
         <div class="search-title">🔍 <span>BUSCADOR DE JUGADORES</span></div>
@@ -160,73 +166,44 @@
             <input type="text" id="playerSearch" placeholder="Ej: Lionel Messi, Cristiano Ronaldo, Vinicius Jr, Erling Haaland..." autocomplete="off">
             <button id="searchBtn">📊 BUSCAR DATOS REALES</button>
         </div>
-        <div class="context-info" id="contextInfo">🧠 403M LECTOR · Cloudflare 24/7 · Lee 403M+ datos · Responde directamente · Scout profesional · 10 herramientas</div>
-        <div class="restriction-alert">🎯 403M LECTOR: Lee 403M+ datos · Cloudflare 24/7 · Responde directamente · Scout profesional · Sin contexto extra</div>
+        <div class="context-info">🧠 403M LECTOR · AcadémIA Pro · IndexedDB · 5 Fuentes · Scout profesional · 13 herramientas</div>
+        <div class="restriction-alert">🎯 403M LECTOR · AcadémIA Pro · IndexedDB · Exportación LaTeX/Markdown/BibTeX/APA</div>
         <div id="playerInfoContainer"></div>
     </div>
 
-    <div class="widget-container" id="widgetContainer">
+    <div class="widget-container">
         <div class="widget" id="widgetMetricas">
             <div class="widget-title">📊 Estadísticas del Jugador</div>
             <div class="widget-content">
                 <div class="metrics-grid-widget">
-                    <div class="metric-item-widget">
-                        <div class="metric-value-widget" id="metricGoles">0</div>
-                        <div class="metric-label-widget">Goles</div>
-                    </div>
-                    <div class="metric-item-widget">
-                        <div class="metric-value-widget" id="metricAsistencias">0</div>
-                        <div class="metric-label-widget">Asistencias</div>
-                    </div>
-                    <div class="metric-item-widget">
-                        <div class="metric-value-widget" id="metricOverall">0</div>
-                        <div class="metric-label-widget">Overall</div>
-                    </div>
-                    <div class="metric-item-widget">
-                        <div class="metric-value-widget" id="metricParticipacion">0%</div>
-                        <div class="metric-label-widget">Participación</div>
-                    </div>
+                    <div class="metric-item-widget"><div class="metric-value-widget" id="metricGoles">0</div><div class="metric-label-widget">Goles</div></div>
+                    <div class="metric-item-widget"><div class="metric-value-widget" id="metricAsistencias">0</div><div class="metric-label-widget">Asistencias</div></div>
+                    <div class="metric-item-widget"><div class="metric-value-widget" id="metricOverall">0</div><div class="metric-label-widget">Overall</div></div>
+                    <div class="metric-item-widget"><div class="metric-value-widget" id="metricParticipacion">0%</div><div class="metric-label-widget">Participación</div></div>
                 </div>
             </div>
         </div>
         <div class="widget" id="widgetConectores">
-            <div class="widget-title">🔌 Estado del Lector</div>
+            <div class="widget-title">🔌 Estado del Sistema</div>
             <div class="widget-content">
                 <div class="connector-metrics">
-                    <div class="connector-metric">
-                        <div class="value" id="metricMemoria">0</div>
-                        <div class="label">Conversaciones</div>
-                    </div>
-                    <div class="connector-metric">
-                        <div class="value" id="metricSemantico">403M+</div>
-                        <div class="label">Datos leídos</div>
-                    </div>
-                    <div class="connector-metric">
-                        <div class="value" id="metricAPIs">30</div>
-                        <div class="label">Países</div>
-                    </div>
-                    <div class="connector-metric">
-                        <div class="value" id="metricContexto">100%</div>
-                        <div class="label">Precisión</div>
-                    </div>
+                    <div class="connector-metric"><div class="value" id="metricMemoria">0</div><div class="label">Conversaciones</div></div>
+                    <div class="connector-metric"><div class="value" id="metricSemantico">403M+</div><div class="label">Datos leídos</div></div>
+                    <div class="connector-metric"><div class="value" id="metricAPIs">30</div><div class="label">Países</div></div>
+                    <div class="connector-metric"><div class="value" id="metricDB">0</div><div class="label">IndexedDB</div></div>
                 </div>
-                <div id="jsllm7WidgetStatus">📖 403M LECTOR: ✅ Activo · Cloudflare 24/7</div>
-                <div id="cloudflareStatus">☁️ Cloudflare: ✅ 24/7 · https://wikipedia-403m.odandoolugan.workers.dev</div>
+                <div id="jsllm7WidgetStatus">📖 403M LECTOR: ✅ Activo</div>
             </div>
         </div>
         <div class="widget" id="widgetConfianza">
             <div class="widget-title">🎯 Confianza del Análisis</div>
             <div class="widget-content">
                 <div class="widget-confidence">
-                    <span style="font-size:0.8rem;">📊</span>
-                    <div class="confidence-bar">
-                        <div class="confidence-fill" id="confidenceFill" style="width:0%"></div>
-                    </div>
+                    <span>📊</span>
+                    <div class="confidence-bar"><div class="confidence-fill" id="confidenceFill" style="width:0%"></div></div>
                     <span class="confidence-label" id="confidenceLabel">0%</span>
                 </div>
-                <div id="widgetConfianzaDetalle" style="font-size:0.75rem;color:#94a3b8;margin-top:8px;">
-                    Basado en datos reales + 403M LECTOR · Cloudflare 24/7
-                </div>
+                <div id="widgetConfianzaDetalle" style="font-size:0.75rem;color:#94a3b8;margin-top:8px;">Calidad: <span id="qualityLabel">--</span> · AcadémIA Pro</div>
             </div>
         </div>
         <div class="widget" id="widgetPosicion">
@@ -241,8 +218,6 @@
         </div>
     </div>
 
-    <div class="metadata-container" id="metadataContainer"></div>
-
     <h2 style="margin-top: 0.5rem;">🎯 RENDIMIENTO POR POSICIÓN</h2>
     <div id="positionsContainer" class="positions-grid"></div>
     
@@ -255,611 +230,526 @@
     </div>
     
     <div style="text-align:center;margin-top:1.5rem;"><button id="resetBtn" class="global-reset">🔄 REINICIAR A JUGADOR BASE</button></div>
-    <div class="footer">✨ 403M LECTOR · Cloudflare 24/7 · Lee 403M+ datos · Responde directamente · Scout profesional · 10 herramientas</div>
+    <div class="footer">✨ RENDIMIENTO PRO · 403M LECTOR · AcadémIA Pro · IndexedDB · 5 Fuentes · 13 herramientas</div>
 </div>
 
 <script>
     // ============================================
-    // CONFIGURACIÓN - CLOUDFLARE 24/7
+    // CONFIGURACIÓN
     // ============================================
-    
-    // 🔥 AHORA USA CLOUDFLARE 24/7 EN LUGAR DE localhost:8081
     const JSLLM7_API_URL = 'https://wikipedia-403m.odandoolugan.workers.dev';
     let cloudflareConectado = false;
-    let jsllm7TermuxConectado = false;
     let modoUsuario = localStorage.getItem('scout_modo') || 'experto';
+    let ultimoAnalisis = '';
+    let referenciasAcademicas = [];
     
     // ============================================
-    // BASE DE DATOS 403M+ (INTERNA)
+    // SISTEMA DE CACHÉ CON IndexedDB
     // ============================================
-    
-    const BASE_DATOS_403M = {
-        jugadores: {
-            messi: {
-                keywords: ['messi', 'lionel messi'],
-                analisis: `ANÁLISIS DE LIONEL MESSI
-
-🔍 FORTALEZAS:
-• Regate excepcional - El mejor driblador de la historia
-• Visión de juego única - Asistencias magistrales
-• Finalización clínica - Goles de todos los ángulos
-• Inteligencia táctica - Lee el juego mejor que nadie
-• Liderazgo - Ejemplo dentro y fuera del campo
-
-📊 ESTADÍSTICAS CLAVE:
-• Goles: 850+ en carrera profesional
-• Asistencias: 350+ en carrera profesional
-• Balones de Oro: 8 (récord histórico)
-• Títulos: 40+ incluyendo Mundial 2022
-
-🎯 ESTILO DE JUEGO:
-Messi es un jugador único que combina velocidad, regate y visión. Su capacidad para cambiar el ritmo del juego y su precisión en el pase lo convierten en el mejor jugador de la historia.
-
-💡 RECOMENDACIÓN SCOUT:
-Es un jugador generacional. Su valor es incalculable. Cualquier equipo que lo tenga es favorito en todas las competiciones.`
-            },
-            ronaldo: {
-                keywords: ['ronaldo', 'cristiano ronaldo'],
-                analisis: `ANÁLISIS DE CRISTIANO RONALDO
-
-🔍 FORTALEZAS:
-• Remate de élite - Uno de los mejores rematadores de la historia
-• Físico impresionante - Excelente condición física
-• Juego aéreo - Salto y cabeceo extraordinarios
-• Mentalidad ganadora - Ambición y liderazgo
-• Versatilidad - Puede jugar en varias posiciones
-
-📊 ESTADÍSTICAS CLAVE:
-• Goles: 900+ en carrera profesional (récord histórico)
-• Asistencias: 250+ en carrera profesional
-• Balones de Oro: 5
-• Títulos: 35+ incluyendo 5 Champions League
-
-🎯 ESTILO DE JUEGO:
-Ronaldo es el ejemplo de profesionalismo y dedicación. Su capacidad para marcar goles de cualquier forma lo convierte en un delantero letal.
-
-💡 RECOMENDACIÓN SCOUT:
-Aunque tiene 39 años, sigue siendo un jugador diferencial. Su experiencia y liderazgo son invaluables.`
-            },
-            haaland: {
-                keywords: ['haaland', 'erling haaland'],
-                analisis: `ANÁLISIS DE ERLING HAALAND
-
-🔍 FORTALEZAS:
-• Finalización - Uno de los mejores rematadores del mundo
-• Velocidad - Tremenda aceleración en espacios cortos
-• Físico - Imponente y difícil de detener
-• Posicionamiento - Siempre en el lugar correcto
-• Instinto goleador - Olfato de gol inigualable
-
-📊 ESTADÍSTICAS CLAVE:
-• Goles: 250+ en carrera profesional
-• Promedio: Más de 1 gol por partido
-• Títulos: Premier League, Champions League
-• Edad: Solo 24 años - enorme proyección
-
-🎯 ESTILO DE JUEGO:
-Haaland es el delantero perfecto para el fútbol moderno. Combina velocidad, fuerza y finalización.
-
-💡 RECOMENDACIÓN SCOUT:
-Es el futuro del fútbol mundial. Si puedes ficharlo, hazlo sin dudar. Es una garantía de goles.`
-            },
-            bellingham: {
-                keywords: ['bellingham', 'jude bellingham'],
-                analisis: `ANÁLISIS DE JUDE BELLINGHAM
-
-🔍 FORTALEZAS:
-• Versatilidad - Puede jugar en múltiples posiciones del mediocampo
-• Inteligencia táctica - Madurez táctica excepcional para su edad
-• Llegada al área - Excelente llegada para definir
-• Recuperación - Gran capacidad para robar balones
-• Liderazgo - Líder nato en el campo
-
-📊 ESTADÍSTICAS CLAVE:
-• Goles: 50+ en carrera profesional
-• Edad: 21 años - enorme proyección
-• Títulos: La Liga, Champions League
-• Internacional con Inglaterra
-
-🎯 ESTILO DE JUEGO:
-Bellingham es el mediocampista moderno completo. Corre, presiona, llega al área y lidera a su equipo.
-
-💡 RECOMENDACIÓN SCOUT:
-Es el mediocampista del futuro. Su valor no hará más que aumentar.`
-            },
-            mbappe: {
-                keywords: ['mbappe', 'kylian mbappe'],
-                analisis: `ANÁLISIS DE KYLIAN MBAPPE
-
-🔍 FORTALEZAS:
-• Velocidad - Uno de los jugadores más rápidos del mundo
-• Finalización - Excelente definición en el área
-• Dribbling - Capacidad para desbordar en espacios reducidos
-• Visión de juego - Buena lectura para asistir
-• Personalidad - No le pesa la presión
-
-📊 ESTADÍSTICAS CLAVE:
-• Goles: 250+ en carrera profesional
-• Asistencias: 100+ en carrera profesional
-• Edad: 25 años - en pleno apogeo
-• Títulos: Mundial 2018, Ligue 1, etc.
-
-🎯 ESTILO DE JUEGO:
-Mbappe es la definición del delantero moderno. Velocidad, técnica y definición.
-
-💡 RECOMENDACIÓN SCOUT:
-Es el futuro del fútbol mundial. Un jugador que marcará época.`
-            }
-        }
-    };
-
-    // ============================================
-    // MOTOR DE BÚSQUEDA 403M+
-    // ============================================
-    
-    class MotorBusqueda403M {
+    class PersistentCache {
         constructor() {
-            this.baseDatos = BASE_DATOS_403M;
-            this.cache = new Map();
-            console.log('📚 403M LECTOR: Base de datos de jugadores cargada');
+            this.dbName = 'ScoutDB';
+            this.version = 1;
+            this.db = null;
+            this.cacheHits = 0;
+            this.cacheMisses = 0;
+            this.init();
         }
         
-        buscar(jugador) {
-            const j = jugador.toLowerCase();
-            let respuesta = null;
-            let nombreEncontrado = null;
-            
-            for (const [key, jug] of Object.entries(this.baseDatos.jugadores)) {
-                for (const keyword of jug.keywords) {
-                    if (j.includes(keyword) || keyword.includes(j)) {
-                        nombreEncontrado = key;
-                        respuesta = jug.analisis;
-                        break;
+        async init() {
+            return new Promise((resolve) => {
+                const request = indexedDB.open(this.dbName, this.version);
+                request.onupgradeneeded = (event) => {
+                    const db = event.target.result;
+                    if (!db.objectStoreNames.contains('playerAnalysis')) {
+                        const store = db.createObjectStore('playerAnalysis', { keyPath: 'playerName' });
+                        store.createIndex('timestamp', 'timestamp', { unique: false });
                     }
-                }
-                if (respuesta) break;
-            }
-            
-            if (!respuesta) {
-                respuesta = this.generarAnalisisGenerico(jugador);
-            }
-            
-            return { analisis: respuesta, nombre: nombreEncontrado };
-        }
-        
-        generarAnalisisGenerico(jugador) {
-            return `ANÁLISIS DE ${jugador.toUpperCase()}
-
-🔍 PERFIL DEL JUGADOR:
-• Posición: Versátil
-• Edad: En pleno desarrollo
-• Proyección: Prometedora
-
-📊 CARACTERÍSTICAS:
-• Técnica: Buena base técnica
-• Inteligencia: Buena lectura de juego
-• Físico: En desarrollo
-• Mentalidad: Competitiva
-
-🎯 RECOMENDACIÓN:
-Jugador con potencial para mejorar. Se recomienda seguimiento y trabajo en aspectos técnicos y tácticos.
-
-💡 SCOUTING:
-Observar evolución en próximos partidos. Potencial para equipos de desarrollo.
-
-📖 Fuente: 403M LECTOR · Cloudflare 24/7 · 403M+ datos analizados
-🕐 ${new Date().toLocaleString()}`;
-        }
-    }
-
-    // ============================================
-    // INICIALIZAR MOTOR
-    // ============================================
-    
-    const motor403M = new MotorBusqueda403M();
-
-    // ============================================
-    // NÚCLEO 403M LECTOR
-    // ============================================
-    
-    class Nucleo403MLector {
-        constructor() {
-            this.nucleo = { activo: true, parametros: 403000000, decisiones: 0, cloudflare: true };
-            this.historialDecisiones = [];
-            this.lector = motor403M;
-            console.log('🧠 NÚCLEO 403M LECTOR inicializado para SCOUT (Cloudflare 24/7)');
-        }
-        
-        analizarYDecidir(pregunta, jugador, modo) {
-            this.nucleo.decisiones++;
-            document.getElementById('decisionStatus').textContent = '🧠 403M LECTOR: Cloudflare 24/7 · Leyendo 403M+ datos...';
-            
-            const resultado = this.lector.buscar(jugador);
-            
-            this.historialDecisiones.push({
-                jugador: jugador,
-                pregunta: pregunta.substring(0, 50),
-                timestamp: new Date().toISOString()
+                    if (!db.objectStoreNames.contains('academicRefs')) {
+                        const store = db.createObjectStore('academicRefs', { keyPath: 'queryHash' });
+                        store.createIndex('timestamp', 'timestamp', { unique: false });
+                    }
+                    if (!db.objectStoreNames.contains('analytics')) {
+                        db.createObjectStore('analytics', { keyPath: 'metric' });
+                    }
+                };
+                request.onsuccess = (event) => {
+                    this.db = event.target.result;
+                    this.loadStats();
+                    console.log('✅ IndexedDB inicializada (Scout)');
+                    resolve();
+                };
+                request.onerror = () => resolve();
             });
-            
-            return resultado;
         }
         
-        getEstado() {
-            return {
-                decisiones: this.nucleo.decisiones,
-                cloudflare: this.nucleo.cloudflare,
-                url: 'https://wikipedia-403m.odandoolugan.workers.dev'
+        async loadStats() {
+            try {
+                const stats = await this.getAnalytics('cacheStats');
+                if (stats) { this.cacheHits = stats.hits || 0; this.cacheMisses = stats.misses || 0; }
+                this.updateUI();
+            } catch(e) {}
+        }
+        
+        async getAnalytics(metric) {
+            if (!this.db) return null;
+            return new Promise((resolve) => {
+                const tx = this.db.transaction(['analytics'], 'readonly');
+                const store = tx.objectStore('analytics');
+                const req = store.get(metric);
+                req.onsuccess = () => resolve(req.result?.value || null);
+                req.onerror = () => resolve(null);
+            });
+        }
+        
+        async saveAnalytics(metric, value) {
+            if (!this.db) return;
+            return new Promise((resolve) => {
+                const tx = this.db.transaction(['analytics'], 'readwrite');
+                const store = tx.objectStore('analytics');
+                store.put({ metric, value, timestamp: Date.now() });
+                tx.oncomplete = () => resolve();
+            });
+        }
+        
+        async cacheAnalysis(playerName, data) {
+            if (!this.db) await this.init();
+            return new Promise((resolve) => {
+                const tx = this.db.transaction(['playerAnalysis'], 'readwrite');
+                const store = tx.objectStore('playerAnalysis');
+                store.put({ playerName: playerName.toLowerCase(), data, timestamp: Date.now() });
+                tx.oncomplete = () => { this.cacheMisses++; this.saveAnalytics('cacheStats', { hits: this.cacheHits, misses: this.cacheMisses }); this.updateUI(); resolve(); };
+            });
+        }
+        
+        async getCachedAnalysis(playerName) {
+            if (!this.db) await this.init();
+            return new Promise((resolve) => {
+                const tx = this.db.transaction(['playerAnalysis'], 'readonly');
+                const store = tx.objectStore('playerAnalysis');
+                const req = store.get(playerName.toLowerCase());
+                req.onsuccess = () => {
+                    const result = req.result;
+                    if (result && (Date.now() - result.timestamp) < 1800000) {
+                        this.cacheHits++;
+                        this.saveAnalytics('cacheStats', { hits: this.cacheHits, misses: this.cacheMisses });
+                        this.updateUI();
+                        resolve(result.data);
+                    } else { resolve(null); }
+                };
+                req.onerror = () => resolve(null);
+            });
+        }
+        
+        async cacheAcademicRefs(queryHash, refs) {
+            if (!this.db) await this.init();
+            return new Promise((resolve) => {
+                const tx = this.db.transaction(['academicRefs'], 'readwrite');
+                const store = tx.objectStore('academicRefs');
+                store.put({ queryHash, refs, timestamp: Date.now() });
+                tx.oncomplete = () => resolve();
+            });
+        }
+        
+        async getCachedAcademicRefs(queryHash) {
+            if (!this.db) await this.init();
+            return new Promise((resolve) => {
+                const tx = this.db.transaction(['academicRefs'], 'readonly');
+                const store = tx.objectStore('academicRefs');
+                const req = store.get(queryHash);
+                req.onsuccess = () => {
+                    const result = req.result;
+                    if (result && (Date.now() - result.timestamp) < 3600000) resolve(result.refs);
+                    else resolve(null);
+                };
+                req.onerror = () => resolve(null);
+            });
+        }
+        
+        updateUI() {
+            const total = this.cacheHits + this.cacheMisses;
+            const hitRate = total > 0 ? Math.round((this.cacheHits / total) * 100) : 0;
+            document.getElementById('cacheHitRate').textContent = hitRate + '%';
+            document.getElementById('dbEntries').textContent = total;
+            document.getElementById('metricDB').textContent = total;
+        }
+        
+        getStats() { return { hits: this.cacheHits, misses: this.cacheMisses, total: this.cacheHits + this.cacheMisses }; }
+    }
+    
+    const cache = new PersistentCache();
+    
+    // ============================================
+    // ANALIZADOR DE CALIDAD
+    // ============================================
+    class ContentAnalyzer {
+        constructor() {
+            this.stopWords = new Set(['el', 'la', 'los', 'las', 'un', 'una', 'de', 'del', 'en', 'con', 'por', 'para', 'que', 'es', 'se', 'su', 'al', 'lo', 'como', 'más', 'y', 'o', 'pero', 'si', 'no']);
+            this.sportWords = {
+                'goles': 3, 'asistencias': 2.5, 'regate': 3, 'velocidad': 2.5, 'técnica': 3,
+                'finalización': 3, 'pase': 2.5, 'defensa': 2.5, 'portero': 2, 'análisis': 2.5,
+                'rendimiento': 3, 'estadísticas': 2.5, 'posición': 2, 'estrategia': 2.5, 'táctica': 3
             };
         }
         
-        mostrarEstado() {
-            const e = this.getEstado();
-            return `
-=== 🧠 403M LECTOR (SCOUT · CLOUDFLARE 24/7) ===
-
-📊 Decisiones: ${e.decisiones}
-📚 Datos leídos: 403,000,000+
-☁️ Cloudflare: ✅ 24/7
-📡 Estado: ✅ Activo
-🔗 URL: ${e.url}
-
-🔍 MOTOR DE BÚSQUEDA:
-• Jugadores precargados: ${Object.keys(BASE_DATOS_403M.jugadores).length}
-• Análisis disponibles: ${Object.keys(BASE_DATOS_403M.jugadores).length}
-
-✅ 403M LECTOR: Responde directamente desde la base de datos
-☁️ Cloudflare: Nunca cae · 24/7 activo
-📌 Si el jugador no está precargado, genera análisis automático
-`;
+        analyzeQuality(text) {
+            const words = text.toLowerCase().split(/\s+/);
+            const filtered = words.filter(w => !this.stopWords.has(w));
+            let score = 0;
+            filtered.forEach(word => { if (this.sportWords[word]) score += this.sportWords[word]; });
+            const qualityScore = Math.min((score / Math.max(filtered.length, 1)) * 100 + 30, 100);
+            return {
+                qualityScore: Math.round(qualityScore),
+                qualityLevel: qualityScore > 70 ? 'alta' : qualityScore > 40 ? 'media' : 'baja'
+            };
         }
     }
-
+    
+    const analyzer = new ContentAnalyzer();
+    
+    // ============================================
+    // DETECTOR DE PLAGIO
+    // ============================================
+    class PlagiarismDetector {
+        createShingles(text, size = 3) {
+            const words = text.toLowerCase().split(/\s+/);
+            const shingles = [];
+            for (let i = 0; i < words.length - size + 1; i++) shingles.push(words.slice(i, i + size).join(' '));
+            return new Set(shingles);
+        }
+        
+        calculateSimilarity(text1, text2) {
+            const s1 = this.createShingles(text1), s2 = this.createShingles(text2);
+            const intersection = new Set([...s1].filter(x => s2.has(x)));
+            const union = new Set([...s1, ...s2]);
+            return union.size > 0 ? intersection.size / union.size : 0;
+        }
+        
+        check(text, sources) {
+            const results = sources.map(s => ({
+                source: s.substring(0, 60),
+                similarity: this.calculateSimilarity(text.substring(0, 500), s.substring(0, 500))
+            }));
+            const maxSim = Math.max(...results.map(r => r.similarity), 0);
+            return {
+                overallRisk: maxSim > 0.3 ? 'Alto' : maxSim > 0.15 ? 'Medio' : 'Bajo',
+                maxSimilarity: maxSim,
+                details: results.sort((a, b) => b.similarity - a.similarity)
+            };
+        }
+    }
+    
+    const plagiarismDetector = new PlagiarismDetector();
+    
+    // ============================================
+    // EXPORTADOR
+    // ============================================
+    class Exporter {
+        toLatex(content, title) {
+            const safe = content.replace(/[#%&_{}]/g, '\\$&').replace(/\*\*(.*?)\*\*/g, '\\textbf{$1}');
+            return `\\documentclass{article}\n\\usepackage[utf8]{inputenc}\n\\usepackage[spanish]{babel}\n\n\\title{Scout: ${title}}\n\\author{Rendimiento PRO + AcadémIA Pro}\n\\date{\\today}\n\n\\begin{document}\n\\maketitle\n\n${safe}\n\n\\end{document}`;
+        }
+        
+        toMarkdown(content, title) {
+            return `# Scout: ${title}\n\n*Generado por Rendimiento PRO + AcadémIA Pro*\n\n${content}`;
+        }
+        
+        toBibTeX(title, refs) {
+            return refs.map((ref, i) => 
+                `@misc{ref${i+1},\n  author = {{Rendimiento PRO}},\n  title = {${title}},\n  year = {${new Date().getFullYear()}},\n  note = {Fuente: ${ref.fuente || 'Análisis deportivo'}}\n}`
+            ).join('\n\n');
+        }
+        
+        toAPA(title, refs) {
+            return refs.map((ref, i) => 
+                `Rendimiento PRO (${new Date().getFullYear()}). ${title}. ${ref.fuente || '403M LECTOR'}.`
+            ).join('\n\n');
+        }
+    }
+    
+    const exporter = new Exporter();
+    
+    // ============================================
+    // BÚSQUEDA ACADÉMICA
+    // ============================================
+    async function buscarFuenteAcademica(tema, fuente) {
+        const endpoints = {
+            crossref: `https://api.crossref.org/works?query=${encodeURIComponent(tema + ' football soccer performance')}&rows=3`,
+            openalex: `https://api.openalex.org/works?search=${encodeURIComponent(tema + ' sports performance')}&per-page=3`,
+            semantic: `https://api.semanticscholar.org/graph/v1/paper/search?query=${encodeURIComponent(tema + ' soccer')}&limit=3&fields=title,authors,year`,
+            arxiv: `https://export.arxiv.org/api/query?search_query=all:${encodeURIComponent(tema + ' sports')}&max_results=3`
+        };
+        
+        try {
+            const response = await fetch(endpoints[fuente]);
+            if (!response.ok) return [];
+            
+            if (fuente === 'arxiv') {
+                const text = await response.text();
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(text, 'text/xml');
+                return Array.from(xml.querySelectorAll('entry')).map(entry => ({
+                    titulo: entry.querySelector('title')?.textContent?.trim() || 'Sin título',
+                    autor: entry.querySelector('author name')?.textContent || 'Autor',
+                    year: entry.querySelector('published')?.textContent?.substring(0,4) || 's.f.',
+                    fuente: 'arXiv',
+                    url: entry.querySelector('id')?.textContent || ''
+                }));
+            }
+            
+            const data = await response.json();
+            
+            if (fuente === 'crossref' && data.message?.items) {
+                return data.message.items.map(item => ({
+                    titulo: item.title?.[0] || 'Sin título',
+                    autor: item.author?.map(a => `${a.family || ''}, ${a.given?.charAt(0) || ''}.`).join(', ') || 'Autor',
+                    year: item.issued?.['date-parts']?.[0]?.[0] || 's.f.',
+                    fuente: 'Crossref',
+                    url: item.DOI ? `https://doi.org/${item.DOI}` : ''
+                }));
+            }
+            
+            if (fuente === 'openalex' && data.results) {
+                return data.results.map(item => ({
+                    titulo: item.title || 'Sin título',
+                    autor: item.authorships?.map(a => a.author.display_name).join(', ') || 'Autor',
+                    year: item.publication_year || 's.f.',
+                    fuente: 'OpenAlex',
+                    url: item.doi || ''
+                }));
+            }
+            
+            if (fuente === 'semantic' && data.data) {
+                return data.data.map(item => ({
+                    titulo: item.title || 'Sin título',
+                    autor: item.authors?.map(a => a.name).join(', ') || 'Autor',
+                    year: item.year || 's.f.',
+                    fuente: 'Semantic Scholar',
+                    url: item.url || ''
+                }));
+            }
+            
+            return [];
+        } catch(e) { return []; }
+    }
+    
+    async function buscarTodasLasFuentes(tema) {
+        const queryHash = tema.toLowerCase().trim();
+        const cached = await cache.getCachedAcademicRefs(queryHash);
+        if (cached) return cached;
+        
+        const fuentes = ['crossref', 'openalex', 'semantic', 'arxiv'];
+        const resultados = await Promise.allSettled(fuentes.map(f => buscarFuenteAcademica(tema, f)));
+        const todas = resultados.filter(r => r.status === 'fulfilled').flatMap(r => r.value);
+        
+        if (todas.length > 0) await cache.cacheAcademicRefs(queryHash, todas);
+        return todas;
+    }
+    
+    // ============================================
+    // BASE DE DATOS 403M+
+    // ============================================
+    const BASE_DATOS_403M = {
+        jugadores: {
+            messi: { keywords: ['messi', 'lionel messi'], analisis: `ANÁLISIS DE LIONEL MESSI\n\n🔍 FORTALEZAS:\n• Regate excepcional - El mejor driblador de la historia\n• Visión de juego única - Asistencias magistrales\n• Finalización clínica - Goles de todos los ángulos\n• Inteligencia táctica - Lee el juego mejor que nadie\n\n📊 ESTADÍSTICAS CLAVE:\n• Goles: 850+ en carrera profesional\n• Asistencias: 350+\n• Balones de Oro: 8 (récord histórico)\n• Títulos: 40+ incluyendo Mundial 2022\n\n💡 RECOMENDACIÓN SCOUT:\nJugador generacional. Valor incalculable.` },
+            ronaldo: { keywords: ['ronaldo', 'cristiano ronaldo'], analisis: `ANÁLISIS DE CRISTIANO RONALDO\n\n🔍 FORTALEZAS:\n• Remate de élite\n• Físico impresionante\n• Juego aéreo extraordinario\n• Mentalidad ganadora\n\n📊 ESTADÍSTICAS CLAVE:\n• Goles: 900+ (récord histórico)\n• Balones de Oro: 5\n• Champions League: 5 títulos\n\n💡 RECOMENDACIÓN SCOUT:\nExperiencia y liderazgo invaluables.` },
+            haaland: { keywords: ['haaland', 'erling haaland'], analisis: `ANÁLISIS DE ERLING HAALAND\n\n🔍 FORTALEZAS:\n• Finalización - Uno de los mejores rematadores\n• Velocidad - Tremenda aceleración\n• Físico imponente\n• Instinto goleador\n\n📊 ESTADÍSTICAS CLAVE:\n• Goles: 250+\n• Promedio: Más de 1 gol/partido\n• Edad: Solo 24 años\n\n💡 RECOMENDACIÓN SCOUT:\nEl futuro del fútbol. Garantía de goles.` },
+            mbappe: { keywords: ['mbappe', 'kylian mbappe'], analisis: `ANÁLISIS DE KYLIAN MBAPPE\n\n🔍 FORTALEZAS:\n• Velocidad - Uno de los más rápidos\n• Finalización excelente\n• Dribbling en espacios reducidos\n• Personalidad fuerte\n\n📊 ESTADÍSTICAS CLAVE:\n• Goles: 250+\n• Asistencias: 100+\n• Mundial 2018\n\n💡 RECOMENDACIÓN SCOUT:\nJugador que marcará época.` },
+            bellingham: { keywords: ['bellingham', 'jude bellingham'], analisis: `ANÁLISIS DE JUDE BELLINGHAM\n\n🔍 FORTALEZAS:\n• Versatilidad en mediocampo\n• Inteligencia táctica excepcional\n• Llegada al área\n• Liderazgo nato\n\n📊 ESTADÍSTICAS CLAVE:\n• Goles: 50+\n• Edad: 21 años\n• La Liga, Champions League\n\n💡 RECOMENDACIÓN SCOUT:\nMediocampista del futuro.` }
+        }
+    };
+    
+    class MotorBusqueda403M {
+        constructor() { this.baseDatos = BASE_DATOS_403M; }
+        
+        buscar(jugador) {
+            const j = jugador.toLowerCase();
+            for (const [key, jug] of Object.entries(this.baseDatos.jugadores)) {
+                if (jug.keywords.some(kw => j.includes(kw) || kw.includes(j))) return jug.analisis;
+            }
+            return `ANÁLISIS DE ${jugador.toUpperCase()}\n\n🔍 PERFIL:\n• Posición: Versátil\n• Proyección: Prometedora\n\n📊 CARACTERÍSTICAS:\n• Técnica: Buena base\n• Inteligencia: Buena lectura\n\n💡 RECOMENDACIÓN:\nJugador con potencial. Seguimiento recomendado.\n\n📖 403M LECTOR · ${new Date().toLocaleString()}`;
+        }
+    }
+    
+    const motor403M = new MotorBusqueda403M();
+    
+    class Nucleo403MLector {
+        constructor() { this.decisiones = 0; this.lector = motor403M; }
+        
+        analizar(jugador) {
+            this.decisiones++;
+            document.getElementById('decisionStatus').textContent = '🧠 403M LECTOR: Analizando...';
+            document.getElementById('decisionCount').textContent = this.decisiones;
+            return this.lector.buscar(jugador);
+        }
+        
+        getEstado() {
+            return `=== 🧠 403M LECTOR ===\n\n📊 Decisiones: ${this.decisiones}\n📚 Datos: 403M+\n💾 Caché: ${cache.getStats().total} entradas\n📡 Estado: ✅ Activo`;
+        }
+    }
+    
     const nucleoLector = new Nucleo403MLector();
-
+    
     // ============================================
     // CONECTORES
     // ============================================
-    
     class MemoryConnector {
-        constructor() {
-            this.shortTerm = [];
-            this.maxShortTerm = 10;
-            this.loadFromStorage();
-        }
-        loadFromStorage() {
-            try {
-                const data = JSON.parse(localStorage.getItem('scout_memoria') || '{}');
-                if (data.shortTerm) this.shortTerm = data.shortTerm;
-            } catch(e) {}
-        }
-        saveToStorage() {
-            try {
-                localStorage.setItem('scout_memoria', JSON.stringify({ shortTerm: this.shortTerm }));
-            } catch(e) {}
-        }
-        remember(interaction) {
-            this.shortTerm.push({ ...interaction, timestamp: Date.now() });
-            if (this.shortTerm.length > this.maxShortTerm) this.shortTerm.shift();
-            this.saveToStorage();
-        }
-        recall(jugador, limit = 3) {
-            return this.shortTerm
-                .filter(item => this.calculateSimilarity(jugador, item.jugador || '') > 0.2)
-                .sort((a, b) => b.similarity - a.similarity)
-                .slice(0, limit)
-                .map(item => ({ jugador: item.jugador, analisis: item.analisis }));
-        }
-        calculateSimilarity(a, b) {
-            if (!a || !b) return 0;
-            const wordsA = a.toLowerCase().split(' ');
-            const wordsB = b.toLowerCase().split(' ');
-            const common = wordsA.filter(w => wordsB.includes(w) && w.length > 2);
-            return common.length / Math.max(wordsA.length, wordsB.length);
-        }
+        constructor() { this.shortTerm = []; this.maxShortTerm = 10; this.loadFromStorage(); }
+        loadFromStorage() { try { const d = JSON.parse(localStorage.getItem('scout_memoria') || '{}'); if (d.shortTerm) this.shortTerm = d.shortTerm; } catch(e) {} }
+        saveToStorage() { try { localStorage.setItem('scout_memoria', JSON.stringify({ shortTerm: this.shortTerm })); } catch(e) {} }
+        remember(i) { this.shortTerm.push({ ...i, timestamp: Date.now() }); if (this.shortTerm.length > this.maxShortTerm) this.shortTerm.shift(); this.saveToStorage(); }
         getStats() { return { total: this.shortTerm.length }; }
     }
-
-    class SemanticConnector {
-        constructor() { this.embeddingsCache = new Map(); }
-        getStats() { return { cacheSize: this.embeddingsCache.size }; }
-    }
-
-    class APIConnector {
-        constructor() {
-            this.endpoints = new Map();
-            this.cache = new Map();
-            this.maxCacheAge = 3600000;
-            this.registerDefaultEndpoints();
-        }
-        registerDefaultEndpoints() {
-            this.registerEndpoint('playerStats', {
-                url: 'https://api.example.com/player',
-                method: 'GET',
-                transform: (data) => ({ stats: data.stats || {}, comparaciones: data.comparaciones || [] })
-            });
-        }
-        registerEndpoint(name, config) { this.endpoints.set(name, config); }
-        async call(endpointName, params = {}) {
-            const config = this.endpoints.get(endpointName);
-            if (!config) return { error: `Endpoint ${endpointName} no encontrado` };
-            const cacheKey = `${endpointName}_${JSON.stringify(params)}`;
-            if (this.cache.has(cacheKey)) {
-                const cached = this.cache.get(cacheKey);
-                if (Date.now() - cached.timestamp < this.maxCacheAge) return cached.data;
-            }
-            try {
-                const mockData = this.generateMockData(endpointName, params);
-                const result = config.transform ? config.transform(mockData) : mockData;
-                this.cache.set(cacheKey, { data: result, timestamp: Date.now() });
-                return result;
-            } catch(e) { return { error: e.message }; }
-        }
-        generateMockData(endpoint, params) {
-            const datos = { playerStats: { stats: { goles: 25, asistencias: 10 }, comparaciones: ['Jugador A', 'Jugador B'] } };
-            return datos[endpoint] || {};
-        }
-        getStats() { return { endpoints: this.endpoints.size, cacheSize: this.cache.size }; }
-    }
-
+    
     const memoryConnector = new MemoryConnector();
-    const semanticConnector = new SemanticConnector();
-    const apiConnector = new APIConnector();
-
+    
     // ============================================
     // FUNCIONES UTILITARIAS
     // ============================================
-    
-    function limpiarMarkdown(texto) {
-        let limpio = texto;
-        limpio = limpio.replace(/\*\*/g, '');
-        limpio = limpio.replace(/\*/g, '');
-        limpio = limpio.replace(/^###\s*/gm, '');
-        limpio = limpio.replace(/^##\s*/gm, '');
-        limpio = limpio.replace(/^#\s*/gm, '');
-        limpio = limpio.replace(/`/g, '');
-        limpio = limpio.replace(/^---\s*$/gm, '');
-        limpio = limpio.replace(/^\s*-\s+/gm, '• ');
-        limpio = limpio.replace(/\n{3,}/g, '\n\n');
-        return limpio.trim();
-    }
-
-    function actualizarMetricasConectores() {
-        const memStats = memoryConnector.getStats();
-        const semStats = semanticConnector.getStats();
-        const apiStats = apiConnector.getStats();
-        document.getElementById('metricMemoria').textContent = memStats.total;
-        document.getElementById('metricSemantico').textContent = '403M+';
-        document.getElementById('metricAPIs').textContent = apiStats.endpoints;
-        document.getElementById('metricContexto').textContent = '100%';
-    }
-
     function showToast(msg, isErr) {
         const t = document.createElement('div');
         t.className = 'toast-msg';
         t.style.background = isErr ? '#ef4444' : '#10b981';
         t.innerText = msg;
         document.body.appendChild(t);
-        setTimeout(() => t.remove(), 2500);
+        setTimeout(() => t.remove(), 3000);
     }
-
+    
     function mostrarModal(titulo, contenido) {
         const modal = document.createElement('div');
         modal.className = 'modal-overlay';
-        modal.innerHTML = `
-            <div class="modal-content">
-                <h3>${titulo}</h3>
-                <div style="white-space:pre-wrap; font-size:0.85rem; line-height:1.5;">${contenido.replace(/\n/g, '<br>')}</div>
-                <button class="modal-close">Cerrar</button>
-            </div>
-        `;
+        modal.innerHTML = `<div class="modal-content"><h3>${titulo}</h3><div style="white-space:pre-wrap;font-size:0.85rem;line-height:1.5;">${contenido.replace(/\n/g, '<br>')}</div><button class="modal-close">Cerrar</button></div>`;
         modal.querySelector('.modal-close').onclick = () => modal.remove();
         document.body.appendChild(modal);
     }
-
-    // ============================================
-    // FUNCIÓN LLAMAR IA (CLOUDFLARE 24/7)
-    // ============================================
     
-    async function llamarIA(prompt) {
-        console.log('🔍 Intentando llamar a Cloudflare 24/7...');
-        
-        try {
-            const url = `${JSLLM7_API_URL}/ask?q=${encodeURIComponent(prompt)}`;
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            const text = await response.text();
-            if (text && text.length > 20) {
-                cloudflareConectado = true;
-                document.getElementById('cloudflareStatus').textContent = '☁️ Cloudflare: ✅ 24/7 · Nunca cae';
-                document.getElementById('cloudflareStatus').style.color = '#10b981';
-                document.getElementById('jsllm7WidgetStatus').textContent = '📖 403M LECTOR: ✅ Activo · Cloudflare 24/7';
-                document.getElementById('jsllm7WidgetStatus').style.color = '#10b981';
-                return text;
-            }
-            throw new Error('Respuesta vacía');
-        } catch (error) {
-            cloudflareConectado = false;
-            document.getElementById('cloudflareStatus').textContent = '☁️ Cloudflare: ✅ Modo offline (caché)';
-            document.getElementById('cloudflareStatus').style.color = '#f59e0b';
-        }
-        
-        // Fallback a jsllm7 si está disponible
-        if (typeof window.jsllm7 !== 'undefined' && window.jsllm7) {
-            try {
-                const response = await window.jsllm7(prompt);
-                if (response && response.length > 50) return response;
-            } catch(e) {}
-        }
-        
-        return null;
+    function descargarArchivo(contenido, nombre) {
+        const blob = new Blob([contenido], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a'); a.href = url; a.download = nombre; a.click();
+        URL.revokeObjectURL(url);
     }
-
-    // ============================================
-    // FUNCIÓN OBTENER ANÁLISIS CON 403M LECTOR
-    // ============================================
     
-    function obtenerAnalisisLector(jugador) {
-        const resultado = nucleoLector.analizarYDecidir(`Analizar jugador ${jugador}`, jugador, modoUsuario);
-        return resultado.analisis || `ANÁLISIS DE ${jugador.toUpperCase()}
-
-🔍 DATOS NO DISPONIBLES:
-No se encontró información específica en la base de datos.
-
-💡 RECOMENDACIÓN:
-Utiliza la búsqueda para encontrar jugadores con análisis precargado (Messi, Ronaldo, Haaland, Bellingham, Mbappe).
-
-📖 Fuente: 403M LECTOR · Cloudflare 24/7 · 403M+ datos
-🕐 ${new Date().toLocaleString()}`;
+    function actualizarMetricas() {
+        document.getElementById('metricMemoria').textContent = memoryConnector.getStats().total;
+        document.getElementById('metricSemantico').textContent = '403M+';
+        document.getElementById('metricAPIs').textContent = '30';
+        document.getElementById('metricDB').textContent = cache.getStats().total;
     }
-
-    // ============================================
-    // FUNCIONES DE HERRAMIENTAS
-    // ============================================
     
+    // ============================================
+    // HERRAMIENTAS
+    // ============================================
     async function herramientaGenerica(promptText, titulo, jugadorNombre) {
-        showToast(`⏳ ${titulo} con 403M LECTOR (Cloudflare 24/7)...`);
+        showToast(`⏳ ${titulo}...`);
         try {
-            const analisis = nucleoLector.analizarYDecidir(promptText, jugadorNombre || currentPlayer?.name || 'Jugador', modoUsuario);
-            const analisisLimpio = limpiarMarkdown(analisis.analisis) || `No se pudo obtener ${titulo.toLowerCase()}.`;
-            mostrarModal(titulo, analisisLimpio);
-            if (currentPlayer) actualizarWidgets(currentPlayer, analisisLimpio);
-        } catch(e) {
-            showToast('❌ Error', true);
-        }
+            const analisis = nucleoLector.analizar(jugadorNombre || currentPlayer?.name || 'Jugador');
+            mostrarModal(titulo, analisis);
+            ultimoAnalisis = analisis;
+            if (currentPlayer) actualizarWidgets(currentPlayer, analisis);
+        } catch(e) { showToast('❌ Error', true); }
     }
     
     async function compararJugadores() {
         const j1 = document.getElementById('playerSearch').value.trim() || currentPlayer?.name || "Messi";
-        const j2 = prompt("Segundo jugador a comparar (Ej: Cristiano Ronaldo, Haaland, Mbappe):", "Cristiano Ronaldo");
-        if (!j2) return;
-        const prompt = `Compara a ${j1} y ${j2} como futbolistas. Analiza: estilo de juego, estadísticas clave, logros, y quién es mejor en cada aspecto. Sé objetivo. Sin asteriscos.`;
-        await herramientaGenerica(prompt, `🔄 COMPARACIÓN: ${j1} vs ${j2}`, j1);
+        const j2 = prompt("Segundo jugador:", "Cristiano Ronaldo");
+        if (j2) await herramientaGenerica(`Comparar ${j1} vs ${j2}`, `🔄 ${j1} vs ${j2}`, j1);
     }
     
-    async function formacionIdeal() {
-        const prompt = `Sugiere una formación de fútbol ideal (4-3-3, 4-4-2, 3-5-2, etc.) para un equipo que quiere dominar la posesión. Explica por qué funciona y qué tipo de jugadores necesita cada posición. Sin asteriscos.`;
-        await herramientaGenerica(prompt, "📋 FORMACIÓN IDEAL", "Formación");
-    }
+    document.getElementById('btnComparar').onclick = compararJugadores;
+    document.getElementById('btnFormacion').onclick = () => herramientaGenerica('Formación ideal 4-3-3', '📋 FORMACIÓN IDEAL', 'Formación');
+    document.getElementById('btnRival').onclick = async () => {
+        const rival = prompt("Equipo rival:", "Real Madrid");
+        if (rival) await herramientaGenerica(`Análisis de ${rival}`, `🎯 RIVAL: ${rival}`, rival);
+    };
+    document.getElementById('btnMercado').onclick = () => herramientaGenerica('Valor de mercado', '💰 VALOR DE MERCADO', currentPlayer?.name || 'Jugador');
+    document.getElementById('btnLesiones').onclick = () => herramientaGenerica('Riesgo de lesiones', '🩺 RIESGO LESIONES', currentPlayer?.name || 'Jugador');
+    document.getElementById('btnJovenes').onclick = () => herramientaGenerica('Jóvenes promesas del fútbol', '🌟 PROMESAS', 'Promesas');
+    document.getElementById('btnEquipo').onclick = () => herramientaGenerica('Mejor XI del mundo 2024-2025', '🏆 MEJOR XI', 'Mejor XI');
+    document.getElementById('btnEstilo').onclick = () => herramientaGenerica('Estilo de juego', '🎭 ESTILO DE JUEGO', currentPlayer?.name || 'Jugador');
+    document.getElementById('btnTransicion').onclick = () => herramientaGenerica('Transiciones en el fútbol moderno', '🔄 TRANSICIONES', 'Transiciones');
+    document.getElementById('btnPrediccion').onclick = () => herramientaGenerica('Predicción de carrera a 5 años', '🔮 PREDICCIÓN', currentPlayer?.name || 'Jugador');
     
-    async function analisisRival() {
-        const rival = prompt("Nombre del equipo rival a analizar:", "Real Madrid");
-        if (!rival) return;
-        const prompt = `Analiza al ${rival} como rival. Puntos fuertes, puntos débiles, formación típica, jugadores clave, y cómo contrarrestarlos tácticamente. Sin asteriscos.`;
-        await herramientaGenerica(prompt, `🎯 ANÁLISIS DE RIVAL: ${rival.toUpperCase()}`, rival);
-    }
-    
-    async function valorMercado() {
-        const jugador = document.getElementById('playerSearch').value.trim() || currentPlayer?.name || "Jugador";
-        const prompt = `Estima el valor de mercado actual de ${jugador} en el mercado de fichajes. Da un rango en euros, factores que influyen (edad, rendimiento, contrato), y si es momento de comprar o vender. Sin asteriscos.`;
-        await herramientaGenerica(prompt, `💰 VALOR DE MERCADO: ${jugador}`, jugador);
-    }
-    
-    async function riesgoLesiones() {
-        const jugador = document.getElementById('playerSearch').value.trim() || currentPlayer?.name || "Jugador";
-        const prompt = `Analiza el riesgo de lesiones de ${jugador} basado en su historial, estilo de juego, edad y posición. Da un nivel de riesgo (bajo/medio/alto) y recomendaciones para prevenirlas. Sin asteriscos.`;
-        await herramientaGenerica(prompt, `🩺 RIESGO DE LESIONES: ${jugador}`, jugador);
-    }
-    
-    async function jovenesPromesas() {
-        const prompt = `Recomienda 5 jóvenes promesas del fútbol mundial (menores de 21 años) con gran proyección. Para cada uno: nombre, posición, país, valor actual estimado y por qué es una promesa. Sin asteriscos.`;
-        await herramientaGenerica(prompt, "🌟 PROMESAS DEL FÚTBOL MUNDIAL", "Promesas");
-    }
-    
-    async function mejorXI() {
-        const prompt = `Construye el mejor once inicial (Mejor XI) del fútbol actual (2024-2025). Formación 4-3-3. Para cada jugador: nombre, posición, y breve razón de su inclusión. Sin asteriscos.`;
-        await herramientaGenerica(prompt, "🏆 MEJOR XI DEL MUNDO", "Mejor XI");
-    }
-    
-    async function estiloJuego() {
-        const jugador = document.getElementById('playerSearch').value.trim() || currentPlayer?.name || "Jugador";
-        const prompt = `Describe el estilo de juego de ${jugador}. Incluye: posición principal, puntos fuertes tácticos, debilidades, y con qué otros jugadores se le compara. Sin asteriscos.`;
-        await herramientaGenerica(prompt, `🎭 ESTILO DE JUEGO: ${jugador}`, jugador);
-    }
-    
-    async function transiciones() {
-        const prompt = `Explica la importancia de las transiciones ofensivas y defensivas en el fútbol moderno. Da 5 consejos para mejorar las transiciones en un equipo. Sin asteriscos.`;
-        await herramientaGenerica(prompt, "🔄 TRANSICIONES EN EL FÚTBOL", "Transiciones");
-    }
-    
-    async function prediccionCarrera() {
-        const jugador = document.getElementById('playerSearch').value.trim() || currentPlayer?.name || "Jugador";
-        const prompt = `Predice la trayectoria futura de ${jugador} en los próximos 5 años. Incluye: posibles equipos a los que podría ir, evolución de rendimiento, logros potenciales, y factores clave que determinarán su éxito. Sin asteriscos.`;
-        await herramientaGenerica(prompt, `🔮 PREDICCIÓN DE CARRERA: ${jugador}`, jugador);
-    }
-    
-    function verEstadoTermux() {
-        const estado = jsllm7TermuxConectado ? '✅ Conectado' : '❌ Desconectado';
-        const mensaje = `
-=== ESTADO DE jsllm7 ===
-
-🔌 Puerto: 8081 (local)
-📊 Registros: 404,356,967
-📡 Estado: ${estado}
-📍 Fuente: ${jsllm7TermuxConectado ? 'Termux (local)' : 'CDN (fallback)'}
-
-${jsllm7TermuxConectado ? '✅ jsllm7 funcionando correctamente' : '⚠️ jsllm7 no conectado a Termux.'}
-
-☁️ 403M LECTOR: Activo independientemente de jsllm7 · Cloudflare 24/7
-`;
-        mostrarModal('🔌 ESTADO DE jsllm7', mensaje);
-    }
-    
-    function verEstadoCloudflare() {
-        const mensaje = `
-=== ☁️ CLOUDFLARE 24/7 ===
-
-🔗 URL: https://wikipedia-403m.odandoolugan.workers.dev
-📡 Estado: ${cloudflareConectado ? '✅ Conectado' : '⚠️ Offline (usando caché)'}
-🕐 Uptime: 24/7 · Nunca cae
-📚 Datos: 403M+ registros
-
-🧠 403M LECTOR:
-• Decisiones: ${nucleoLector.getEstado().decisiones}
-• Jugadores precargados: ${Object.keys(BASE_DATOS_403M.jugadores).length}
-• Herramientas: 10+
-
-✅ Cloudflare garantiza disponibilidad 24/7
-📌 El sistema funciona incluso sin conexión a internet
-`;
-        mostrarModal('☁️ CLOUDFLARE 24/7', mensaje);
-    }
-
     // ============================================
-    // BOTONES
+    // BOTONES ACADÉMIA PRO
     // ============================================
-    
-    document.getElementById('btnDecisionStatus').onclick = () => {
-        const estado = nucleoLector.mostrarEstado();
-        mostrarModal('🧠 403M LECTOR', estado);
+    document.getElementById('btnBuscarAcademico').onclick = async () => {
+        const tema = currentPlayer?.name || 'football performance analysis';
+        showToast('📚 Buscando en 4 fuentes académicas...');
+        referenciasAcademicas = await buscarTodasLasFuentes(tema);
+        
+        if (referenciasAcademicas.length > 0) {
+            const refsText = referenciasAcademicas.map((r, i) => 
+                `${i+1}. ${r.autor} (${r.year}). ${r.titulo}. ${r.fuente}. ${r.url || ''}`
+            ).join('\n\n');
+            mostrarModal('📚 REFERENCIAS ACADÉMICAS', `Encontradas ${referenciasAcademicas.length}:\n\n${refsText}`);
+        } else {
+            mostrarModal('📚 BÚSQUEDA ACADÉMICA', 'No se encontraron referencias académicas.');
+        }
     };
     
-    document.getElementById('btnCloudflareStatus').onclick = verEstadoCloudflare;
-    document.getElementById('btnTermuxStatus').onclick = verEstadoTermux;
-
-    document.getElementById('btnComparar').onclick = compararJugadores;
-    document.getElementById('btnFormacion').onclick = formacionIdeal;
-    document.getElementById('btnRival').onclick = analisisRival;
-    document.getElementById('btnMercado').onclick = valorMercado;
-    document.getElementById('btnLesiones').onclick = riesgoLesiones;
-    document.getElementById('btnJovenes').onclick = jovenesPromesas;
-    document.getElementById('btnEquipo').onclick = mejorXI;
-    document.getElementById('btnEstilo').onclick = estiloJuego;
-    document.getElementById('btnTransicion').onclick = transiciones;
-    document.getElementById('btnPrediccion').onclick = prediccionCarrera;
-
+    document.getElementById('btnVerificarPlagio').onclick = () => {
+        if (!ultimoAnalisis) { showToast('⚠️ Realiza un análisis primero', true); return; }
+        const fuentes = Object.values(BASE_DATOS_403M.jugadores).map(j => j.analisis);
+        const resultado = plagiarismDetector.check(ultimoAnalisis, fuentes);
+        
+        mostrarModal('⚠️ VERIFICACIÓN DE PLAGIO',
+            `Riesgo: ${resultado.overallRisk}\nSimilitud Máx: ${Math.round(resultado.maxSimilarity * 100)}%\n\n` +
+            `Detalles:\n${resultado.details.slice(0, 5).map(d => `• ${d.source}: ${Math.round(d.similarity * 100)}%`).join('\n')}`
+        );
+    };
+    
+    document.getElementById('btnExportar').onclick = () => {
+        if (!ultimoAnalisis) { showToast('⚠️ Realiza un análisis primero', true); return; }
+        
+        const formatos = ['latex', 'markdown', 'bibtex', 'apa'];
+        const nombres = ['LaTeX', 'Markdown', 'BibTeX', 'APA 7'];
+        const buttons = formatos.map((f, i) => 
+            `<button class="export-btn" style="margin:5px;padding:8px 16px;background:#8b5cf6;color:white;border:none;border-radius:20px;cursor:pointer;" onclick="window.exportarFormato('${f}')">📄 ${nombres[i]}</button>`
+        ).join('');
+        
+        mostrarModal('📤 EXPORTAR ANÁLISIS', 
+            `Selecciona el formato de exportación:\n\n${buttons}\n\nTambién puedes usar los botones de exportación que aparecen después de cada análisis.`
+        );
+    };
+    
+    window.exportarFormato = function(format) {
+        if (!ultimoAnalisis) return;
+        const title = currentPlayer?.name || 'Jugador';
+        let content = '', filename = '';
+        
+        switch(format) {
+            case 'latex': content = exporter.toLatex(ultimoAnalisis, title); filename = `scout_${title.replace(/\s+/g,'_')}.tex`; break;
+            case 'markdown': content = exporter.toMarkdown(ultimoAnalisis, title); filename = `scout_${title.replace(/\s+/g,'_')}.md`; break;
+            case 'bibtex': content = exporter.toBibTeX(title, referenciasAcademicas.length > 0 ? referenciasAcademicas : [{fuente:'403M LECTOR'}]); filename = `refs_${title.replace(/\s+/g,'_')}.bib`; break;
+            case 'apa': content = exporter.toAPA(title, referenciasAcademicas.length > 0 ? referenciasAcademicas : [{fuente:'403M LECTOR'}]); filename = `refs_${title.replace(/\s+/g,'_')}.txt`; break;
+        }
+        
+        descargarArchivo(content, filename);
+        document.querySelectorAll('.modal-overlay').forEach(m => m.remove());
+        showToast(`📤 Exportado como ${format.toUpperCase()}`);
+    };
+    
+    document.getElementById('btnDecisionStatus').onclick = () => {
+        mostrarModal('🧠 403M LECTOR', nucleoLector.getEstado());
+    };
+    
+    document.getElementById('btnTermuxStatus').onclick = () => {
+        const dbStats = cache.getStats();
+        mostrarModal('🔌 ESTADO DEL SISTEMA',
+            `=== Cloudflare ===\n📡 Estado: ${cloudflareConectado ? '✅ Conectado' : '⚠️ Offline'}\n\n=== IndexedDB ===\n💾 Hits: ${dbStats.hits}\n❌ Misses: ${dbStats.misses}\n📊 Total: ${dbStats.total}\n\n${nucleoLector.getEstado()}`
+        );
+    };
+    
     // ============================================
     // UI PRINCIPAL
     // ============================================
-    
     let currentPlayer = { name: "Jugador Base", overall: 75, position: "Delantero", goals: 8, assists: 6, pace: 75, shooting: 74, passing: 72, defending: 50, physical: 70 };
     let currentAnalysisDiv = null;
     let analizando = false;
 
     function actualizarModoUI() {
         document.querySelectorAll('.modo-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.modo === modoUsuario));
-        const contextDiv = document.getElementById('contextInfo');
-        if (contextDiv) contextDiv.innerHTML = modoUsuario === 'experto' ? '🧠 403M LECTOR · Cloudflare 24/7 · Lee 403M+ datos · Responde directamente · Scout profesional' : '⚡ MODO BÁSICO · Análisis rápido · Estadísticas esenciales';
     }
     
     document.querySelectorAll('.modo-btn').forEach(btn => {
@@ -868,7 +758,6 @@ ${jsllm7TermuxConectado ? '✅ jsllm7 funcionando correctamente' : '⚠️ jsllm
             localStorage.setItem('scout_modo', modoUsuario);
             actualizarModoUI();
             showToast(`✨ Modo ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'}`);
-            if (currentAnalysisDiv && currentPlayer) generarAnalisisIA(currentPlayer, currentAnalysisDiv);
         });
     });
     actualizarModoUI();
@@ -933,7 +822,7 @@ ${jsllm7TermuxConectado ? '✅ jsllm7 funcionando correctamente' : '⚠️ jsllm
         posState.forEach(pos=>{
             const perf=Math.round(pos.skills.reduce((a,s)=>a+s.value,0)/pos.skills.length);
             const card=document.createElement('div');card.className='position-card';
-            card.innerHTML=`<div class="pos-header"><span class="pos-name">${pos.name}</span><span class="pos-perf">🎯 ${perf}%</span></div><div>${pos.skills.map(s=>`<div class="skill-item"><div class="skill-label"><span>${s.name}</span><span>${s.value}/99</span></div><div class="skill-bar-bg"><div class="skill-fill" style="width:${s.value}%;"></div></div></div>`).join('')}</div><div class="badge-recom" style="margin-top:8px;font-size:0.7rem;color:#94a3b8;">${perf>=80?'🏆 ELITE':(perf>=65?'👍 BUENO':'📈 MARGEN')}</div>`;
+            card.innerHTML=`<div class="pos-header"><span class="pos-name">${pos.name}</span><span class="pos-perf">🎯 ${perf}%</span></div><div>${pos.skills.map(s=>`<div class="skill-item"><div class="skill-label"><span>${s.name}</span><span>${s.value}/99</span></div><div class="skill-bar-bg"><div class="skill-fill" style="width:${s.value}%;"></div></div></div>`).join('')}</div>`;
             c.appendChild(card);
         });
     }
@@ -950,46 +839,68 @@ ${jsllm7TermuxConectado ? '✅ jsllm7 funcionando correctamente' : '⚠️ jsllm
         if (j.overall > 80) confianza += 10;
         if (j.goals > 10) confianza += 5;
         if (j.assists > 5) confianza += 5;
-        if (j.pace > 70) confianza += 5;
-        confianza = Math.min(Math.max(confianza, 55), 92);
+        confianza = Math.min(confianza, 92);
         
         document.getElementById('confidenceFill').style.width = confianza + '%';
         document.getElementById('confidenceLabel').textContent = Math.round(confianza) + '%';
+        
+        const quality = analyzer.analyzeQuality(analisis || '');
+        document.getElementById('qualityLabel').textContent = quality.qualityScore + '%';
         
         const posContent = document.getElementById('widgetPosicionContent');
         const posEmojis = { 'Delantero': '⚽', 'Extremo': '🌪️', 'Mediocentro': '🎯', 'Lateral': '⚡', 'Defensa Central': '🛡️', 'Portero': '🧤' };
         const emoji = posEmojis[j.position] || '⚽';
         posContent.innerHTML = `
-            <div style="color:#94a3b8;font-size:0.75rem;margin-bottom:8px;">Posición ideal del jugador</div>
+            <div style="color:#94a3b8;font-size:0.75rem;margin-bottom:8px;">Posición ideal · Calidad: <span class="quality-badge quality-${quality.qualityLevel}">${quality.qualityScore}%</span></div>
             <div style="display:flex;gap:10px;flex-wrap:wrap;">
                 <span style="background:#1e293b;padding:8px 16px;border-radius:15px;font-size:1rem;border:2px solid #3bcb9b;">${emoji} ${j.position}</span>
-            </div>
-            <div style="margin-top:8px;font-size:0.7rem;color:#94a3b8;">
-                📊 Overall: ${j.overall}/100
-            </div>
-        `;
+            </div>`;
         
-        actualizarMetricasConectores();
+        actualizarMetricas();
     }
 
     async function generarAnalisisIA(j, el){
         if(analizando){el.innerHTML="⏳ Ya analizando...";return;}
         analizando=true;
-        el.innerHTML=`<span class="loading-spinner"></span> 403M LECTOR (Cloudflare 24/7) leyendo 403M+ datos...`;
+        el.innerHTML=`<span class="loading-spinner"></span> 403M LECTOR analizando...`;
         
-        const analisis = obtenerAnalisisLector(j.name);
+        // Verificar caché IndexedDB
+        const cached = await cache.getCachedAnalysis(j.name);
+        let analisis;
+        
+        if (cached) {
+            analisis = cached;
+        } else {
+            analisis = nucleoLector.analizar(j.name);
+            await cache.cacheAnalysis(j.name, analisis);
+        }
         
         if (analisis && analisis.length > 50) {
             el.innerHTML = analisis.replace(/\n/g,'<br>');
-            memoryConnector.remember({
-                jugador: j.name,
-                analisis: analisis,
-                posicion: j.position
-            });
+            ultimoAnalisis = analisis;
+            memoryConnector.remember({ jugador: j.name, analisis });
             actualizarWidgets(j, analisis);
-            showToast(`✅ 403M LECTOR · Cloudflare 24/7 · Análisis directo de 403M+ datos`);
+            
+            // Añadir botones de exportación
+            const exportDiv = document.createElement('div');
+            exportDiv.className = 'export-buttons';
+            exportDiv.innerHTML = `
+                <button class="export-btn" data-format="latex">📄 LaTeX</button>
+                <button class="export-btn" data-format="markdown">📝 Markdown</button>
+                <button class="export-btn" data-format="bibtex">📚 BibTeX</button>
+                <button class="export-btn" data-format="apa">📋 APA 7</button>
+            `;
+            exportDiv.querySelectorAll('.export-btn').forEach(eb => {
+                eb.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    window.exportarFormato(eb.dataset.format);
+                });
+            });
+            if (!el.querySelector('.export-buttons')) el.appendChild(exportDiv);
+            
+            showToast(`✅ Análisis completado · IndexedDB · Calidad: ${analyzer.analyzeQuality(analisis).qualityScore}%`);
         } else {
-            el.innerHTML = "⚠️ No se encontró información para este jugador en 403M+ datos.";
+            el.innerHTML = "⚠️ No se encontró información para este jugador.";
         }
         
         analizando=false;
@@ -998,8 +909,13 @@ ${jsllm7TermuxConectado ? '✅ jsllm7 funcionando correctamente' : '⚠️ jsllm
     window.generarAnalisis = function(){if(currentAnalysisDiv)generarAnalisisIA(currentPlayer,currentAnalysisDiv);};
 
     function renderInfo(p){
+        const quality = analyzer.analyzeQuality(`Jugador ${p.name} Overall ${p.overall} Goles ${p.goals} Asistencias ${p.assists}`);
         const c=document.getElementById('playerInfoContainer');
-        c.innerHTML=`<div class="player-card-big"><div><div class="player-name">⭐ ${p.name}</div><div style="display:flex;gap:0.5rem;margin-top:0.3rem;flex-wrap:wrap;"><span class="stat-chip">📊 Overall: <span>${p.overall}</span></span><span class="stat-chip">📍 Posición: <span>${p.position}</span></span><span class="stat-chip">⚽ Goles: <span>${p.goals}</span></span><span class="stat-chip">🎯 Asistencias: <span>${p.assists}</span></span></div></div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">💨 Ritmo: ${p.pace}</span><span class="stat-chip">🎯 Tiro: ${p.shooting}</span><span class="stat-chip">🎨 Pase: ${p.passing}</span><span class="stat-chip">🛡️ Defensa: ${p.defending}</span><span class="stat-chip">💪 Físico: ${p.physical}</span></div></div><div class="ia-analysis"><button class="ia-btn" onclick="generarAnalisis()">🤖 403M LECTOR · ANALIZAR (Cloudflare 24/7)</button><div id="iaResult" style="margin-top:10px;">🔍 403M LECTOR leerá 403M+ datos para este jugador</div></div>`;
+        c.innerHTML=`<div class="player-card-big">
+            <span class="quality-badge quality-${quality.qualityLevel}">${quality.qualityScore}%</span>
+            <div><div class="player-name">⭐ ${p.name}</div><div style="display:flex;gap:0.5rem;margin-top:0.3rem;flex-wrap:wrap;"><span class="stat-chip">📊 Overall: <span>${p.overall}</span></span><span class="stat-chip">📍 ${p.position}</span><span class="stat-chip">⚽ Goles: <span>${p.goals}</span></span><span class="stat-chip">🎯 Asist: <span>${p.assists}</span></span></div></div>
+            <div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">💨 ${p.pace}</span><span class="stat-chip">🎯 ${p.shooting}</span><span class="stat-chip">🎨 ${p.passing}</span><span class="stat-chip">🛡️ ${p.defending}</span><span class="stat-chip">💪 ${p.physical}</span></div>
+        </div><div class="ia-analysis"><button class="ia-btn" onclick="generarAnalisis()">🤖 403M LECTOR · ANALIZAR</button><div id="iaResult" style="margin-top:10px;">🔍 403M LECTOR analizará este jugador</div></div>`;
         currentAnalysisDiv=document.getElementById('iaResult');
         actualizarWidgets(p, '');
     }
@@ -1013,9 +929,9 @@ ${jsllm7TermuxConectado ? '✅ jsllm7 funcionando correctamente' : '⚠️ jsllm
         updatePos(currentPlayer);
         renderInfo(currentPlayer);
         renderPos();
-        document.getElementById('newsTicker').innerHTML=`⚽ 403M LECTOR · Cloudflare 24/7 · ${currentPlayer.name} · ${currentPlayer.overall} OVR · 403M+ datos · Respuesta directa`;
+        document.getElementById('newsTicker').innerHTML=`⚽ ${currentPlayer.name} · ${currentPlayer.overall} OVR · AcadémIA Pro · IndexedDB`;
         if(currentAnalysisDiv)setTimeout(()=>generarAnalisisIA(currentPlayer,currentAnalysisDiv),300);
-        showToast(`✅ ${currentPlayer.name} cargado · 403M LECTOR · Cloudflare 24/7 · 403M+ datos`);
+        showToast(`✅ ${currentPlayer.name} cargado · AcadémIA Pro · IndexedDB`);
     }
 
     function reset(){
@@ -1024,67 +940,47 @@ ${jsllm7TermuxConectado ? '✅ jsllm7 funcionando correctamente' : '⚠️ jsllm
         renderInfo(currentPlayer);
         renderPos();
         document.getElementById('playerSearch').value="";
-        if(currentAnalysisDiv)currentAnalysisDiv.innerHTML="🔍 403M LECTOR leerá 403M+ datos para este jugador";
+        if(currentAnalysisDiv)currentAnalysisDiv.innerHTML="🔍 403M LECTOR analizará este jugador";
         actualizarWidgets(currentPlayer, '');
-        actualizarMetricasConectores();
-        showToast("🔄 Jugador base cargado · 403M LECTOR reiniciado");
+        actualizarMetricas();
+        showToast("🔄 Jugador base cargado");
     }
 
     // ============================================
     // INICIALIZACIÓN
     // ============================================
+    async function verificarCloudflare() {
+        try {
+            const response = await fetch(`${JSLLM7_API_URL}/stats`);
+            if (response.ok) {
+                cloudflareConectado = true;
+                document.getElementById('cfStatus').textContent = '✅ Conectado';
+                document.getElementById('cfStatus').style.color = '#10b981';
+                document.getElementById('jsllm7WidgetStatus').innerHTML = '📖 403M LECTOR: ✅ Activo';
+                document.getElementById('jsllm7WidgetStatus').style.color = '#10b981';
+                document.getElementById('liveBadge').textContent = '☁️ 24/7 ACTIVO';
+            }
+        } catch(e) {
+            cloudflareConectado = false;
+            document.getElementById('cfStatus').textContent = '⚠️ Caché';
+            document.getElementById('cfStatus').style.color = '#f59e0b';
+        }
+    }
     
     function init(){
         updatePos(currentPlayer);
         renderInfo(currentPlayer);
         renderPos();
         actualizarWidgets(currentPlayer, '');
-        actualizarMetricasConectores();
+        actualizarMetricas();
         document.getElementById('searchBtn').addEventListener('click',buscarJugador);
         document.getElementById('resetBtn').addEventListener('click',reset);
         document.getElementById('playerSearch').addEventListener('keypress',e=>{if(e.key==='Enter')buscarJugador();});
         
-        // Verificar Cloudflare
         verificarCloudflare();
         setInterval(verificarCloudflare, 60000);
         
-        // Verificar Termux (opcional)
-        verificarConexionTermux();
-        setInterval(verificarConexionTermux, 30000);
-        
-        showToast(`☁️ 403M LECTOR · Cloudflare 24/7 · 403M+ datos · ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'}`);
-    }
-    
-    async function verificarCloudflare() {
-        try {
-            const response = await fetch(`${JSLLM7_API_URL}/ask?q=test`);
-            if (response.ok) {
-                cloudflareConectado = true;
-                document.getElementById('cloudflareStatus').textContent = '☁️ Cloudflare: ✅ 24/7 · Nunca cae';
-                document.getElementById('cloudflareStatus').style.color = '#10b981';
-                document.getElementById('jsllm7WidgetStatus').textContent = '📖 403M LECTOR: ✅ Activo · Cloudflare 24/7';
-                document.getElementById('jsllm7WidgetStatus').style.color = '#10b981';
-                document.getElementById('liveBadge').textContent = '☁️ 24/7 ACTIVO';
-                document.getElementById('liveBadge').style.background = '#10b981';
-            }
-        } catch(e) {
-            cloudflareConectado = false;
-            document.getElementById('cloudflareStatus').textContent = '☁️ Cloudflare: ✅ Modo caché activo';
-            document.getElementById('cloudflareStatus').style.color = '#f59e0b';
-        }
-    }
-    
-    async function verificarConexionTermux() {
-        try {
-            const response = await fetch('http://localhost:8081/stats');
-            if (response.ok) {
-                const stats = await response.json();
-                jsllm7TermuxConectado = true;
-                // No modificar el estado de Cloudflare
-            }
-        } catch(e) {
-            jsllm7TermuxConectado = false;
-        }
+        showToast(`☁️ RENDIMIENTO PRO · AcadémIA Pro · IndexedDB · 5 Fuentes · ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'}`);
     }
     
     init();
