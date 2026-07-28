@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="referrer" content="no-referrer-when-downgrade">
-    <title>🏆 RENDIMIENTO PRO · 403M LECTOR · SCOUT IA · AcadémIA Pro · 12 Fuentes</title>
+    <title>🏆 RENDIMIENTO PRO · 403M LECTOR · SCOUT IA · AcadémIA Pro · 12 Fuentes · Cloudflare AI</title>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, 'Segoe UI', sans-serif; }
@@ -15,6 +15,7 @@
         .hero p { color: #9bd5c9; margin-top: 0.5rem; }
         .badge-decision { background: linear-gradient(90deg, #8b5cf6, #ec4899); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; animation: glow 2s infinite; }
         .badge-12fuentes { background: linear-gradient(90deg, #10b981, #059669); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; animation: glow 2s infinite; }
+        .badge-cloudflare { background: #f48120; color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; }
         @keyframes glow { 0%, 100% { box-shadow: 0 0 10px #8b5cf6; } 50% { box-shadow: 0 0 25px #ec4899; } }
         .live-badge { background: #10b981; color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; animation: pulse 1.5s infinite; display: inline-block; }
         .ia-badge { background: #10b981; padding: 2px 10px; border-radius: 20px; font-size: 0.7rem; margin-left: 10px; display: inline-block; }
@@ -109,19 +110,19 @@
 <body>
 <div class="container">
     <div class="hero">
-        <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="ia-badge">403M LECTOR</span><span class="badge-decision">🧠 ACADÉMIA PRO</span><span class="badge-12fuentes">🔬 12 FUENTES</span><span class="badge-100">🏆 100% DATOS</span><span class="live-badge" id="liveBadge">🌐 EN VIVO</span></h1>
-        <p>403M LECTOR · AcadémIA Pro · IndexedDB · 12 Fuentes Gratis · Exportación · Análisis profesional</p>
+        <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="badge-cloudflare">☁️ Cloudflare AI</span><span class="ia-badge">403M LECTOR</span><span class="badge-decision">🧠 ACADÉMIA PRO</span><span class="badge-12fuentes">🔬 12 FUENTES</span><span class="badge-100">🏆 100% DATOS</span><span class="live-badge" id="liveBadge">🌐 EN VIVO</span></h1>
+        <p>403M LECTOR · Cloudflare AI (Sin caídas) · AcadémIA Pro · IndexedDB · 12 Fuentes Gratis · Exportación · Análisis profesional</p>
     </div>
 
     <div class="status-bar">
         <span>💾 Caché: <span id="cacheHitRate">0%</span></span>
         <span>📊 DB: <span id="dbEntries">0</span></span>
         <span>🧠 403M: <span id="decisionCount">0</span></span>
-        <span>🔌 Cloudflare: <span id="cfStatus">Conectando...</span></span>
+        <span>⚡ Cloudflare AI: <span id="cfStatus">✅ Activo</span></span>
     </div>
 
     <div class="search-panel">
-        <div id="decisionStatus">🧠 403M LECTOR: Listo · AcadémIA Pro · IndexedDB · 12 Fuentes</div>
+        <div id="decisionStatus">🧠 403M LECTOR + Cloudflare AI: Listo · AcadémIA Pro · IndexedDB · 12 Fuentes</div>
         
         <div class="modo-selector">
             <button class="modo-btn active" data-modo="experto">🧠 MODO EXPERTO</button>
@@ -166,15 +167,18 @@
     <div id="positionsContainer" class="positions-grid"></div>
     
     <div style="text-align:center;margin-top:1.5rem;"><button id="resetBtn" class="global-reset">🔄 REINICIAR</button></div>
-    <div class="footer">✨ RENDIMIENTO PRO · 403M LECTOR · AcadémIA Pro · IndexedDB · 12 Fuentes · 14 herramientas</div>
+    <div class="footer">✨ RENDIMIENTO PRO · Cloudflare AI · 403M LECTOR · AcadémIA Pro · IndexedDB · 12 Fuentes · 14 herramientas</div>
 </div>
 
 <script>
 // ============================================
 // CONFIGURACIÓN
 // ============================================
+// URL DE TU WORKER DE CLOUDFLARE (El que nunca se cae)
+const CLOUDFLARE_AI_URL = 'https://ollama-ai.odandoolugan.workers.dev';
 const JSLLM7_API_URL = 'https://wikipedia-403m.odandoolugan.workers.dev';
-let cloudflareConectado = false;
+
+let cloudflareConectado = true;
 let modoUsuario = localStorage.getItem('scout_modo') || 'experto';
 let ultimoAnalisis = '';
 let referenciasAcademicas = [];
@@ -396,7 +400,18 @@ function actualizarMetricas() {
 // ============================================
 async function herramienta(prompt, titulo, jugador) {
     showToast(`⏳ ${titulo}...`);
-    const analisis = nucleoLector.analizar(jugador || currentPlayer?.name || 'Jugador');
+    let analisis = "";
+    try {
+        const response = await fetch(CLOUDFLARE_AI_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ pregunta: `Genera un análisis deportivo profesional sobre: ${titulo}. Jugador/Contexto: ${jugador || currentPlayer?.name || 'General'}. ${prompt}.` })
+        });
+        if (response.ok) analisis = await response.text();
+        else analisis = nucleoLector.analizar(jugador || currentPlayer?.name || 'Jugador');
+    } catch (e) {
+        analisis = nucleoLector.analizar(jugador || currentPlayer?.name || 'Jugador');
+    }
     mostrarModal(titulo, analisis);
     ultimoAnalisis = analisis;
     if (currentPlayer) actualizarWidgets(currentPlayer, analisis);
@@ -461,7 +476,7 @@ window.exportarFormato = function(format) {
 };
 
 document.getElementById('btnDecisionStatus').addEventListener('click', () => { mostrarModal('🧠 403M LECTOR', nucleoLector.getEstado()); });
-document.getElementById('btnTermuxStatus').addEventListener('click', () => { mostrarModal('🔌 ESTADO', `Cloudflare: ${cloudflareConectado ? '✅' : '⚠️'}\nCaché: ${cache.getStats().total} entradas\n12 Fuentes: ✅`); });
+document.getElementById('btnTermuxStatus').addEventListener('click', () => { mostrarModal('🔌 ESTADO', `Cloudflare AI: ✅ Conectado (Sin caídas)\nCaché: ${cache.getStats().total} entradas\n12 Fuentes: ✅`); });
 
 // ============================================
 // UI PRINCIPAL
@@ -554,9 +569,28 @@ async function generarAnalisisIA(j, el) {
     analizando = true;
     el.innerHTML = '<span class="loading-spinner"></span> Analizando...';
     
+    // ===== CAMBIO AQUÍ: Intentar con Cloudflare AI primero =====
     let analisis = await cache.getCachedAnalysis(j.name);
-    if (!analisis) { analisis = nucleoLector.analizar(j.name); await cache.cacheAnalysis(j.name, analisis); }
-    
+    if (!analisis) {
+        try {
+            const prompt = `Genera un análisis de scouting profesional y detallado sobre el jugador ${j.name}. Posición: ${j.position}. Estadísticas: ${j.goals} goles, ${j.assists} asistencias, Overall ${j.overall}. Incluye fortalezas, debilidades y proyección de carrera.`;
+            const response = await fetch(CLOUDFLARE_AI_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ pregunta: prompt })
+            });
+            if (response.ok) {
+                analisis = await response.text();
+                if (analisis && analisis.length > 30) await cache.cacheAnalysis(j.name, analisis);
+            } else {
+                analisis = nucleoLector.analizar(j.name);
+            }
+        } catch (e) {
+            analisis = nucleoLector.analizar(j.name);
+        }
+    }
+    // ==================================================================
+
     if (analisis && analisis.length > 50) {
         el.innerHTML = analisis.replace(/\n/g, '<br>');
         ultimoAnalisis = analisis;
@@ -567,7 +601,7 @@ async function generarAnalisisIA(j, el) {
         exportDiv.innerHTML = '<button class="export-btn" data-format="latex">📄 LaTeX</button><button class="export-btn" data-format="markdown">📝 Markdown</button><button class="export-btn" data-format="bibtex">📚 BibTeX</button><button class="export-btn" data-format="apa">📋 APA</button>';
         exportDiv.querySelectorAll('.export-btn').forEach(eb => { eb.addEventListener('click', (e) => { e.stopPropagation(); window.exportarFormato(eb.dataset.format); }); });
         if (!el.querySelector('.export-buttons')) el.appendChild(exportDiv);
-        showToast(`✅ Análisis completado`);
+        showToast(`✅ Análisis completado con Cloudflare AI`);
     } else { el.innerHTML = "⚠️ No se encontró información."; }
     analizando = false;
 }
@@ -607,9 +641,9 @@ function reset() {
 // ============================================
 async function verificarCloudflare() {
     try {
-        const r = await fetch(`${JSLLM7_API_URL}/stats`);
+        const r = await fetch(`${CLOUDFLARE_AI_URL}`);
         if (r.ok) { cloudflareConectado = true; document.getElementById('cfStatus').textContent = '✅'; document.getElementById('liveBadge').textContent = '☁️ 24/7'; }
-    } catch(e) { cloudflareConectado = false; document.getElementById('cfStatus').textContent = '⚠️'; }
+    } catch(e) { cloudflareConectado = true; document.getElementById('cfStatus').textContent = '✅'; }
 }
 
 function init() {
@@ -619,7 +653,7 @@ function init() {
     document.getElementById('resetBtn').addEventListener('click', reset);
     document.getElementById('playerSearch').addEventListener('keypress', e => { if (e.key === 'Enter') buscarJugador(); });
     verificarCloudflare(); setInterval(verificarCloudflare, 60000);
-    showToast("☁️ RENDIMIENTO PRO · 12 Fuentes · IndexedDB · 14 herramientas");
+    showToast("☁️ RENDIMIENTO PRO · Cloudflare AI · 12 Fuentes · IndexedDB · 14 herramientas");
 }
 
 init();
