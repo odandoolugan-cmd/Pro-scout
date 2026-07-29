@@ -569,11 +569,33 @@ async function generarAnalisisIA(j, el) {
     analizando = true;
     el.innerHTML = '<span class="loading-spinner"></span> Analizando...';
     
-    // ===== CAMBIO AQUÍ: Intentar con Cloudflare AI primero =====
+    // ===== FASE 2 y 3: Búsqueda en 12 fuentes + Envío de contexto a la IA =====
     let analisis = await cache.getCachedAnalysis(j.name);
     if (!analisis) {
+        // 1. Buscar en las 12 fuentes académicas (Fase 2)
+        const resultados12 = await fuentes12.buscarTodasLasFuentes(j.name + ' football player performance');
+        let contextoAcademico = "";
+        if (resultados12.resumen.total_resultados > 0) {
+            contextoAcademico = `\n\n--- INICIO DE ANÁLISIS ACADÉMICO DEPORTIVO ---\n`;
+            contextoAcademico += `Se encontraron ${resultados12.resumen.total_resultados} resultados académicos sobre el jugador.\n\n`;
+            const fuentesPrioritarias = ['semanticScholar', 'core', 'arxiv', 'wikipedia'];
+            fuentesPrioritarias.forEach(key => {
+                const f = resultados12.fuentes[key];
+                if (f && f.exito && f.count > 0) {
+                    contextoAcademico += `\n[${key.toUpperCase()} - ${f.count} resultados]:\n`;
+                    f.data.slice(0, 2).forEach(r => {
+                        contextoAcademico += `• Título: ${r.titulo || 'Sin título'}\n`;
+                        contextoAcademico += `  Resumen: ${(r.abstract || r.snippet || 'Sin resumen disponible.').substring(0, 200)}...\n`;
+                    });
+                }
+            });
+            contextoAcademico += `\n--- FIN DE ANÁLISIS ACADÉMICO DEPORTIVO ---\n\n`;
+        }
+
+        // 2. Generar el prompt con el contexto académico y las estadísticas (Fase 3)
+        const prompt = `Contexto académico:\n${contextoAcademico}\n\nDatos del jugador ${j.name}: Posición: ${j.position}. Estadísticas: ${j.goals} goles, ${j.assists} asistencias, Overall ${j.overall}. Velocidad: ${j.pace}, Disparo: ${j.shooting}, Pase: ${j.passing}, Defensa: ${j.defending}, Físico: ${j.physical}.\n\nInstrucción: Genera un informe de scouting profesional y detallado. Incluye fortalezas, debilidades y proyección de carrera. Si hay información académica arriba, ÚSALA para fundamentar el análisis.`;
+
         try {
-            const prompt = `Genera un análisis de scouting profesional y detallado sobre el jugador ${j.name}. Posición: ${j.position}. Estadísticas: ${j.goals} goles, ${j.assists} asistencias, Overall ${j.overall}. Incluye fortalezas, debilidades y proyección de carrera.`;
             const response = await fetch(CLOUDFLARE_AI_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -601,7 +623,7 @@ async function generarAnalisisIA(j, el) {
         exportDiv.innerHTML = '<button class="export-btn" data-format="latex">📄 LaTeX</button><button class="export-btn" data-format="markdown">📝 Markdown</button><button class="export-btn" data-format="bibtex">📚 BibTeX</button><button class="export-btn" data-format="apa">📋 APA</button>';
         exportDiv.querySelectorAll('.export-btn').forEach(eb => { eb.addEventListener('click', (e) => { e.stopPropagation(); window.exportarFormato(eb.dataset.format); }); });
         if (!el.querySelector('.export-buttons')) el.appendChild(exportDiv);
-        showToast(`✅ Análisis completado con Cloudflare AI`);
+        showToast(`✅ Análisis completado con Cloudflare AI usando fuentes académicas`);
     } else { el.innerHTML = "⚠️ No se encontró información."; }
     analizando = false;
 }
