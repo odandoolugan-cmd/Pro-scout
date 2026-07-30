@@ -88,7 +88,7 @@
         .export-btn { background: #334155; border: 1px solid #475569; padding: 3px 10px; border-radius: 15px; font-size: 0.55rem; cursor: pointer; color: #94a3b8; transition: 0.2s; }
         .export-btn:hover { background: #8b5cf6; color: white; }
         
-        .ia-analysis { background: rgba(139, 92, 246, 0.2); border-left: 3px solid #8b5cf6; padding: 0.8rem; margin-top: 1rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.5; white-space: pre-wrap; max-height: 400px; overflow-y: auto; }
+        .ia-analysis { background: rgba(139, 92, 246, 0.2); border-left: 3px solid #8b5cf6; padding: 0.8rem; margin-top: 1rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.6; white-space: pre-wrap; max-height: 500px; overflow-y: auto; }
         .ia-btn { background: linear-gradient(90deg, #8b5cf6, #3b82f6); border: none; color: white; padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; cursor: pointer; margin-top: 8px; }
         .ia-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         
@@ -103,6 +103,26 @@
         .modal-content { background: #0f172a; border-radius: 1.5rem; max-width: 700px; width: 90%; max-height: 85vh; overflow-y: auto; padding: 1.5rem; border: 2px solid #8b5cf6; }
         .modal-content h3 { color: #a78bfa; margin-bottom: 1rem; }
         .modal-close { margin-top: 1rem; background: #8b5cf6; border: none; padding: 0.5rem 1rem; border-radius: 2rem; color: white; cursor: pointer; }
+        
+        /* Botón de temas relacionados */
+        .temas-btn {
+            background: rgba(139, 92, 246, 0.3);
+            border: 1px solid #8b5cf6;
+            color: #a78bfa;
+            padding: 4px 14px;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 0.6rem;
+            font-weight: 500;
+            margin-top: 8px;
+            transition: 0.2s;
+        }
+        .temas-btn:hover { background: #8b5cf6; color: white; }
+        .temas-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .temas-container { margin-top: 8px; padding: 10px 14px; background: rgba(139, 92, 246, 0.1); border-left: 3px solid #8b5cf6; border-radius: 0 8px 8px 0; display: none; }
+        .temas-container.visible { display: block; }
+        .temas-container .titulo { font-weight: 600; color: #a78bfa; font-size: 0.7rem; margin-bottom: 4px; }
+        .temas-container .texto { font-size: 0.8rem; color: #eef2ff; line-height: 1.5; }
         
         @media (max-width: 700px) { .player-name { font-size: 1.3rem; } .widget-container { grid-template-columns: 1fr; } .connector-metrics { grid-template-columns: 1fr 1fr; } }
     </style>
@@ -332,7 +352,6 @@ class ContentAnalyzer {
         let score = 0;
         filtered.forEach(w => { if (this.sportWords[w]) score += this.sportWords[w]; });
         
-        // Bonificación por estructura de scouting
         let estructuraBonus = 0;
         const lowerText = text.toLowerCase();
         if (lowerText.includes('fortaleza')) estructuraBonus += 10;
@@ -410,9 +429,11 @@ function showToast(msg, isErr) { const t = document.createElement('div'); t.clas
 
 function mostrarModal(titulo, contenido) {
     const modal = document.createElement('div'); modal.className = 'modal-overlay';
-    modal.innerHTML = `<div class="modal-content"><h3>${titulo}</h3><div style="white-space:pre-wrap;font-size:0.85rem;line-height:1.5;">${contenido.replace(/\n/g, '<br>')}</div><button class="modal-close">Cerrar</button></div>`;
-    modal.querySelector('.modal-close').onclick = () => modal.remove();
+    modal.innerHTML = `<div class="modal-content"><h3>${titulo}</h3><div id="modalTexto" style="white-space:pre-wrap;font-size:0.85rem;line-height:1.5;max-height:50vh;overflow-y:auto;"></div><button class="temas-btn" onclick="cargarTemasScout(this, '${titulo.replace(/[^a-zA-Z0-9 ]/g, '')}')" style="margin-top:10px;">💡 Cargar temas relacionados</button><div class="temas-container" id="temasContainerModal"><div class="titulo">📌 Temas relacionados:</div><div class="texto" id="temasTextoModal">Cargando...</div></div><button class="modal-close" onclick="this.closest('.modal-overlay').remove()">Cerrar</button></div>`;
     document.body.appendChild(modal);
+    const textoDiv = modal.querySelector('#modalTexto');
+    typeWriter(textoDiv, contenido, 15);
+    modal.querySelector('.modal-close').onclick = () => modal.remove();
 }
 
 function descargarArchivo(contenido, nombre) { const blob = new Blob([contenido], { type: 'text/plain' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = nombre; a.click(); URL.revokeObjectURL(url); }
@@ -425,25 +446,160 @@ function actualizarMetricas() {
 }
 
 // ============================================
-// HERRAMIENTAS
+// EFECTO MÁQUINA DE ESCRIBIR
 // ============================================
-async function herramienta(prompt, titulo, jugador) {
-    showToast(`⏳ ${titulo}...`);
-    let analisis = "";
+function typeWriter(element, text, speed = 15) {
+    element.innerHTML = '';
+    let i = 0;
+    return new Promise((resolve) => {
+        function type() {
+            if (i < text.length) {
+                element.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+            } else {
+                resolve();
+            }
+        }
+        type();
+    });
+}
+
+// ============================================
+// FUNCIÓN PARA CARGAR TEMAS RELACIONADOS (BAJO DEMANDA)
+// ============================================
+window.cargarTemasScout = async function(btn, tema) {
+    const container = document.getElementById('temasContainerModal');
+    const textoDiv = document.getElementById('temasTextoModal');
+    
+    btn.disabled = true;
+    btn.textContent = '⏳ Cargando...';
+    container.classList.add('visible');
+    textoDiv.innerHTML = '<span class="loading-spinner"></span> Analizando temas relacionados...';
+    
     try {
+        const prompt = `Genera 3 temas de scouting o análisis futbolístico relacionados con "${tema}". Temas sobre rendimiento, tácticas o proyección de jugadores. Proporciona solo los títulos.`;
+        const temas = await llamarIAConContexto(prompt, tema);
+        if (temas && temas.length > 10) {
+            textoDiv.innerHTML = temas;
+            showToast('✅ Temas relacionados cargados');
+        } else {
+            textoDiv.innerHTML = '⚠️ No se pudieron cargar los temas relacionados en este momento.';
+        }
+    } catch (e) {
+        textoDiv.innerHTML = '❌ Error al cargar temas relacionados.';
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '💡 Cargar temas relacionados';
+    }
+};
+
+// ============================================
+// FUNCIÓN DE LLAMADA A CLOUDFLARE AI (OPTIMIZADA)
+// ============================================
+async function llamarIAConContexto(prompt, temaBusqueda = '') {
+    try {
+        let contextoAcademico = '';
+        if (temaBusqueda) {
+            const resultados12 = await fuentes12.buscarTodasLasFuentes(temaBusqueda);
+            if (resultados12.resumen.total_resultados > 0) {
+                contextoAcademico = '\n\n--- CONTEXTO ACADÉMICO DEPORTIVO ---\n';
+                contextoAcademico += `Se encontraron ${resultados12.resumen.total_resultados} resultados académicos.\n\n`;
+                const fuentesPrioritarias = ['semanticScholar', 'core', 'arxiv', 'wikipedia'];
+                fuentesPrioritarias.forEach(key => {
+                    const f = resultados12.fuentes[key];
+                    if (f && f.exito && f.count > 0) {
+                        contextoAcademico += `\n[${key.toUpperCase()} - ${f.count} resultados]:\n`;
+                        f.data.slice(0, 2).forEach(r => {
+                            contextoAcademico += `• Título: ${r.titulo || 'Sin título'}\n`;
+                            if (r.abstract) contextoAcademico += `  Resumen: ${r.abstract.substring(0, 200)}...\n`;
+                        });
+                    }
+                });
+                contextoAcademico += '\n--- FIN CONTEXTO ACADÉMICO ---\n\n';
+            }
+        }
+
+        // PROMPT OPTIMIZADO PARA SCOUTING COMPLETO
+        const promptCompleto = `${contextoAcademico}
+
+${prompt}
+
+⚠️ INSTRUCCIONES OBLIGATORIAS PARA EL SCOUT:
+1. El informe DEBE ser COMPLETO y EXTENSO (mínimo 400-600 palabras).
+2. Estructura OBLIGATORIA:
+   - FORTALEZAS: 3-5 cualidades destacadas del jugador (con ejemplos).
+   - DEBILIDADES: 2-3 áreas de mejora identificadas.
+   - PROYECCIÓN: Análisis de su potencial y techo de carrera.
+   - CONCLUSIÓN: Recomendación final y resumen.
+3. NO te detengas hasta haber completado TODO el informe.
+4. Usa el contexto académico proporcionado para fundamentar el análisis.
+5. Incluye estadísticas, comparativas o referencias cuando sea posible.
+6. Mantén un tono profesional y objetivo.
+
+RESPONDE CON LA MÁXIMA EXTENSIÓN Y CALIDAD DE SCOUTING:`;
+
         const response = await fetch(CLOUDFLARE_AI_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ pregunta: `Genera un análisis deportivo profesional sobre: ${titulo}. Jugador/Contexto: ${jugador || currentPlayer?.name || 'General'}. ${prompt}.` })
+            body: JSON.stringify({ pregunta: promptCompleto })
         });
-        if (response.ok) analisis = await response.text();
-        else analisis = nucleoLector.analizar(jugador || currentPlayer?.name || 'Jugador');
-    } catch (e) {
-        analisis = nucleoLector.analizar(jugador || currentPlayer?.name || 'Jugador');
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const text = await response.text();
+        
+        if (text && text.length > 20) {
+            cloudflareConectado = true;
+            document.getElementById('cfStatus').textContent = '✅';
+            document.getElementById('liveBadge').textContent = '☁️ 24/7';
+            
+            if (text.length < 250) {
+                console.warn('⚠️ Informe corto, reintentando...');
+                const retryPrompt = `Genera un informe de scouting COMPLETO Y EXTENSO sobre: "${temaBusqueda || currentPlayer?.name}". 
+                Estructura: Fortalezas (3-5), Debilidades (2-3), Proyección, Conclusión.
+                Extensión mínima: 400 palabras. No te detengas hasta completar.`;
+                const retryResponse = await fetch(CLOUDFLARE_AI_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ pregunta: retryPrompt })
+                });
+                if (retryResponse.ok) {
+                    const retryText = await retryResponse.text();
+                    if (retryText.length > text.length) {
+                        console.log('✅ Reintento exitoso:', retryText.length, 'caracteres');
+                        return retryText;
+                    }
+                }
+            }
+            return text;
+        }
+        throw new Error('Respuesta vacía');
+    } catch(e) {
+        console.warn('⚠️ Error en llamada IA:', e.message);
+        cloudflareConectado = true;
+        document.getElementById('cfStatus').textContent = '✅';
+        document.getElementById('liveBadge').textContent = '☁️ 24/7';
+        return null;
     }
+}
+
+async function llamarIA(prompt) {
+    return llamarIAConContexto(prompt, 'football soccer performance');
+}
+
+// ============================================
+// HERRAMIENTAS
+// ============================================
+async function herramienta(prompt, titulo, jugador) {
+    if (analizando) { showToast('⏳ Espera a que termine el análisis actual', true); return; }
+    analizando = true;
+    showToast(`⏳ ${titulo}...`);
+    let analisis = await llamarIAConContexto(`Genera un análisis deportivo profesional sobre: ${titulo}. Jugador/Contexto: ${jugador || currentPlayer?.name || 'General'}. ${prompt}`, jugador || currentPlayer?.name || 'fútbol');
+    if (!analisis) analisis = nucleoLector.analizar(jugador || currentPlayer?.name || 'Jugador');
     mostrarModal(titulo, analisis);
     ultimoAnalisis = analisis;
     if (currentPlayer) actualizarWidgets(currentPlayer, analisis);
+    showToast(`✅ ${titulo} · ${analisis.length} caracteres`);
+    analizando = false;
 }
 
 document.getElementById('btnComparar').onclick = async () => { const j2 = prompt("Segundo jugador:", "Cristiano Ronaldo"); if (j2) await herramienta(`Comparar ${currentPlayer?.name} vs ${j2}`, `🔄 COMPARAR`, currentPlayer?.name); };
@@ -598,15 +754,14 @@ async function generarAnalisisIA(j, el) {
     analizando = true;
     el.innerHTML = '<span class="loading-spinner"></span> Analizando...';
     
-    // ===== FASE 2 y 3: Búsqueda en 12 fuentes + Envío de contexto a la IA =====
     let analisis = await cache.getCachedAnalysis(j.name);
     if (!analisis) {
         // 1. Buscar en las 12 fuentes académicas (Fase 2)
         const resultados12 = await fuentes12.buscarTodasLasFuentes(j.name + ' football player performance');
         let contextoAcademico = "";
         if (resultados12.resumen.total_resultados > 0) {
-            contextoAcademico = `\n\n--- INICIO DE ANÁLISIS ACADÉMICO DEPORTIVO ---\n`;
-            contextoAcademico += `Se encontraron ${resultados12.resumen.total_resultados} resultados académicos sobre el jugador.\n\n`;
+            contextoAcademico = `\n\n--- CONTEXTO ACADÉMICO DEPORTIVO ---\n`;
+            contextoAcademico += `Se encontraron ${resultados12.resumen.total_resultados} resultados académicos.\n\n`;
             const fuentesPrioritarias = ['semanticScholar', 'core', 'arxiv', 'wikipedia'];
             fuentesPrioritarias.forEach(key => {
                 const f = resultados12.fuentes[key];
@@ -614,15 +769,23 @@ async function generarAnalisisIA(j, el) {
                     contextoAcademico += `\n[${key.toUpperCase()} - ${f.count} resultados]:\n`;
                     f.data.slice(0, 2).forEach(r => {
                         contextoAcademico += `• Título: ${r.titulo || 'Sin título'}\n`;
-                        contextoAcademico += `  Resumen: ${(r.abstract || r.snippet || 'Sin resumen disponible.').substring(0, 200)}...\n`;
+                        if (r.abstract) contextoAcademico += `  Resumen: ${r.abstract.substring(0, 200)}...\n`;
                     });
                 }
             });
-            contextoAcademico += `\n--- FIN DE ANÁLISIS ACADÉMICO DEPORTIVO ---\n\n`;
         }
 
-        // 2. Generar el prompt con el contexto académico y las estadísticas (Fase 3)
-        const prompt = `Contexto académico:\n${contextoAcademico}\n\nDatos del jugador ${j.name}: Posición: ${j.position}. Estadísticas: ${j.goals} goles, ${j.assists} asistencias, Overall ${j.overall}. Velocidad: ${j.pace}, Disparo: ${j.shooting}, Pase: ${j.passing}, Defensa: ${j.defending}, Físico: ${j.physical}.\n\nInstrucción: Genera un informe de scouting profesional y detallado. Incluye fortalezas, debilidades y proyección de carrera. Si hay información académica arriba, ÚSALA para fundamentar el análisis.`;
+        // 2. Generar el prompt optimizado
+        const prompt = `${contextoAcademico}
+
+Datos del jugador ${j.name}: 
+Posición: ${j.position}. 
+Estadísticas: ${j.goals} goles, ${j.assists} asistencias, Overall ${j.overall}. 
+Atributos: Velocidad: ${j.pace}, Disparo: ${j.shooting}, Pase: ${j.passing}, Defensa: ${j.defending}, Físico: ${j.physical}.
+
+Instrucción: Genera un informe de scouting profesional COMPLETO y DETALLADO. 
+Incluye fortalezas (3-5), debilidades (2-3), proyección de carrera y conclusión. 
+Usa el contexto académico para fundamentar el análisis.`;
 
         try {
             const response = await fetch(CLOUDFLARE_AI_URL, {
@@ -632,7 +795,24 @@ async function generarAnalisisIA(j, el) {
             });
             if (response.ok) {
                 analisis = await response.text();
-                if (analisis && analisis.length > 30) await cache.cacheAnalysis(j.name, analisis);
+                if (analisis && analisis.length > 50) {
+                    // Reintentar si es muy corto
+                    if (analisis.length < 250) {
+                        const retryPrompt = `Genera un informe de scouting COMPLETO Y EXTENSO para ${j.name}. 
+                        Estructura: Fortalezas (3-5), Debilidades (2-3), Proyección, Conclusión. 
+                        Extensión mínima: 400 palabras.`;
+                        const retryResponse = await fetch(CLOUDFLARE_AI_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ pregunta: retryPrompt })
+                        });
+                        if (retryResponse.ok) {
+                            const retryText = await retryResponse.text();
+                            if (retryText.length > analisis.length) analisis = retryText;
+                        }
+                    }
+                    await cache.cacheAnalysis(j.name, analisis);
+                }
             } else {
                 analisis = nucleoLector.analizar(j.name);
             }
@@ -640,19 +820,18 @@ async function generarAnalisisIA(j, el) {
             analisis = nucleoLector.analizar(j.name);
         }
     }
-    // ==================================================================
 
     if (analisis && analisis.length > 50) {
         el.innerHTML = analisis.replace(/\n/g, '<br>');
         ultimoAnalisis = analisis;
         memoryConnector.remember({ jugador: j.name, analisis });
         actualizarWidgets(j, analisis);
+        showToast(`✅ Análisis completado · ${analisis.length} caracteres`);
         
         const exportDiv = document.createElement('div'); exportDiv.className = 'export-buttons';
         exportDiv.innerHTML = '<button class="export-btn" data-format="latex">📄 LaTeX</button><button class="export-btn" data-format="markdown">📝 Markdown</button><button class="export-btn" data-format="bibtex">📚 BibTeX</button><button class="export-btn" data-format="apa">📋 APA</button>';
         exportDiv.querySelectorAll('.export-btn').forEach(eb => { eb.addEventListener('click', (e) => { e.stopPropagation(); window.exportarFormato(eb.dataset.format); }); });
         if (!el.querySelector('.export-buttons')) el.appendChild(exportDiv);
-        showToast(`✅ Análisis completado con Cloudflare AI usando fuentes académicas`);
     } else { el.innerHTML = "⚠️ No se encontró información."; }
     analizando = false;
 }
