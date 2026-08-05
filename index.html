@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="referrer" content="no-referrer-when-downgrade">
-    <title>🏆 RENDIMIENTO PRO · 403M LECTOR · SCOUT IA · AcadémIA Pro · 12 Fuentes · Cloudflare AI · WASM</title>
+    <title>🏆 RENDIMIENTO PRO · 403M LECTOR · SCOUT IA · AcadémIA Pro · 12 Fuentes · Mistral AI · WASM</title>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, 'Segoe UI', sans-serif; }
@@ -15,7 +15,7 @@
         .hero p { color: #9bd5c9; margin-top: 0.5rem; }
         .badge-decision { background: linear-gradient(90deg, #8b5cf6, #ec4899); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; animation: glow 2s infinite; }
         .badge-12fuentes { background: linear-gradient(90deg, #10b981, #059669); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; animation: glow 2s infinite; }
-        .badge-cloudflare { background: #f48120; color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; }
+        .badge-mistral { background: linear-gradient(90deg, #f97316, #dc2626); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; }
         .badge-wasm { background: #3bcb9b; color: #1a2c3e; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; }
         .badge-italia { background: linear-gradient(135deg, #009246, #FFFFFF, #CE2B37); color: #1a2c3e; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; border: 1px solid #CE2B37; }
         @keyframes glow { 0%, 100% { box-shadow: 0 0 10px #8b5cf6; } 50% { box-shadow: 0 0 25px #ec4899; } }
@@ -24,9 +24,13 @@
         .badge-100 { background: #e9c46a; color: #1a2c3e; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
         
-        .modo-selector { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; }
+        .modo-selector { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; align-items: center; flex-wrap: wrap; }
         .modo-btn { background: #1e293b; border: 1px solid #334155; padding: 6px 18px; border-radius: 30px; font-size: 0.75rem; cursor: pointer; font-weight: 600; color: #94a3b8; transition: all 0.2s; }
         .modo-btn.active { background: linear-gradient(90deg, #8b5cf6, #3b82f6); color: white; border-color: #8b5cf6; }
+        .modo-btn:hover { background: #334155; color: white; }
+        .modo-activo-indicator { display: inline-block; padding: 2px 12px; border-radius: 12px; font-size: 0.65rem; font-weight: 600; margin-left: 10px; }
+        .modo-experto { background: #8b5cf6; color: white; }
+        .modo-basico { background: #f97316; color: white; }
         
         .tools-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0; justify-content: center; }
         .tool-btn { background: #1e293b; border: 1px solid #334155; padding: 6px 12px; border-radius: 20px; font-size: 0.65rem; cursor: pointer; font-weight: 500; color: #94a3b8; transition: 0.2s; }
@@ -45,6 +49,9 @@
         .search-box input:focus { background: #2a534b; box-shadow: 0 0 0 2px #5fe0c0; }
         .search-box button { background: linear-gradient(90deg, #2d8f7a, #3fb597); border: none; padding: 0 1.8rem; border-radius: 3rem; font-weight: bold; color: white; cursor: pointer; }
         .search-box button:hover { transform: scale(0.96); }
+        
+        .progress-bar-container { width: 100%; height: 4px; background: #1e293b; border-radius: 2px; margin: 8px 0; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #8b5cf6, #ec4899); width: 0%; transition: width 0.5s; border-radius: 2px; }
         
         .status-bar { background: #1e293b; border-radius: 1rem; padding: 0.4rem 1rem; margin: 0.5rem 0; font-size: 0.6rem; display: flex; justify-content: space-around; flex-wrap: wrap; color: #94a3b8; }
         
@@ -98,8 +105,9 @@
         @keyframes spin { to { transform: rotate(360deg); } }
         
         .global-reset { background: #aa3e2e; border: none; padding: 0.6rem 1.5rem; border-radius: 3rem; color: white; margin-top: 1rem; cursor: pointer; font-weight: bold; }
+        .global-reset:hover { transform: scale(0.96); }
         .footer { text-align: center; margin-top: 2rem; font-size: 0.7rem; opacity: 0.6; }
-        .toast-msg { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #10b981; color: white; padding: 8px 20px; border-radius: 50px; font-size: 0.8rem; z-index: 2000; animation: fadeOut 3s forwards; }
+        .toast-msg { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #8b5cf6; color: white; padding: 8px 20px; border-radius: 50px; font-size: 0.8rem; z-index: 2000; animation: fadeOut 3s forwards; }
         @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; align-items: center; justify-content: center; }
         .modal-content { background: #0f172a; border-radius: 1.5rem; max-width: 700px; width: 90%; max-height: 85vh; overflow-y: auto; padding: 1.5rem; border: 2px solid #8b5cf6; }
@@ -141,24 +149,31 @@
 <body>
 <div class="container">
     <div class="hero">
-        <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="badge-cloudflare">☁️ Cloudflare AI</span><span class="badge-wasm">⚡ WASM</span><span class="ia-badge">403M LECTOR</span><span class="badge-decision">🧠 ACADÉMIA PRO</span><span class="badge-12fuentes">🔬 12 FUENTES</span><span class="badge-100">🏆 100% DATOS</span><span class="badge-italia">🇮🇹 SCOUT ITALIANO</span><span class="live-badge" id="liveBadge">🌐 EN VIVO</span></h1>
-        <p>403M LECTOR · Cloudflare AI (Sin caídas) · WebAssembly · AcadémIA Pro · IndexedDB · 12 Fuentes Gratis · Exportación · Análisis profesional · 🇮🇹</p>
+        <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="badge-mistral">⚡ MISTRAL AI</span><span class="badge-wasm">⚡ WASM</span><span class="ia-badge">403M LECTOR</span><span class="badge-decision">🧠 ACADÉMIA PRO</span><span class="badge-12fuentes">🔬 12 FUENTES</span><span class="badge-100">🏆 100% DATOS</span><span class="badge-italia">🇮🇹 SCOUT ITALIANO</span><span class="live-badge" id="liveBadge">🌐 EN VIVO</span></h1>
+        <p>403M LECTOR · Mistral AI · WebAssembly · AcadémIA Pro · IndexedDB · 12 Fuentes Gratis · Exportación · Análisis profesional · 🇮🇹</p>
     </div>
 
     <div class="status-bar">
         <span>💾 Caché: <span id="cacheHitRate">0%</span></span>
         <span>📊 DB: <span id="dbEntries">0</span></span>
         <span>🧠 403M: <span id="decisionCount">0</span></span>
-        <span>⚡ Cloudflare AI: <span id="cfStatus">✅ Activo</span></span>
+        <span>⚡ Mistral AI: <span id="cfStatus">✅ Activo</span></span>
         <span>⚡ WASM: <span id="wasmStatus">⏳ Cargando...</span></span>
+        <span>📌 Modo: <span id="modoStatus" style="color:#a78bfa;">🧠 Experto</span></span>
     </div>
 
     <div class="search-panel">
-        <div id="decisionStatus">🧠 403M LECTOR + Cloudflare AI + WASM: Listo · AcadémIA Pro · IndexedDB · 12 Fuentes · 🇮🇹</div>
+        <div id="decisionStatus">🧠 403M LECTOR + Mistral AI + WASM: Listo · AcadémIA Pro · IndexedDB · 12 Fuentes · 🇮🇹</div>
         
         <div class="modo-selector">
-            <button class="modo-btn active" data-modo="experto">🧠 MODO EXPERTO</button>
-            <button class="modo-btn" data-modo="basico">⚡ MODO BÁSICO</button>
+            <button class="modo-btn active" data-modo="experto">🧠 MODO EXPERTO (4000 tokens)</button>
+            <button class="modo-btn" data-modo="basico">⚡ MODO BÁSICO (1500 tokens)</button>
+            <span id="modoActualIndicator" class="modo-activo-indicator modo-experto">🧠 Experto</span>
+        </div>
+        
+        <!-- Barra de progreso -->
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progressBar"></div>
         </div>
         
         <div class="tools-bar">
@@ -190,7 +205,7 @@
 
     <div class="widget-container">
         <div class="widget"><div class="widget-title">📊 Estadísticas</div><div class="widget-content"><div class="metrics-grid-widget"><div class="metric-item-widget"><div class="metric-value-widget" id="metricGoles">0</div><div class="metric-label-widget">Goles</div></div><div class="metric-item-widget"><div class="metric-value-widget" id="metricAsistencias">0</div><div class="metric-label-widget">Asistencias</div></div><div class="metric-item-widget"><div class="metric-value-widget" id="metricOverall">0</div><div class="metric-label-widget">Overall</div></div><div class="metric-item-widget"><div class="metric-value-widget" id="metricParticipacion">0%</div><div class="metric-label-widget">Participación</div></div></div></div></div>
-        <div class="widget"><div class="widget-title">🔌 Estado</div><div class="widget-content"><div class="connector-metrics"><div class="connector-metric"><div class="value" id="metricMemoria">0</div><div class="label">Conversaciones</div></div><div class="connector-metric"><div class="value" id="metricSemantico">403M+</div><div class="label">Datos</div></div><div class="connector-metric"><div class="value" id="metricAPIs">12</div><div class="label">Fuentes</div></div><div class="connector-metric"><div class="value" id="metricDB">0</div><div class="label">IndexedDB</div></div></div><div id="jsllm7WidgetStatus">⚡ Cloudflare AI: ✅ Activo (Sin caídas)</div><div id="wasmWidgetStatus">⚡ WebAssembly: <span id="wasmWidgetStatusText">⏳ Cargando...</span></div></div></div>
+        <div class="widget"><div class="widget-title">🔌 Estado</div><div class="widget-content"><div class="connector-metrics"><div class="connector-metric"><div class="value" id="metricMemoria">0</div><div class="label">Conversaciones</div></div><div class="connector-metric"><div class="value" id="metricSemantico">403M+</div><div class="label">Datos</div></div><div class="connector-metric"><div class="value" id="metricAPIs">12</div><div class="label">Fuentes</div></div><div class="connector-metric"><div class="value" id="metricDB">0</div><div class="label">IndexedDB</div></div></div><div id="jsllm7WidgetStatus">⚡ Mistral AI: ✅ Activo</div><div id="wasmWidgetStatus">⚡ WebAssembly: <span id="wasmWidgetStatusText">⏳ Cargando...</span></div></div></div>
         <div class="widget"><div class="widget-title">🎯 Confianza</div><div class="widget-content"><div class="widget-confidence"><span>📊</span><div class="confidence-bar"><div class="confidence-fill" id="confidenceFill" style="width:0%"></div></div><span class="confidence-label" id="confidenceLabel">0%</span></div><div style="font-size:0.75rem;color:#94a3b8;margin-top:8px;">Calidad: <span id="qualityLabel">--</span></div></div></div>
         <div class="widget"><div class="widget-title">🎯 Posición</div><div class="widget-content" id="widgetPosicionContent"><div style="display:flex;gap:10px;flex-wrap:wrap;"><span style="background:#1e293b;padding:4px 10px;border-radius:15px;font-size:0.7rem;border:1px solid #3bcb9b;">⚽ Delantero</span></div></div></div>
     </div>
@@ -199,12 +214,27 @@
     <div id="positionsContainer" class="positions-grid"></div>
     
     <div style="text-align:center;margin-top:1.5rem;"><button id="resetBtn" class="global-reset">🔄 REINICIAR</button></div>
-    <div class="footer">✨ RENDIMIENTO PRO · Cloudflare AI · WebAssembly · 403M LECTOR · AcadémIA Pro · IndexedDB · 12 Fuentes · 14 herramientas · 🇮🇹</div>
+    <div class="footer">✨ RENDIMIENTO PRO · Mistral AI · WebAssembly · 403M LECTOR · AcadémIA Pro · IndexedDB · 12 Fuentes · 14 herramientas · 🇮🇹</div>
 </div>
 
 <script>
 // ============================================
-// WEBASSEMBLY OPTIMIZER
+// CONFIGURACIÓN - MISTRAL AI (SIN CLOUDFLARE)
+// ============================================
+const MISTRAL_API_KEY = 'eKzUq9HIk9xGnJtT6BfzdVSqKKWscOjT';
+const MISTRAL_API_URL = 'https://api.mistral.ai/v1/chat/completions';
+const PAIS_FIJO = 'italia';
+
+let modoActual = 'experto';
+let ultimoAnalisis = '';
+let referenciasAcademicas = [];
+let currentPlayer = { name: "Jugador Base", overall: 75, position: "Delantero", goals: 8, assists: 6, pace: 75, shooting: 74, passing: 72, defending: 50, physical: 70 };
+let currentAnalysisDiv = null;
+let analizando = false;
+let ocupado = false;
+
+// ============================================
+// WEBASSEMBLY OPTIMIZER - LIMPIA FORMATO
 // ============================================
 class WASMOptimizer {
     constructor() {
@@ -228,25 +258,16 @@ class WASMOptimizer {
                 0x00, 0x20, 0x01, 0x6a,
                 0x0b
             ]);
-            const module = await WebAssembly.instantiate(wasmCode);
-            if (module.instance.exports.add) {
-                console.log('✅ WebAssembly inicializado correctamente');
-                this.initialized = true;
-                document.getElementById('wasmStatus').textContent = '✅ Activo';
-                document.getElementById('wasmStatus').style.color = '#3bcb9b';
-                document.getElementById('wasmWidgetStatusText').textContent = '✅ Activo';
-                document.getElementById('wasmWidgetStatusText').style.color = '#3bcb9b';
-                return true;
-            }
+            await WebAssembly.instantiate(wasmCode);
             this.initialized = true;
-            console.log('✅ WebAssembly inicializado (modo simulado)');
-            document.getElementById('wasmStatus').textContent = '⚠️ Simulado';
-            document.getElementById('wasmStatus').style.color = '#f59e0b';
-            document.getElementById('wasmWidgetStatusText').textContent = '⚠️ Simulado';
-            document.getElementById('wasmWidgetStatusText').style.color = '#f59e0b';
+            console.log('✅ WebAssembly inicializado');
+            document.getElementById('wasmStatus').textContent = '✅ Activo';
+            document.getElementById('wasmStatus').style.color = '#3bcb9b';
+            document.getElementById('wasmWidgetStatusText').textContent = '✅ Activo';
+            document.getElementById('wasmWidgetStatusText').style.color = '#3bcb9b';
             return true;
         } catch (error) {
-            console.warn('⚠️ Error en WebAssembly, usando modo JS:', error.message);
+            console.warn('⚠️ Error en WebAssembly:', error.message);
             this.initialized = true;
             document.getElementById('wasmStatus').textContent = '⚠️ JS Fallback';
             document.getElementById('wasmStatus').style.color = '#f59e0b';
@@ -256,38 +277,27 @@ class WASMOptimizer {
         }
     }
 
-    optimizeText(text) {
+    cleanText(text) {
         const inicio = performance.now();
-        if (!text || text.length < 50) return text;
-        let optimized = text;
-        if (this.initialized) {
-            try {
-                optimized = this.optimizeTextJS(text);
-                this.stats.optimizaciones++;
-            } catch (e) {
-                optimized = this.optimizeTextJS(text);
-            }
-        } else {
-            optimized = this.optimizeTextJS(text);
-        }
-        const fin = performance.now();
-        this.stats.tiempoTotal += (fin - inicio);
-        return optimized;
-    }
-
-    optimizeTextJS(text) {
-        if (!text || text.length < 50) return text;
+        if (!text) return text;
+        
         let result = text;
+        // Eliminar asteriscos
+        result = result.replace(/\*\*(.*?)\*\*/g, '$1');
+        result = result.replace(/\*(.*?)\*/g, '$1');
+        // Eliminar guiones bajos
+        result = result.replace(/__(.*?)__/g, '$1');
+        result = result.replace(/_(.*?)_/g, '$1');
+        // Eliminar hashtags
+        result = result.replace(/#(.*?)(\s|$)/g, '$1$2');
+        // Limpiar espacios
         result = result.replace(/\s+/g, ' ');
         result = result.replace(/\s+([.,;:!?])/g, '$1');
         result = result.replace(/\.\s*([a-z])/g, (_, c) => '. ' + c.toUpperCase());
         result = result.replace(/\n\s*\n/g, '\n\n');
-        if (!result.includes('FICHA TÉCNICA')) {
-            result = '📋 FICHA TÉCNICA\n' + result;
-        }
-        if (!result.includes('CONCLUSIÓN')) {
-            result += '\n\n🏁 CONCLUSIÓN: El jugador requiere seguimiento continuo para evaluar su progresión.';
-        }
+        
+        this.stats.optimizaciones++;
+        this.stats.tiempoTotal += (performance.now() - inicio);
         return result;
     }
 
@@ -298,17 +308,20 @@ const wasm = new WASMOptimizer();
 wasm.init();
 
 // ============================================
-// CONFIGURACIÓN
+// SISTEMA DE CACHÉ IndexedDB
 // ============================================
-// URL DEL AGENTE CON 12 FUENTES + MISTRAL
-const CLOUDFLARE_AI_URL = 'https://agente-buscador.odandoolugan.workers.dev';
-const JSLLM7_API_URL = 'https://wikipedia-403m.odandoolugan.workers.dev';
-const PAIS_FIJO = 'italia';
-
-let cloudflareConectado = true;
-let modoUsuario = localStorage.getItem('scout_modo') || 'experto';
-let ultimoAnalisis = '';
-let referenciasAcademicas = [];
+class PersistentCache {
+    constructor() { this.dbName = 'ScoutDBv2'; this.version = 2; this.db = null; this.cacheHits = 0; this.cacheMisses = 0; this.init(); }
+    async init() { return new Promise((resolve) => { const r = indexedDB.open(this.dbName, this.version); r.onupgradeneeded = (e) => { const d = e.target.result; if (!d.objectStoreNames.contains('playerAnalysis')) { const s = d.createObjectStore('playerAnalysis', { keyPath: 'playerName' }); s.createIndex('timestamp', 'timestamp', { unique: false }); } if (!d.objectStoreNames.contains('analytics')) d.createObjectStore('analytics', { keyPath: 'metric' }); }; r.onsuccess = (e) => { this.db = e.target.result; this.loadStats(); resolve(); }; r.onerror = () => resolve(); }); }
+    async loadStats() { try { const s = await this.getAnalytics('cacheStats'); if (s) { this.cacheHits = s.hits || 0; this.cacheMisses = s.misses || 0; } this.updateUI(); } catch(e) {} }
+    async getAnalytics(m) { if (!this.db) return null; return new Promise((r) => { const t = this.db.transaction(['analytics'], 'readonly'); const q = t.objectStore('analytics').get(m); q.onsuccess = () => r(q.result?.value); }); }
+    async saveAnalytics(m, v) { if (!this.db) return; return new Promise((r) => { const t = this.db.transaction(['analytics'], 'readwrite'); t.objectStore('analytics').put({ metric: m, value: v }); t.oncomplete = () => r(); }); }
+    async cacheAnalysis(n, d) { if (!this.db) await this.init(); this.cacheMisses++; await this.saveAnalytics('cacheStats', { hits: this.cacheHits, misses: this.cacheMisses }); return new Promise((r) => { const t = this.db.transaction(['playerAnalysis'], 'readwrite'); t.objectStore('playerAnalysis').put({ playerName: n.toLowerCase(), data: d, timestamp: Date.now() }); t.oncomplete = () => { this.updateUI(); r(); }; }); }
+    async getCachedAnalysis(n) { if (!this.db) await this.init(); return new Promise((r) => { const t = this.db.transaction(['playerAnalysis'], 'readonly'); const q = t.objectStore('playerAnalysis').get(n.toLowerCase()); q.onsuccess = () => { const d = q.result; if (d && (Date.now() - d.timestamp) < 1800000) { this.cacheHits++; this.saveAnalytics('cacheStats', { hits: this.cacheHits, misses: this.cacheMisses }); this.updateUI(); r(d.data); } else r(null); }; }); }
+    updateUI() { const t = this.cacheHits + this.cacheMisses; document.getElementById('cacheHitRate').textContent = (t > 0 ? Math.round((this.cacheHits / t) * 100) : 0) + '%'; document.getElementById('dbEntries').textContent = t; document.getElementById('metricDB').textContent = t; }
+    getStats() { return { hits: this.cacheHits, misses: this.cacheMisses, total: this.cacheHits + this.cacheMisses }; }
+}
+const cache = new PersistentCache();
 
 // ============================================
 // 12 FUENTES GRATUITAS SIN API KEY
@@ -424,20 +437,38 @@ class FuentesGratuitas12 {
 const fuentes12 = new FuentesGratuitas12();
 
 // ============================================
-// SISTEMA DE CACHÉ IndexedDB
+// FUNCIONES UTILITARIAS
 // ============================================
-class PersistentCache {
-    constructor() { this.dbName = 'ScoutDBv2'; this.version = 2; this.db = null; this.cacheHits = 0; this.cacheMisses = 0; this.init(); }
-    async init() { return new Promise((resolve) => { const r = indexedDB.open(this.dbName, this.version); r.onupgradeneeded = (e) => { const d = e.target.result; if (!d.objectStoreNames.contains('playerAnalysis')) { const s = d.createObjectStore('playerAnalysis', { keyPath: 'playerName' }); s.createIndex('timestamp', 'timestamp', { unique: false }); } if (!d.objectStoreNames.contains('analytics')) d.createObjectStore('analytics', { keyPath: 'metric' }); }; r.onsuccess = (e) => { this.db = e.target.result; this.loadStats(); resolve(); }; r.onerror = () => resolve(); }); }
-    async loadStats() { try { const s = await this.getAnalytics('cacheStats'); if (s) { this.cacheHits = s.hits || 0; this.cacheMisses = s.misses || 0; } this.updateUI(); } catch(e) {} }
-    async getAnalytics(m) { if (!this.db) return null; return new Promise((r) => { const t = this.db.transaction(['analytics'], 'readonly'); const q = t.objectStore('analytics').get(m); q.onsuccess = () => r(q.result?.value); }); }
-    async saveAnalytics(m, v) { if (!this.db) return; return new Promise((r) => { const t = this.db.transaction(['analytics'], 'readwrite'); t.objectStore('analytics').put({ metric: m, value: v }); t.oncomplete = () => r(); }); }
-    async cacheAnalysis(n, d) { if (!this.db) await this.init(); this.cacheMisses++; await this.saveAnalytics('cacheStats', { hits: this.cacheHits, misses: this.cacheMisses }); return new Promise((r) => { const t = this.db.transaction(['playerAnalysis'], 'readwrite'); t.objectStore('playerAnalysis').put({ playerName: n.toLowerCase(), data: d, timestamp: Date.now() }); t.oncomplete = () => { this.updateUI(); r(); }; }); }
-    async getCachedAnalysis(n) { if (!this.db) await this.init(); return new Promise((r) => { const t = this.db.transaction(['playerAnalysis'], 'readonly'); const q = t.objectStore('playerAnalysis').get(n.toLowerCase()); q.onsuccess = () => { const d = q.result; if (d && (Date.now() - d.timestamp) < 1800000) { this.cacheHits++; this.saveAnalytics('cacheStats', { hits: this.cacheHits, misses: this.cacheMisses }); this.updateUI(); r(d.data); } else r(null); }; }); }
-    updateUI() { const t = this.cacheHits + this.cacheMisses; document.getElementById('cacheHitRate').textContent = (t > 0 ? Math.round((this.cacheHits / t) * 100) : 0) + '%'; document.getElementById('dbEntries').textContent = t; document.getElementById('metricDB').textContent = t; }
-    getStats() { return { hits: this.cacheHits, misses: this.cacheMisses, total: this.cacheHits + this.cacheMisses }; }
+function showToast(msg, isErr) {
+    const t = document.createElement('div');
+    t.className = 'toast-msg';
+    t.style.background = isErr ? '#ef4444' : '#8b5cf6';
+    t.innerText = msg;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 3000);
 }
-const cache = new PersistentCache();
+
+function mostrarModal(titulo, contenido) {
+    const modal = document.createElement('div'); modal.className = 'modal-overlay';
+    modal.innerHTML = `<div class="modal-content"><h3>${titulo}</h3><div id="modalTexto" style="white-space:pre-wrap;font-size:0.85rem;line-height:1.5;max-height:50vh;overflow-y:auto;"></div><button class="temas-btn" onclick="cargarTemasScout(this, '${titulo.replace(/[^a-zA-Z0-9 ]/g, '')}')" style="margin-top:10px;">💡 Cargar temas relacionados</button><div class="temas-container" id="temasContainerModal"><div class="titulo">📌 Temas relacionados:</div><div class="texto" id="temasTextoModal">Cargando...</div></div><button class="modal-close" onclick="this.closest('.modal-overlay').remove()">Cerrar</button></div>`;
+    document.body.appendChild(modal);
+    const textoDiv = modal.querySelector('#modalTexto');
+    textoDiv.innerHTML = contenido;
+    modal.querySelector('.modal-close').onclick = () => modal.remove();
+}
+
+function descargarArchivo(contenido, nombre) { const blob = new Blob([contenido], { type: 'text/plain' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = nombre; a.click(); URL.revokeObjectURL(url); }
+
+function actualizarProgress(porcentaje) {
+    document.getElementById('progressBar').style.width = `${Math.min(100, porcentaje)}%`;
+}
+
+function actualizarMetricas() {
+    document.getElementById('metricMemoria').textContent = memoryConnector?.getStats().total || 0;
+    document.getElementById('metricSemantico').textContent = '403M+';
+    document.getElementById('metricAPIs').textContent = '12';
+    document.getElementById('metricDB').textContent = cache.getStats().total;
+}
 
 // ============================================
 // ANALIZADOR + PLAGIO + EXPORTADOR
@@ -492,6 +523,138 @@ class Exporter {
 const exporter = new Exporter();
 
 // ============================================
+// FUNCIÓN DE LLAMADA A MISTRAL AI - SCOUT ITALIANO
+// ============================================
+async function llamarIAConContexto(prompt, temaBusqueda = '') {
+    try {
+        let contextoAcademico = '';
+        if (temaBusqueda) {
+            const resultados12 = await fuentes12.buscarTodasLasFuentes(temaBusqueda);
+            if (resultados12.resumen.total_resultados > 0) {
+                contextoAcademico = '\n\n--- CONTEXTO ACADÉMICO DEPORTIVO ---\n';
+                contextoAcademico += `Se encontraron ${resultados12.resumen.total_resultados} resultados académicos.\n\n`;
+                const fuentesPrioritarias = ['semanticScholar', 'core', 'arxiv', 'wikipedia'];
+                fuentesPrioritarias.forEach(key => {
+                    const f = resultados12.fuentes[key];
+                    if (f && f.exito && f.count > 0) {
+                        contextoAcademico += `\n[${key.toUpperCase()} - ${f.count} resultados]:\n`;
+                        f.data.slice(0, 2).forEach(r => {
+                            contextoAcademico += `• Título: ${r.titulo || 'Sin título'}\n`;
+                            if (r.abstract) contextoAcademico += `  Resumen: ${r.abstract.substring(0, 200)}...\n`;
+                        });
+                    }
+                });
+                contextoAcademico += '\n--- FIN CONTEXTO ACADÉMICO ---\n\n';
+            }
+        }
+
+        // PROMPT SEGÚN MODO
+        let promptCompleto;
+        let maxTokens;
+
+        if (modoActual === 'experto') {
+            promptCompleto = `
+Actúa como un scout profesional senior con experiencia en el fútbol italiano.
+
+${contextoAcademico}
+
+${prompt}
+
+📋 ESTRUCTURA OBLIGATORIA:
+1️⃣ Ficha Técnica del Jugador
+2️⃣ Perfil Físico (escala 1-10)
+3️⃣ Perfil Técnico (escala 1-10)
+4️⃣ Perfil Táctico (escala 1-10)
+5️⃣ Perfil Mental (escala 1-10)
+6️⃣ Fortalezas Destacadas (4-5)
+7️⃣ Áreas de Mejora (2-3)
+8️⃣ Estadísticas Clave
+9️⃣ Jugadores Comparables
+🔟 Proyección y Techo de Carrera
+1️⃣1️⃣ Conclusión y Recomendación
+
+Reglas:
+✅ Fundamenta CADA valoración con evidencia
+✅ Sé específico con datos y métricas
+✅ Diferencia entre rendimiento actual y potencial
+✅ Extensión: 800-1000 palabras
+✅ NO uses asteriscos ni formato especial
+
+Empieza con "📋 FICHA TÉCNICA" y termina con "🏁 CONCLUSIÓN".`;
+            maxTokens = 4000;
+        } else {
+            promptCompleto = `
+Actúa como scout profesional.
+
+${contextoAcademico}
+
+${prompt}
+
+Estructura:
+1. Ficha Técnica
+2. Fortalezas (3-4)
+3. Áreas de Mejora (2-3)
+4. Conclusión y Recomendación
+
+Extensión: 300-500 palabras.
+NO uses asteriscos ni formato especial.
+
+Empieza con "📋 FICHA TÉCNICA" y termina con "🏁 CONCLUSIÓN".`;
+            maxTokens = 1500;
+        }
+
+        console.log(`📚 Enviando prompt a Mistral AI (${modoActual})`);
+        console.log('🇮🇹 Enfoque geográfico:', PAIS_FIJO);
+        actualizarProgress(30);
+
+        const response = await fetch(MISTRAL_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${MISTRAL_API_KEY}`
+            },
+            body: JSON.stringify({
+                model: 'mistral-large-latest',
+                messages: [
+                    { 
+                        role: 'system', 
+                        content: 'Eres un scout profesional senior experto en fútbol italiano. Responde en español con estructura profesional. NO uses asteriscos ni formato especial.' 
+                    },
+                    { role: 'user', content: promptCompleto }
+                ],
+                temperature: 0.7,
+                max_tokens: maxTokens
+            })
+        });
+
+        actualizarProgress(60);
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error?.message || `Error ${response.status}`);
+        }
+
+        const data = await response.json();
+        let text = data.choices?.[0]?.message?.content || '';
+
+        if (text && text.length > 20) {
+            document.getElementById('cfStatus').textContent = '✅ Activo';
+            document.getElementById('cfStatus').style.color = '#10b981';
+            document.getElementById('liveBadge').textContent = '🌐 24/7';
+            actualizarProgress(80);
+            // Optimizar con WebAssembly
+            return wasm.cleanText(text);
+        }
+        throw new Error('respuesta vacía');
+    } catch(e) {
+        console.warn('⚠️ Error en llamada Mistral:', e.message);
+        document.getElementById('cfStatus').textContent = '⚠️ Error';
+        document.getElementById('cfStatus').style.color = '#f59e0b';
+        return null;
+    }
+}
+
+// ============================================
 // BASE DE DATOS 403M+
 // ============================================
 const BASE_DATOS_403M = {
@@ -530,50 +693,7 @@ class MemoryConnector {
 const memoryConnector = new MemoryConnector();
 
 // ============================================
-// FUNCIONES UTILITARIAS
-// ============================================
-function showToast(msg, isErr) { const t = document.createElement('div'); t.className = 'toast-msg'; t.style.background = isErr ? '#ef4444' : '#10b981'; t.innerText = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 3000); }
-
-function mostrarModal(titulo, contenido) {
-    const modal = document.createElement('div'); modal.className = 'modal-overlay';
-    modal.innerHTML = `<div class="modal-content"><h3>${titulo}</h3><div id="modalTexto" style="white-space:pre-wrap;font-size:0.85rem;line-height:1.5;max-height:50vh;overflow-y:auto;"></div><button class="temas-btn" onclick="cargarTemasScout(this, '${titulo.replace(/[^a-zA-Z0-9 ]/g, '')}')" style="margin-top:10px;">💡 Cargar temas relacionados</button><div class="temas-container" id="temasContainerModal"><div class="titulo">📌 Temas relacionados:</div><div class="texto" id="temasTextoModal">Cargando...</div></div><button class="modal-close" onclick="this.closest('.modal-overlay').remove()">Cerrar</button></div>`;
-    document.body.appendChild(modal);
-    const textoDiv = modal.querySelector('#modalTexto');
-    typeWriter(textoDiv, contenido, 15);
-    modal.querySelector('.modal-close').onclick = () => modal.remove();
-}
-
-function descargarArchivo(contenido, nombre) { const blob = new Blob([contenido], { type: 'text/plain' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = nombre; a.click(); URL.revokeObjectURL(url); }
-
-function actualizarMetricas() {
-    document.getElementById('metricMemoria').textContent = memoryConnector.getStats().total;
-    document.getElementById('metricSemantico').textContent = '403M+';
-    document.getElementById('metricAPIs').textContent = '12';
-    document.getElementById('metricDB').textContent = cache.getStats().total;
-}
-
-// ============================================
-// EFECTO MÁQUINA DE ESCRIBIR
-// ============================================
-function typeWriter(element, text, speed = 15) {
-    element.innerHTML = '';
-    let i = 0;
-    return new Promise((resolve) => {
-        function type() {
-            if (i < text.length) {
-                element.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(type, speed);
-            } else {
-                resolve();
-            }
-        }
-        type();
-    });
-}
-
-// ============================================
-// FUNCIÓN PARA CARGAR TEMAS RELACIONADOS (BAJO DEMANDA)
+// TEMAS RELACIONADOS (BAJO DEMANDA)
 // ============================================
 window.cargarTemasScout = async function(btn, tema) {
     const container = document.getElementById('temasContainerModal');
@@ -583,19 +703,24 @@ window.cargarTemasScout = async function(btn, tema) {
     btn.textContent = '⏳ Cargando...';
     container.classList.add('visible');
     textoDiv.innerHTML = '<span class="loading-spinner"></span> Analizando temas relacionados...';
+    actualizarProgress(10);
     
     try {
         const prompt = `Genera 3 temas de scouting o análisis futbolístico relacionados con "${tema}" desde la perspectiva del scouting italiano. Temas sobre rendimiento, tácticas o proyección de jugadores. Proporciona solo los títulos.`;
         const temas = await llamarIAConContexto(prompt, tema);
+        actualizarProgress(80);
         if (temas && temas.length > 10) {
             const stats = wasm.getStats();
             textoDiv.innerHTML = temas;
+            actualizarProgress(100);
             showToast(`✅ Temas relacionados · WASM (${stats.optimizaciones} optimizaciones)`);
         } else {
             textoDiv.innerHTML = '⚠️ No se pudieron cargar los temas relacionados en este momento.';
+            actualizarProgress(0);
         }
     } catch (e) {
         textoDiv.innerHTML = '❌ Error al cargar temas relacionados.';
+        actualizarProgress(0);
     } finally {
         btn.disabled = false;
         btn.textContent = '💡 Cargar temas relacionados';
@@ -603,122 +728,59 @@ window.cargarTemasScout = async function(btn, tema) {
 };
 
 // ============================================
-// FUNCIÓN DE LLAMADA A CLOUDFLARE AI CON PROMPT DE SCOUT ITALIANO
-// ============================================
-async function llamarIAConContexto(prompt, temaBusqueda = '') {
-    try {
-        let contextoAcademico = '';
-        if (temaBusqueda) {
-            const resultados12 = await fuentes12.buscarTodasLasFuentes(temaBusqueda);
-            if (resultados12.resumen.total_resultados > 0) {
-                contextoAcademico = '\n\n--- CONTEXTO ACADÉMICO DEPORTIVO ---\n';
-                contextoAcademico += `Se encontraron ${resultados12.resumen.total_resultados} resultados académicos.\n\n`;
-                const fuentesPrioritarias = ['semanticScholar', 'core', 'arxiv', 'wikipedia'];
-                fuentesPrioritarias.forEach(key => {
-                    const f = resultados12.fuentes[key];
-                    if (f && f.exito && f.count > 0) {
-                        contextoAcademico += `\n[${key.toUpperCase()} - ${f.count} resultados]:\n`;
-                        f.data.slice(0, 2).forEach(r => {
-                            contextoAcademico += `• Título: ${r.titulo || 'Sin título'}\n`;
-                            if (r.abstract) contextoAcademico += `  Resumen: ${r.abstract.substring(0, 200)}...\n`;
-                        });
-                    }
-                });
-                contextoAcademico += '\n--- FIN CONTEXTO ACADÉMICO ---\n\n';
-            }
-        }
-
-        // PROMPT DE SCOUT PROFESIONAL SENIOR ITALIANO
-        const promptScout = `${contextoAcademico}
-
-${prompt}
-
-═══════════════════════════════════════════════════════════
-🔍 ROL: SCOUT PROFESIONAL SENIOR ITALIANO
-═══════════════════════════════════════════════════════════
-
-⚠️ INSTRUCCIONES OBLIGATORIAS:
-
-📊 EXTENSIÓN: Mínimo 800-1000 palabras.
-
-📋 ESTRUCTURA OBLIGATORIA:
-   1️⃣ Ficha Técnica del Jugador
-   2️⃣ Perfil Físico (escala 1-10)
-   3️⃣ Perfil Técnico (escala 1-10)
-   4️⃣ Perfil Táctico (escala 1-10)
-   5️⃣ Perfil Mental (escala 1-10)
-   6️⃣ Fortalezas Destacadas (4-5)
-   7️⃣ Áreas de Mejora (2-3)
-   8️⃣ Estadísticas Clave
-   9️⃣ Jugadores Comparables
-   🔟 Proyección y Techo de Carrera
-   1️⃣1️⃣ Conclusión y Recomendación
-
-🎓 REGLAS DE CALIDAD:
-✅ Fundamenta CADA valoración con evidencia
-✅ Sé específico con datos y métricas
-✅ Diferencia entre rendimiento actual y potencial
-✅ Mantén objetividad
-❌ NO uses frases vagas
-❌ NO omitas ninguna sección
-
-Empieza con "📋 FICHA TÉCNICA" y termina con "🏁 CONCLUSIÓN".`;
-
-        console.log('📚 Enviando prompt a Cloudflare AI');
-        console.log('🇮🇹 Enfoque geográfico fijo:', PAIS_FIJO);
-
-        // ⏱️ TIMEOUT DE 60 SEGUNDOS
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 60000);
-
-        const response = await fetch(CLOUDFLARE_AI_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ pregunta: promptScout }),
-            signal: controller.signal
-        });
-
-        clearTimeout(timeoutId);
-
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const text = await response.text();
-
-        if (text && text.length > 50) {
-            cloudflareConectado = true;
-            document.getElementById('cfStatus').textContent = '✅';
-            document.getElementById('liveBadge').textContent = '☁️ 24/7';
-            
-            // Optimizar con WebAssembly
-            const textoOptimizado = wasm.optimizeText(text);
-            return textoOptimizado;
-        }
-        throw new Error('Respuesta vacía');
-    } catch(e) {
-        console.warn('⚠️ Error en llamada IA:', e.message);
-        cloudflareConectado = true;
-        document.getElementById('cfStatus').textContent = '✅';
-        document.getElementById('liveBadge').textContent = '☁️ 24/7';
-        return null;
-    }
-}
-
-// ============================================
 // HERRAMIENTAS
 // ============================================
 async function herramienta(prompt, titulo, jugador) {
     if (analizando) { showToast('⏳ Espera a que termine el análisis actual', true); return; }
     analizando = true;
+    ocupado = true;
     showToast(`⏳ ${titulo}...`);
+    actualizarProgress(10);
+    
     let analisis = await llamarIAConContexto(`Genera un análisis de scouting profesional sobre: ${titulo}. Jugador/Contexto: ${jugador || currentPlayer?.name || 'General'} con enfoque en ${PAIS_FIJO}. ${prompt}`, jugador || currentPlayer?.name || 'fútbol');
-    if (!analisis) analisis = nucleoLector.analizar(jugador || currentPlayer?.name || 'Jugador');
+    actualizarProgress(70);
+    
+    if (!analisis || analisis.length < 50) {
+        analisis = nucleoLector.analizar(jugador || currentPlayer?.name || 'Jugador');
+    }
     const stats = wasm.getStats();
     mostrarModal(titulo, analisis);
     ultimoAnalisis = analisis;
     if (currentPlayer) actualizarWidgets(currentPlayer, analisis);
+    actualizarProgress(100);
     showToast(`✅ ${titulo} · ${analisis.length} caracteres · WASM (${stats.optimizaciones} optimizaciones) · 🇮🇹`);
     analizando = false;
+    ocupado = false;
+    setTimeout(() => actualizarProgress(0), 2000);
 }
 
+// ============================================
+// SELECTOR DE MODO
+// ============================================
+document.querySelectorAll('.modo-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.modo-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        modoActual = this.dataset.modo;
+        const indicator = document.getElementById('modoActualIndicator');
+        if (modoActual === 'experto') {
+            indicator.textContent = '🧠 Experto (4000 tokens)';
+            indicator.className = 'modo-activo-indicator modo-experto';
+            document.getElementById('modoStatus').textContent = '🧠 Experto';
+            document.getElementById('modoStatus').style.color = '#a78bfa';
+        } else {
+            indicator.textContent = '⚡ Básico (1500 tokens)';
+            indicator.className = 'modo-activo-indicator modo-basico';
+            document.getElementById('modoStatus').textContent = '⚡ Básico';
+            document.getElementById('modoStatus').style.color = '#f97316';
+        }
+        showToast(`✨ Modo ${modoActual === 'experto' ? 'EXPERTO' : 'BÁSICO'}`);
+    });
+});
+
+// ============================================
+// BOTONES DE HERRAMIENTAS
+// ============================================
 document.getElementById('btnComparar').onclick = async () => { const j2 = prompt("Segundo jugador:", "Cristiano Ronaldo"); if (j2) await herramienta(`Comparar ${currentPlayer?.name} vs ${j2}`, `🔄 COMPARAR`, currentPlayer?.name); };
 document.getElementById('btnFormacion').onclick = () => herramienta('Formación ideal', '📋 FORMACIÓN', 'Formación');
 document.getElementById('btnRival').onclick = async () => { const r = prompt("Equipo rival:", "Real Madrid"); if (r) await herramienta(`Análisis de ${r}`, `🎯 RIVAL`, r); };
@@ -794,12 +856,13 @@ document.getElementById('btnTermuxStatus').addEventListener('click', () => {
     const stats = wasm.getStats();
     mostrarModal('🔌 ESTADO', 
         `=== ESTADO DEL SISTEMA ===\n` +
-        `⚡ Cloudflare AI: ✅ Conectado (Sin caídas)\n` +
+        `⚡ Mistral AI: ✅ Conectado (Sin Cloudflare)\n` +
         `⚡ WebAssembly: ${wasm.initialized ? '✅ Activo' : '⚠️ No disponible'}\n` +
         `📊 Optimizaciones: ${stats.optimizaciones}\n` +
         `⏱️ Tiempo WASM: ${Math.round(stats.tiempoTotal)}ms\n` +
         `💾 Caché: ${cache.getStats().total} entradas\n` +
         `📚 Fuentes: 12 activas\n` +
+        `📌 Modo: ${modoActual === 'experto' ? '🧠 Experto (4000 tokens)' : '⚡ Básico (1500 tokens)'}\n` +
         `🇮🇹 Enfoque: ${PAIS_FIJO}`
     );
 });
@@ -807,14 +870,6 @@ document.getElementById('btnTermuxStatus').addEventListener('click', () => {
 // ============================================
 // UI PRINCIPAL
 // ============================================
-let currentPlayer = { name: "Jugador Base", overall: 75, position: "Delantero", goals: 8, assists: 6, pace: 75, shooting: 74, passing: 72, defending: 50, physical: 70 };
-let currentAnalysisDiv = null;
-let analizando = false;
-
-function actualizarModoUI() { document.querySelectorAll('.modo-btn').forEach(b => b.classList.toggle('active', b.dataset.modo === modoUsuario)); }
-document.querySelectorAll('.modo-btn').forEach(b => { b.addEventListener('click', () => { modoUsuario = b.dataset.modo; localStorage.setItem('scout_modo', modoUsuario); actualizarModoUI(); showToast(`✨ Modo ${modoUsuario === 'experto' ? 'EXPERTO' : 'BÁSICO'}`); }); });
-actualizarModoUI();
-
 function getPlayerData(nombre) {
     const nl = nombre.toLowerCase();
     const db = { "lionel messi": { overall:92, goles:25, asistencias:18, pace:82, shooting:91, passing:93, defending:35, physical:68, pos:"Extremo" }, "cristiano ronaldo": { overall:91, goles:28, asistencias:8, pace:85, shooting:94, passing:78, defending:40, physical:85, pos:"Delantero" }, "erling haaland": { overall:91, goles:32, asistencias:6, pace:88, shooting:93, passing:65, defending:42, physical:90, pos:"Delantero" }, "jude bellingham": { overall:89, goles:19, asistencias:8, pace:82, shooting:84, passing:86, defending:70, physical:82, pos:"Mediocentro" }, "kylian mbappe": { overall:92, goles:30, asistencias:9, pace:95, shooting:90, passing:77, defending:38, physical:83, pos:"Delantero" } };
@@ -893,7 +948,8 @@ function actualizarWidgets(j, analisis) {
 async function generarAnalisisIA(j, el) {
     if (analizando) { el.innerHTML = "⏳ Ya analizando..."; return; }
     analizando = true;
-    el.innerHTML = '<span class="loading-spinner"></span> Analizando con Cloudflare AI + WASM...';
+    el.innerHTML = '<span class="loading-spinner"></span> Analizando con Mistral AI + WASM...';
+    actualizarProgress(10);
     
     let analisis = await cache.getCachedAnalysis(j.name);
     if (!analisis) {
@@ -916,50 +972,91 @@ async function generarAnalisisIA(j, el) {
             });
         }
 
-        // 2. Generar el prompt de scout profesional con enfoque en Italia
-        const prompt = `${contextoAcademico}
-
-Datos del jugador ${j.name}: 
+        // 2. Generar el prompt según el modo
+        let prompt;
+        if (modoActual === 'experto') {
+            prompt = `Datos del jugador ${j.name}: 
 Posición: ${j.position}. 
 Estadísticas: ${j.goals} goles, ${j.assists} asistencias, Overall ${j.overall}. 
 Atributos: Velocidad: ${j.pace}, Disparo: ${j.shooting}, Pase: ${j.passing}, Defensa: ${j.defending}, Físico: ${j.physical}.
 
-Instrucción: Genera un informe de scouting profesional COMPLETO y DETALLADO desde la perspectiva de un scout italiano de élite.
-Incluye ficha técnica, perfiles (Físico/Técnico/Táctico/Mental), fortalezas (4-5), debilidades (2-3), estadísticas clave, jugadores comparables, proyección y conclusión final con recomendación.
-Usa el contexto académico para fundamentar el análisis.
-Enfoque en el contexto del fútbol italiano y europeo.`;
+Genera un informe de scouting profesional COMPLETO desde la perspectiva de un scout italiano de élite.
+
+Estructura obligatoria:
+1️⃣ Ficha Técnica del Jugador
+2️⃣ Perfil Físico (escala 1-10)
+3️⃣ Perfil Técnico (escala 1-10)
+4️⃣ Perfil Táctico (escala 1-10)
+5️⃣ Perfil Mental (escala 1-10)
+6️⃣ Fortalezas Destacadas (4-5)
+7️⃣ Áreas de Mejora (2-3)
+8️⃣ Estadísticas Clave
+9️⃣ Jugadores Comparables
+🔟 Proyección y Techo de Carrera
+1️⃣1️⃣ Conclusión y Recomendación
+
+${contextoAcademico}
+
+Extensión: 800-1000 palabras.
+Enfoque en el contexto del fútbol italiano y europeo.
+NO uses asteriscos ni formato especial.
+
+Empieza con "📋 FICHA TÉCNICA" y termina con "🏁 CONCLUSIÓN".`;
+        } else {
+            prompt = `Datos del jugador ${j.name}: 
+Posición: ${j.position}. 
+Estadísticas: ${j.goals} goles, ${j.assists} asistencias, Overall ${j.overall}. 
+Atributos: Velocidad: ${j.pace}, Disparo: ${j.shooting}, Pase: ${j.passing}, Defensa: ${j.defending}, Físico: ${j.physical}.
+
+Genera un informe de scouting profesional.
+
+Estructura:
+1. Ficha Técnica
+2. Fortalezas (3-4)
+3. Áreas de Mejora (2-3)
+4. Conclusión y Recomendación
+
+Extensión: 300-500 palabras.
+NO uses asteriscos ni formato especial.
+
+Empieza con "📋 FICHA TÉCNICA" y termina con "🏁 CONCLUSIÓN".`;
+        }
 
         try {
-            const response = await fetch(CLOUDFLARE_AI_URL, {
+            const response = await fetch(MISTRAL_API_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ pregunta: prompt })
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${MISTRAL_API_KEY}`
+                },
+                body: JSON.stringify({
+                    model: 'mistral-large-latest',
+                    messages: [
+                        { 
+                            role: 'system', 
+                            content: 'Eres un scout profesional senior experto en fútbol italiano. Responde en español con estructura profesional. NO uses asteriscos ni formato especial.' 
+                        },
+                        { role: 'user', content: prompt }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: modoActual === 'experto' ? 4000 : 1500
+                })
             });
             if (response.ok) {
-                analisis = await response.text();
+                const data = await response.json();
+                analisis = data.choices?.[0]?.message?.content || '';
                 if (analisis && analisis.length > 50) {
-                    if (analisis.length < 300) {
-                        const retryPrompt = `Genera un informe de scouting COMPLETO Y EXTENSO para ${j.name} con enfoque en ${PAIS_FIJO}. 
-                        Estructura: Ficha técnica, Perfiles (Físico/Técnico/Táctico/Mental), Fortalezas, Debilidades, Estadísticas, Comparables, Proyección, Conclusión. 
-                        Extensión mínima: 600 palabras.`;
-                        const retryResponse = await fetch(CLOUDFLARE_AI_URL, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ pregunta: retryPrompt })
-                        });
-                        if (retryResponse.ok) {
-                            const retryText = await retryResponse.text();
-                            if (retryText.length > analisis.length) analisis = retryText;
-                        }
-                    }
                     // Optimizar con WebAssembly
-                    analisis = wasm.optimizeText(analisis);
+                    analisis = wasm.cleanText(analisis);
                     await cache.cacheAnalysis(j.name, analisis);
+                } else {
+                    throw new Error('Respuesta vacía');
                 }
             } else {
                 analisis = nucleoLector.analizar(j.name);
             }
         } catch (e) {
+            console.warn('Error en análisis:', e);
             analisis = nucleoLector.analizar(j.name);
         }
     }
@@ -967,6 +1064,7 @@ Enfoque en el contexto del fútbol italiano y europeo.`;
     if (analisis && analisis.length > 50) {
         const stats = wasm.getStats();
         el.innerHTML = analisis.replace(/\n/g, '<br>');
+        actualizarProgress(100);
         ultimoAnalisis = analisis;
         memoryConnector.remember({ jugador: j.name, analisis });
         actualizarWidgets(j, analisis);
@@ -976,7 +1074,11 @@ Enfoque en el contexto del fútbol italiano y europeo.`;
         exportDiv.innerHTML = '<button class="export-btn" data-format="latex">📄 LaTeX</button><button class="export-btn" data-format="markdown">📝 Markdown</button><button class="export-btn" data-format="bibtex">📚 BibTeX</button><button class="export-btn" data-format="apa">📋 APA</button>';
         exportDiv.querySelectorAll('.export-btn').forEach(eb => { eb.addEventListener('click', (e) => { e.stopPropagation(); window.exportarFormato(eb.dataset.format); }); });
         if (!el.querySelector('.export-buttons')) el.appendChild(exportDiv);
-    } else { el.innerHTML = "⚠️ No se encontró información."; }
+        setTimeout(() => actualizarProgress(0), 2000);
+    } else { 
+        el.innerHTML = "⚠️ No se encontró información."; 
+        actualizarProgress(0);
+    }
     analizando = false;
 }
 
@@ -984,7 +1086,7 @@ window.generarAnalisis = function() { if (currentAnalysisDiv) generarAnalisisIA(
 
 function renderInfo(p) {
     const q = analyzer.analyzeQuality(`Jugador ${p.name} Overall ${p.overall}`);
-    document.getElementById('playerInfoContainer').innerHTML = `<div class="player-card-big"><span class="quality-badge quality-${q.qualityLevel}">${q.qualityScore}%</span><div><div class="player-name">⭐ ${p.name}</div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">📊 Overall: <span>${p.overall}</span></span><span class="stat-chip">📍 ${p.position}</span><span class="stat-chip">⚽ Goles: <span>${p.goals}</span></span><span class="stat-chip">🎯 Asist: <span>${p.assists}</span></span></div></div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">💨 ${p.pace}</span><span class="stat-chip">🎯 ${p.shooting}</span><span class="stat-chip">🎨 ${p.passing}</span><span class="stat-chip">🛡️ ${p.defending}</span><span class="stat-chip">💪 ${p.physical}</span></div></div><div class="ia-analysis"><button class="ia-btn" onclick="generarAnalisis()">🤖 403M LECTOR · ANALIZAR CON WASM</button><div id="iaResult" style="margin-top:10px;">🔍 Análisis pendiente...</div></div>`;
+    document.getElementById('playerInfoContainer').innerHTML = `<div class="player-card-big"><span class="quality-badge quality-${q.qualityLevel}">${q.qualityScore}%</span><div><div class="player-name">⭐ ${p.name}</div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">📊 Overall: <span>${p.overall}</span></span><span class="stat-chip">📍 ${p.position}</span><span class="stat-chip">⚽ Goles: <span>${p.goals}</span></span><span class="stat-chip">🎯 Asist: <span>${p.assists}</span></span></div></div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">💨 ${p.pace}</span><span class="stat-chip">🎯 ${p.shooting}</span><span class="stat-chip">🎨 ${p.passing}</span><span class="stat-chip">🛡️ ${p.defending}</span><span class="stat-chip">💪 ${p.physical}</span></div></div><div class="ia-analysis"><button class="ia-btn" onclick="generarAnalisis()">🤖 403M LECTOR · ANALIZAR CON MISTRAL + WASM</button><div id="iaResult" style="margin-top:10px;">🔍 Análisis pendiente...</div></div>`;
     currentAnalysisDiv = document.getElementById('iaResult');
     actualizarWidgets(p, '');
 }
@@ -1013,23 +1115,16 @@ function reset() {
 // ============================================
 // INICIALIZACIÓN
 // ============================================
-async function verificarCloudflare() {
-    try {
-        const r = await fetch(`${CLOUDFLARE_AI_URL}`);
-        if (r.ok) { cloudflareConectado = true; document.getElementById('cfStatus').textContent = '✅'; document.getElementById('liveBadge').textContent = '☁️ 24/7'; }
-    } catch(e) { cloudflareConectado = true; document.getElementById('cfStatus').textContent = '✅'; }
-}
-
 function init() {
     console.log(`🇮🇹 Enfoque geográfico fijo: ${PAIS_FIJO}`);
     console.log(`⚡ WebAssembly: ${wasm.initialized ? '✅ Activo' : '⚠️ No disponible'}`);
+    console.log(`🧠 Modo Experto: 4000 tokens | ⚡ Modo Básico: 1500 tokens`);
     updatePos(currentPlayer); renderInfo(currentPlayer); renderPos();
     actualizarWidgets(currentPlayer, ''); actualizarMetricas();
     document.getElementById('searchBtn').addEventListener('click', buscarJugador);
     document.getElementById('resetBtn').addEventListener('click', reset);
     document.getElementById('playerSearch').addEventListener('keypress', e => { if (e.key === 'Enter') buscarJugador(); });
-    verificarCloudflare(); setInterval(verificarCloudflare, 60000);
-    showToast(`☁️ RENDIMIENTO PRO · Cloudflare AI · WASM · 12 Fuentes · IndexedDB · 14 herramientas · 🇮🇹 Enfoque ${PAIS_FIJO}`);
+    showToast(`☁️ RENDIMIENTO PRO · Mistral AI · WASM · 12 Fuentes · IndexedDB · 14 herramientas · 🇮🇹 Enfoque ${PAIS_FIJO}`);
 }
 
 init();
