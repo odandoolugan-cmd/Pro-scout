@@ -369,7 +369,7 @@ class WASMUltra {
         }
     }
 
-    // 1. LIMPIEZA DE TEXTO
+    // ✅ 1. LIMPIEZA DE TEXTO
     cleanText(text) {
         const inicio = performance.now();
         if (!text) return text;
@@ -389,7 +389,7 @@ class WASMUltra {
         return result;
     }
 
-    // 2. DETECCIÓN DE IDIOMA
+    // ✅ 2. DETECCIÓN DE IDIOMA (CORREGIDO: detectarIdioma con I mayúscula)
     detectarIdioma(texto) {
         const inicio = performance.now();
         if (!texto || texto.length < 5) return 'es';
@@ -1299,7 +1299,7 @@ RESPONDE SOLO CON EL INFORME COMPLETO, sin introducciones ni comentarios adicion
         ultimoAnalisis = analisis;
         actualizarWidgets(j, analisis);
         
-        // LLAMAR A TODAS LAS FUNCIONES WASM ULTRA
+        // ✅ LLAMAR A TODAS LAS FUNCIONES WASM ULTRA - usar detectarIdioma con I mayúscula
         const idiomaDet = wasmUltra.detectarIdioma(analisis);
         actualizarAnalisisAutomatico(analisis, idiomaDet);
         
@@ -1690,6 +1690,22 @@ async function init() {
         document.getElementById('ultraTiempo').textContent = Math.round(stats.tiempoTotal) + 'ms';
         document.getElementById('ultraIdiomas').textContent = stats.idiomasDetectados;
         document.getElementById('ultraFunciones').textContent = stats.funcionesEjecutadas;
+        
+        // ✅ Prueba de diagnóstico - verificar que la función está disponible
+        console.log('🔍 Funciones disponibles en wasmUltra:');
+        console.log(Object.keys(wasmUltra));
+        
+        if (typeof wasmUltra.detectarIdioma === 'function') {
+            console.log('✅ detectarIdioma está disponible');
+        } else {
+            console.log('❌ detectarIdioma NO está disponible');
+            console.log('🔍 Buscando funciones similares:');
+            Object.keys(wasmUltra).forEach(key => {
+                if (key.includes('detectar') || key.includes('idioma')) {
+                    console.log(`  - ${key}`);
+                }
+            });
+        }
     }
     
     updatePos(currentPlayer); renderInfo(currentPlayer); renderPos();
