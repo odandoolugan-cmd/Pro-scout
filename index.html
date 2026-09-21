@@ -177,8 +177,8 @@
 <body>
 <div class="container">
     <div class="hero">
-        <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="badge badge-rustwasm">🦀 WASM RUST</span><span class="badge badge-multiia">🔄 MULTI-IA</span><span class="badge badge-core">🧬 CORE 403M</span><span class="badge badge-agentreach">🔌 AGENT-REACH</span><span class="badge badge-mistral">⚡ MULTI-IA</span><span class="badge badge-wasm">⚡ WASM EXTREMO</span><span class="badge badge-decision">🧠 403M LECTOR</span><span class="badge badge-12fuentes">🔬 12 FUENTES</span><span class="badge badge-apifutbol">⚽ API FÚTBOL</span><span class="badge badge-100">🏆 100% DATOS</span><span class="badge badge-italia">🇮🇹 SCOUT ITALIANO</span><span class="badge badge-1llamada">⚡ 1 LLAMADA</span><span class="badge badge-memoria">🧠 MEMORIA</span><span class="badge badge-ilimitado">♾️ ILIMITADO</span><span class="badge badge-agente">🤖 AGENTE</span><span class="live-badge">🌐 EN VIVO</span></h1>
-        <p>WASM Rust REAL · Multi-IA · Core 403M · Agent-Reach · ⚽ APIs Fútbol · 12 Fuentes + Ilimitadas · 🇮🇹 · 📊 Análisis Automático · 🧠 Memoria Persistente · ♾️ Sin límites · 🤖 Agente</p>
+        <h1>⚡ RENDIMIENTO PRO · SCOUT IA <span class="badge badge-rustwasm">🦀 WASM RUST</span><span class="badge badge-multiia">🔄 MULTI-IA</span><span class="badge badge-core">🧬 CORE 403M</span><span class="badge badge-agentreach">🔌 AGENT-REACH</span><span class="badge badge-mistral">⚡ MULTI-IA</span><span class="badge badge-wasm">⚡ WASM EXTREMO</span><span class="badge badge-decision">🧠 403M LECTOR</span><span class="badge badge-12fuentes">🔬 12 FUENTES</span><span class="badge badge-apifutbol">⚽ API FÚTBOL</span><span class="badge badge-100">🏆 100% DATOS</span><span class="badge badge-italia">🇮🇹 SCOUT ITALIANO</span><span class="badge badge-1llamada">⚡ PARALELO</span><span class="badge badge-memoria">🧠 MEMORIA</span><span class="badge badge-ilimitado">♾️ ILIMITADO</span><span class="badge badge-agente">🤖 AGENTE</span><span class="live-badge">🌐 EN VIVO</span></h1>
+        <p>WASM Rust REAL · Multi-IA paralelo (Promise.any) · Core 403M · Agent-Reach · ⚽ APIs Fútbol · 12 Fuentes + Ilimitadas · 🇮🇹 · 📊 Análisis Automático · 🧠 Memoria Persistente · ♾️ Sin límites · 🤖 Agente</p>
     </div>
 
     <!-- CORE 403M STATUS -->
@@ -206,6 +206,7 @@
         <span>📊 Funciones: <strong id="wasmFuncsStatus">0</strong></span>
         <span>📦 Caché: <strong id="wasmCacheSize">0</strong></span>
         <span>🔄 Multi-IA: <strong id="proveedorStatus" style="color:#10b981;">✅ Activo</strong></span>
+        <span>✅ OK: <strong id="iaOkCount" style="color:#10b981;">0</strong> · ❌ Fallos: <strong id="iaFailsCount" style="color:#ef4444;">0</strong></span>
         <span>⚡ 1 Llamada: <strong id="llamadaStatus" style="color:#ec4899;">✅</strong></span>
         <span>📌 Modo: <strong id="modoStatus" style="color:#a78bfa;">🧠 Experto</strong></span>
         <span>🌐 <strong id="idiomaStatus" style="color:#3b82f6;">🇪🇸</strong></span>
@@ -219,7 +220,7 @@
         <span>📊 Funciones: <strong id="ultraFunciones">0</strong></span>
         <span>♾️ Fuentes: <strong id="ultraFuentes">0</strong></span>
         <span>🔄 IA: <strong id="ultraProveedor">Multi-IA</strong></span>
-        <span>⚡ <strong class="velocidad">50x MÁS RÁPIDO</strong></span>
+        <span>⚡ <strong class="velocidad">PARALELO 50x</strong></span>
     </div>
 
     <div class="sources-badge">
@@ -235,7 +236,7 @@
     </div>
 
     <div class="search-panel">
-        <div id="decisionStatus" style="font-size:0.75rem;color:#a78bfa;text-align:center;margin-bottom:10px;">🧠 403M LECTOR + WASM Rust + Multi-IA + Core 403M + Agent-Reach + ⚽ APIs Fútbol · ♾️ Sin límites</div>
+        <div id="decisionStatus" style="font-size:0.75rem;color:#a78bfa;text-align:center;margin-bottom:10px;">🧠 403M LECTOR + WASM Rust + Multi-IA paralelo + Core 403M + Agent-Reach + ⚽ APIs Fútbol · ♾️ Sin límites</div>
         
         <div class="modo-selector">
             <button class="modo-btn active" data-modo="experto">🧠 MODO EXPERTO</button>
@@ -352,7 +353,7 @@
     <div id="positionsContainer" class="positions-grid"></div>
     
     <div style="text-align:center;margin-top:1.5rem;"><button id="resetBtn" class="tool-btn" style="padding:10px 20px;font-size:0.9rem;">🔄 REINICIAR</button></div>
-    <div class="footer">✨ RENDIMIENTO PRO · WASM Rust + Multi-IA + Core 403M + Agent-Reach + ⚽ APIs Fútbol · 🇮🇹 Enfoque Italiano · ♾️ Sin límites</div>
+    <div class="footer">✨ RENDIMIENTO PRO · WASM Rust + Multi-IA paralelo + Core 403M + Agent-Reach + ⚽ APIs Fútbol · 🇮🇹 Enfoque Italiano · ♾️ Sin límites</div>
 </div>
 
 <script type="module">
@@ -363,7 +364,7 @@ class RustWASM {
     constructor() {
         this.wasm = null;
         this.cargado = false;
-        this.stats = { funciones: 0, tiempo: 0, optimizaciones: 0 };
+        this.stats = { funciones: 0, tiempo: 0, optimizaciones: 0, idiomasDetectados: 0 };
     }
     async cargar() {
         try {
@@ -372,7 +373,7 @@ class RustWASM {
             await mod.default('./pkg/academia_wasm_bg.wasm');
             this.wasm = mod;
             this.cargado = true;
-            const version = mod.wasm_version();
+            const version = mod.wasm_version ? mod.wasm_version() : 'unknown';
             const funcs = ['contar_palabras','contar_caracteres_sin_espacios','contar_oraciones','process_text_full','extract_keywords','extract_authors_fast','detectar_idioma','resumir_texto','process_agent_context','cache_response','get_cached_response','get_cache_size','clear_cache'].filter(f => typeof mod[f] === 'function');
             console.log(`✅ WASM Rust cargado (Core ${version}M) · ${funcs.length}/13 funciones`);
             document.getElementById('wasmStatus').textContent = `✅ Rust real (${funcs.length} funcs)`;
@@ -395,7 +396,7 @@ class RustWASM {
     processFull(t) { if (!this.cargado) return null; try { this.stats.funciones++; const r = JSON.parse(this.wasm.process_text_full(t)); if (r.tiempo_us) this.stats.tiempo += r.tiempo_us / 1000; return r; } catch(e) { return null; } }
     keywords(t, n = 8) { if (!this.cargado) return []; try { this.stats.funciones++; return JSON.parse(this.wasm.extract_keywords(t, n)); } catch(e) { return []; } }
     autores(t) { if (!this.cargado) return []; try { this.stats.funciones++; return JSON.parse(this.wasm.extract_authors_fast(t)); } catch(e) { return []; } }
-    idioma(t) { if (!this.cargado) return 'es'; try { this.stats.funciones++; return this.wasm.detectar_idioma(t); } catch(e) { return 'es'; } }
+    idioma(t) { if (!this.cargado) return 'es'; try { this.stats.funciones++; const r = this.wasm.detectar_idioma(t); this.stats.idiomasDetectados = (this.stats.idiomasDetectados || 0) + 1; return r; } catch(e) { return 'es'; } }
     resumen(t, n = 3) { if (!this.cargado) return t.substring(0, 500); try { this.stats.funciones++; return this.wasm.resumir_texto(t, n); } catch(e) { return t.substring(0, 500); } }
     cache(k, v) { if (this.cargado) try { this.wasm.cache_response(k, v); } catch(e) {} }
     getCache(k) { if (this.cargado) { try { const v = this.wasm.get_cached_response(k); return v && v.length > 0 ? v : null; } catch(e) {} } return null; }
@@ -410,6 +411,7 @@ class RustWASM {
     calcularTiempoLectura(t) { const p = this.contarPalabras(t).palabras; const m = Math.round(p / 200); return m < 1 ? '< 1 min' : `${m} min`; }
     riquezaVocabulario(t) { const s = this.contarPalabras(t); return s.palabras > 0 ? Math.round((s.unicas / s.palabras) * 100) : 0; }
     evaluarCompletitud(t) { const e = this.validarEstructura(t); const c = this.contarCitasAPA(t); const s = this.contarPalabras(t); const prob = []; if (!e.tieneFicha) prob.push('Falta Ficha'); if (!e.tieneFortalezas) prob.push('Faltan Fortalezas'); if (!e.tieneConclusion) prob.push('Falta Conclusión'); if (c.total < 2) prob.push('Pocas citas'); if (s.palabras < 400) prob.push('Texto corto'); return { completitud: Math.max(0, 100 - prob.length * 10), problemas: prob }; }
+    getStats() { return { funciones: this.stats.funciones, tiempo: this.stats.tiempo, optimizaciones: this.stats.optimizaciones, idiomasDetectados: this.stats.idiomasDetectados || 0 }; }
 }
 const rustWASM = new RustWASM();
 window.rustWASM = rustWASM;
@@ -565,27 +567,24 @@ async function buscarJugadorAPI(nombre) {
 }
 
 // ============================================
-// 🔄 MULTI-IA CON FALLBACK — TODOS LOS PROVEEDORES
+// 🔄 MULTI-IA — 9 PROVEEDORES + MODELOS FREE
 // ============================================
 const IA_PROVEEDORES = [
-    // ---- Google Gemini (Free) ----
     {
         nombre: 'Google',
-        url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AQ.Ab8RN6Ly5QrNa2RWh65DS_PRM_AMDE7E_52VaHe1FcdJcurvgw',
+        url: 'https://generativelanguage.googleapis.com/v1beta/models',
         key: 'AQ.Ab8RN6Ly5QrNa2RWh65DS_PRM_AMDE7E_52VaHe1FcdJcurvgw',
         modelos: ['gemini-2.0-flash', 'gemini-2.5-flash-preview-04-17'],
         color: '#4285F4',
         tipo: 'google'
     },
-    // ---- Cerebras (Free) ----
     {
         nombre: 'Cerebras',
         url: 'https://api.cerebras.ai/v1/chat/completions',
         key: 'csk-jntkcrk4ev8vk35fhy6ctf4f6y2hdfp5h4f2khvwtdy82kcv',
-        modelos: ['llama3.1-8b', 'llama-3.3-70b', 'qwen-2.5-32b', 'qwen-2.5-coder-32b'],
+        modelos: ['llama3.1-8b', 'llama-3.3-70b', 'qwen-2.5-32b'],
         color: '#FF6B35'
     },
-    // ---- Z.ai (Free) ----
     {
         nombre: 'Z.ai',
         url: 'https://api.z.ai/api/paas/v4/chat/completions',
@@ -593,15 +592,13 @@ const IA_PROVEEDORES = [
         modelos: ['glm-4-flash', 'glm-4.5-flash'],
         color: '#7C3AED'
     },
-    // ---- Mistral (Free) ----
     {
         nombre: 'Mistral AI',
         url: 'https://api.mistral.ai/v1/chat/completions',
         key: '5qjCySPcH6ltO3ACeYcv8peh8iz252uW',
-        modelos: ['mistral-small-latest', 'mistral-large-latest', 'open-mistral-7b'],
+        modelos: ['mistral-small-latest', 'open-mistral-7b', 'mistral-tiny', 'open-mistral-nemo'],
         color: '#f97316'
     },
-    // ---- GitHub (Free) ----
     {
         nombre: 'GitHub',
         url: 'https://models.inference.ai.azure.com/chat/completions',
@@ -609,116 +606,193 @@ const IA_PROVEEDORES = [
         modelos: ['gpt-4o-mini', 'Phi-3.5-mini-instruct', 'Meta-Llama-3.1-8B-Instruct'],
         color: '#24292E'
     },
-    // ---- Ollama Cloud (Free) ----
     {
         nombre: 'Ollama Cloud',
         url: 'https://api.ollama.cloud/v1/chat/completions',
         key: '0edce97e3d3f405fb5e528efef2757f8.v6Xv_n50E_J9aSpdYQJMvaS3',
-        modelos: ['llama3.2', 'mistral', 'gemma2', 'qwen2.5'],
+        modelos: ['llama3.2', 'mistral', 'gemma2'],
         color: '#333333'
     },
-    // ---- Kiro (Free) ----
     {
         nombre: 'Kiro',
         url: 'https://api.kiro.ai/v1/chat/completions',
         key: 'sk-xt-41b2aae5f67cc4105f017e26f6f5fe48f21d3e2207977139',
-        modelos: ['kiro-chat', 'kiro-pro'],
+        modelos: ['kiro-chat'],
         color: '#00A3FF'
     },
-    // ---- Orca Router (Free) ----
     {
         nombre: 'Orca Router',
         url: 'https://api.orcarouter.ai/v1/chat/completions',
         key: 'sk-orca-cCg3Kbg7IUyeXhXdzZ41MRPe5kuQShyEiQ7tvlILHuk',
-        modelos: ['orca-mini', 'orca-2-7b', 'orca-2-13b'],
+        modelos: ['orca-mini', 'orca-2-7b'],
         color: '#8B5CF6'
     },
-    // ---- OpenRouter (Free) ----
     {
         nombre: 'OpenRouter',
         url: 'https://openrouter.ai/api/v1/chat/completions',
         key: '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',
-        modelos: ['mistralai/mistral-7b-instruct:free', 'meta-llama/llama-3.1-8b-instruct:free', 'google/gemma-2-9b-it:free', 'qwen/qwen-2.5-7b-instruct:free'],
+        modelos: [
+            'mistralai/mistral-7b-instruct:free',
+            'meta-llama/llama-3.1-8b-instruct:free',
+            'google/gemma-2-9b-it:free',
+            'qwen/qwen-2.5-7b-instruct:free'
+        ],
         color: '#10b981',
         extraHeaders: { 'HTTP-Referer': 'https://pro-scout.local', 'X-Title': 'Pro Scout' }
     }
 ];
+
+const TIMEOUT_IA = 25000;
+const TIMEOUT_TOTAL_ANALISIS = 60000;
+
 const PAIS_FIJO = 'Italia';
 let ocupado = false, modoActual = 'experto', idiomaDetectado = 'es', proveedorActual = null;
 let ultimoAnalisis = '', cacheInvestigaciones = [], referenciasAcademicas = [];
 let currentPlayer = { name: "Jugador Base", overall: 75, position: "Delantero", goals: 8, assists: 6, pace: 75, shooting: 74, passing: 72, defending: 50, physical: 70 };
 let currentAnalysisDiv = null;
 let analizando = false;
+let iaOkCount = 0, iaFailsCount = 0;
 
 try { const c = localStorage.getItem('scout_cache'); if (c) cacheInvestigaciones = JSON.parse(c); } catch(e) {}
 
 const nombreIdioma = { 'es': 'Español', 'en': 'Inglés', 'de': 'Alemán', 'fr': 'Francés', 'pt': 'Portugués', 'it': 'Italiano' };
 const banderaIdioma = { 'es': '🇪🇸', 'en': '🇬🇧', 'de': '🇩🇪', 'fr': '🇫🇷', 'pt': '🇵🇹', 'it': '🇮🇹' };
 
+// ============================================
+// 🔍 DIAGNÓSTICO
+// ============================================
+const Diagnostico = {
+    contador: 0,
+    log(mensaje, tipo = 'info') {
+        this.contador++;
+        const icono = tipo === 'ok' ? '✅' : tipo === 'warn' ? '⚠️' : tipo === 'error' ? '❌' : 'ℹ️';
+        console.log(`[${tipo.toUpperCase()}] ${icono} ${mensaje}`);
+    }
+};
+
+// ============================================
+// 🔧 FETCH CON TIMEOUT
+// ============================================
+function fetchConTimeout(url, opciones = {}, timeoutMs = 8000) {
+    const ctrl = new AbortController();
+    const tid = setTimeout(() => ctrl.abort(), timeoutMs);
+    return fetch(url, { ...opciones, signal: ctrl.signal }).finally(() => clearTimeout(tid));
+}
+
+// ============================================
+// 🔄 ACTUALIZAR PROVEEDOR
+// ============================================
 function actualizarProveedor(nombre) {
     proveedorActual = nombre;
     const prov = document.getElementById('proveedorStatus');
     if (prov) { prov.textContent = `✅ ${nombre}`; prov.style.color = '#10b981'; }
     const ultra = document.getElementById('ultraProveedor');
     if (ultra) ultra.textContent = nombre;
+    const ok = document.getElementById('iaOkCount');
+    const fail = document.getElementById('iaFailsCount');
+    if (ok) ok.textContent = iaOkCount;
+    if (fail) fail.textContent = iaFailsCount;
 }
 
+// ============================================
+// 🔄 MULTI-IA EN PARALELO (Promise.any)
+// ============================================
 async function llamarIA(messages, maxTokens = 3000) {
-    let ultimoError = null;
+    Diagnostico.log(`Lanzando ${IA_PROVEEDORES.length} proveedores · ${IA_PROVEEDORES.reduce((a, p) => a + p.modelos.length, 0)} modelos en paralelo…`, 'info');
+
+    const promesas = [];
     for (const prov of IA_PROVEEDORES) {
         for (const modelo of prov.modelos) {
-            try {
-                console.log(`🔄 Probando ${prov.nombre} (${modelo})...`);
-                const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${prov.key}` };
-                if (prov.extraHeaders) Object.assign(headers, prov.extraHeaders);
+            promesas.push(
+                (async () => {
+                    const t0 = Date.now();
+                    try {
+                        const headers = {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${prov.key}`
+                        };
+                        if (prov.extraHeaders) Object.assign(headers, prov.extraHeaders);
 
-                let body;
-                let url = prov.url;
+                        let url = prov.url;
+                        let body;
 
-                // ---- Google Gemini ----
-                if (prov.tipo === 'google') {
-                    url = `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${prov.key}`;
-                    body = {
-                        contents: messages.map(m => ({
-                            role: m.role === 'assistant' ? 'model' : m.role,
-                            parts: [{ text: m.content }]
-                        })),
-                        generationConfig: { maxOutputTokens: maxTokens, temperature: 0.7 }
-                    };
-                } else {
-                    body = {
-                        model: modelo,
-                        messages: messages,
-                        temperature: 0.7,
-                        max_tokens: maxTokens
-                    };
-                }
+                        if (prov.tipo === 'google') {
+                            url = `${prov.url}/${modelo}:generateContent?key=${prov.key}`;
+                            delete headers['Authorization'];
+                            body = {
+                                contents: messages.map(m => ({
+                                    role: m.role === 'assistant' ? 'model' : m.role,
+                                    parts: [{ text: m.content }]
+                                })),
+                                generationConfig: { maxOutputTokens: maxTokens, temperature: 0.7 }
+                            };
+                        } else {
+                            body = {
+                                model: modelo,
+                                messages,
+                                temperature: 0.7,
+                                max_tokens: maxTokens
+                            };
+                        }
 
-                const ctrl = new AbortController();
-                const tid = setTimeout(() => ctrl.abort(), 60000);
-                const resp = await fetch(url, { method: 'POST', headers, body: JSON.stringify(body), signal: ctrl.signal });
-                clearTimeout(tid);
+                        const resp = await fetchConTimeout(
+                            url,
+                            { method: 'POST', headers, body: JSON.stringify(body) },
+                            TIMEOUT_IA
+                        );
+                        const dur = ((Date.now() - t0) / 1000).toFixed(1);
 
-                if ([401, 403, 429].includes(resp.status)) { console.warn(`⚠️ ${prov.nombre}/${modelo} → ${resp.status}`); ultimoError = `${resp.status} en ${prov.nombre}`; continue; }
-                if (!resp.ok) { const err = await resp.json().catch(() => ({})); ultimoError = err.error?.message || `Error ${resp.status}`; continue; }
+                        if ([401, 403, 429].includes(resp.status)) {
+                            const errTxt = resp.status === 429 ? 'rate limit' : resp.status === 401 ? 'key inválida' : `HTTP ${resp.status}`;
+                            Diagnostico.log(`${prov.nombre}/${modelo}: ${errTxt} (${dur}s)`, 'error');
+                            iaFailsCount++;
+                            throw new Error(`${prov.nombre}/${modelo}: ${errTxt}`);
+                        }
+                        if (!resp.ok) {
+                            Diagnostico.log(`${prov.nombre}/${modelo}: HTTP ${resp.status} (${dur}s)`, 'error');
+                            iaFailsCount++;
+                            throw new Error(`${prov.nombre}/${modelo}: HTTP ${resp.status}`);
+                        }
 
-                const data = await resp.json();
-                let texto = '';
+                        const data = await resp.json();
+                        let texto = '';
+                        if (prov.tipo === 'google') {
+                            texto = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+                        } else {
+                            texto = data.choices?.[0]?.message?.content || '';
+                        }
 
-                if (prov.tipo === 'google') {
-                    texto = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-                } else {
-                    texto = data.choices?.[0]?.message?.content || '';
-                }
+                        if (texto.length < 50) {
+                            Diagnostico.log(`${prov.nombre}/${modelo}: respuesta corta (${texto.length})`, 'warn');
+                            iaFailsCount++;
+                            throw new Error(`${prov.nombre}/${modelo}: respuesta corta`);
+                        }
 
-                if (texto.length < 50) { ultimoError = 'Respuesta muy corta'; continue; }
-                console.log(`✅ ${prov.nombre} (${modelo}): ${texto.length} chars`);
-                actualizarProveedor(prov.nombre);
-                return { texto, proveedor: prov.nombre, modelo };
-            } catch(e) { console.warn(`⚠️ ${prov.nombre}/${modelo}:`, e.message); ultimoError = e.name === 'AbortError' ? 'Timeout' : e.message; }
+                        Diagnostico.log(`${prov.nombre}/${modelo}: ${texto.length} chars en ${dur}s`, 'ok');
+                        iaOkCount++;
+                        return { texto, proveedor: prov.nombre, modelo };
+                    } catch (e) {
+                        if (e.name === 'AbortError') {
+                            Diagnostico.log(`${prov.nombre}/${modelo}: Timeout ${TIMEOUT_IA / 1000}s`, 'error');
+                            iaFailsCount++;
+                        }
+                        throw e;
+                    }
+                })()
+            );
         }
     }
-    throw new Error(`Todos los proveedores fallaron. Último: ${ultimoError}`);
+
+    try {
+        const resultado = await Promise.any(promesas);
+        actualizarProveedor(resultado.proveedor);
+        Diagnostico.log(`🏆 GANADOR: ${resultado.proveedor} (${resultado.modelo})`, 'ok');
+        return resultado;
+    } catch (e) {
+        Diagnostico.log('❌ Todos los proveedores IA fallaron', 'error');
+        actualizarProveedor('Fallback');
+        throw new Error('Todos los proveedores IA fallaron');
+    }
 }
 
 // ============================================
@@ -860,6 +934,95 @@ class FuentesFutbol12 {
 const fuentes12 = new FuentesFutbol12();
 
 // ============================================
+// 🧠 FALLBACK SCOUT (si toda IA falla)
+// ============================================
+function generarFallbackScout(jugador, datosAPI, resultados12, agentReachData) {
+    if (!jugador) return null;
+
+    const nombre = jugador.name;
+    const overall = jugador.overall || 70;
+    const goles = jugador.goals || 0;
+    const asistencias = jugador.assists || 0;
+
+    const velocidad = jugador.pace || 70;
+    const tiro = jugador.shooting || 70;
+    const pase = jugador.passing || 70;
+    const defensa = jugador.defending || 50;
+    const fisico = jugador.physical || 70;
+
+    const escalar = (n) => Math.min(10, Math.max(1, Math.round(n / 10)));
+
+    let texto = '';
+    texto += `📋 FICHA TÉCNICA DE ${nombre.toUpperCase()}\n\n`;
+    texto += `Jugador en posición ${jugador.position || 'no especificada'}, con un overall de ${overall}. `;
+    if (datosAPI) {
+        texto += `Datos reales desde ${datosAPI.fuente}: equipo ${datosAPI.equipo || 'N/A'}, `;
+        texto += `nacionalidad ${datosAPI.nacionalidad || 'N/A'}.\n\n`;
+    } else {
+        texto += `Datos base generados localmente.\n\n`;
+    }
+
+    texto += `💪 PERFIL FÍSICO (escala 1-10)\n`;
+    texto += `- Velocidad: ${escalar(velocidad)}/10\n`;
+    texto += `- Resistencia: ${escalar(fisico)}/10\n`;
+    texto += `- Fuerza: ${escalar(fisico)}/10\n`;
+    texto += `- Agilidad: ${escalar(velocidad)}/10\n\n`;
+
+    texto += `🎯 PERFIL TÉCNICO (escala 1-10)\n`;
+    texto += `- Regate: ${escalar(velocidad)}/10\n`;
+    texto += `- Finalización: ${escalar(tiro)}/10\n`;
+    texto += `- Pase: ${escalar(pase)}/10\n`;
+    texto += `- Control: ${escalar(pase)}/10\n\n`;
+
+    texto += `🧠 PERFIL TÁCTICO (escala 1-10)\n`;
+    texto += `- Visión de juego: ${escalar(pase)}/10\n`;
+    texto += `- Posicionamiento: ${escalar(overall)}/10\n`;
+    texto += `- Toma de decisiones: ${escalar(overall)}/10\n\n`;
+
+    texto += `💎 FORTALEZAS DESTACADAS\n`;
+    let fortCount = 0;
+    if (velocidad > 80) { fortCount++; texto += `${fortCount}. Velocidad élite\n`; }
+    if (tiro > 80) { fortCount++; texto += `${fortCount}. Gran capacidad de finalización\n`; }
+    if (pase > 80) { fortCount++; texto += `${fortCount}. Excelente distribución\n`; }
+    fortCount++;
+    texto += `${fortCount}. Overall alto (${overall})\n\n`;
+
+    texto += `🔧 ÁREAS DE MEJORA\n`;
+    let mejCount = 0;
+    if (defensa < 60) { mejCount++; texto += `${mejCount}. Trabajo defensivo\n`; }
+    if (fisico < 70) { mejCount++; texto += `${mejCount}. Condición física\n`; }
+    mejCount++;
+    texto += `${mejCount}. Consistencia\n\n`;
+
+    texto += `📊 ESTADÍSTICAS CLAVE\n`;
+    texto += `- Goles: ${goles}\n`;
+    texto += `- Asistencias: ${asistencias}\n`;
+    texto += `- Overall: ${overall}\n\n`;
+
+    texto += `👥 JUGADORES COMPARABLES\n`;
+    texto += `1. Jugador de perfil similar en Serie A\n`;
+    texto += `2. Referente histórico de la posición\n\n`;
+
+    texto += `🚀 PROYECCIÓN Y TECHO\n`;
+    texto += `- Overall actual: ${overall}\n`;
+    texto += `- Proyección a 5 años: ${Math.min(99, overall + 5)}\n\n`;
+
+    texto += `🏁 CONCLUSIÓN Y RECOMENDACIÓN\n`;
+    texto += `Basado en ${resultados12?.resumen?.fuentes_exitosas || 0}/12 fuentes y `;
+    texto += `${(agentReachData?.github?.length || 0) + (agentReachData?.reddit?.length || 0) + (agentReachData?.wiki?.length || 0)} `;
+    texto += `resultados de Agent-Reach. `;
+    texto += overall > 80 ? `Fichaje ALTAMENTE RECOMENDADO.` : overall > 70 ? `Fichaje RECOMENDADO con seguimiento.` : `Fichaje a valorar según necesidades del equipo.`;
+    texto += `\n\n─────────────────────────────────────\n`;
+    texto += `⚠️ AVISO DE MODO FALLBACK\n`;
+    texto += `Los ${IA_PROVEEDORES.length} proveedores de IA no respondieron en el tiempo límite.\n`;
+    texto += `Este informe fue generado automáticamente sin intervención de IA generativa.\n`;
+    texto += `🔄 Reintenta para obtener análisis generado por IA.\n`;
+    texto += `─────────────────────────────────────`;
+
+    return texto;
+}
+
+// ============================================
 // 🤖 ANÁLISIS CON AGENTE + CORE 403M + AGENT-REACH
 // ============================================
 async function generarAnalisisConAgente(jugador, el) {
@@ -928,7 +1091,7 @@ async function generarAnalisisConAgente(jugador, el) {
         try { const keywords = rustWASM.keywords(contexto, 10); console.log(`🦀 WASM Rust keywords: ${keywords.length}`); } catch(e) {}
     }
     
-    el.innerHTML = '<span class="loading-spinner"></span> ⚡ 1 LLAMADA a Multi-IA con WASM Rust...';
+    el.innerHTML = '<span class="loading-spinner"></span> ⚡ Multi-IA paralelo con WASM Rust...';
     actualizarProgress(50);
     
     const prompt = `Actúa como scout profesional senior con experiencia en fútbol italiano.
@@ -1008,19 +1171,31 @@ Reglas:
     const maxTokens = modoActual === 'experto' ? 4000 : 2000;
     let analisis = null;
     
+    // --- RACE: IA vs timeout global ---
+    const timeoutGlobal = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT_GLOBAL')), TIMEOUT_TOTAL_ANALISIS));
+    const tareaIA = llamarIA([
+        { role: 'system', content: `Eres scout profesional senior experto en fútbol italiano. Responde en español con estructura profesional. NO uses asteriscos.` },
+        { role: 'user', content: prompt }
+    ], maxTokens);
+
+    let resultado;
     try {
-        const resultado = await llamarIA([
-            { role: 'system', content: `Eres scout profesional senior experto en fútbol italiano. Responde en español con estructura profesional. NO uses asteriscos.` },
-            { role: 'user', content: prompt }
-        ], maxTokens);
+        resultado = await Promise.race([tareaIA, timeoutGlobal]);
         analisis = rustWASM.cleanText(resultado.texto);
         core403M.registrarConsulta(jugador.name, analisis);
         rustWASM.cache(`scout_${jugador.name}_${Date.now()}`, analisis.substring(0, 5000));
         document.getElementById('llamadaStatus').textContent = '✅ 1 Llamada';
         document.getElementById('llamadaStatus').style.color = '#10b981';
     } catch(e) {
-        console.warn('Error en análisis:', e);
-        analisis = `📋 FICHA TÉCNICA DE ${jugador.name}\n\n💪 Perfil Físico: Promedio\n🎯 Perfil Técnico: Promedio\n💎 Fortalezas: Versatilidad\n🏁 Conclusión: Jugador útil.\n\n📖 403M LECTOR · ${new Date().toLocaleString()}`;
+        Diagnostico.log(`IA falló: ${e.message}`, 'error');
+        Diagnostico.log('🧠 Activando FALLBACK SCOUT…', 'warn');
+        const fallback = generarFallbackScout(jugador, datosAPI, resultados12, resultadosAgentReach);
+        if (fallback) {
+            analisis = fallback;
+            showToast(`🧠 Fallback Scout · datos de ${datosAPI?.fuente || 'base'}`, true);
+        } else {
+            analisis = `📋 FICHA TÉCNICA DE ${jugador.name}\n\n💪 Perfil Físico: Promedio\n🎯 Perfil Técnico: Promedio\n💎 Fortalezas: Versatilidad\n🏁 Conclusión: Jugador útil.\n\n⚠️ Todos los proveedores fallaron.`;
+        }
     }
     
     actualizarProgress(90);
@@ -1136,7 +1311,7 @@ function renderInfo(p, datosAPI) {
             ${datosAPI.fechaNacimiento ? `📅 Nacimiento: ${datosAPI.fechaNacimiento}` : ''}
         </div>`;
     }
-    document.getElementById('playerInfoContainer').innerHTML = `<div class="player-card-big"><span class="quality-badge quality-${q.qualityLevel}">${q.qualityScore}%</span><div style="flex:1;"><div class="player-name">⭐ ${p.name}</div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:4px;"><span class="stat-chip">📊 Overall: <span>${p.overall}</span></span><span class="stat-chip">📍 ${p.position}</span><span class="stat-chip">⚽ Goles: <span>${p.goals}</span></span><span class="stat-chip">🎯 Asist: <span>${p.assists}</span></span></div>${apiInfo}</div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">💨 ${p.pace}</span><span class="stat-chip">🎯 ${p.shooting}</span><span class="stat-chip">🎨 ${p.passing}</span><span class="stat-chip">🛡️ ${p.defending}</span><span class="stat-chip">💪 ${p.physical}</span></div></div><div class="ia-analysis"><button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON WASM Rust + MULTI-IA + 12 FUENTES + APIS ⚽</button><div id="iaResult" style="margin-top:10px;">🔍 Análisis pendiente...</div></div>`;
+    document.getElementById('playerInfoContainer').innerHTML = `<div class="player-card-big"><span class="quality-badge quality-${q.qualityLevel}">${q.qualityScore}%</span><div style="flex:1;"><div class="player-name">⭐ ${p.name}</div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:4px;"><span class="stat-chip">📊 Overall: <span>${p.overall}</span></span><span class="stat-chip">📍 ${p.position}</span><span class="stat-chip">⚽ Goles: <span>${p.goals}</span></span><span class="stat-chip">🎯 Asist: <span>${p.assists}</span></span></div>${apiInfo}</div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">💨 ${p.pace}</span><span class="stat-chip">🎯 ${p.shooting}</span><span class="stat-chip">🎨 ${p.passing}</span><span class="stat-chip">🛡️ ${p.defending}</span><span class="stat-chip">💪 ${p.physical}</span></div></div><div class="ia-analysis"><button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON WASM Rust + MULTI-IA PARALELO + 12 FUENTES + APIS ⚽</button><div id="iaResult" style="margin-top:10px;">🔍 Análisis pendiente...</div></div>`;
     currentAnalysisDiv = document.getElementById('iaResult');
     actualizarWidgets(p, '', datosAPI);
 }
@@ -1233,7 +1408,7 @@ document.getElementById('btnRustStatus').onclick = () => {
     const funcs = mod ? ['contar_palabras','contar_caracteres_sin_espacios','contar_oraciones','process_text_full','extract_keywords','extract_authors_fast','detectar_idioma','resumir_texto','process_agent_context','cache_response','get_cached_response','get_cache_size','clear_cache'].filter(f => typeof mod[f] === 'function') : [];
     mostrarModal('🦀 WASM Rust Real',
         `Estado: ${rustWASM.cargado ? '✅ Cargado' : '❌ Fallback JS'}\n` +
-        `Versión: ${rustWASM.cargado ? 'Core ' + mod.wasm_version() + 'M' : 'N/A'}\n` +
+        `Versión: ${rustWASM.cargado && mod.wasm_version ? 'Core ' + mod.wasm_version() + 'M' : 'N/A'}\n` +
         `Funciones: ${funcs.length}/13\n\n${funcs.map(f => '• ' + f).join('\n')}\n\n` +
         `⚡ Ejecutadas: ${rustWASM.stats.funciones}\n⏱️ Tiempo: ${Math.round(rustWASM.stats.tiempo)}ms\n📦 Caché: ${rustWASM.getCacheSize()}`
     );
@@ -1255,14 +1430,16 @@ document.getElementById('btnRustTest').onclick = () => {
 };
 
 document.getElementById('btnMultiIA').onclick = () => {
-    let info = '🔄 Multi-IA con fallback automático\n\n';
+    let info = '🔄 Multi-IA — 9 proveedores en paralelo con Promise.any\n\n';
     IA_PROVEEDORES.forEach((p, i) => {
         const emoji = ['🥇','🥈','🥉','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣'][i] || '🔹';
         info += `${emoji} ${p.nombre}\n`;
         info += `   • Modelos: ${p.modelos.join(', ')}\n`;
         info += `   • Estado: ${proveedorActual === p.nombre ? '✅ Activo' : '⏳ Espera'}\n\n`;
     });
-    info += `🔧 Si un proveedor falla, se prueba automáticamente el siguiente.`;
+    info += `📊 Estadísticas:\n✅ OK: ${iaOkCount}\n❌ Fallos: ${iaFailsCount}\n\n`;
+    info += `🔧 Timeout: ${TIMEOUT_IA / 1000}s por proveedor · ${TIMEOUT_TOTAL_ANALISIS / 1000}s global\n`;
+    info += `🏆 Gana el proveedor que responde primero.`;
     mostrarModal('🔄 Multi-IA — Todos los proveedores', info);
 };
 
@@ -1346,7 +1523,8 @@ document.getElementById('btnAnalisisCompleto').onclick = () => {
     mostrarModal('📊 Análisis Completo',
         `📝 Palabras: ${stats.palabras}\n🔄 Únicas: ${stats.unicas}\n📖 Oraciones: ${stats.oraciones}\n\n` +
         `🏷️ Keywords: ${kw.map(k => `${k.palabra} (${k.frecuencia})`).join(', ')}\n\n` +
-        `🦀 WASM Rust: ${rustWASM.cargado ? 'Activo' : 'Fallback'}`
+        `🦀 WASM Rust: ${rustWASM.cargado ? 'Activo' : 'Fallback'}\n` +
+        `🔄 Multi-IA: ${iaOkCount} OK · ${iaFailsCount} fallos`
     );
 };
 
@@ -1356,6 +1534,7 @@ document.getElementById('btnDecisionStatus').onclick = () => {
     mostrarModal('🧠 403M + WASM Rust + Core 403M',
         `🦀 WASM Rust: ${rustWASM.cargado ? '✅ Activo' : '⚠️ Fallback'}\n📊 Funciones: ${stats.funciones}\n📦 Caché: ${rustWASM.getCacheSize()}\n\n` +
         `🧬 Core 403M:\n• Agentes: ${ce.agentes}\n• Consultas: ${ce.consultas}\n• Evoluciones: ${ce.evoluciones}\n• Calidad: ${ce.calidadPromedio}%\n\n` +
+        `🔄 Multi-IA: ✅ Paralelo\n🏆 Proveedor: ${proveedorActual || 'En espera'}\n✅ OK: ${iaOkCount} · ❌ Fallos: ${iaFailsCount}\n\n` +
         `🔌 Agent-Reach: ✅ Activo`
     );
 };
@@ -1365,7 +1544,10 @@ document.getElementById('btnTermuxStatus').onclick = () => {
     const ar = agentReach.getStats();
     mostrarModal('🔌 Estado Completo',
         `🦀 WASM Rust: ${rustWASM.cargado ? '✅' : '⚠️'}\n📊 Funciones: ${rustWASM.stats.funciones}\n📦 Caché: ${rustWASM.getCacheSize()}\n\n` +
-        `🔄 Multi-IA: ${proveedorActual || 'En espera'}\n🧬 Core 403M: ${ce.consultas} consultas, ${ce.evoluciones} evoluciones\n` +
+        `🔄 Multi-IA: ${proveedorActual || 'En espera'}\n` +
+        `✅ OK: ${iaOkCount} · ❌ Fallos: ${iaFailsCount}\n` +
+        `⏱️ Timeout: ${TIMEOUT_IA / 1000}s por proveedor · ${TIMEOUT_TOTAL_ANALISIS / 1000}s global\n\n` +
+        `🧬 Core 403M: ${ce.consultas} consultas, ${ce.evoluciones} evoluciones\n` +
         `🔌 Agent-Reach: G${ar.github} R${ar.reddit} W${ar.wiki}\n\n` +
         `📌 Modo: ${modoActual}\n💾 Análisis guardados: ${cacheInvestigaciones.length}`
     );
@@ -1387,10 +1569,21 @@ async function herramienta(prompt, titulo, jugador) {
     showToast(`⏳ ${titulo}...`);
     actualizarProgress(10);
     try {
-        const resultado = await llamarIA([
+        const timeoutGlobal = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT_GLOBAL')), TIMEOUT_TOTAL_ANALISIS));
+        const tareaIA = llamarIA([
             { role: 'system', content: 'Eres scout profesional experto en fútbol italiano. NO uses asteriscos.' },
             { role: 'user', content: `${prompt} sobre ${jugador} con enfoque en ${PAIS_FIJO}. Estructura profesional.` }
         ], modoActual === 'experto' ? 4000 : 2000);
+        
+        let resultado;
+        try {
+            resultado = await Promise.race([tareaIA, timeoutGlobal]);
+        } catch (e) {
+            Diagnostico.log(`Herramienta ${titulo} falló: ${e.message}`, 'error');
+            resultado = { texto: `📋 ${titulo} de ${jugador}\n\n⚠️ Los proveedores de IA no respondieron. Reintenta más tarde.`, proveedor: 'Fallback', modelo: 'local' };
+            showToast('🧠 Fallback activado', true);
+        }
+        
         const analisis = rustWASM.cleanText(resultado.texto);
         mostrarModal(titulo, analisis);
         ultimoAnalisis = analisis;
@@ -1470,14 +1663,19 @@ const analyzer = new ContentAnalyzer();
 // INICIALIZACIÓN
 // ============================================
 (async () => {
-    console.log('🚀 Pro Scout · WASM Rust + Multi-IA + Core 403M + Agent-Reach + APIs Fútbol');
-    console.log('📊 9 proveedores IA · 13 funciones Rust · 12 fuentes fútbol · 6 idiomas');
+    console.log('🚀 Pro Scout · WASM Rust + Multi-IA paralelo + Core 403M + Agent-Reach + APIs Fútbol');
+    Diagnostico.log(`🚀 Pro Scout iniciando…`, 'info');
+    Diagnostico.log(`📊 ${IA_PROVEEDORES.length} proveedores · ${IA_PROVEEDORES.reduce((a, p) => a + p.modelos.length, 0)} modelos free`, 'info');
+    Diagnostico.log(`⏱️ Timeout IA: ${TIMEOUT_IA / 1000}s · Timeout global: ${TIMEOUT_TOTAL_ANALISIS / 1000}s`, 'info');
+    Diagnostico.log('🔄 Estrategia: Promise.any (paralelo) + fallback scout', 'info');
+    
     await rustWASM.cargar();
     if (rustWASM.cargado) {
         showToast('🦀 WASM Rust cargado · ⚽ APIs Fútbol activas · 🧬 Core 403M · 🔌 Agent-Reach');
     } else {
         showToast('⚠️ WASM Rust no disponible · Usando fallback JS', true);
     }
+    actualizarProveedor(null);
     updatePos(currentPlayer);
     renderInfo(currentPlayer);
     renderPos();
