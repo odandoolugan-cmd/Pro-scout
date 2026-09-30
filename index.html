@@ -569,6 +569,119 @@ async function buscarJugadorAPI(nombre) {
 }
 
 // ⚽ Fuentes adicionales para el fallback (búsqueda más profunda)
+// ============================================
+// 🧹 FALLBACK INTELIGENTE — Dedup + Filtro + Relevancia (Fútbol)
+// ============================================
+
+function deduplicarJugadores(datos) {
+    const todos = [];
+    if (datos.theSportsDB) datos.theSportsDB.forEach(j => todos.push({ ...j, fuente: 'theSportsDB' }));
+    if (datos.apiFootball) datos.apiFootball.forEach(j => todos.push({ ...j, fuente: 'apiFootball' }));
+    
+    const vistos = new Set();
+    return todos.filter(j => {
+        const clave = (j.nombre || '').toLowerCase().replace(/[^a-záéíóúñ]/g, '');
+        if (vistos.has(clave)) return false;
+        vistos.add(clave);
+        return true;
+    });
+}
+
+function filtrarDatosBasuraFutbol(datos) {
+    const limpio = { ...datos };
+    
+    if (limpio.theSportsDB) {
+        limpio.theSportsDB = limpio.theSportsDB.filter(j => 
+            j.nombre && j.nombre !== 'null' && j.nombre !== ''
+        );
+    }
+    if (limpio.apiFootball) {
+        limpio.apiFootball = limpio.apiFootball.filter(j => 
+            j.nombre && (j.goles !== undefined || j.asistencias !== undefined)
+        );
+    }
+    if (limpio.equipos) {
+        limpio.equipos = limpio.equipos.filter(t => t.nombre && t.nombre !== '');
+    }
+    
+    return limpio;
+}
+
+function calcularRelevanciaJugador(jugador) {
+    let score = 0;
+    let maxScore = 0;
+    
+    maxScore += 25;
+    if (jugador.overall > 80) score += 25;
+    else if (jugador.overall > 70) score += 20;
+    else if (jugador.overall > 60) score += 15;
+    else score += 10;
+    
+    maxScore += 20;
+    if (jugador.goals > 20) score += 20;
+    else if (jugador.goals > 10) score += 15;
+    else if (jugador.goals > 5) score += 10;
+    else score += 5;
+    
+    maxScore += 15;
+    if (jugador.assists > 10) score += 15;
+    else if (jugador.assists > 5) score += 10;
+    else if (jugador.assists > 2) score += 5;
+    
+    maxScore += 10;
+    if (jugador.position && jugador.position !== 'Jugador') score += 10;
+    
+    maxScore += 30;
+    if (jugador._datosExtra) score += 30;
+    
+    return Math.round((score / maxScore) * 100);
+}
+
+function generarResumenExtendidoFutbol(jugador, datos) {
+    let resumen = '';
+    resumen += `📊 ANÁLISIS EXTENDIDO DE ${jugador.name}\n\n`;
+    resumen += `FICHA TÉCNICA:\n`;
+    resumen += `  • Posición: ${jugador.position}\n`;
+    resumen += `  • Overall: ${jugador.overall}/99\n`;
+    resumen += `  • Goles: ${jugador.goals}\n`;
+    resumen += `  • Asistencias: ${jugador.assists}\n\n`;
+    resumen += `ATRIBUTOS:\n`;
+    resumen += `  • Velocidad: ${jugador.pace}/99\n`;
+    resumen += `  • Tiro: ${jugador.shooting}/99\n`;
+    resumen += `  • Pase: ${jugador.passing}/99\n`;
+    resumen += `  • Defensa: ${jugador.defending}/99\n`;
+    resumen += `  • Físico: ${jugador.physical}/99\n\n`;
+    
+    if (datos) {
+        resumen += `DATOS ENRIQUECIDOS:\n`;
+        if (datos.theSportsDB && datos.theSportsDB.length > 0) {
+            const j = datos.theSportsDB[0];
+            resumen += `  • TheSportsDB: ${j.nombre} (${j.equipo || 'N/A'})\n`;
+            if (j.nacionalidad) resumen += `    Nacionalidad: ${j.nacionalidad}\n`;
+        }
+        if (datos.apiFootball && datos.apiFootball.length > 0) {
+            const j = datos.apiFootball[0];
+            resumen += `  • API-Football: ${j.nombre} (${j.equipo || 'N/A'})\n`;
+        }
+        if (datos.wikipedia?.extracto) {
+            resumen += `\n  • Wikipedia: ${datos.wikipedia.extracto.substring(0, 300)}...\n`;
+        }
+    }
+    
+    const relevancia = calcularRelevanciaJugador(jugador);
+    resumen += `\nÍNDICE DE RELEVANCIA: ${relevancia}%\n`;
+    if (relevancia > 80) resumen += `  ✅ Jugador de élite\n`;
+    else if (relevancia > 60) resumen += `  📈 Jugador destacado\n`;
+    else if (relevancia > 40) resumen += `  📊 Jugador promedio\n`;
+    else resumen += `  ⚠️ Datos limitados\n`;
+    
+    return resumen;
+}
+
+// ============================================
+// 🔬 FALLBACK DE FÚTBOL
+// ============================================
+
 async function recopilarDatosFallbackFutbol(jugador) {
     const datos = {};
     const nombre = jugador.name;
@@ -644,7 +757,26 @@ async function recopilarDatosFallbackFutbol(jugador) {
         }
     } catch(e) {}
     
-    return datos;
+    // 🔥 APLICAR FALLBACK INTELIGENTE
+    Diagnostico.log('Aplicando fallback inteligente...', 'info');
+    
+    // 1. Deduplicar
+    const deduplicados = deduplicarJugadores(datos);
+    Diagnostico.log('Tras deduplicar: ' + deduplicados.length + ' jugadores', 'info');
+    
+    // 2. Filtrar basura
+    const limpio = filtrarDatosBasuraFutbol(datos);
+    
+    // 3. Calcular relevancia
+    const relevancia = calcularRelevanciaJugador(jugador);
+    Diagnostico.log('Relevancia: ' + relevancia + '%', 'ok');
+    
+    // 4. Añadir info al resultado
+    limpio._deduplicados = deduplicados;
+    limpio._relevancia = relevancia;
+    limpio._resumenExtendido = generarResumenExtendidoFutbol(jugador, limpio);
+    
+    return limpio;
 }
 
 // ============================================
