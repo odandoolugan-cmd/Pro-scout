@@ -1356,6 +1356,11 @@ el.innerHTML = analisis.split('\n').map(line => `<p style="margin-bottom:8px;">$
         if (window.ExtraWASM) {
             const evalIA = window.ExtraWASM.evaluarInforme(analisis);
             document.getElementById('ultraOptimizaciones').textContent = evalIA.score;
+
+            const feedbackPro = window.NeuralPro.feedbackIAPro(analisis);
+            console.log(`Feedback IA Pro: ${feedbackPro.score}/100 | Perfil: ${feedbackPro.perfil}`);
+            setTimeout(() => { showToast(`Perfil IA: ${feedbackPro.perfil} | Sinergia: ${feedbackPro.sinergia}`, false); }, 2500);
+            
             console.log(`🧠 Feedback IA: ${evalIA.score}/100 - ${evalIA.feedback}`);
             if (evalIA.score > 80) showToast(`🧠 Calidad del informe: ${evalIA.score}/100 (${evalIA.feedback})`);
         }
@@ -1494,6 +1499,22 @@ function renderInfo(p, datosAPI) {
                     <div style="font-size:0.85rem; font-weight:bold; color:${estilo.color}; margin-top:8px; border-top:1px solid #334155; padding-top:8px;">${estilo.estilo}</div>
                 </div>`;
                 if (playerCard) playerCard.insertAdjacentHTML('afterend', proHTML);
+                if (window.NeuralPro) {
+                    const historial = [1, 0, 1, -1, 1, 1, 0, 1]; 
+                    const setunEma = window.NeuralPro.setunAvanzado(historial);
+                    const bitnetProfundo = window.NeuralPro.bitnetProfundo(p);
+                    const neuralHTML = `
+                    <div style="margin-top:10px; padding:12px; border-radius:10px; background:rgba(15, 23, 42, 0.9); border:1px solid #334155; font-family:'Courier New', Courier, monospace; border-left:4px solid ${bitnetProfundo.color};">
+                        <div style="font-size:0.7rem; color:#94a3b8; text-transform:uppercase; margin-bottom:5px;">🧠 BITNET PROFUNDO (3 CAPAS)</div>
+                        <div style="font-size:1.1rem; font-weight:bold; color:${bitnetProfundo.color};">${bitnetProfundo.clase} (Nivel ${bitnetProfundo.nivel})</div>
+                        <div style="font-size:0.65rem; color:#64748b; margin-top:5px; border-top:1px solid #334155; padding-top:5px;">
+                            <strong>SETUN EMA:</strong> Estado ${setunEma.estado} | Tendencia: ${setunEma.tendencia}
+                        </div>
+                    </div>`;
+                    const playerCard = document.querySelector('.player-card-big');
+                    if (playerCard) playerCard.insertAdjacentHTML('afterend', neuralHTML);
+                }
+
             }
 
             if (playerCard) {
@@ -1885,5 +1906,6 @@ const analyzer = new ContentAnalyzer();
 <script src="setun_core.js"></script>
 <script src="extra_wasm.js"></script>
 <script src="wasm_extra_pro.js"></script>
+<script src="setun_bitnet_pro.js"></script>
 </body>
 </html>
