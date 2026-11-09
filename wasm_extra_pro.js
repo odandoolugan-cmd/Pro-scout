@@ -4,7 +4,7 @@ window.WasmPro = {
     // Compara el Overall de un jugador con su valor de mercado estimado
     detectarGanga: function(jugador) {
         // Simulamos que el valor de mercado se calcula con una fórmula basada en la edad y el overall
-        const edad = jugador.edad || 25;
+        const edad = jugador.edad || (jugador.name ? (jugador.name.length * 2) : 25);
         const valorEstimado = (jugador.overall * 1000000) - (edad * 500000);
         
         // Si el jugador tiene un overall mayor a 80 y es joven, es una ganga
@@ -42,5 +42,17 @@ window.WasmPro = {
         if (suma >= -1) return { nivel: "ROTACIÓN / PROMESA", color: "#3b82f6", capa1: capa1 };
         return { nivel: "NO RECOMENDADO", color: "#ef4444", capa1: capa1 };
     }
+
+    // 3. Analizador de Estilo de Juego
+    analizarEstilo: function(jugador) {
+        const ataque = (jugador.shooting || 70) + (jugador.pace || 70);
+        const creacion = (jugador.passing || 70) * 1.5;
+        const defensa = (jugador.defending || 50) * 2;
+        
+        if (ataque > creacion && ataque > defensa) return { estilo: "⚽ Finalizador Nato", color: "#ef4444" };
+        if (creacion > ataque && creacion > defensa) return { estilo: "🎨 Creador de Juego", color: "#3b82f6" };
+        if (defensa > ataque && defensa > creacion) return { estilo: "🛡️ Muro Defensivo", color: "#10b981" };
+        return { estilo: "⚖️ Equilibrado / Box-to-Box", color: "#f59e0b" };
+    },
 };
 console.log("🚀 WasmPro cargado: Detector de Gangas y Scout Neuronal Ternario listos.");

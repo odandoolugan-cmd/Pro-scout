@@ -1482,6 +1482,7 @@ function renderInfo(p, datosAPI) {
             // ⭐ PANELES WASM PRO ⭐
             if (window.WasmPro) {
                 const ganga = window.WasmPro.detectarGanga(p);
+                const estilo = window.WasmPro.analizarEstilo(p);
                 const scoutNeuronal = window.WasmPro.scoutNeuronal(p);
                 
                 const proHTML = `
@@ -1490,6 +1491,7 @@ function renderInfo(p, datosAPI) {
                     <div style="font-size:1rem; font-weight:bold; color:${scoutNeuronal.color};">${scoutNeuronal.nivel}</div>
                     <div style="font-size:0.65rem; color:#64748b; margin-top:5px;">Vector: [${scoutNeuronal.capa1.join(' | ')}]</div>
                     <div style="font-size:0.75rem; color:#ecfdf5; margin-top:8px; border-top:1px solid #334155; padding-top:8px;">${ganga.mensaje}</div>
+                    <div style="font-size:0.85rem; font-weight:bold; color:${estilo.color}; margin-top:8px; border-top:1px solid #334155; padding-top:8px;">${estilo.estilo}</div>
                 </div>`;
                 if (playerCard) playerCard.insertAdjacentHTML('afterend', proHTML);
             }
