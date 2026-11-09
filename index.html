@@ -1348,7 +1348,7 @@ Reglas:
     actualizarProgress(90);
     
     if (analisis && analisis.length > 50) {
-        el.innerHTML = analisis.split('\n').map(line => `<p>${line || '&nbsp;'}</p>`).join('');
+el.innerHTML = analisis.split('\n').map(line => `<p style="margin-bottom:8px;">${line || '&nbsp;'}</p>`).join('');
         actualizarProgress(100);
         ultimoAnalisis = analisis;
         
