@@ -1459,20 +1459,7 @@ function renderInfo(p, datosAPI) {
     }
     document.getElementById('playerInfoContainer').innerHTML = `<div class="player-card-big"><span class="quality-badge quality-${q.qualityLevel}">${q.qualityScore}%</span><div style="flex:1;"><div class="player-name">⭐ ${p.name}</div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:4px;"><span class="stat-chip">📊 Overall: <span>${p.overall}</span></span><span class="stat-chip">📍 ${p.position}</span><span class="stat-chip">⚽ Goles: <span>${p.goals}</span></span><span class="stat-chip">🎯 Asist: <span>${p.assists}</span></span></div>${apiInfo}</div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">💨 ${p.pace}</span><span class="stat-chip">🎯 ${p.shooting}</span><span class="stat-chip">🎨 ${p.passing}</span><span class="stat-chip">🛡️ ${p.defending}</span><span class="stat-chip">💪 ${p.physical}</span></div></div><div class="ia-analysis"><button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON WASM Rust + MULTI-IA + FALLBACK IA ⚽</button><div id="iaResult" style="margin-top:10px;">🔍 Análisis pendiente...</div></div>`;
     
-    if (window.SetunCore) {
-        const resSetun = window.SetunCore.inferenciaBitNet({ overall: p.overall, goles: p.goals, asistencias: p.assists, pace: p.pace });
-        const setunHTML = `<div style="margin-top:10px;padding:12px;border-radius:10px;background:rgba(0,0,0,0.4);border-left:4px solid ${resSetun.color};"><div style="font-size:0.7rem;color:#aaa;">🧬 Núcleo Setun 1958</div><div style="font-size:1rem;font-weight:bold;color:${resSetun.color};margin:5px 0;">${resSetun.decision}</div><div style="font-size:0.6rem;color:#666;">Señales: [${resSetun.capa1.join(', ')}]</div></div>`;
-        document.getElementById('playerInfoContainer').innerHTML += setunHTML;
-    }
-// ⭐ PANEL SETUN 1958 ⭐
-try {
-    if (window.SetunCore) {
-        const resSetun = window.SetunCore.inferenciaBitNet({ overall: p.overall, goles: p.goals, asistencias: p.assists, pace: p.pace });
-        const setunHTML = `<div style="margin-top:10px;padding:12px;border-radius:10px;background:rgba(0,0,0,0.4);border-left:4px solid ${resSetun.color};"><div style="font-size:0.7rem;color:#aaa;">🧬 Núcleo Setun 1958 (Lógica Ternaria)</div><div style="font-size:1rem;font-weight:bold;color:${resSetun.color};margin:5px 0;">${resSetun.decision}</div><div style="font-size:0.6rem;color:#666;">Señales: [${resSetun.capa1.join(', ')}]</div></div>`;
-        const container = document.getElementById('playerInfoContainer');
-        if (container) container.innerHTML += setunHTML;
-    }
-} catch(e) { console.error('Error en Setun:', e); } 
+     
    currentAnalysisDiv = document.getElementById('iaResult');
     actualizarWidgets(p, '', datosAPI);
 }
