@@ -1479,6 +1479,21 @@ function renderInfo(p, datosAPI) {
             const colorBorde = resSetun.color;
             // Inyectamos el panel justo debajo de la tarjeta del jugador
             const playerCard = document.querySelector('.player-card-big');
+            // ⭐ PANELES WASM PRO ⭐
+            if (window.WasmPro) {
+                const ganga = window.WasmPro.detectarGanga(p);
+                const scoutNeuronal = window.WasmPro.scoutNeuronal(p);
+                
+                const proHTML = `
+                <div style="margin-top:10px; padding:12px; border-radius:10px; background:rgba(15, 23, 42, 0.9); border:1px solid #334155; font-family:'Courier New', Courier, monospace; border-left:4px solid ${scoutNeuronal.color};">
+                    <div style="font-size:0.7rem; color:#94a3b8; text-transform:uppercase; margin-bottom:5px;">🧠 SCOUT NEURONAL TERNARIO (BITNET)</div>
+                    <div style="font-size:1rem; font-weight:bold; color:${scoutNeuronal.color};">${scoutNeuronal.nivel}</div>
+                    <div style="font-size:0.65rem; color:#64748b; margin-top:5px;">Vector: [${scoutNeuronal.capa1.join(' | ')}]</div>
+                    <div style="font-size:0.75rem; color:#ecfdf5; margin-top:8px; border-top:1px solid #334155; padding-top:8px;">${ganga.mensaje}</div>
+                </div>`;
+                if (playerCard) playerCard.insertAdjacentHTML('afterend', proHTML);
+            }
+
             if (playerCard) {
                 const setunHTML = `
                 <div style="margin-top:15px; padding:12px; border-radius:10px; background:rgba(15, 23, 42, 0.9); border:1px solid #334155; box-shadow:0 0 15px rgba(0,0,0,0.5); font-family:'Courier New', Courier, monospace; border-left:4px solid ${colorBorde};">
@@ -1862,5 +1877,6 @@ const analyzer = new ContentAnalyzer();
 
 <script src="setun_core.js"></script>
 <script src="extra_wasm.js"></script>
+<script src="wasm_extra_pro.js"></script>
 </body>
 </html>
