@@ -1460,7 +1460,31 @@ function renderInfo(p, datosAPI) {
     document.getElementById('playerInfoContainer').innerHTML = `<div class="player-card-big"><span class="quality-badge quality-${q.qualityLevel}">${q.qualityScore}%</span><div style="flex:1;"><div class="player-name">⭐ ${p.name}</div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:4px;"><span class="stat-chip">📊 Overall: <span>${p.overall}</span></span><span class="stat-chip">📍 ${p.position}</span><span class="stat-chip">⚽ Goles: <span>${p.goals}</span></span><span class="stat-chip">🎯 Asist: <span>${p.assists}</span></span></div>${apiInfo}</div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><span class="stat-chip">💨 ${p.pace}</span><span class="stat-chip">🎯 ${p.shooting}</span><span class="stat-chip">🎨 ${p.passing}</span><span class="stat-chip">🛡️ ${p.defending}</span><span class="stat-chip">💪 ${p.physical}</span></div></div><div class="ia-analysis"><button class="ia-btn" onclick="generarAnalisis()">🤖 ANALIZAR CON WASM Rust + MULTI-IA + FALLBACK IA ⚽</button><div id="iaResult" style="margin-top:10px;">🔍 Análisis pendiente...</div></div>`;
     
      
-   currentAnalysisDiv = document.getElementById('iaResult');
+   
+    // ⭐ PANEL SETUN 1958 (DISEÑO VISUAL) ⭐
+    try {
+        if (window.SetunCore) {
+            const resSetun = window.SetunCore.inferenciaBitNet({ overall: p.overall, goles: p.goals, asistencias: p.assists, pace: p.pace });
+            const colorBorde = resSetun.color;
+            const setunHTML = `
+            <div style="margin-top:15px; padding:12px; border-radius:10px; background:rgba(15, 23, 42, 0.9); border:1px solid #334155; box-shadow:0 0 15px rgba(0,0,0,0.5); font-family:'Courier New', Courier, monospace; border-left:4px solid ${colorBorde};">
+                <div style="font-size:0.7rem; color:#94a3b8; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px; display:flex; justify-content:space-between;">
+                    <span>🧬 NÚCLEO SETUN 1958</span>
+                    <span style="color:${colorBorde};">■ ONLINE</span>
+                </div>
+                <div style="font-size:1.2rem; font-weight:bold; margin-bottom:5px; color:${colorBorde}; text-shadow:0 0 8px ${colorBorde};">
+                    ${resSetun.decision}
+                </div>
+                <div style="font-size:0.65rem; color:#64748b; background:#0f172a; padding:4px 8px; border-radius:5px; display:inline-block;">
+                    [ CAPA 1: ${resSetun.capa1.join(' | ')} ] -> FILTRO ANALÓGICO
+                </div>
+            </div>`;
+            const container = document.getElementById('playerInfoContainer');
+            if (container) container.innerHTML += setunHTML;
+        }
+    } catch(e) { console.error('Error en Setun:', e); }
+    
+    currentAnalysisDiv = document.getElementById('iaResult');
     actualizarWidgets(p, '', datosAPI);
 }
 
