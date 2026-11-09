@@ -1348,7 +1348,7 @@ Reglas:
     actualizarProgress(90);
     
     if (analisis && analisis.length > 50) {
-        el.innerHTML = analisis.replace(/\n/g, '<br>');
+        el.innerHTML = analisis.split('\n').map(line => `<p>${line || '&nbsp;'}</p>`).join('');
         actualizarProgress(100);
         ultimoAnalisis = analisis;
         
@@ -1721,6 +1721,11 @@ document.getElementById('btnComparar').onclick = async () => {
     
     showToast('🔄 Comparando estadísticas...');
     const datosJ2 = await buscarJugadorAPI(j2);
+    // Validar que el nombre devuelto coincida (evitar "Provincia de Halland")
+    if (!datosJ2 || !datosJ2.nombre.toLowerCase().includes(j2.toLowerCase().split(' ')[0])) {
+        showToast('❌ No se encontró a ' + j2 + '. Intenta con el nombre exacto.', true);
+        return;
+    }
     if (!datosJ2) { showToast('❌ No se encontró al segundo jugador', true); return; }
     
     // Generar estadísticas aleatorias para el jugador 2 basadas en su nombre
