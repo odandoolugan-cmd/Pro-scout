@@ -1556,7 +1556,48 @@ function renderInfo(p, datosAPI) {
         }
     } catch(e) { console.error('Error en Setun:', e); }
 
+    
+    // ⭐ PANELES COMPLETOS (SETUN, BITNET, ESTILO, PROFUNDO, MATRIZ) ⭐
+    try {
+        if (window.SetunCore) {
+            const resSetun = window.SetunCore.inferenciaBitNet({ overall: p.overall, goles: p.goals, asistencias: p.assists, pace: p.pace });
+            const setunHTML = `<div style="margin-top:10px;padding:12px;border-radius:10px;background:rgba(0,0,0,0.4);border-left:4px solid ${resSetun.color};"><div style="font-size:0.7rem;color:#aaa;">🧬 NÚCLEO SETUN 1958</div><div style="font-size:1rem;font-weight:bold;color:${resSetun.color};margin:5px 0;">${resSetun.decision}</div><div style="font-size:0.6rem;color:#666;">Señales: [${resSetun.capa1.join(', ')}]</div></div>`;
+            document.getElementById('playerInfoContainer').innerHTML += setunHTML;
+        }
+    } catch(e) { console.error('Error Setun:', e); }
+
+    try {
+        if (window.WasmPro) {
+            const ganga = window.WasmPro.detectarGanga(p);
+            const scoutNeuronal = window.WasmPro.scoutNeuronal(p);
+            const estilo = window.WasmPro.analizarEstilo(p);
+            const proHTML = `<div style="margin-top:10px; padding:12px; border-radius:10px; background:rgba(15, 23, 42, 0.9); border:1px solid #334155; font-family:'Courier New', Courier, monospace; border-left:4px solid ${scoutNeuronal.color};"><div style="font-size:0.7rem; color:#94a3b8; text-transform:uppercase; margin-bottom:5px;">🧠 SCOUT NEURONAL TERNARIO (BITNET)</div><div style="font-size:1rem; font-weight:bold; color:${scoutNeuronal.color};">${scoutNeuronal.nivel}</div><div style="font-size:0.65rem; color:#64748b; margin-top:5px;">Vector: [${scoutNeuronal.capa1.join(' | ')}]</div><div style="font-size:0.75rem; color:#ecfdf5; margin-top:8px; border-top:1px solid #334155; padding-top:8px;">${ganga.mensaje}</div><div style="font-size:0.85rem; font-weight:bold; color:${estilo.color}; margin-top:8px; border-top:1px solid #334155; padding-top:8px;">${estilo.estilo}</div></div>`;
+            document.getElementById('playerInfoContainer').innerHTML += proHTML;
+        }
+    } catch(e) { console.error('Error WasmPro:', e); }
+
+    try {
+        if (window.NeuralPro) {
+            const historial = [1, 0, 1, -1, 1, 1, 0, 1];
+            const setunEma = window.NeuralPro.setunAvanzado(historial);
+            const bitnetProfundo = window.NeuralPro.bitnetProfundo(p);
+            const neuralHTML = `<div style="margin-top:10px; padding:12px; border-radius:10px; background:rgba(15, 23, 42, 0.9); border:1px solid #334155; font-family:'Courier New', Courier, monospace; border-left:4px solid ${bitnetProfundo.color};"><div style="font-size:0.7rem; color:#94a3b8; text-transform:uppercase; margin-bottom:5px;">🧠 BITNET PROFUNDO (3 CAPAS)</div><div style="font-size:1.1rem; font-weight:bold; color:${bitnetProfundo.color};">${bitnetProfundo.clase} (Nivel ${bitnetProfundo.nivel})</div><div style="font-size:0.65rem; color:#64748b; margin-top:5px; border-top:1px solid #334155; padding-top:5px;"><strong>SETUN EMA:</strong> Estado ${setunEma.estado} | Tendencia: ${setunEma.tendencia}</div></div>`;
+            document.getElementById('playerInfoContainer').innerHTML += neuralHTML;
+        }
+    } catch(e) { console.error('Error NeuralPro:', e); }
+
+    try {
+        if (window.UltraWasm) {
+            const contexto = window.UltraWasm.setunContextual(p, 'Serie A');
+            const hebbiano = window.UltraWasm.bitnetHebbiano(p, '');
+            const matriz = window.UltraWasm.matrizDecision(p, contexto.sinergia, contexto.riesgo);
+            const ultraHTML = `<div style="margin-top:10px; padding:12px; border-radius:10px; background:rgba(15, 23, 42, 0.9); border:1px solid #334155; font-family:'Courier New', Courier, monospace; border-left:4px solid ${matriz.color};"><div style="font-size:0.7rem; color:#94a3b8; text-transform:uppercase; margin-bottom:5px;">📊 MATRIZ DE DECISIÓN</div><div style="font-size:1.1rem; font-weight:bold; color:${matriz.color};">${matriz.zona}</div><div style="font-size:0.65rem; color:#64748b; margin-top:5px; border-top:1px solid #334155; padding-top:5px;"><strong>SETUN CONTEXTUAL:</strong> Sinergia ${contexto.sinergia}% | Riesgo: ${contexto.riesgo}<br><strong>BITNET HEBBBIANO:</strong> Puntaje ${hebbiano.puntaje}/100</div></div>`;
+            document.getElementById('playerInfoContainer').innerHTML += ultraHTML;
+        }
+    } catch(e) { console.error('Error UltraWasm:', e); }
+
     currentAnalysisDiv = document.getElementById('iaResult');
+
     actualizarWidgets(p, '', datosAPI);
 }
 
