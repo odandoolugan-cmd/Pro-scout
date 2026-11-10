@@ -1513,6 +1513,26 @@ function renderInfo(p, datosAPI) {
                     </div>`;
                     const playerCard = document.querySelector('.player-card-big');
                     if (playerCard) playerCard.insertAdjacentHTML('afterend', neuralHTML);
+
+                // ⭐ PANELES ULTRA PRO ⭐
+                if (window.UltraWasm) {
+                    const contexto = window.UltraWasm.setunContextual(p, 'Serie A'); // Enfoque italiano
+                    const hebbiano = window.UltraWasm.bitnetHebbiano(p, ultimoAnalisis || '');
+                    const matriz = window.UltraWasm.matrizDecision(p, contexto.sinergia, contexto.riesgo);
+
+                    const ultraHTML = `
+                    <div style="margin-top:10px; padding:12px; border-radius:10px; background:rgba(15, 23, 42, 0.9); border:1px solid #334155; font-family:'Courier New', Courier, monospace; border-left:4px solid ${matriz.color};">
+                        <div style="font-size:0.7rem; color:#94a3b8; text-transform:uppercase; margin-bottom:5px;">📊 MATRIZ DE DECISIÓN</div>
+                        <div style="font-size:1.1rem; font-weight:bold; color:${matriz.color};">${matriz.zona}</div>
+                        <div style="font-size:0.65rem; color:#64748b; margin-top:5px; border-top:1px solid #334155; padding-top:5px;">
+                            <strong>SETUN CONTEXTUAL:</strong> Sinergia ${contexto.sinergia}% | Riesgo: ${contexto.riesgo}<br>
+                            <strong>BITNET HEBBBIANO:</strong> Puntaje ${hebbiano.puntaje}/100 (Pesos: [${hebbiano.pesos.join(', ')}])
+                        </div>
+                    </div>`;
+                    const playerCard = document.querySelector('.player-card-big');
+                    if (playerCard) playerCard.insertAdjacentHTML('afterend', ultraHTML);
+                }
+
                 }
 
             }
@@ -1907,5 +1927,6 @@ const analyzer = new ContentAnalyzer();
 <script src="extra_wasm.js"></script>
 <script src="wasm_extra_pro.js"></script>
 <script src="setun_bitnet_pro.js"></script>
+<script src="wasm_ultra_pro.js"></script>
 </body>
 </html>
