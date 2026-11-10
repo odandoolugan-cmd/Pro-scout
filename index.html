@@ -1561,7 +1561,7 @@ function renderInfo(p, datosAPI) {
     try {
         if (window.SetunCore) {
             const resSetun = window.SetunCore.inferenciaBitNet({ overall: p.overall, goles: p.goals, asistencias: p.assists, pace: p.pace });
-            const setunHTML = `<div style="margin-top:10px;padding:12px;border-radius:10px;background:rgba(0,0,0,0.4);border-left:4px solid ${resSetun.color};"><div style="font-size:0.7rem;color:#aaa;">🧬 NÚCLEO SETUN 1958</div><div style="font-size:1rem;font-weight:bold;color:${resSetun.color};margin:5px 0;">${resSetun.decision}</div><div style="font-size:0.6rem;color:#666;">Señales: [${resSetun.capa1.join(', ')}]</div></div>`;
+            const setunHTML = `<div style="margin-top:10px;padding:12px;border-radius:10px;background:rgba(0,0,0,0.4);border-left:4px solid ${resSetun.color};"><div style="font-size:0.7rem;color:#aaa;"></div><div style="font-size:1rem;font-weight:bold;color:${resSetun.color};margin:5px 0;">${resSetun.decision}</div><div style="font-size:0.6rem;color:#666;">Señales: [${resSetun.capa1.join(', ')}]</div></div>`;
             document.getElementById('playerInfoContainer').innerHTML += setunHTML;
         }
     } catch(e) { console.error('Error Setun:', e); }
