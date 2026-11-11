@@ -1593,6 +1593,28 @@ function renderInfo(p, datosAPI) {
             const matriz = window.UltraWasm.matrizDecision(p, contexto.sinergia, contexto.riesgo);
             const ultraHTML = `<div style="margin-top:10px; padding:12px; border-radius:10px; background:rgba(15, 23, 42, 0.9); border:1px solid #334155; font-family:'Courier New', Courier, monospace; border-left:4px solid ${matriz.color};"><div style="font-size:0.7rem; color:#94a3b8; text-transform:uppercase; margin-bottom:5px;">📊 MATRIZ DE DECISIÓN</div><div style="font-size:1.1rem; font-weight:bold; color:${matriz.color};">${matriz.zona}</div><div style="font-size:0.65rem; color:#64748b; margin-top:5px; border-top:1px solid #334155; padding-top:5px;"><strong>SETUN CONTEXTUAL:</strong> Sinergia ${contexto.sinergia}% | Riesgo: ${contexto.riesgo}<br><strong>BITNET HEBBBIANO:</strong> Puntaje ${hebbiano.puntaje}/100</div></div>`;
             document.getElementById('playerInfoContainer').innerHTML += ultraHTML;
+
+    // 💰 PANELES SETUN EXTRA (FINANCIERO Y WONDERKID)
+    try {
+        if (window.SetunExtra) {
+            const finanzas = window.SetunExtra.valorMercado(p);
+            const wonder = window.SetunExtra.wonderkid(p);
+            
+            const extraHTML = `
+            <div style="margin-top:10px; padding:12px; border-radius:10px; background:rgba(15, 23, 42, 0.9); border:1px solid #334155; font-family:'Courier New', Courier, monospace; border-left:4px solid ${finanzas.color};">
+                <div style="font-size:0.7rem; color:#94a3b8; text-transform:uppercase; margin-bottom:5px;">💰 SETUN FINANCIERO</div>
+                <div style="font-size:1rem; font-weight:bold; color:${finanzas.color};">${finanzas.estado}</div>
+                <div style="font-size:0.65rem; color:#64748b; margin-top:5px;">
+                    Valor estimado: ${finanzas.valor}M€ | ${finanzas.diferencia > 0 ? '+' : ''}${finanzas.diferencia}M€ de diferencia
+                </div>
+                <div style="font-size:0.7rem; color:#94a3b8; text-transform:uppercase; margin-top:10px; margin-bottom:5px;">🌟 WONDERKID</div>
+                <div style="font-size:1rem; font-weight:bold; color:${wonder.color};">${wonder.nivel}</div>
+                <div style="font-size:0.65rem; color:#64748b; margin-top:5px;">${wonder.proyeccion}</div>
+            </div>`;
+            document.getElementById('playerInfoContainer').innerHTML += extraHTML;
+        }
+    } catch(e) { console.error('Error SetunExtra:', e); }
+
         }
     } catch(e) { console.error('Error UltraWasm:', e); }
 
@@ -1969,5 +1991,6 @@ const analyzer = new ContentAnalyzer();
 <script src="wasm_extra_pro.js"></script>
 <script src="setun_bitnet_pro.js"></script>
 <script src="wasm_ultra_pro.js"></script>
+<script src="setun_extra.js"></script>
 </body>
 </html>
