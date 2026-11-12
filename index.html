@@ -1621,6 +1621,21 @@ function renderInfo(p, datosAPI) {
                 ${window.RadarChart.generar(p)}
             </div>`;
             document.getElementById('playerInfoContainer').innerHTML += radarHTML;
+
+    // 🩺 PANEL DE PREDICCIÓN DE LESIONES
+    try {
+        if (window.LesionesWasm) {
+            const lesion = window.LesionesWasm.predecir(p, ultimoAnalisis || '');
+            const lesionHTML = `
+            <div style="margin-top:10px; padding:12px; border-radius:10px; background:rgba(15, 23, 42, 0.9); border:1px solid #334155; font-family:'Courier New', Courier, monospace; border-left:4px solid ${lesion.color};">
+                <div style="font-size:0.7rem; color:#94a3b8; text-transform:uppercase; margin-bottom:5px;">🩺 RIESGO DE LESIÓN</div>
+                <div style="font-size:1.1rem; font-weight:bold; color:${lesion.color};">${lesion.nivel} (${lesion.riesgo}%)</div>
+                <div style="font-size:0.65rem; color:#64748b; margin-top:5px;">${lesion.recomendacion}</div>
+            </div>`;
+            document.getElementById('playerInfoContainer').innerHTML += lesionHTML;
+        }
+    } catch(e) { console.error('Error LesionesWasm:', e); }
+
         }
     } catch(e) { console.error('Error RadarChart:', e); }
 
@@ -2006,5 +2021,6 @@ const analyzer = new ContentAnalyzer();
 <script src="wasm_ultra_pro.js"></script>
 <script src="setun_extra.js"></script>
 <script src="radar_chart.js"></script>
+<script src="lesiones_wasm.js"></script>
 </body>
 </html>
