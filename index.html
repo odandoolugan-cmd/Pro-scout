@@ -1622,6 +1622,51 @@ function renderInfo(p, datosAPI) {
             </div>`;
             document.getElementById('playerInfoContainer').innerHTML += radarHTML;
 
+    // 🧠 PANEL DE MENTALIDAD Y LIDERAZGO
+    try {
+        if (window.MentalidadWasm) {
+            const mental = window.MentalidadWasm.analizar(p, ultimoAnalisis || '');
+            const mentalHTML = `
+            <div style="margin-top:10px; padding:12px; border-radius:10px; background:rgba(15, 23, 42, 0.9); border:1px solid #334155; font-family:'Courier New', Courier, monospace; border-left:4px solid ${mental.color};">
+                <div style="font-size:0.7rem; color:#94a3b8; text-transform:uppercase; margin-bottom:5px;">🧠 MENTALIDAD Y LIDERAZGO</div>
+                <div style="font-size:1.1rem; font-weight:bold; color:${mental.color};">${mental.perfil}</div>
+                <div style="font-size:0.65rem; color:#64748b; margin-top:5px;">Score: ${mental.score}/100</div>
+            </div>`;
+            document.getElementById('playerInfoContainer').innerHTML += mentalHTML;
+        }
+    } catch(e) { console.error('Error Mentalidad:', e); }
+
+    // 📈 PANEL DE PROYECCIÓN DE VALOR
+    try {
+        if (window.ProyeccionValor) {
+            const proy = window.ProyeccionValor.calcular(p);
+            const proyHTML = `
+            <div style="margin-top:10px; padding:12px; border-radius:10px; background:rgba(15, 23, 42, 0.9); border:1px solid #334155; font-family:'Courier New', Courier, monospace; border-left:4px solid ${proy.color};">
+                <div style="font-size:0.7rem; color:#94a3b8; text-transform:uppercase; margin-bottom:5px;">📈 PROYECCIÓN A 3 AÑOS</div>
+                <div style="font-size:1.1rem; font-weight:bold; color:${proy.color};">${proy.tendencia}</div>
+                <div style="font-size:0.65rem; color:#64748b; margin-top:5px;">
+                    Valor actual: ${proy.valorActual}M€ → Futuro: ${proy.valorFuturo}M€
+                </div>
+            </div>`;
+            document.getElementById('playerInfoContainer').innerHTML += proyHTML;
+        }
+    } catch(e) { console.error('Error Proyeccion:', e); }
+
+    // 🌍 PANEL DE ADAPTABILIDAD DE LIGA
+    try {
+        if (window.AdaptabilidadLiga) {
+            const adapt = window.AdaptabilidadLiga.analizar(p);
+            const adaptHTML = `
+            <div style="margin-top:10px; padding:12px; border-radius:10px; background:rgba(15, 23, 42, 0.9); border:1px solid #334155; font-family:'Courier New', Courier, monospace; border-left:4px solid #3b82f6;">
+                <div style="font-size:0.7rem; color:#94a3b8; text-transform:uppercase; margin-bottom:5px;">🌍 ADAPTABILIDAD DE LIGA</div>
+                <div style="font-size:1.1rem; font-weight:bold; color:#3b82f6;">${adapt.ligaIdeal}</div>
+                <div style="font-size:0.65rem; color:#64748b; margin-top:5px;">Estilo: ${adapt.estilo} | Puntuación: ${adapt.puntuacion}/100</div>
+            </div>`;
+            document.getElementById('playerInfoContainer').innerHTML += adaptHTML;
+        }
+    } catch(e) { console.error('Error Adaptabilidad:', e); }
+
+
     // 🩺 PANEL DE PREDICCIÓN DE LESIONES
     try {
         if (window.LesionesWasm) {
@@ -2023,5 +2068,8 @@ const analyzer = new ContentAnalyzer();
 <script src="radar_chart.js"></script>
 <script src="lesiones_wasm.js"></script>
 <script src="comparacion_visual.js"></script>
+<script src="mentalidad_wasm.js"></script>
+<script src="proyeccion_valor.js"></script>
+<script src="adaptabilidad_liga.js"></script>
 </body>
 </html>
