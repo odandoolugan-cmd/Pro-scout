@@ -1663,6 +1663,51 @@ function renderInfo(p, datosAPI) {
                 <div style="font-size:0.65rem; color:#64748b; margin-top:5px;">Estilo: ${adapt.estilo} | Puntuación: ${adapt.puntuacion}/100</div>
             </div>`;
             document.getElementById('playerInfoContainer').innerHTML += adaptHTML;
+
+    // 📊 PANELES DE VARIABLES EXTRA
+    try {
+        if (window.VariablesExtra) {
+            const ipg = window.VariablesExtra.ipg(p);
+            const consistencia = window.VariablesExtra.consistencia(p);
+            const eficiencia = window.VariablesExtra.eficienciaTiro(p);
+            const techo = window.VariablesExtra.techoCarrera(p);
+            const duelos = window.VariablesExtra.duelos(p);
+            
+            const extraHTML = `
+            <div style="margin-top:10px; padding:12px; border-radius:10px; background:rgba(15, 23, 42, 0.9); border:1px solid #334155; font-family:'Courier New', Courier, monospace;">
+                <div style="font-size:0.7rem; color:#94a3b8; text-transform:uppercase; margin-bottom:8px;">📊 VARIABLES EXTRA DE SCOUTING</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                    <div style="background:rgba(0,0,0,0.2); padding:8px; border-radius:6px;">
+                        <div style="font-size:0.6rem; color:#64748b;">PARTICIPACIÓN EN GOLES</div>
+                        <div style="font-size:0.9rem; font-weight:bold; color:${ipg.color};">${ipg.ipg}%</div>
+                        <div style="font-size:0.55rem; color:#94a3b8;">${ipg.nivel}</div>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.2); padding:8px; border-radius:6px;">
+                        <div style="font-size:0.6rem; color:#64748b;">CONSISTENCIA</div>
+                        <div style="font-size:0.9rem; font-weight:bold; color:${consistencia.color};">${consistencia.nivel}</div>
+                        <div style="font-size:0.55rem; color:#94a3b8;">${consistencia.detalle}</div>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.2); padding:8px; border-radius:6px;">
+                        <div style="font-size:0.6rem; color:#64748b;">EFICIENCIA DE TIRO</div>
+                        <div style="font-size:0.9rem; font-weight:bold; color:${eficiencia.color};">${eficiencia.nivel}</div>
+                        <div style="font-size:0.55rem; color:#94a3b8;">Ratio: ${eficiencia.eficiencia}</div>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.2); padding:8px; border-radius:6px;">
+                        <div style="font-size:0.6rem; color:#64748b;">TECHO DE CARRERA</div>
+                        <div style="font-size:0.9rem; font-weight:bold; color:${techo.color};">${techo.nivel}</div>
+                        <div style="font-size:0.55rem; color:#94a3b8;">Techo: ${techo.techo} Overall</div>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.2); padding:8px; border-radius:6px; grid-column:span 2;">
+                        <div style="font-size:0.6rem; color:#64748b;">DUELOS GANADOS</div>
+                        <div style="font-size:0.9rem; font-weight:bold; color:${duelos.color};">${duelos.nivel}</div>
+                        <div style="font-size:0.55rem; color:#94a3b8;">Puntuación: ${duelos.puntuacion}/100</div>
+                    </div>
+                </div>
+            </div>`;
+            document.getElementById('playerInfoContainer').innerHTML += extraHTML;
+        }
+    } catch(e) { console.error('Error VariablesExtra:', e); }
+
         }
     } catch(e) { console.error('Error Adaptabilidad:', e); }
 
@@ -2071,5 +2116,6 @@ const analyzer = new ContentAnalyzer();
 <script src="mentalidad_wasm.js"></script>
 <script src="proyeccion_valor.js"></script>
 <script src="adaptabilidad_liga.js"></script>
+<script src="variables_extra.js"></script>
 </body>
 </html>
