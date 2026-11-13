@@ -1868,7 +1868,34 @@ function renderInfo(p, datosAPI) {
             if (container) container.innerHTML += evoHTML;
         }
     } catch(e) { console.error('Error AutoEvolucion:', e); }
+    // 🧠 PANEL DE MODO OJEADOR (VEREDICTO FINAL)
+    try {
+        if (window.ModoOjeador) {
+            const setunDecision = (typeof resSetun !== 'undefined' && resSetun) ? resSetun.decision : 'COMPRAR (1)';
+            const bitnetNivel = (typeof scoutNeuronal !== 'undefined' && scoutNeuronal) ? scoutNeuronal.nivel : 'ÉLITE MUNDIAL';
+            
+            // Simulamos finanzas y lesiones basadas en los datos disponibles
+            const finanzas = { estado: 'PRECIO JUSTO' };
+            const lesiones = { nivel: 'BAJO' };
+            
+            const veredicto = window.ModoOjeador.generarVeredicto(p, setunDecision, bitnetNivel, finanzas, lesiones);
+            
+            const ojeadorHTML = `
+            <div style="margin-top:15px; padding:15px; border-radius:10px; background:linear-gradient(135deg, rgba(15,23,42,0.95), rgba(30,41,59,0.95)); border:2px solid ${veredicto.color}; font-family:'Inter', sans-serif; box-shadow:0 0 15px ${veredicto.color}40;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <div style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase; font-weight:bold;">🧠 VEREDICTO DEL OJEADOR</div>
+                    <div style="font-size:0.6rem; color:${veredicto.color}; border:1px solid ${veredicto.color}; padding:2px 8px; border-radius:10px;">ANÁLISIS FINAL</div>
+                </div>
+                <div style="font-size:1.4rem; font-weight:bold; color:${veredicto.color}; margin-bottom:8px;">${veredicto.recomendacion}</div>
+                <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:8px; line-height:1.4;">${veredicto.razon}</div>
+                <div style="font-size:0.75rem; color:#f59e0b; background:rgba(245,158,11,0.1); padding:6px; border-radius:6px; border-left:3px solid #f59e0b;">💡 ${veredicto.inversionSugerida}</div>
+            </div>`;
+            document.getElementById('playerInfoContainer').innerHTML += ojeadorHTML;
+        }
+    } catch(e) { console.error('Error ModoOjeador:', e); }
     
+    currentAnalysisDiv = document.getElementById('iaResult');    
+
     currentAnalysisDiv = document.getElementById('iaResult');
     currentAnalysisDiv = document.getElementById('iaResult');
 
