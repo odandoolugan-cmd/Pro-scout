@@ -1611,7 +1611,38 @@ function renderInfo(p, datosAPI) {
                 <div style="font-size:0.65rem; color:#64748b; margin-top:5px;">${wonder.proyeccion}</div>
             </div>`;
             document.getElementById('playerInfoContainer').innerHTML += extraHTML;
-
+    // 🧬 PANEL DE AUTO-EVOLUCIÓN
+    try {
+        if (window.AutoEvolucion) {
+            const setunDecision = resSetun ? resSetun.decision : 'N/A';
+            const bitnetNivel = scoutNeuronal ? scoutNeuronal.nivel : 'N/A';
+            window.AutoEvolucion.registrar(p, setunDecision, bitnetNivel, 'Proyección');
+            
+            const stats = window.AutoEvolucion.getStats();
+            const evoHTML = `
+            <div style="margin-top:10px; padding:12px; border-radius:10px; background:rgba(15, 23, 42, 0.9); border:1px solid #334155; font-family:'Courier New', Courier, monospace; border-left:4px solid #8b5cf6;">
+                <div style="font-size:0.7rem; color:#94a3b8; text-transform:uppercase; margin-bottom:5px;">🧬 AUTO-EVOLUCIÓN</div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <div style="font-size:0.6rem; color:#64748b;">PRECISIÓN</div>
+                        <div style="font-size:1.1rem; font-weight:bold; color:#10b981;">${stats.precision}%</div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.6rem; color:#64748b;">GENERACIÓN</div>
+                        <div style="font-size:1.1rem; font-weight:bold; color:#f59e0b;">${stats.generacion}</div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.6rem; color:#64748b;">ANÁLISIS</div>
+                        <div style="font-size:1.1rem; font-weight:bold; color:#3b82f6;">${stats.total}</div>
+                    </div>
+                </div>
+                <div style="font-size:0.55rem; color:#64748b; margin-top:8px;">
+                    El sistema aprende de cada análisis. A mayor precisión, más fiable es su recomendación.
+                </div>
+            </div>`;
+            document.getElementById('playerInfoContainer').innerHTML += evoHTML;
+        }
+    } catch(e) { console.error('Error AutoEvolucion:', e); }
     // 🧬 PANEL DE AUTO-EVOLUCIÓN
     try {
         if (window.AutoEvolucion) {
