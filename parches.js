@@ -1,15 +1,33 @@
-// 🔧 PARCHE DE DIAGNÓSTICO Y APLICACIÓN
-console.log("🧪 Parche cargado. Esperando funciones...");
+// 🔧 PARCHE DE DIAGNÓSTICO VISUAL
+console.log("🧪 Parche cargado a las " + new Date().toLocaleTimeString());
 
-// Intentar aplicar los parches cada 500ms hasta que las funciones existan
+// Crear un banner en la pantalla
+const banner = document.createElement('div');
+banner.style.cssText = "position:fixed;top:0;left:0;right:0;background:#0f172a;color:white;padding:10px;z-index:9999;font-family:monospace;font-size:12px;text-align:center;border-bottom:2px solid #8b5cf6;";
+banner.innerHTML = "🔍 <strong>Diagnóstico de Parches</strong> | UltraWasm: ❌ | AutoEvolucion: ❌ | Intentos: 0";
+document.body.appendChild(banner);
+
 let intentos = 0;
 const intervalo = setInterval(function() {
     intentos++;
+    const tieneUltra = !!window.UltraWasm;
+    const tieneAuto = !!window.AutoEvolucion;
+    const tieneSetun = tieneUltra && !!window.UltraWasm.setunContextual;
+    const tieneHebb = tieneUltra && !!window.UltraWasm.bitnetHebbiano;
+    const tieneEvo = tieneAuto && !!window.AutoEvolucion.evolucionar;
     
-    // Verificar si las funciones ya existen
-    if (window.UltraWasm && window.UltraWasm.setunContextual && window.AutoEvolucion && window.AutoEvolucion.evolucionar) {
+    banner.innerHTML = "🔍 <strong>Diagnóstico</strong> | Intentos: " + intentos + 
+        " | UltraWasm: " + (tieneUltra ? "✅" : "❌") + 
+        " | SetunContextual: " + (tieneSetun ? "✅" : "❌") + 
+        " | BitnetHebbiano: " + (tieneHebb ? "✅" : "❌") + 
+        " | AutoEvolucion: " + (tieneAuto ? "✅" : "❌") + 
+        " | Evolucionar: " + (tieneEvo ? "✅" : "❌");
+
+    // Si todas las funciones existen, aplicar los parches
+    if (tieneSetun && tieneHebb && tieneEvo) {
         clearInterval(intervalo);
-        console.log("✅ Funciones encontradas en el intento " + intentos);
+        banner.style.background = "#10b981";
+        banner.innerHTML = "✅ <strong>Parches aplicados correctamente</strong>";
         
         // PARCHE 1: Setun Contextual
         const originalSetun = window.UltraWasm.setunContextual;
@@ -20,7 +38,6 @@ const intervalo = setInterval(function() {
             else if (edad > 32) resultado.sinergia = Math.max(0, resultado.sinergia - 15);
             return resultado;
         };
-        console.log("🔧 Parche 1 aplicado: Setun Contextual.");
         
         // PARCHE 2: Auto-Evolución
         const originalEvo = window.AutoEvolucion.evolucionar;
@@ -43,7 +60,6 @@ const intervalo = setInterval(function() {
             }
             return { precision, generacion: this.generacion, total: this.memoria.length };
         };
-        console.log("🔧 Parche 2 aplicado: Auto-Evolución.");
         
         // PARCHE 3: BitNet Hebbiano
         const originalBitnet = window.UltraWasm.bitnetHebbiano;
@@ -66,27 +82,15 @@ const intervalo = setInterval(function() {
             const resultado = (suma / totalPesos) * 10;
             return { puntaje: Math.round(resultado), pesos: pesos.map(p => p.toFixed(1)) };
         };
-        console.log("🔧 Parche 3 aplicado: BitNet Hebbiano.");
         
-        // Mostrar un mensaje en pantalla
-        const toast = document.createElement('div');
-        toast.textContent = "🔧 Parches aplicados correctamente";
-        toast.style.cssText = "position:fixed;top:10px;right:10px;background:#10b981;color:white;padding:8px 16px;border-radius:20px;z-index:9999;font-size:12px;";
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 3000);
+        setTimeout(() => banner.remove(), 3000);
     }
     
-    // Si después de 10 segundos no encuentra las funciones, avisar
-    if (intentos > 20) {
+    // Si después de 15 segundos no encuentra las funciones, avisar
+    if (intentos > 30) {
         clearInterval(intervalo);
-        console.warn("⚠️ No se encontraron las funciones después de 10 segundos.");
-        console.log("UltraWasm:", window.UltraWasm ? "✅ Existe" : "❌ No existe");
-        console.log("AutoEvolucion:", window.AutoEvolucion ? "✅ Existe" : "❌ No existe");
-        
-        const toast = document.createElement('div');
-        toast.textContent = "⚠️ No se pudieron aplicar los parches";
-        toast.style.cssText = "position:fixed;top:10px;right:10px;background:#ef4444;color:white;padding:8px 16px;border-radius:20px;z-index:9999;font-size:12px;";
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 5000);
+        banner.style.background = "#ef4444";
+        banner.innerHTML = "❌ <strong>No se encontraron las funciones después de 15s</strong> | UltraWasm: " + (tieneUltra ? "✅" : "❌") + " | AutoEvolucion: " + (tieneAuto ? "✅" : "❌");
+        setTimeout(() => banner.remove(), 10000);
     }
 }, 500);
