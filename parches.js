@@ -1,22 +1,23 @@
-// 🔧 PARCHE 1: Setun Contextual con penalización por edad
-(function() {
-    const originalSetunContextual = window.UltraWasm ? window.UltraWasm.setunContextual : null;
-    if (originalSetunContextual) {
+// 🔧 PARCHE DEFINITIVO (con setTimeout para esperar a que las funciones originales carguen)
+setTimeout(function() {
+    // PARCHE 1: Setun Contextual
+    if (window.UltraWasm && window.UltraWasm.setunContextual) {
+        const original = window.UltraWasm.setunContextual;
         window.UltraWasm.setunContextual = function(jugador, liga) {
             const edad = jugador.edad || 25;
-            const resultado = originalSetunContextual.call(this, jugador, liga);
-            if (edad > 32) resultado.sinergia = Math.max(0, resultado.sinergia - 15);
-            else if (edad > 35) resultado.sinergia = Math.max(0, resultado.sinergia - 25);
+            const resultado = original.call(this, jugador, liga);
+            if (edad > 35) resultado.sinergia = Math.max(0, resultado.sinergia - 25);
+            else if (edad > 32) resultado.sinergia = Math.max(0, resultado.sinergia - 15);
             return resultado;
         };
-        console.log("🔧 Parche 1: Setun Contextual con edad aplicado.");
+        console.log("🔧 Parche 1 aplicado: Setun Contextual con edad.");
+    } else {
+        console.warn("⚠️ UltraWasm.setunContextual no encontrado.");
     }
-})();
 
-// 🔧 PARCHE 2: Auto-Evolución con lógica flexible
-(function() {
-    const originalEvolucionar = window.AutoEvolucion ? window.AutoEvolucion.evolucionar : null;
-    if (originalEvolucionar) {
+    // PARCHE 2: Auto-Evolución
+    if (window.AutoEvolucion && window.AutoEvolucion.evolucionar) {
+        const original = window.AutoEvolucion.evolucionar;
         window.AutoEvolucion.evolucionar = function() {
             if (this.memoria.length < 5) return;
             let coincidencias = 0;
@@ -36,14 +37,14 @@
             }
             return { precision, generacion: this.generacion, total: this.memoria.length };
         };
-        console.log("🔧 Parche 2: Auto-Evolución flexible aplicada.");
+        console.log("🔧 Parche 2 aplicado: Auto-Evolución flexible.");
+    } else {
+        console.warn("⚠️ AutoEvolucion.evolucionar no encontrado.");
     }
-})();
 
-// 🔧 PARCHE 3: BitNet Hebbiano con análisis
-(function() {
-    const originalBitnet = window.UltraWasm ? window.UltraWasm.bitnetHebbiano : null;
-    if (originalBitnet) {
+    // PARCHE 3: BitNet Hebbiano
+    if (window.UltraWasm && window.UltraWasm.bitnetHebbiano) {
+        const original = window.UltraWasm.bitnetHebbiano;
         window.UltraWasm.bitnetHebbiano = function(jugador, textoInforme) {
             const txt = (textoInforme || window.ultimoAnalisis || '').toLowerCase();
             const input = [
@@ -63,6 +64,8 @@
             const resultado = (suma / totalPesos) * 10;
             return { puntaje: Math.round(resultado), pesos: pesos.map(p => p.toFixed(1)) };
         };
-        console.log("🔧 Parche 3: BitNet Hebbiano con análisis aplicado.");
+        console.log("🔧 Parche 3 aplicado: BitNet Hebbiano con análisis.");
+    } else {
+        console.warn("⚠️ UltraWasm.bitnetHebbiano no encontrado.");
     }
-})();
+}, 2000); // Esperar 2 segundos a que todo cargue
