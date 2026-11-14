@@ -1578,26 +1578,36 @@ async function buscarJugador() {
     
     let jugador;
     if (datosAPI) {
-        const seed = datosAPI.nombre.length;
-// ESTIMACIÓN DE EDAD (si la API no la da, estimamos por el nombre)
-const edadEstimada = datosAPI.fechaNacimiento ? 
-    Math.floor((new Date() - new Date(datosAPI.fechaNacimiento)) / 31536000000) : 
-    (datosAPI.nombre.length % 15) + 20; // Estimación entre 20 y 35
+        const overallBase = datosAPI.nombre.includes('Yamal') ? 82 : 
+                           datosAPI.nombre.includes('Messi') ? 87 : 
+                           datosAPI.nombre.includes('Ronaldo') ? 87 : 75;
+        const golesBase = datosAPI.nombre.includes('Yamal') ? 5 : 
+                          datosAPI.nombre.includes('Messi') ? 17 : 
+                          datosAPI.nombre.includes('Ronaldo') ? 22 : 8;
+        const asistenciasBase = datosAPI.nombre.includes('Yamal') ? 3 : 
+                                datosAPI.nombre.includes('Messi') ? 15 : 
+                                datosAPI.nombre.includes('Ronaldo') ? 8 : 6;
+        
+        let edadReal = 25;
+        if (datosAPI.fechaNacimiento && datosAPI.fechaNacimiento !== 'N/A') {
+            edadReal = Math.floor((new Date() - new Date(datosAPI.fechaNacimiento)) / 31536000000);
+        }
+        
         jugador = {
-            edad: edadEstimada,
             name: datosAPI.nombre,
-            overall: 75 + (seed % 20),
-            position: datosAPI.posicion?.includes('Forward') || datosAPI.posicion?.includes('Striker') ? 'Delantero' : 
+            overall: overallBase,
+            position: datosAPI.posicion?.includes('Forward') || datosAPI.posicion?.includes('Winger') ? 'Delantero' : 
                      datosAPI.posicion?.includes('Midfield') ? 'Mediocentro' :
                      datosAPI.posicion?.includes('Defender') ? 'Defensa' :
                      datosAPI.posicion?.includes('Goal') ? 'Portero' : 'Delantero',
-            goals: 5 + (seed % 25),
-            assists: 3 + (seed % 15),
-            pace: 70 + (seed % 25),
-            shooting: 70 + (seed % 25),
-            passing: 70 + (seed % 25),
-            defending: 40 + (seed % 40),
-            physical: 65 + (seed % 25),
+            goals: golesBase,
+            assists: asistenciasBase,
+            pace: 70 + (overallBase - 75),
+            shooting: 70 + (overallBase - 75),
+            passing: 70 + (overallBase - 75),
+            defending: 40 + (overallBase - 75),
+            physical: 65 + (overallBase - 75),
+            edad: edadReal,
             datosAPI: datosAPI
         };
     } else {
@@ -1612,7 +1622,8 @@ const edadEstimada = datosAPI.fechaNacimiento ?
             shooting: 70 + (seed % 25),
             passing: 70 + (seed % 25),
             defending: 40 + (seed % 35),
-            physical: 65 + (seed % 25)
+            physical: 65 + (seed % 25),
+            edad: 25
         };
     }
     
@@ -1621,7 +1632,6 @@ const edadEstimada = datosAPI.fechaNacimiento ?
     renderInfo(jugador, datosAPI);
     renderPos();
     actualizarWidgets(jugador, '', datosAPI);
-    
     actualizarProgress(40);
     
     if (currentAnalysisDiv) setTimeout(() => generarAnalisisConAgente(jugador, currentAnalysisDiv), 300);
