@@ -1573,7 +1573,7 @@ async function buscarJugador() {
     showToast(`🔍 Buscando ${q} en APIs reales...`);
     actualizarProgress(5);
     
-    const datosAPI = await buscarJugadorAPI(q);
+    let  datosAPI = await buscarJugadorAPI(q);
     actualizarProgress(20);
     
     let jugador;
