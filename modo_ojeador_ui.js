@@ -3,7 +3,6 @@
     console.log("🧠 ModoOjeador UI cargado.");
     
     function inyectarVeredicto() {
-        // Eliminar panel anterior si existe
         const panelAnterior = document.getElementById('modo-ojeador-panel');
         if (panelAnterior) panelAnterior.remove();
         
@@ -13,28 +12,47 @@
         try {
             const p = window.currentPlayer;
             
-            // 1. Calcular Setun directamente (no leer del DOM)
-            const setunDecision = (p.overall > 85 && p.goals > 10 && p.assists > 5) ? 'COMPRAR (1)' : 
-                                  (p.overall < 70 || p.goals < 3) ? 'VENDER (-1)' : 'MANTENER (0)';
+            // Leer Setun directamente del panel (por el color del borde)
+            const setunPanel = document.querySelector('[style*="NÚCLEO SETUN"]');
+            let setunDecision = 'MANTENER (0)';
+            if (setunPanel) {
+                const texto = setunPanel.textContent;
+                if (texto.includes('COMPRAR')) setunDecision = 'COMPRAR (1)';
+                else if (texto.includes('VENDER')) setunDecision = 'VENDER (-1)';
+                else setunDecision = 'MANTENER (0)';
+            }
             
-            // 2. Calcular BitNet directamente
+            // Leer BitNet directamente del panel
+            const bitnetPanel = document.querySelector('[style*="SCOUT NEURONAL"]');
             let bitnetNivel = 'ROTACIÓN';
-            if (p.overall > 85 && p.goals > 15) bitnetNivel = 'ÉLITE MUNDIAL';
-            else if (p.overall > 80 && p.goals > 10) bitnetNivel = 'JUGADOR DESTACADO';
-            else if (p.overall > 75) bitnetNivel = 'ROTACIÓN / PROMESA';
-            else bitnetNivel = 'DESCARTE';
+            if (bitnetPanel) {
+                const texto = bitnetPanel.textContent;
+                if (texto.includes('ÉLITE MUNDIAL')) bitnetNivel = 'ÉLITE MUNDIAL';
+                else if (texto.includes('GALÁCTICO')) bitnetNivel = 'GALÁCTICO';
+                else if (texto.includes('JUGADOR DESTACADO')) bitnetNivel = 'JUGADOR DESTACADO';
+                else if (texto.includes('ROTACIÓN')) bitnetNivel = 'ROTACIÓN / PROMESA';
+                else bitnetNivel = 'DESCARTE';
+            }
             
-            // 3. Calcular Finanzas directamente
+            // Leer Finanzas
+            const finanzasPanel = document.querySelector('[style*="SETUN FINANCIERO"]');
             let finanzasEstado = 'PRECIO JUSTO';
-            if (p.overall > 85 && p.edad < 23) finanzasEstado = 'INFRAVALORADO';
-            else if (p.overall > 85 && p.edad > 30) finanzasEstado = 'SOBREVALORADO';
+            if (finanzasPanel) {
+                const texto = finanzasPanel.textContent;
+                if (texto.includes('INFRAVALORADO')) finanzasEstado = 'INFRAVALORADO';
+                else if (texto.includes('SOBREVALORADO')) finanzasEstado = 'SOBREVALORADO';
+            }
             
-            // 4. Calcular Lesiones directamente
+            // Leer Lesiones
+            const lesionesPanel = document.querySelector('[style*="RIESGO DE LESIÓN"]');
             let lesionesNivel = 'BAJO';
-            if (p.edad > 32) lesionesNivel = 'ALTO';
-            else if (p.edad > 28) lesionesNivel = 'MEDIO';
+            if (lesionesPanel) {
+                const texto = lesionesPanel.textContent;
+                if (texto.includes('ALTO')) lesionesNivel = 'ALTO';
+                else if (texto.includes('MEDIO')) lesionesNivel = 'MEDIO';
+            }
             
-            // 5. Generar veredicto con los datos reales
+            // Generar veredicto
             const veredicto = window.ModoOjeador.generarVeredicto(
                 p, setunDecision, bitnetNivel, { estado: finanzasEstado }, { nivel: lesionesNivel }
             );
@@ -60,11 +78,10 @@
         } catch(e) { console.error('Error ModoOjeador UI:', e); }
     }
 
-    // Observar cambios en el DOM
     const observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             if (mutation.type === 'childList') {
-                setTimeout(inyectarVeredicto, 1000);
+                setTimeout(inyectarVeredicto, 1500);
             }
         });
     });
