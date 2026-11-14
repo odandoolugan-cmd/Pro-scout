@@ -33,7 +33,7 @@
             if (p.edad > 32) lesionesNivel = 'ALTO';
             else if (p.edad > 28) lesionesNivel = 'MEDIO';
             
-            // 5. Generar veredicto (lógica simplificada)
+            // 5. Generar veredicto
             let recomendacion, color, razon, inversion;
             
             if (setunDecision.includes('COMPRAR') && bitnetNivel.includes('ÉLITE') && lesionesNivel === 'BAJO') {
@@ -79,6 +79,7 @@
         } catch(e) { console.error('Error ModoOjeador UI:', e); }
     }
 
+    // Observer para detectar cuando se carga un jugador
     const observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             if (mutation.type === 'childList') {
@@ -92,6 +93,7 @@
         if (container) observer.observe(container, { childList: true, subtree: true });
     });
 
+    // También al hacer clic en buscar
     document.addEventListener('click', function(e) {
         if (e.target && e.target.id === 'searchBtn') {
             const panelAnterior = document.getElementById('modo-ojeador-panel');
