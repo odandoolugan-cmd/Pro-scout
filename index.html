@@ -506,7 +506,7 @@ async function buscarJugadorAPI(nombre) {
     
     // 1. TheSportsDB
     try {
-        const r = await fetch(`https://www.thesportsdb.com/api/v1/json/3/searchplayers.php?p=${encodeURIComponent(nombreLimpio)}`);
+        const r = await fetch(`https://www.thesportsdb.com/api/v1/json/123/searchplayers.php?p=${encodeURIComponent(nombreLimpio)}`);
         const d = await r.json();
         if (d.player && d.player.length > 0) {
             const p = d.player[0];
@@ -688,7 +688,7 @@ async function recopilarDatosFallbackFutbol(jugador) {
     
     // TheSportsDB - Eventos y estadísticas del jugador
     try {
-        const r = await fetch(`https://www.thesportsdb.com/api/v1/json/3/searchplayers.php?p=${encodeURIComponent(nombre)}`);
+        const r = await fetch(`https://www.thesportsdb.com/api/v1/json/123/searchplayers.php?p=${encodeURIComponent(nombre)}`);
         const d = await r.json();
         if (d.player && d.player.length > 0) {
             datos.theSportsDB = d.player.slice(0, 3).map(p => ({
@@ -706,7 +706,7 @@ async function recopilarDatosFallbackFutbol(jugador) {
     
     // TheSportsDB - Equipo actual y eventos
     try {
-        const r = await fetch(`https://www.thesportsdb.com/api/v1/json/3/searchteams.php?t=${encodeURIComponent(nombre)}`);
+        const r = await fetch(`https://www.thesportsdb.com/api/v1/json/123/searchteams.php?t=${encodeURIComponent(nombre)}`);
         const d = await r.json();
         if (d.teams && d.teams.length > 0) {
             datos.equipos = d.teams.slice(0, 3).map(t => ({
@@ -886,7 +886,7 @@ class FuentesFutbol12 {
     constructor() { this.cache = new Map(); }
     async theSportsDB(tema) {
         try {
-            const r = await fetchConTimeout(`https://www.thesportsdb.com/api/v1/json/3/searchplayers.php?p=${encodeURIComponent(tema)}`, {}, TIMEOUT_API);
+            const r = await fetchConTimeout(`https://www.thesportsdb.com/api/v1/json/123/searchplayers.php?p=${encodeURIComponent(tema)}`, {}, TIMEOUT_API);
             const d = await r.json();
             return (d.player || []).slice(0, 5).map(p => ({ titulo: p.strPlayer, autor: p.strTeam, year: p.dateBorn, resumen: p.strPosition, url: null, fuente: 'TheSportsDB' }));
         } catch(e) { return []; }
@@ -2318,5 +2318,6 @@ window.renderizarPaneles = function(p, analisis) {
 <script src="modo_ojeador.js"></script>
 <script src="modo_ojeador_ui.js"></script>
 <script src="parches.js"></script>
+<script src="jugadores_db.js"></script>
 </body>
 </html>
