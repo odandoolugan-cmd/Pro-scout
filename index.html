@@ -1243,6 +1243,7 @@ async function generarAnalisisConAgente(jugador, el) {
     const prompt = `Actúa como scout profesional senior con experiencia en fútbol italiano.
 
 DATOS DEL JUGADOR:
+- Edad: ${jugador.edad || 'Desconocida'} años
 - Nombre: ${jugador.name}
 - Posición: ${jugador.position}
 - Overall: ${jugador.overall}
