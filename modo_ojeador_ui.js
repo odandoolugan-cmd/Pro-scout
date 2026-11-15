@@ -3,6 +3,7 @@
     console.log("🧠 ModoOjeador UI cargado.");
     
     function inyectarVeredicto() {
+        // Eliminar panel anterior si existe
         const panelAnterior = document.getElementById('modo-ojeador-panel');
         if (panelAnterior) panelAnterior.remove();
         
@@ -12,7 +13,7 @@
         try {
             const p = window.currentPlayer;
             
-            // 1. Calcular Setun directamente
+            // 1. Calcular Setun directamente desde los datos del jugador
             const setunDecision = (p.overall > 85 && p.goals > 10 && p.assists > 5) ? 'COMPRAR (1)' : 
                                   (p.overall < 70 || p.goals < 3) ? 'VENDER (-1)' : 'MANTENER (0)';
             
@@ -83,7 +84,7 @@
     const observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             if (mutation.type === 'childList') {
-                setTimeout(inyectarVeredicto, 1500);
+                setTimeout(inyectarVeredicto, 2000);
             }
         });
     });
@@ -98,7 +99,7 @@
         if (e.target && e.target.id === 'searchBtn') {
             const panelAnterior = document.getElementById('modo-ojeador-panel');
             if (panelAnterior) panelAnterior.remove();
-            setTimeout(inyectarVeredicto, 3000);
+            setTimeout(inyectarVeredicto, 3500);
         }
     });
 })();
