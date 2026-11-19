@@ -275,10 +275,7 @@
             <button class="tool-btn memoria" id="btnMemoriaStatus">🧠 Memoria</button>
             <button class="tool-btn" id="btnAnalisisCompleto">📊 Completo</button>
             <button class="tool-btn" id="btnTermuxStatus">🔌 Estado</button>
-            document.getElementById('btnDiagnostico').onclick = () => {
-    // Recopilar información de todos los módulos
-    const wasmStatus = rustWASM.cargado ? '✅ Rust real (40 funcs)' : '⚠️ Fallback JS';
-    const autoEvo = window.AutoEvolucion ? window.AutoEvolucion.getStats() : { precision: 0, generacion: 0, total: 0 };
+            
     const coreStatus = core403M.getEstado();
     const agentReach = agentReach.getStats();
     const setunExtra = window.SetunExtra ? '✅ Activo' : '❌ No cargado';
