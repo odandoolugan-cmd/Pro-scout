@@ -275,7 +275,59 @@
             <button class="tool-btn memoria" id="btnMemoriaStatus">🧠 Memoria</button>
             <button class="tool-btn" id="btnAnalisisCompleto">📊 Completo</button>
             <button class="tool-btn" id="btnTermuxStatus">🔌 Estado</button>
-        </div>
+            document.getElementById('btnDiagnostico').onclick = () => {
+    // Recopilar información de todos los módulos
+    const wasmStatus = rustWASM.cargado ? '✅ Rust real (40 funcs)' : '⚠️ Fallback JS';
+    const autoEvo = window.AutoEvolucion ? window.AutoEvolucion.getStats() : { precision: 0, generacion: 0, total: 0 };
+    const coreStatus = core403M.getEstado();
+    const agentReach = agentReach.getStats();
+    const setunExtra = window.SetunExtra ? '✅ Activo' : '❌ No cargado';
+    const neuralPro = window.NeuralPro ? '✅ Activo' : '❌ No cargado';
+    const ultraWasm = window.UltraWasm ? '✅ Activo' : '❌ No cargado';
+    const setunConsenso = window.SetunConsenso ? '✅ Activo' : '❌ No cargado';
+    const ojeador = window.ModoOjeador ? '✅ Activo' : '❌ No cargado';
+    
+    // Verificar el panel del Ojeador
+    const panelOjeador = document.getElementById('modo-ojeador-panel');
+    const ojeadorVisible = panelOjeador ? '✅ Visible' : '❌ No visible';
+    
+    // Verificar el jugador actual
+    const jugadorActual = window.currentPlayer ? window.currentPlayer.name : 'Ninguno';
+    const jugadorOverall = window.currentPlayer ? window.currentPlayer.overall : 'N/A';
+    const jugadorEdad = window.currentPlayer ? window.currentPlayer.edad : 'N/A';
+    
+    const diagnostico = `
+🦀 WASM Rust: ${wasmStatus}
+🧬 Core 403M: ${coreStatus.activo ? '✅ Activo' : '❌ Inactivo'}
+🔌 Agent-Reach: ${agentReach.total > 0 ? '✅ Activo' : '⚠️ Sin resultados'}
+🧠 Auto-Evolución: ${autoEvo.precision}% precisión (Gen ${autoEvo.generacion}, ${autoEvo.total} análisis)
+
+📦 MÓDULOS CARGADOS:
+• SetunExtra: ${setunExtra}
+• NeuralPro: ${neuralPro}
+• UltraWasm: ${ultraWasm}
+• SetunConsenso: ${setunConsenso}
+• ModoOjeador: ${ojeador}
+
+🧠 OJEADOR:
+• Panel visible: ${ojeadorVisible}
+
+👤 JUGADOR ACTUAL:
+• Nombre: ${jugadorActual}
+• Overall: ${jugadorOverall}
+• Edad: ${jugadorEdad}
+
+📊 ESTADÍSTICAS:
+• Funciones WASM ejecutadas: ${rustWASM.stats.funciones}
+• Caché WASM: ${rustWASM.getCacheSize()}
+• Consultas Core 403M: ${coreStatus.consultas}
+• Evoluciones Core 403M: ${coreStatus.evoluciones}
+    `;
+    
+    mostrarModal('🔍 Diagnóstico del Sistema', diagnostico);
+};
+            <button class="tool-btn" id="btnDiagnostico">🔍 Diagnóstico</button>  
+ </div>
         
         <div class="search-title">🔍 <span>BUSCADOR DE JUGADORES EN VIVO</span></div>
         <div class="search-box">
@@ -2457,7 +2509,6 @@ window.renderizarPaneles = function(p, analisis) {
 <script src="autoevolucion_ui.js"></script>
 <script src="modo_ojeador.js"></script>
 <script src="modo_ojeador_ui.js"></script>
-<script src="parches.js"></script>
 <script src="jugadores_db.js"></script>
 </body>
 </html>
