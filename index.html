@@ -276,53 +276,7 @@
             <button class="tool-btn" id="btnAnalisisCompleto">📊 Completo</button>
             <button class="tool-btn" id="btnTermuxStatus">🔌 Estado</button>
             
-    const coreStatus = core403M.getEstado();
-    const agentReach = agentReach.getStats();
-    const setunExtra = window.SetunExtra ? '✅ Activo' : '❌ No cargado';
-    const neuralPro = window.NeuralPro ? '✅ Activo' : '❌ No cargado';
-    const ultraWasm = window.UltraWasm ? '✅ Activo' : '❌ No cargado';
-    const setunConsenso = window.SetunConsenso ? '✅ Activo' : '❌ No cargado';
-    const ojeador = window.ModoOjeador ? '✅ Activo' : '❌ No cargado';
     
-    // Verificar el panel del Ojeador
-    const panelOjeador = document.getElementById('modo-ojeador-panel');
-    const ojeadorVisible = panelOjeador ? '✅ Visible' : '❌ No visible';
-    
-    // Verificar el jugador actual
-    const jugadorActual = window.currentPlayer ? window.currentPlayer.name : 'Ninguno';
-    const jugadorOverall = window.currentPlayer ? window.currentPlayer.overall : 'N/A';
-    const jugadorEdad = window.currentPlayer ? window.currentPlayer.edad : 'N/A';
-    
-    const diagnostico = `
-🦀 WASM Rust: ${wasmStatus}
-🧬 Core 403M: ${coreStatus.activo ? '✅ Activo' : '❌ Inactivo'}
-🔌 Agent-Reach: ${agentReach.total > 0 ? '✅ Activo' : '⚠️ Sin resultados'}
-🧠 Auto-Evolución: ${autoEvo.precision}% precisión (Gen ${autoEvo.generacion}, ${autoEvo.total} análisis)
-
-📦 MÓDULOS CARGADOS:
-• SetunExtra: ${setunExtra}
-• NeuralPro: ${neuralPro}
-• UltraWasm: ${ultraWasm}
-• SetunConsenso: ${setunConsenso}
-• ModoOjeador: ${ojeador}
-
-🧠 OJEADOR:
-• Panel visible: ${ojeadorVisible}
-
-👤 JUGADOR ACTUAL:
-• Nombre: ${jugadorActual}
-• Overall: ${jugadorOverall}
-• Edad: ${jugadorEdad}
-
-📊 ESTADÍSTICAS:
-• Funciones WASM ejecutadas: ${rustWASM.stats.funciones}
-• Caché WASM: ${rustWASM.getCacheSize()}
-• Consultas Core 403M: ${coreStatus.consultas}
-• Evoluciones Core 403M: ${coreStatus.evoluciones}
-    `;
-    
-    mostrarModal('🔍 Diagnóstico del Sistema', diagnostico);
-};
             <button class="tool-btn" id="btnDiagnostico">🔍 Diagnóstico</button>  
  </div>
         
