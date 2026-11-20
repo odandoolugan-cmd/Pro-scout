@@ -1,6 +1,9 @@
 // 🧬 AUTO-EVOLUCIÓN
 window.AutoEvolucion = {
-    memoria: JSON.parse(localStorage.getItem('scout_memoria') || '[]'),
+memoria: (() => {
+    try { return JSON.parse(localStorage.getItem('scout_memoria') || '[]'); }
+    catch(e) { return []; }
+})(),
     generacion: parseInt(localStorage.getItem('scout_generacion') || '0'),
 
     registrar: function(jugador, setun, bitnet, proyeccion) {
