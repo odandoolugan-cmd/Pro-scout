@@ -1,4 +1,4 @@
-// 🧬 MODO OJEADOR - VERSIÓN FINAL (CON SETUN DE CONSENSO)
+// 🧬 MODO OJEADOR - VERSIÓN FINAL (CON MUTATIONOBSERVER)
 (function() {
     console.log("🧬 Ojeador Final cargado.");
     
@@ -7,10 +7,14 @@
         if (panelAnterior) panelAnterior.remove();
         
         const playerCard = document.querySelector('.player-card-big');
-        if (!playerCard || !window.currentPlayer) return;
+        if (!playerCard || !window.currentPlayer) {
+            console.warn("⚠️ Ojeador: No hay jugador o tarjeta aún.");
+            return;
+        }
         
         try {
             const p = window.currentPlayer;
+            console.log(`🧬 Ojeador: Procesando ${p.name} (Overall: ${p.overall}, Goles: ${p.goals})`);
             
             // Calcular Setun original
             let setunDecision = 'MANTENER';
@@ -34,7 +38,9 @@
             if (p.edad > 32) lesionesNivel = 'ALTO';
             else if (p.edad > 28) lesionesNivel = 'MEDIO';
             
-            // Usar Setun de Consenso (si existe)
+            console.log(`🧬 Setun: ${setunDecision} | BitNet: ${bitnetNivel} | Finanzas: ${finanzasEstado} | Lesiones: ${lesionesNivel}`);
+            
+            // Usar Setun de Consenso
             let consenso = null;
             if (window.SetunConsenso) {
                 consenso = window.SetunConsenso.calcular({
@@ -54,7 +60,7 @@
                 recomendacion = consenso.consenso;
                 color = consenso.color;
                 razon = consenso.razon;
-                inversion = consenso.puedeFichar ? 'Fichaje recomendado.' : 'No recomendado.';
+                inversion = consenso.puedeFichar ? 'Fichaje recomendado. Negociar según necesidad.' : 'No recomendado. Buscar alternativas.';
             } else {
                 // Lógica de respaldo
                 if (setunDecision === 'COMPRAR' && bitnetNivel === 'ÉLITE') {
@@ -93,23 +99,35 @@
         } catch(e) { console.error('Error Ojeador Final:', e); }
     }
 
-    // Escuchar clic en el botón de buscar
-    document.addEventListener('click', function(e) {
-        if (e.target && e.target.id === 'searchBtn') {
-            console.log("🔍 Búsqueda iniciada. Esperando a currentPlayer...");
-            let intentos = 0;
-            const interval = setInterval(function() {
-                intentos++;
-                if (window.currentPlayer && window.currentPlayer.name) {
-                    clearInterval(interval);
-                    console.log("✅ currentPlayer definido después de " + intentos + " intentos.");
-                    setTimeout(inyectarVeredicto, 500);
+    // Observer que detecta cuando aparece la tarjeta del jugador
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                // Verificar si se añadió un .player-card-big
+                const playerCard = document.querySelector('.player-card-big');
+                if (playerCard && window.currentPlayer) {
+                    console.log("🧬 Ojeador: Tarjeta de jugador detectada. Inyectando veredicto...");
+                    // Esperar un poco para que otros paneles se rendericen
+                    setTimeout(inyectarVeredicto, 1000);
                 }
-                if (intentos > 20) {
-                    clearInterval(interval);
-                    console.warn("⚠️ No se pudo detectar currentPlayer después de 10 segundos.");
-                }
-            }, 500);
-        }
+            }
+        });
     });
+
+    // Observar el contenedor principal
+    const container = document.getElementById('playerInfoContainer');
+    if (container) {
+        observer.observe(container, { childList: true, subtree: true });
+        console.log("🧬 Ojeador: Observando playerInfoContainer.");
+    } else {
+        // Si no existe al cargar, esperar a que se cree
+        const interval = setInterval(function() {
+            const c = document.getElementById('playerInfoContainer');
+            if (c) {
+                clearInterval(interval);
+                observer.observe(c, { childList: true, subtree: true });
+                console.log("🧬 Ojeador: Observer iniciado en playerInfoContainer (tardío).");
+            }
+        }, 500);
+    }
 })();
