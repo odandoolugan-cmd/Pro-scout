@@ -1,8 +1,9 @@
-// 🧬 MODO OJEADOR - VERSIÓN DEFINITIVA (OBSERVER CON FALLBACK)
+// 🧬 MODO OJEADOR - VERSIÓN DEFINITIVA (SETINTERVAL CON LÓGICA CORREGIDA)
 (function() {
     console.log("🧬 Ojeador Final cargado.");
     
     let panelInyectado = false;
+    let intervalId = null;
     
     function inyectarVeredicto() {
         if (panelInyectado) return;
@@ -11,10 +12,7 @@
         if (panelAnterior) panelAnterior.remove();
         
         const playerCard = document.querySelector('.player-card-big');
-        if (!playerCard || !window.currentPlayer) {
-            console.warn("⚠️ Ojeador: No hay jugador o tarjeta aún.");
-            return;
-        }
+        if (!playerCard || !window.currentPlayer) return;
         
         try {
             const p = window.currentPlayer;
@@ -108,42 +106,27 @@
         }
     }
 
-    // Observer que detecta cuando aparece la tarjeta del jugador
-    const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            if (mutation.type === 'childList') {
-                const playerCard = document.querySelector('.player-card-big');
-                if (playerCard && window.currentPlayer && !panelInyectado) {
-                    console.log("🧬 Ojeador: Tarjeta detectada. Inyectando veredicto...");
-                    // Esperar un poco para que otros paneles se rendericen
-                    setTimeout(inyectarVeredicto, 1500);
-                }
-            }
-        });
-    });
-
-    // Observar el contenedor principal
-    const container = document.getElementById('playerInfoContainer');
-    if (container) {
-        observer.observe(container, { childList: true, subtree: true });
-        console.log("🧬 Ojeador: Observando playerInfoContainer.");
-    } else {
-        // Si no existe al cargar, esperar a que se cree
-        const interval = setInterval(function() {
-            const c = document.getElementById('playerInfoContainer');
-            if (c) {
-                clearInterval(interval);
-                observer.observe(c, { childList: true, subtree: true });
-                console.log("🧬 Ojeador: Observer iniciado en playerInfoContainer (tardío).");
-            }
-        }, 500);
-    }
-    
-    // Resetear el flag cuando se hace una nueva búsqueda
+    // Escuchar clic en el botón de buscar
     document.addEventListener('click', function(e) {
         if (e.target && e.target.id === 'searchBtn') {
+            console.log("🔍 Búsqueda iniciada. Reiniciando flag del Ojeador.");
             panelInyectado = false;
-            console.log("🔍 Nueva búsqueda detectada. Reiniciando flag del Ojeador.");
+            if (intervalId) clearInterval(intervalId);
+            
+            let intentos = 0;
+            intervalId = setInterval(function() {
+                intentos++;
+                const playerCard = document.querySelector('.player-card-big');
+                if (playerCard && window.currentPlayer) {
+                    clearInterval(intervalId);
+                    console.log("✅ Tarjeta detectada después de " + intentos + " intentos.");
+                    setTimeout(inyectarVeredicto, 1000);
+                }
+                if (intentos > 30) {
+                    clearInterval(intervalId);
+                    console.warn("⚠️ No se pudo detectar la tarjeta después de 15 segundos.");
+                }
+            }, 500);
         }
     });
 })();
