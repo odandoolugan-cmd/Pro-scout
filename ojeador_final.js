@@ -1,126 +1,149 @@
-// 🧬 MODO OJEADOR - VERSIÓN FINAL (LEE VALORES REALES)
+// 🧬 MODO OJEADOR - VERSIÓN DEFINITIVA (OBSERVER CON FALLBACK)
 (function() {
     console.log("🧬 Ojeador Final cargado.");
     
+    let panelInyectado = false;
+    
     function inyectarVeredicto() {
+        if (panelInyectado) return;
+        
         const panelAnterior = document.getElementById('modo-ojeador-panel');
         if (panelAnterior) panelAnterior.remove();
         
         const playerCard = document.querySelector('.player-card-big');
-        if (!playerCard || !window.currentPlayer) return;
+        if (!playerCard || !window.currentPlayer) {
+            console.warn("⚠️ Ojeador: No hay jugador o tarjeta aún.");
+            return;
+        }
         
         try {
             const p = window.currentPlayer;
+            panelInyectado = true;
             
-            // Leer Setun directamente del panel (por el color del borde)
-            const setunPanel = document.querySelector('[style*="NÚCLEO SETUN"]');
-            let setunDecision = 'MANTENER (0)';
-            if (setunPanel) {
-                const texto = setunPanel.textContent;
-                if (texto.includes('COMPRAR')) setunDecision = 'COMPRAR (1)';
-                else if (texto.includes('VENDER')) setunDecision = 'VENDER (-1)';
-                else setunDecision = 'MANTENER (0)';
-            }
+            console.log(`🧬 Ojeador: Procesando ${p.name} (Overall: ${p.overall}, Goles: ${p.goals}, Asist: ${p.assists}, Edad: ${p.edad})`);
             
-            // Leer BitNet directamente del panel
-            const bitnetPanel = document.querySelector('[style*="SCOUT NEURONAL"]');
+            // Calcular Setun original (con lógica correcta)
+            let setunDecision = 'MANTENER';
+            if (p.overall > 85 && p.goals > 10 && p.assists > 5) setunDecision = 'COMPRAR';
+            else if (p.overall < 70 || p.goals < 3) setunDecision = 'VENDER';
+            
+            // Calcular BitNet
             let bitnetNivel = 'ROTACIÓN';
-            if (bitnetPanel) {
-                const texto = bitnetPanel.textContent;
-                if (texto.includes('ÉLITE MUNDIAL')) bitnetNivel = 'ÉLITE MUNDIAL';
-                else if (texto.includes('GALÁCTICO')) bitnetNivel = 'GALÁCTICO';
-                else if (texto.includes('JUGADOR DESTACADO')) bitnetNivel = 'JUGADOR DESTACADO';
-                else if (texto.includes('ROTACIÓN')) bitnetNivel = 'ROTACIÓN / PROMESA';
-                else bitnetNivel = 'DESCARTE';
-            }
+            if (p.overall > 85 && p.goals > 15) bitnetNivel = 'ÉLITE';
+            else if (p.overall > 80 && p.goals > 10) bitnetNivel = 'DESTACADO';
+            else if (p.overall > 75) bitnetNivel = 'ROTACIÓN';
+            else bitnetNivel = 'DESCARTE';
             
-            // Leer Finanzas
-            const finanzasPanel = document.querySelector('[style*="SETUN FINANCIERO"]');
+            // Calcular Finanzas
             let finanzasEstado = 'PRECIO JUSTO';
-            if (finanzasPanel) {
-                const texto = finanzasPanel.textContent;
-                if (texto.includes('INFRAVALORADO')) finanzasEstado = 'INFRAVALORADO';
-                else if (texto.includes('SOBREVALORADO')) finanzasEstado = 'SOBREVALORADO';
-            }
+            if (p.overall > 85 && p.edad < 23) finanzasEstado = 'INFRAVALORADO';
+            else if (p.overall > 85 && p.edad > 30) finanzasEstado = 'SOBREVALORADO';
             
-            // Leer Lesiones
-            const lesionesPanel = document.querySelector('[style*="RIESGO DE LESIÓN"]');
+            // Calcular Lesiones
             let lesionesNivel = 'BAJO';
-            if (lesionesPanel) {
-                const texto = lesionesPanel.textContent;
-                if (texto.includes('ALTO')) lesionesNivel = 'ALTO';
-                else if (texto.includes('MEDIO')) lesionesNivel = 'MEDIO';
-            }
+            if (p.edad > 32) lesionesNivel = 'ALTO';
+            else if (p.edad > 28) lesionesNivel = 'MEDIO';
             
-            console.log(`🧬 OJEADOR DEBUG: Setun=${setunDecision} | BitNet=${bitnetNivel} | Finanzas=${finanzasEstado} | Lesiones=${lesionesNivel}`);
+            console.log(`🧬 Setun: ${setunDecision} | BitNet: ${bitnetNivel} | Finanzas: ${finanzasEstado} | Lesiones: ${lesionesNivel}`);
+            
+            // Usar Setun de Consenso
+            let consenso = null;
+            if (window.SetunConsenso) {
+                consenso = window.SetunConsenso.calcular({
+                    setun: setunDecision,
+                    bitnet: bitnetNivel,
+                    finanzas: finanzasEstado,
+                    lesiones: lesionesNivel,
+                    edad: p.edad || 25
+                });
+                console.log(`🧬 CONSENSO: ${consenso.consenso} (${consenso.puntos} pts) | ${consenso.detalles.join(' | ')}`);
+            }
             
             // Generar veredicto
             let recomendacion, color, razon, inversion;
             
-            if (setunDecision.includes('COMPRAR') && bitnetNivel.includes('ÉLITE') && lesionesNivel === 'BAJO') {
-                recomendacion = 'FICHAJE PRIORITARIO'; color = '#10b981';
-                razon = 'Rendimiento de élite, bajo riesgo físico y precio justo.';
-                inversion = 'Inversión recomendada. Negociar en los próximos 15 días.';
-            } else if (setunDecision.includes('COMPRAR') && !bitnetNivel.includes('ÉLITE')) {
-                recomendacion = 'APUESTA TÁCTICA'; color = '#3b82f6';
-                razon = 'Setun lo recomienda, pero BitNet no lo ve como élite. Puede ser un jugador de rotación valioso.';
-                inversion = 'Inversión moderada. No pagar sobreprecio.';
-            } else if (setunDecision.includes('MANTENER') && (bitnetNivel.includes('ROTACIÓN') || bitnetNivel.includes('DESTACADO'))) {
-                recomendacion = 'SEGUIMIENTO ESTRECHO'; color = '#8b5cf6';
-                razon = 'Jugador con potencial pero sin urgencia de fichaje. Seguir su evolución.';
-                inversion = 'Esperar a final de temporada para evaluar.';
-            } else if (setunDecision.includes('VENDER') || bitnetNivel.includes('DESCARTE')) {
-                recomendacion = 'EVITAR FICHAJE'; color = '#ef4444';
-                razon = 'Rendimiento insuficiente o riesgo elevado.';
-                inversion = 'No invertir. Buscar alternativas.';
+            if (consenso) {
+                recomendacion = consenso.consenso;
+                color = consenso.color;
+                razon = consenso.razon;
+                inversion = consenso.puedeFichar ? 'Fichaje recomendado. Negociar según necesidad.' : 'No recomendado. Buscar alternativas.';
             } else {
-                recomendacion = 'MANTENER'; color = '#f59e0b';
-                razon = 'Perfil estándar. Sin urgencias.';
-                inversion = 'Valorar según necesidad del equipo.';
+                // Lógica de respaldo
+                if (setunDecision === 'COMPRAR' && bitnetNivel === 'ÉLITE') {
+                    recomendacion = 'FICHAJE PRIORITARIO'; color = '#10b981';
+                    razon = 'Rendimiento de élite y precio justo.';
+                    inversion = 'Inversión recomendada.';
+                } else if (setunDecision === 'MANTENER' && bitnetNivel === 'ROTACIÓN') {
+                    recomendacion = 'SEGUIMIENTO ESTRECHO'; color = '#8b5cf6';
+                    razon = 'Jugador con potencial pero sin urgencia.';
+                    inversion = 'Esperar a final de temporada.';
+                } else {
+                    recomendacion = 'MANTENER'; color = '#f59e0b';
+                    razon = 'Perfil estándar.';
+                    inversion = 'Valorar según necesidad.';
+                }
             }
-            
-            console.log(`🧬 Veredicto: ${recomendacion}`);
             
             const panelHTML = `
             <div id="modo-ojeador-panel" style="margin-top:15px; padding:15px; border-radius:10px; background:linear-gradient(135deg, rgba(15,23,42,0.95), rgba(30,41,59,0.95)); border:2px solid ${color}; font-family:'Inter', sans-serif; box-shadow:0 0 15px ${color}40;">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <div style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase; font-weight:bold;">🧠 VEREDICTO DEL OJEADOR</div>
-                    <div style="font-size:0.6rem; color:${color}; border:1px solid ${color}; padding:2px 8px; border-radius:10px;">ANÁLISIS FINAL</div>
+                    <div style="font-size:0.8rem; color:#94a3b8; text-transform:uppercase; font-weight:bold;">🧬 SETUN DE CONSENSO</div>
+                    <div style="font-size:0.6rem; color:${color}; border:1px solid ${color}; padding:2px 8px; border-radius:10px;">${consenso ? (consenso.puntos > 0 ? '+' : '') + consenso.puntos + ' pts' : 'ANÁLISIS'}</div>
                 </div>
                 <div style="font-size:1.4rem; font-weight:bold; color:${color}; margin-bottom:8px;">${recomendacion}</div>
                 <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:8px; line-height:1.4;">${razon}</div>
-                <div style="font-size:0.75rem; color:#f59e0b; background:rgba(245,158,11,0.1); padding:6px; border-radius:6px; border-left:3px solid #f59e0b;">💡 ${inversion}</div>
-                <div style="font-size:0.6rem; color:#64748b; margin-top:8px; border-top:1px solid #334155; padding-top:8px;">
-                    Datos: Setun: ${setunDecision} | BitNet: ${bitnetNivel} | Finanzas: ${finanzasEstado} | Lesiones: ${lesionesNivel}
+                <div style="font-size:0.65rem; color:#64748b; margin-top:8px; border-top:1px solid #334155; padding-top:8px;">
+                    ${consenso ? consenso.detalles.join(' | ') : 'Setun: ' + setunDecision + ' | BitNet: ' + bitnetNivel}
+                </div>
+                <div style="font-size:0.6rem; color:#f59e0b; background:rgba(245,158,11,0.1); padding:6px; border-radius:6px; margin-top:8px; border-left:3px solid #f59e0b;">
+                    💡 ${inversion}
                 </div>
             </div>`;
             
             playerCard.parentNode.insertBefore(document.createRange().createContextualFragment(panelHTML), playerCard.nextSibling);
-            console.log("🧠 Veredicto del Ojeador añadido.");
-        } catch(e) { console.error('Error ModoOjeador Final:', e); }
+            console.log("🧬 Setun de Consenso añadido.");
+        } catch(e) {
+            console.error('Error Ojeador Final:', e);
+            panelInyectado = false;
+        }
     }
 
-    // Escuchar clic en el botón de buscar
+    // Observer que detecta cuando aparece la tarjeta del jugador
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                const playerCard = document.querySelector('.player-card-big');
+                if (playerCard && window.currentPlayer && !panelInyectado) {
+                    console.log("🧬 Ojeador: Tarjeta detectada. Inyectando veredicto...");
+                    // Esperar un poco para que otros paneles se rendericen
+                    setTimeout(inyectarVeredicto, 1500);
+                }
+            }
+        });
+    });
+
+    // Observar el contenedor principal
+    const container = document.getElementById('playerInfoContainer');
+    if (container) {
+        observer.observe(container, { childList: true, subtree: true });
+        console.log("🧬 Ojeador: Observando playerInfoContainer.");
+    } else {
+        // Si no existe al cargar, esperar a que se cree
+        const interval = setInterval(function() {
+            const c = document.getElementById('playerInfoContainer');
+            if (c) {
+                clearInterval(interval);
+                observer.observe(c, { childList: true, subtree: true });
+                console.log("🧬 Ojeador: Observer iniciado en playerInfoContainer (tardío).");
+            }
+        }, 500);
+    }
+    
+    // Resetear el flag cuando se hace una nueva búsqueda
     document.addEventListener('click', function(e) {
         if (e.target && e.target.id === 'searchBtn') {
-            console.log("🔍 Búsqueda iniciada. Esperando a que se rendericen los paneles...");
-            let intentos = 0;
-            const interval = setInterval(function() {
-                intentos++;
-                // Verificar si los paneles de Setun y BitNet ya existen
-                const setunPanel = document.querySelector('[style*="NÚCLEO SETUN"]');
-                const bitnetPanel = document.querySelector('[style*="SCOUT NEURONAL"]');
-                
-                if (setunPanel && bitnetPanel && window.currentPlayer) {
-                    clearInterval(interval);
-                    console.log("✅ Paneles detectados después de " + intentos + " intentos.");
-                    setTimeout(inyectarVeredicto, 500);
-                }
-                if (intentos > 30) {
-                    clearInterval(interval);
-                    console.warn("⚠️ No se pudieron detectar los paneles después de 15 segundos.");
-                }
-            }, 500);
+            panelInyectado = false;
+            console.log("🔍 Nueva búsqueda detectada. Reiniciando flag del Ojeador.");
         }
     });
 })();
