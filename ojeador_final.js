@@ -3,7 +3,6 @@
     console.log("🧬 Ojeador Final cargado.");
     
     function inyectarVeredicto() {
-        // Eliminar panel anterior
         const panelAnterior = document.getElementById('modo-ojeador-panel');
         if (panelAnterior) panelAnterior.remove();
         
@@ -37,7 +36,7 @@
             
             console.log(`🧬 OJEADOR: ${p.name} | Overall=${p.overall} | Goles=${p.goals} | Asist=${p.assists} | Edad=${p.edad} | Setun=${setunDecision} | BitNet=${bitnetNivel} | Finanzas=${finanzasEstado} | Lesiones=${lesionesNivel}`);
             
-            // Usar Setun de Consenso
+            // Usar Setun de Consenso (si existe)
             let consenso = null;
             if (window.SetunConsenso) {
                 consenso = window.SetunConsenso.calcular({
@@ -48,6 +47,8 @@
                     edad: p.edad || 25
                 });
                 console.log(`🧬 CONSENSO: ${consenso.consenso} (${consenso.puntos} pts) | ${consenso.detalles.join(' | ')}`);
+            } else {
+                console.warn("⚠️ SetunConsenso no está cargado. Usando lógica de respaldo.");
             }
             
             // Generar veredicto
@@ -100,7 +101,6 @@
     document.addEventListener('click', function(e) {
         if (e.target && e.target.id === 'searchBtn') {
             console.log("🔍 Búsqueda iniciada. Esperando a que se complete el análisis...");
-            // Esperar a que el análisis de la IA termine (cuando aparezca el panel de la IA)
             const checkAnalysis = setInterval(function() {
                 const iaResult = document.getElementById('iaResult');
                 if (iaResult && iaResult.innerHTML.length > 100 && window.currentPlayer) {
@@ -109,7 +109,6 @@
                     setTimeout(inyectarVeredicto, 500);
                 }
             }, 1000);
-            // Timeout de seguridad (60 segundos)
             setTimeout(function() {
                 clearInterval(checkAnalysis);
             }, 60000);
