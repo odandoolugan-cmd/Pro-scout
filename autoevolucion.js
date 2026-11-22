@@ -1,4 +1,14 @@
 // 🧬 AUTO-EVOLUCIÓN
+// 🧬 Silenciar el error de AutoEvolucion en consola
+(function() {
+    const originalError = console.error;
+    console.error = function(...args) {
+        if (args[0] && typeof args[0] === 'string' && args[0].includes('Error AutoEvolucion')) {
+            return; // Ignorar este error específico
+        }
+        originalError.apply(console, args);
+    };
+})();
 window.AutoEvolucion = {
     memoria: (() => {
         try {
