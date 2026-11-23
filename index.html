@@ -173,7 +173,11 @@
         .source-badge.50x { border-color: #10b981; background: rgba(16,185,129,0.3); animation: pulse 1.5s infinite; }
         
         @media (max-width: 700px) { .player-name { font-size: 1.3rem; } .widget-container { grid-template-columns: 1fr; } .connector-metrics { grid-template-columns: 1fr 1fr; } .hero h1 { font-size: 1.6rem; } }
-    </style>
+/* 🐞 Ocultar consola de debug (para activar, cambiar display: none por display: block) */
+#debug-panel, #debug-toggle-btn {
+    display: none !important;
+}  
+  </style>
 </head>
 <body>
 <div class="container">

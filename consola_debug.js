@@ -24,6 +24,7 @@
         word-break: break-all;
     `;
     document.body.appendChild(panel);
+panel.id = 'debug-panel';
     
     // Botón para mostrar/ocultar
     const toggleBtn = document.createElement('button');
@@ -44,6 +45,7 @@
         box-shadow: 0 0 10px #8b5cf6;
     `;
     document.body.appendChild(toggleBtn);
+toggleBtn.id = 'debug-toggle-btn';
     
     toggleBtn.onclick = () => {
         panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
