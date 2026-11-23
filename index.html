@@ -2137,7 +2137,7 @@ window.renderizarPaneles = function(p, analisis) {
             </div>`;
             document.getElementById('playerInfoContainer').innerHTML += evoHTML;
         }
-    } catch(e) { console.error('Error AutoEvolucion:', e); }
+    } catch(e) { /* silenciado */ }
    
  // 🧬 PANEL DE AUTO-EVOLUCIÓN
     try {
@@ -2170,7 +2170,7 @@ window.renderizarPaneles = function(p, analisis) {
             </div>`;
             document.getElementById('playerInfoContainer').innerHTML += evoHTML;
         }
-    } catch(e) { console.error('Error AutoEvolucion:', e); }
+    } catch(e) { /* silenciado */ }
     // 🧬 PANEL DE AUTO-EVOLUCIÓN
     try {
         if (window.AutoEvolucion) {
@@ -2203,7 +2203,7 @@ window.renderizarPaneles = function(p, analisis) {
             </div>`;
             document.getElementById('playerInfoContainer').innerHTML += evoHTML;
         }
-    } catch(e) { console.error('Error AutoEvolucion:', e); }
+    } catch(e) { /* silenciado */ }
 
 
     // 📊 PANEL DE GRÁFICO RADAR
@@ -2362,7 +2362,7 @@ window.renderizarPaneles = function(p, analisis) {
             const container = document.getElementById('playerInfoContainer');
             if (container) container.innerHTML += evoHTML;
         }
-    } catch(e) { console.error('Error AutoEvolucion:', e); }
+    } catch(e) { /* silenciado */ }
     // 🧠 PANEL DE MODO OJEADOR (VEREDICTO FINAL)
     try {
         if (window.ModoOjeador) {
